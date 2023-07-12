@@ -1,0 +1,27 @@
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ article.url }}"
+    },
+    "headline": "{{ article.title | escape }}",
+    "description": "{{ article.excerpt | escape }}",
+    "image": "{{ article.image.src }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ article.author }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ shop.name }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.indyvogue.com/cdn/shop/files/IndyVogue-Logo.webp?v=1688503914&width=190"
+      }
+    },
+    "datePublished": "{{ article.published_at | date: '%Y-%m-%d' }}",
+    "dateModified": "{{ article.updated_at | date: '%Y-%m-%d' }}"
+  }
+</script>
