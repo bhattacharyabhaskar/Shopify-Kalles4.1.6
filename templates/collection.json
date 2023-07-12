@@ -2,95 +2,10 @@
   "sections": {
     "top": {
       "type": "top-collections",
-      "disabled": true,
-      "blocks": {
-        "69bbe0dd-0a50-42e8-986b-0d5e6c5cfa67": {
-          "type": "cat",
-          "settings": {
-            "collection": "default-3",
-            "icon": ""
-          }
-        },
-        "863873b6-012e-4a34-90e3-eead750fa3ce": {
-          "type": "cat",
-          "settings": {
-            "collection": "bag",
-            "icon": ""
-          }
-        },
-        "fc07bff9-6d08-423c-8802-9a03c34f3a31": {
-          "type": "cat",
-          "settings": {
-            "collection": "decor",
-            "icon": ""
-          }
-        },
-        "a286cc0b-0c90-4b1a-862c-a1136f283aac": {
-          "type": "cat",
-          "settings": {
-            "collection": "default-2",
-            "icon": ""
-          }
-        },
-        "23c84729-8fcb-488c-9541-00e283af6afe": {
-          "type": "cat",
-          "settings": {
-            "collection": "dress",
-            "icon": ""
-          }
-        },
-        "5f1d751a-fdac-43d4-ad9d-55da0c297244": {
-          "type": "cat",
-          "settings": {
-            "collection": "hats",
-            "icon": ""
-          }
-        },
-        "0f0e1f7c-788c-46c0-9fb4-1ec7ce88da01": {
-          "type": "cat",
-          "settings": {
-            "collection": "frontpage",
-            "icon": ""
-          }
-        },
-        "70189b51-5562-4924-b642-a1deba7741ee": {
-          "type": "cat",
-          "settings": {
-            "collection": "sale",
-            "icon": ""
-          }
-        },
-        "560f5822-3eeb-4070-a2cd-b5738881a4c1": {
-          "type": "cat",
-          "settings": {
-            "collection": "shoes",
-            "icon": ""
-          }
-        },
-        "be9b8b8f-6cac-47ab-b809-a2fe640a75a7": {
-          "type": "cat",
-          "settings": {
-            "collection": "women",
-            "icon": ""
-          }
-        }
-      },
-      "block_order": [
-        "69bbe0dd-0a50-42e8-986b-0d5e6c5cfa67",
-        "863873b6-012e-4a34-90e3-eead750fa3ce",
-        "fc07bff9-6d08-423c-8802-9a03c34f3a31",
-        "a286cc0b-0c90-4b1a-862c-a1136f283aac",
-        "23c84729-8fcb-488c-9541-00e283af6afe",
-        "5f1d751a-fdac-43d4-ad9d-55da0c297244",
-        "0f0e1f7c-788c-46c0-9fb4-1ec7ce88da01",
-        "70189b51-5562-4924-b642-a1deba7741ee",
-        "560f5822-3eeb-4070-a2cd-b5738881a4c1",
-        "be9b8b8f-6cac-47ab-b809-a2fe640a75a7"
-      ],
       "settings": {
         "show_top_collections": true,
-        "source": "1",
-        "menu": "main-menu",
+        "source": "3",
+        "menu": "sarees",
         "sort_collections": "alphabetical_reversed",
         "box_border": "top",
         "content_align": "center",
