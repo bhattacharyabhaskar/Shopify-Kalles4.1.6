@@ -1496,6 +1496,41 @@
         "mg_mb": "",
         "pd_mb": ""
       }
+    },
+    "16891733191dfe92fe": {
+      "type": "apps",
+      "blocks": {
+        "199a191d-03f8-4543-b439-90e80c21a434": {
+          "type": "shopify:\/\/apps\/seguno-email-marketing\/blocks\/newsletter_form\/db65571f-fa4d-473d-baa2-283a96dc76bc",
+          "settings": {
+            "heading": "Subscribe & Save",
+            "subheading": "<p>Subscribe to our NewsLetter and get <strong>$10 USD Off*<\/strong> your purchase. Get the latest & greatest update on New Arrivals, Promotions and lots more.<\/p><p><em>*Cannot be combined with other promotions. <\/em><a href=\"\/pages\/current-offers-and-promotions\" title=\"Current Offers and Promotions\"><em>Click here for details<\/em><\/a><em>.<\/em><\/p>",
+            "show_first_name": false,
+            "show_last_name": false,
+            "show_permission_checkbox": true,
+            "tags": "newsletter",
+            "return_to": "shopify:\/\/collections\/buy-silk-mark-certified-saree",
+            "label_first_name": "First name",
+            "placeholder_first_name": "",
+            "label_last_name": "Last name",
+            "placeholder_last_name": "",
+            "label_email": "Email",
+            "placeholder_email": "",
+            "label_permission": "<p>I agree to receive marketing emails from IndyVogue.<\/p>",
+            "label_subscribe": "Subscribe",
+            "success_message": "Thanks for subscribing",
+            "background_color": "#ffffff",
+            "text_color": "#1a1b18",
+            "button_background_color": "#445958",
+            "button_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "199a191d-03f8-4543-b439-90e80c21a434"
+      ],
+      "settings": {
+      }
     }
   },
   "order": [
@@ -1509,6 +1544,7 @@
     "16460362229768af39",
     "164603686708691778",
     "16460368750174c54a",
-    "1646209857bf69e76a"
+    "1646209857bf69e76a",
+    "16891733191dfe92fe"
   ]
 }
