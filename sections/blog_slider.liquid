@@ -1,0 +1,874 @@
+<!-- sections/blog_slider.liquid -->
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'custom-effect.css' | asset_url | stylesheet_tag }}
+{{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+{%- liquid 
+    assign sid = section.id
+    assign se_stts = section.settings
+    assign se_blocks = section.blocks   
+    assign stt_layout = se_stts.layout
+    assign stt_image_bg = se_stts.image_bg
+    assign blog_owl = blogs[se_stts.blog]
+    assign by = 'blogs.article.by' | t
+    assign on = 'blogs.article.on' | t 
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif 
+    if se_stts.btn_owl == "outline"
+        assign arrow_icon = 1
+    else
+        assign arrow_icon = 2
+    endif
+    
+    assign image_ratio = se_stts.image_ratio
+    if image_ratio == "ratioadapt"
+        assign imgatt = ''
+    else 
+        assign imgatt = 'data-'
+    endif
+    assign use_button = false
+    assign b_effect = se_stts.b_effect
+    assign img_effect = se_stts.img_effect
+    assign show_author = se_stts.show_author
+    assign show_comment = se_stts.show_comment
+    assign show_date = se_stts.show_date
+    assign date_format = se_stts.date
+    assign by = 'blogs.article.by' | t
+    assign blog_owl_url = blog_owl.url 
+    assign t4s_se_class = 't4s_nt_se_' | append: sid
+    if se_stts.use_cus_css and se_stts.code_cus_css != blank
+        render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+    endif 
+ -%}
+<div class="t4s-section-inner {{ t4s_se_class }} t4s_nt_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+    {{- html_layout[0] -}}
+        {%- if stt_layout == 't4s-se-container' -%}
+            <div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}        
+                <div class="t4s-flicky-slider t4s_{{ image_ratio }} t4s_position_{{ se_stts.image_position }} t4s_{{ se_stts.image_size }} t4s-row t4s-g-0 t4s-row-cols-lg-{{ se_stts.col_dk }} t4s-row-cols-md-{{ se_stts.col_tb }} t4s-row-cols-{{ se_stts.col_mb }}{% if se_stts.nav_btn == true %}  t4s-slider-btn-style-{{ se_stts.btn_owl }} t4s-slider-btn-{{ se_stts.btn_shape }} t4s-slider-btn-{{ se_stts.btn_size }} t4s-slider-btn-cl-{{ se_stts.btn_cl }} t4s-slider-btn-vi-{{ se_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ se_stts.btn_hidden_mobile }} {% endif %}{% if se_stts.nav_dot %} t4s-dots-style-{{ se_stts.dot_owl }} t4s-dots-cl-{{ se_stts.dots_cl }} t4s-dots-round-{{ se_stts.dots_round }} t4s-dots-hidden-mobile-{{ se_stts.dots_hidden_mobile }} {% endif %} flickityt4s" data-flickityt4s-js='{"setPrevNextButtons":true,"arrowIcon":"{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{ se_stts.loop }},"prevNextButtons": {{ se_stts.nav_btn }},"percentPosition": 0,"pageDots": {{ se_stts.nav_dot }}, "autoPlay" : {{ se_stts.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ se_stts.au_hover }} }'  style="--space-dots: {{ se_stts.dots_space }}px;--flickity-btn-pos: 30px;--flickity-btn-pos-mb: 30px;">
+                    {%- if blog_owl != blank %}
+                        {%- for article in blog_owl.articles limit: se_stts.limit -%}
+                            {%- assign art_url = article.url -%}
+                            {%- assign image = article.image -%}
+                            <div class="t4s-col-item t4s-post-item">                                                 
+                                <a href="{{ art_url }}" class="t4s-d-block t4s-eff t4s-eff-{{ b_effect }} t4s-eff-img-{{ img_effect }}">
+                                    <div class="t4s_ratio" style="--{{ imgatt }}aspect-ratioapt: {{ image.aspect_ratio | default: 1.7777 }}" data-cacl-slide>
+                                        {%- if image != blank -%}
+                                            <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                            <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span>
+                                        {%- else -%}
+                                            {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}
+                                        {%- endif -%} 
+                                    </div>
+                                </a>
+                                <div class="t4s-pa t4s-l-0 t4s-b-0 t4s-r-0 t4s-w-100 t4s-post-content-alternative t4s-text-center">
+                                    <div class="t4s-post-meta">
+                                        {%- if show_author -%}<span class="t4s-post-author">{{ by }} <span class="t4s-blog-owl-color1">{{ article.author | replace_first: 'ad clnt', 'admin' }}</span></span>{%- endif -%}
+                                        {%- if article.tags.size > 0 -%}
+                                            <span class="t4s-post-tags"><span>{{ 'blogs.article.in' | t }}</span> 
+                                            {%- for tag in article.tags limit: 5 -%}
+                                                <a href="{{ blog_owl_url }}/tagged/{{ tag | handle }}">{{ tag | remove : 'category_' | strip }}</a>{% unless forloop.last %},{% endunless %}
+                                            {%- endfor -%}
+                                            </span>
+                                        {%- endif -%}
+                                        {%- if show_comment -%}
+                                            <div class="t4s-post-comments">
+                                                {%- if article.comments_count > 0 %}{% assign cm_link = '#comments' %}{% else %}{% assign cm_link = '#comment_form' %}{% endif -%}
+                                                <a href="{{ art_url }}{{ cm_link }}">{{ 'blogs.comments.with_count' | t: count: article.comments_count }}</a>
+                                            </div>
+                                        {%- endif -%}
+                                    </div>
+                                    <h2 class="t4s-post-title t4s-blog-owl-color1"><a href="{{ art_url }}">{{ article.title }}</a></h2>
+                                    {%- if show_date -%}<span class="t4s-post-time t4s-blog-owl-color2"><time class="t4s-entry-date">{%- if date_format contains "%" -%}{{ article.published_at | time_tag: date_format }}{%- else -%}{{ article.published_at | time_tag: format: date_format }}{%- endif -%}</time></span>{%- endif -%}
+                                </div>                            
+                            </div>
+                        {%- endfor -%}
+                    {%- else -%}
+                        {%- for i in (1..8) -%}
+                            <div class="t4s-col-item t4s-post-item">
+                                <div class="t4s-post-inner2 t4s-pr">   
+                                    <div class="t4s-eff t4s-eff-{{ b_effect }} t4s-eff-img-{{ img_effect }}">
+                                        <div class="t4s_ratio" {{ imgatt }}style="--aspect-ratioapt:1.7777" data-cacl-slide>
+                                            {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}
+                                        </div>
+                                    </div>
+                                    <div class="t4s-pa t4s-l-0 t4s-b-0 t4s-r-0 t4s-w-100 t4s-post-content-alternative t4s-text-center">
+                                        <div class="t4s-post-meta">
+                                            {%- if show_author -%}<span class="t4s-post-author">{{ by }} <span class="t4s-blog-owl-color1">Admin</span></span>{%- endif -%}
+                                                <span class="t4s-post-tags"><span>{{ 'blogs.article.in' | t }}</span>
+                                                    <a href="/admin/articles">Beautiful, </a><a href="/admin/articles">Clothes</a>
+                                                </span>
+                                            {%- if show_comment -%}
+                                                <div class="t4s-post-comments"><a href="/admin/articles">{{ 'blogs.comments.with_count.other' | t: count: 6 }}</a></div>
+                                            {%- endif -%}
+                                        </div>
+                                        <h2 class="t4s-post-title t4s-blog-owl-color1">
+                                            <a href="/admin/articles">{{ 'onboarding.blog_title' | t }}</a>
+                                        </h2>
+                                        {%- if show_date -%}<span class="t4s-post-time t4s-blog-owl-color2"><time class="t4s-entry-date">{{ "Tue, 25 Jan, 2023" | time_tag: format: date_format }}</time></span>{%- endif -%}
+                                    </div>
+                                </div>
+                            </div>
+                        {%- endfor -%}
+                    {%- endif -%}
+                </div>
+    {{- html_layout[1] -}}
+</div>
+{%- style -%}
+{%- assign overlay = se_stts.overlay | divided_by: 100.0 -%}
+    .t4s-blog-slider .t4s-post-item{position: relative;}
+    .t4s-blog-slider .t4s-eff{z-index:unset}
+    .t4s-blog-slider .t4s-post-content-alternative{
+        background: {{ se_stts.bg | color_modify: 'alpha', overlay }};
+        padding: 20px;
+    }
+    .t4s-blog-slider .t4s-post-author{margin-right:5px;}
+    .t4s-blog-slider .t4s-post-tags span{margin-right:3px;}
+    .t4s-blog-slider .t4s-post-meta{
+        font-size:12px;
+    }
+    .t4s-blog-slider .t4s-post-content-alternative .t4s-post-title{
+        font-size:14px;
+        letter-spacing:2px;
+        margin-top:10px;
+        margin-bottom:5px;
+        text-transform:uppercase;
+    }
+    .t4s-blog-slider .t4s-post-content-alternative .t4s-blog-owl-color1,
+    .t4s-blog-slider .t4s-post-content-alternative a:not(:hover){
+        color:{{ se_stts.cl }}!important;
+    }
+    .t4s-blog-slider .t4s-post-content-alternative .t4s-post-meta,
+    .t4s-blog-slider .t4s-post-content-alternative .t4s-blog-owl-color2{
+        color:{{ se_stts.cl2 }};
+    }
+{%- endstyle -%}
+{%- schema -%}
+{
+    "name":"Blog slider",
+    "tag":"section",
+    "class":"t4s-section t4s_tp_flickity t4s-blog-slider",
+    "settings":[
+        {
+            "type": "header",
+            "content": "1.General options"
+        },
+        {
+            "id": "blog",
+            "type": "blog",
+            "label": "Blog"
+        },
+        {
+            "type": "range",
+            "max":50,
+            "min":1,
+            "step":1,
+            "id": "limit",
+            "label": "Maximum articles to show",
+            "default": 6
+        },
+        {
+            "type": "select",
+            "id": "date",
+            "label": "Date format",
+            "info":"Different format options display for various languages.",
+            "default": "date",
+            "options": [
+                {
+                    "value": "abbreviated_date",
+                    "label": "Apr 19, 1994"
+                },
+                {
+                    "value": "basic",
+                    "label": "4/19/1994"
+                },
+                {
+                    "value": "date",
+                    "label": "April 19, 1994"
+                },
+                {
+                    "value": "%b %d",
+                    "label": "Apr 19"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "col_dk",
+            "label": "Items per row",
+            "default": "3",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "1"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                },
+                {
+                    "value": "3",
+                    "label": "3"
+                },
+                {
+                    "value": "4",
+                    "label": "4"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "col_tb",
+            "label": "Items per row (Tablet)",
+            "default": "2",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "1"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                },
+                {
+                    "value": "3",
+                    "label": "3"
+                },
+                {
+                    "value": "4",
+                    "label": "4"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "col_mb",
+            "label": "Items per row (Mobile)",
+            "default": "1",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "1"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "show_author",
+            "label": "Show author",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_date",
+            "label": "Show date",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_comment",
+            "label": "Show comment",
+            "default": false
+        },
+        {
+            "type": "header",
+            "content": "+Options for image"
+        },
+        {
+            "type": "select",
+            "id": "image_ratio",
+            "label": "Aspect ratio",
+            "default": "ratio4_3",
+            "info": "Aspect ratio custom will settings in general panel.",
+            "options": [
+                {
+                    "group": "Auto",
+                    "value": "ratioadapt",
+                    "label": "Adapt to image"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio2_1",
+                    "label": "2:1"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio16_9",
+                    "label": "16:9"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio8_5",
+                    "label": "8:5"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio3_2",
+                    "label": "3:2"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio4_3",
+                    "label": "4:3"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "rationt",
+                    "label": "Ratio ASOS"
+                },
+                {
+                    "group": "Squared",
+                    "value": "ratio1_1",
+                    "label": "1:1"
+                },
+                {
+                    "group": "Portrait",
+                    "value": "ratio2_3",
+                    "label": "2:3"
+                },
+                {
+                    "group": "Portrait",
+                    "value": "ratio1_2",
+                    "label": "1:2"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus1",
+                    "label": "Ratio custom 1"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus2",
+                    "label": "Ratio custom 2"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus3",
+                    "label": "Ratio custom 3"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus4",
+                    "label": "Ratio custom 4"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "image_position",
+            "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'.",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "1",
+                    "label": "Left top"
+                },
+                {
+                    "value": "2",
+                    "label": "Left center"
+                },
+                {
+                    "value": "3",
+                    "label": "Left bottom"
+                },
+                {
+                    "value": "4",
+                    "label": "Right top"
+                },
+                {
+                    "value": "5",
+                    "label": "Right center"
+                },
+                {
+                    "value": "6",
+                    "label": "Right bottom"
+                },
+                {
+                    "value": "7",
+                    "label": "Center top"
+                },
+                {
+                    "value": "8",
+                    "label": "Center center"
+                },
+                {
+                    "value": "9",
+                    "label": "Center bottom"
+                }
+            ],
+            "label": "Image position",
+            "default": "8"
+        },
+        {
+            "type": "select",
+            "id": "image_size",
+            "label": "Image size",
+            "default": "cover",
+            "info": "This settings apply only if the image ratio is not set to 'Adapt to image'.",
+            "options": [
+                {
+                    "value": "cover",
+                    "label": "Full"
+                },
+                {
+                    "value": "contain",
+                    "label": "Auto"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "img_effect",
+            "label": "Image hover effect",
+            "info": "Waring: Hovering effect will resize your images",
+            "default": "none",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "None"
+                },
+                {
+                    "value": "zoom",
+                    "label": "Zoom in"
+                },
+                {
+                    "value": "rotate",
+                    "label": "Rotate"
+                },
+                {
+                    "value": "translateToTop",
+                    "label": "Move to top "
+                },
+                {
+                    "value": "translateToRight",
+                    "label": "Move to right"
+                },
+                {
+                    "value": "translateToBottom",
+                    "label": "Move to bottom"
+                },
+                {
+                    "value": "translateToLeft",
+                    "label": "Move to feft"
+                },
+                {
+                    "value": "filter",
+                    "label": "Filter"
+                },
+                {
+                    "value": "bounceIn",
+                    "label": "BounceIn"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "b_effect",
+            "label": "Effect",
+            "default": "none",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "None"
+                },
+                {
+                    "value": "border-run",
+                    "label": "Border run"
+                },
+                {
+                    "value": "pervasive-circle",
+                    "label": "Pervasive circle"
+                },
+                {
+                    "value": "plus-zoom-overlay",
+                    "label": "Plus zoom overlay"
+                },
+                {
+                    "value": "dark-overlay",
+                    "label": "Dark overlay"
+                },
+                {
+                    "value": "light-overlay",
+                    "label": "Light overlay"
+                } 
+            ]
+        },
+        {
+            "type": "header",
+            "content": "+Color"
+        },
+        {
+            "type": "color",
+            "id": "cl",
+            "label": "Color text",
+            "default": "#fff"
+        },
+        {
+            "type": "color",
+            "id": "cl2",
+            "label": "Color text 2",
+            "default": "#878787"
+        },
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background color",
+            "default": "#000"
+        },
+        {
+            "type": "range",
+            "id": "overlay",
+            "label": "Background opacity",
+            "default": 80,
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%"
+        },
+        {
+            "type": "header",
+            "content": "+Options for carousel layout"
+        },
+        {
+            "type": "checkbox",
+            "id": "loop",
+            "label": "Enable loop",
+            "info": "At the end of cells, wrap-around to the other end for infinite scrolling",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "au_time",
+            "min": 0,
+            "max": 30,
+            "step": 0.5,
+            "label": "Autoplay speed in second.",
+            "info": "Set is '0' to disable autoplay",
+            "unit": "s",
+            "default": 0
+        },
+        {
+            "type": "checkbox",
+            "id": "au_hover",
+            "label": "Pause autoplay on hover",
+            "info": "Auto-playing will pause when the user hovers over the carousel",
+            "default": true
+        },
+        {
+            "type": "paragraph",
+            "content": "—————————————————"
+        },
+        {
+            "type": "paragraph",
+            "content": "Prev next button"
+        },
+        {
+            "type": "checkbox",
+            "id": "nav_btn",
+            "label": "Use prev next button",
+            "info": "Creates and show previous & next buttons",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "btn_vi",
+            "label": "Visible",
+            "default": "hover",
+            "options": [
+                {
+                    "value": "always",
+                    "label": "Always"
+                },
+                {
+                    "value": "hover",
+                    "label": "Only hover"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_owl",
+            "label": "Button style",
+            "default": "default",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "outline",
+                    "label": "Outline"
+                },
+                {
+                    "value": "simple",
+                    "label": "Simple"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_shape",
+            "label": "Button shape",
+            "info": "Not working with button style 'Simple'",
+            "default": "none",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "Default"
+                },
+                {
+                    "value": "round",
+                    "label": "Round"
+                },
+                {
+                    "value": "rotate",
+                    "label": "Rotate"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_cl",
+            "label": "Button color",
+            "default": "dark",
+            "options": [
+                {
+                    "value": "light",
+                    "label": "Light"
+                },
+                {
+                    "value": "dark",
+                    "label": "Dark"
+                },
+                {
+                    "value": "primary",
+                    "label": "Primary"
+                },
+                {
+                    "value": "custom1",
+                    "label": "Custom color 1"
+                },
+                {
+                    "value": "custom2",
+                    "label": "Custom color 2"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_size",
+            "label": "Buttons size",
+            "default": "small",
+            "options": [
+                {
+                    "value": "small",
+                    "label": "Small"
+                },
+                {
+                    "value": "medium",
+                    "label": "Medium"
+                },
+                {
+                    "value": "large",
+                    "label": "Large"
+                }
+            ]
+        },
+        {
+            "type":"checkbox",
+            "id":"btn_hidden_mobile",
+            "label":"Hidden buttons on mobile ",
+            "default": true
+        },
+        {
+            "type": "paragraph",
+            "content": "—————————————————"
+        },
+        {
+            "type": "paragraph",
+            "content": "Page dots"
+        },
+        {
+            "type": "checkbox",
+            "id": "nav_dot",
+            "label": "Use page dots",
+            "info": "Creates and show page dots",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "dot_owl",
+            "label": "Dots style",
+            "default": "default",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "outline",
+                    "label": "Outline"
+                },
+                {
+                    "value": "elessi",
+                    "label": "Elessi"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "dots_cl",
+            "label": "Dots color",
+            "default": "dark",
+            "options": [
+                {
+                    "value": "light",
+                    "label": "Light (Best on dark background)"
+                },
+                {
+                    "value": "dark",
+                    "label": "Dark"
+                },
+                {
+                    "value": "primary",
+                    "label": "Primary"
+                },
+                {
+                    "value": "custom1",
+                    "label": "Custom color 1"
+                },
+                {
+                    "value": "custom2",
+                    "label": "Custom color 2"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "dots_round",
+            "label": "Enable dots round",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "dots_space",
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "label": "Dot between horizontal",
+            "unit": "px",
+            "default": 10
+        },
+        {
+            "type":"checkbox",
+            "id":"dots_hidden_mobile",
+            "label":"Hidden dots on mobile ",
+            "default": false
+        },
+        {
+            "type": "header",
+            "content": "2.Design options"
+        },
+        {
+            "type": "select","id": "layout","default": "t4s-container-fluid","label": "Layout",
+            "options": [
+                { "value": "t4s-se-container", "label": "Container"},
+                { "value": "t4s-container-wrap", "label": "Wrapped container"},
+                { "value": "t4s-container-fluid", "label": "Full width"}
+            ]
+        },
+        {
+            "type": "color",
+            "id": "cl_bg",
+            "label": "Background"
+        },
+        {
+            "type": "color_background",
+            "id": "cl_bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_bg",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+            "default": ",,50px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+            "placeholder": "50px,,50px,"
+        },
+        {
+            "type": "header",
+            "content": "+ Design Tablet Options"
+        },
+        {
+            "type": "text",
+            "id": "mg_tb",
+            "label": "Margin",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd_tb",
+            "label": "Padding",
+            "placeholder": ",,50px,"
+        }, 
+        {
+            "type": "header",
+            "content": "+ Design mobile options"
+        },
+        {
+            "type": "text",
+            "id": "mg_mb",
+            "label": "Margin",
+            "default": ",,30px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd_mb",
+            "label": "Padding",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "header",
+            "content": "3. Custom css"
+        },
+        {
+            "id": "use_cus_css",
+            "type": "checkbox",
+            "label": "Use custom css",
+            "default":false,
+            "info": "If you want custom style for this section."
+        },
+        { 
+            "id": "code_cus_css",
+            "type": "textarea",
+            "label": "Code custom css",
+            "info": "Use selector .SectionID to style css"
+            
+        }
+    ]
+}
+{% endschema %}

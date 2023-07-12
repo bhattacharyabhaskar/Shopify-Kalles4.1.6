@@ -1,0 +1,170 @@
+<!-- sections/line.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign sid = section.id
+  assign se_stts = section.settings
+  assign se_blocks = section.blocks
+  assign stt_layout = se_stts.layout
+  assign stt_image_bg = se_stts.image_bg
+  if stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+
+  assign t4s_se_class = 't4s_nt_se_' | append: sid
+  if se_stts.use_cus_css and se_stts.code_cus_css != blank
+    render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+  endif 
+ -%} 
+<div class="t4s-section-inner t4s_nt_se_{{ sid }} t4s_se_{{ sid }} {{ stt_layout }} {{ se_stts.line_pos }} " {% render 'section_style', se_stts: se_stts -%} > 
+    {{- html_layout[0] -}}
+      <div class="t4s-custom-line" style="--width: {{ se_stts.line_width }}%;--height: {{ se_stts.line_height }}px;--line-cl: {{ se_stts.line_cl }};--line-style: {{ se_stts.line_style }};"></div>
+    {{- html_layout[1] -}}
+  </div>
+{%- schema -%}
+  {
+    "name": "Custom line",
+    "tag": "section",
+    "class": "t4s-section t4s-line-section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "1. General options"
+      },
+      {
+        "type": "select",
+        "id": "line_style",
+        "label": "Line style",
+        "default": "solid",
+        "options": [
+          {
+            "value": "solid",
+            "label": "Solid"
+          },
+          {
+            "value": "dotted",
+            "label": "Dotted"
+          },
+          {
+            "value": "dashed",
+            "label": "Dashed"
+          },
+          {
+            "value": "double",
+            "label": "Double"
+          },
+          {
+            "value": "groove",
+            "label": "Groove"
+          }
+        ]
+      }, 
+      {
+        "type": "range",
+        "id": "line_width",
+        "min": 1,
+        "max": 100,
+        "step": 1,
+        "label": "Line width",
+        "unit": "%",
+        "default": 100
+      }, 
+      {
+        "type": "range",
+        "id": "line_height",
+        "min": 1,
+        "max": 15,
+        "step": 0.5,
+        "label": "Line height",
+        "unit": "px",
+        "default": 1
+      },
+      {
+        "type": "color",
+        "id": "line_cl",
+        "label": "Line color",
+        "default": "#e6e6e6"
+      },
+      {
+        "type": "select",
+        "id": "line_pos",
+        "label": "Line position",
+        "default": "t4s-text-start",
+        "options": [
+          {
+            "value": "t4s-text-start",
+            "label": "Left"
+          },
+          {
+            "value": "t4s-text-center",
+            "label": "Center"
+          },
+          {
+            "value": "t4s-text-end",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "2. Design options"
+      },
+      {
+        "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+        "options": [
+            { "value": "t4s-container-wrap", "label": "Wrapped container"},
+            { "value": "t4s-container-fluid", "label": "Full width"}
+        ]
+      },
+      {
+          "type": "text",
+          "id": "mg",
+          "label": "Margin",
+          "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+          "default": ",,50px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "mg_tb",
+          "label": "Margin (Tablet)",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "mg_mb",
+          "default": ",,30px,",
+          "label": "Margin (Mobile)",
+          "placeholder": ",,50px,"
+      },
+      {
+        "type": "header",
+        "content": "3. Custom css"
+      },
+      {
+        "id": "use_cus_css",
+        "type": "checkbox",
+        "label": "Use custom css",
+        "default":false,
+        "info": "If you want custom style for this section."
+      },
+      { 
+        "id": "code_cus_css",
+        "type": "textarea",
+        "label": "Code custom css",
+        "info": "Use selector .SectionID to style css"
+        
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom line",
+        "category": "Homepage"
+      }
+    ]
+  }
+{% endschema %}
+
+{%- javascript -%}
+{%- endjavascript -%}

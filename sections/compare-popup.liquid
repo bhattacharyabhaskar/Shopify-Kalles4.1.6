@@ -1,0 +1,67 @@
+{%- if search.results_count > 0 -%}
+
+  {%- liquid
+    assign limit           = 6
+    assign root_url        = routes.root_url
+    assign pr_results      = search.results
+    assign placeholder_img = settings.placeholder_img
+    assign remove_txt      = 'compare_popup.remove' | t -%}
+
+  <style>
+    .t4s_section__compare-popup {
+      z-index: 999;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      opacity: 1;
+      pointer-events: none;
+      padding: 30px;
+      box-shadow: 0 0 9px rgb(0 0 0 / 14%);
+      transition: transform .35s;
+      -webkit-transform: translate3d(0,100%,0);
+      transform: translate3d(0,100%,0);
+    }
+    .t4s_section__compare-popup.is--activate {
+        pointer-events: auto;
+        -webkit-transform: none;
+        transform: none;
+    }
+  </style>
+
+  {%- paginate search.results by limit -%}
+
+  <div class="t4s_compare_list-wrap">
+     <div class="t4s_compare_list-title">
+        {{ 'compare_popup.title' | t }}
+        <button type="button" data-close-compare>{{ 'compare_popup.close' | t }}</button>
+     </div>
+     <div class="t4s_compare_list-items">
+        {%- for product in pr_results -%}
+            {%- liquid
+                assign image = product.featured_media | default: placeholder_img
+                assign pr_id = product.id -%}
+
+            <div class="t4s_compare_list-item t4s_compare_id_{{ pr_id }}">
+               <button type="button" data-remove-compare data-id="{{ pr_id }}">{{ remove_txt }}</button>
+               {{ product.title }}
+            </div>
+
+        {%- endfor -%}
+     </div>
+     <div class="t4s_compare_list-btns">
+        <button type="button" data-clear-compare>{{ 'compare_popup.clear' | t }}</button>
+        <a data-link-compare href="{{ routes_search_url }}/?view=compare">{{ 'compare_popup.button' | t }}</a>
+     </div>
+  </div>
+
+
+  {%- endpaginate -%}
+{%- endif -%}
+
+{%- schema -%}
+  {
+    "name": "Compare popup",
+    "class": "t4s_section__compare-popup t4s-pf t4s-op-0 t4s-pe-none"
+  }
+{% endschema %}

@@ -1,0 +1,1014 @@
+<!-- sections/iconbox.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'icon-box.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign sid = section.id
+    assign se_stts = section.settings
+    assign se_blocks = section.blocks
+    assign block_first = se_blocks.first
+    assign stt_layout = se_stts.layout
+    assign stt_image_bg = se_stts.image_bg
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif
+    assign use_button = false 
+    assign t4s_se_class = 't4s_nt_se_' | append: sid
+    if se_stts.use_cus_css and se_stts.code_cus_css != blank
+        render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+    endif 
+    assign ARRhtml1 = 'a,,' | split: ','
+    assign ARRhtml2 = 'div,data-' | split: ','
+    assign source = se_stts.source
+ -%}
+<div class="t4s-section-inner {{ t4s_se_class }} t4s_nt_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}
+    <div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+    {%- render 'section_tophead', se_stts: se_stts -%}
+    {% if se_stts.layout_des == "1" %}
+        <div class="t4s-row t4s-align-items-center t4s-row t4s-justify-content-center t4s-row-cols-lg-{{ se_stts.col_dk }} t4s-row-cols-md-{{ se_stts.col_tb }} t4s-row-cols-{{ se_stts.col_mb }} t4s-gx-md-{{ se_stts.space_h_item }} t4s-gy-md-{{ se_stts.space_v_item }} t4s-gx-{{ se_stts.space_h_item_mb }} t4s-gy-{{ se_stts.space_v_item_mb }} t4s-iconbox-border__{{ se_stts.enable_border }} t4s-iconbox-shadow__{{ se_stts.enable_shadow }}">
+    {%- else -%}
+        <div class="t4s-flicky-slider t4s_{{ se_stts.image_size }} flickityt4s t4s-row t4s-row-cols-lg-{{ se_stts.col_dk }} t4s-gx-md-{{ se_stts.space_h_item }} t4s-gy-md-{{ se_stts.space_v_item }} t4s-gx-{{ se_stts.space_h_item_mb }} t4s-gy-{{ se_stts.space_v_item_mb }} t4s-iconbox-border__{{ se_stts.enable_border }} t4s-iconbox-shadow__{{ se_stts.enable_shadow }} t4s-row-cols-md-{{ se_stts.col_tb }} t4s-row-cols-{{ se_stts.col_mb }} t4s-iconbox-border__{{ se_stts.enable_border }} t4s-iconbox-shadow__{{ se_stts.enable_shadow }}{% if se_stts.nav_btn == true %}  t4s-slider-btn-style-{{ se_stts.btn_owl }} t4s-slider-btn-{{ se_stts.btn_shape }} t4s-slider-btn-{{ se_stts.btn_size }} t4s-slider-btn-cl-{{ se_stts.btn_cl }} t4s-slider-btn-vi-{{ se_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ se_stts.btn_hidden_mobile }} {% endif %}{% if se_stts.nav_dot %} t4s-dots-style-{{ se_stts.dot_owl }} t4s-dots-cl-{{ se_stts.dots_cl }} t4s-dots-round-{{ se_stts.dots_round }} t4s-dots-hidden-mobile-{{ se_stts.dots_hidden_mobile }} {% endif %} flickityt4s" data-flickityt4s-js='{"setPrevNextButtons":true,"arrowIcon":"{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{ se_stts.loop }},"prevNextButtons": {{ se_stts.nav_btn }},"percentPosition": 1,"pageDots": {{ se_stts.nav_dot }}, "autoPlay" : {{ se_stts.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ se_stts.au_hover }} }'  style="--space-dots: {{ se_stts.dots_space }}px;--flickity-btn-pos: {{ se_stts.space_h_item }}px;--flickity-btn-pos-mb: {{ se_stts.space_h_item_mb }}px;">
+    {%- endif -%}
+            {%- for block in se_blocks -%}
+                {%- liquid
+                    assign bk_stts = block.settings 
+                    assign pd_content_split = se_stts.pd_content | remove: ' ' | split: ','
+                    assign pd_content =  pd_content_split[0] | append: ' ' | append: pd_content_split[1] | append: ' ' | append: pd_content_split[2] | append: ' ' | append: pd_content_split[3]
+                    assign link = bk_stts.link
+                    if link == blank 
+                        assign ARRhtml = ARRhtml2
+                    else 
+                        assign ARRhtml = ARRhtml1  
+                    endif
+               -%}
+                <div class="t4s-iconbox-item t4s-col-item {{ bk_stts.source }}" id="b_{{ block.id }}" data-select-flickity {{ block.shopify_attributes }}>
+                    <div class="t4s-iconbox-item__wrapper">
+                        <{{ ARRhtml[0] }} {{ ARRhtml[1] }}href="{{ link }}" {{ ARRhtml[2] }}target="{{ bk_stts.open_link }}" class="t4s-iconbox-inner t4s-d-block t4s-text-center" data-cacl-slide style="--cl-icon:{{ se_stts.cl_icon }};--cl-border:{{ se_stts.cl_border }};--cl-head:{{ se_stts.cl_head }};--cl-des:{{ se_stts.cl_des }};--cl-box:{{ se_stts.cl_box }};--cl-box-hover:{{ se_stts.cl_box_hover }};--cl-content-hover:{{ se_stts.cl_content_hover }};--pd-content:{{ pd_content }};">
+                            <div class="t4s-iconbox-head t4s-d-flex t4s-align-items-center t4s-justify-content-center t4s-iconbox-icon__{{ bk_stts.icon_pos }}">
+                                {%- if source == 'line_awe' -%}
+                                    {%- if bk_stts.icon != blank -%}<div class="t4s-iconbox-icon t4s-iconbox-icon__awesome" style="--icon-awesome-fs:{{ bk_stts.icon_awesome_fs }}px;"><i class="{{ bk_stts.icon }}"></i></div>{%- endif -%} 
+                                {%- elsif source == 'get_image' -%}
+                                    {%- assign image = bk_stts.image_icon -%}
+                                    {%- if image != blank -%}
+                                        <div class="t4s-iconbox-icon t4s-iconbox-icon__image t4s-pr" style="--max-width:{{ image.width }}px;--width:{{ bk_stts.icon_image_width }}px;">
+                                            <img class="lazyloadt4s" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                            <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span> 
+                                        </div>
+                                    {%- endif -%}
+                                {%- else -%}
+                                    {%- if bk_stts.img_svg != blank -%}
+                                        <div class="t4s-iconbox-icon t4s-iconbox-icon__svg" style="--w-image-svg:{{ bk_stts.w_image_svg }}px;--w-image-svg-mb:{{ bk_stts.w_image_svg_mb }}px;">{{ bk_stts.img_svg }}</div>
+                                    {%- endif -%}
+                                {%- endif -%}
+                                {%- if bk_stts.heading != blank -%}<h3 class="t4s-iconbox-heading">{{ bk_stts.heading }}</h3>{%- endif -%}
+                            </div>
+                            {%- if bk_stts.des != blank -%}
+                                <div class="t4s-iconbox-des"><p>{{ bk_stts.des }}</p></div>
+                            {%- endif -%}
+                        </{{ ARRhtml[0] }}>
+                    </div>
+                </div>
+            {%- endfor -%}
+    </div>
+    {{- html_layout[1] -}}
+</div>
+{%- if use_button -%}
+    {{ 'button-style.css' | asset_url | stylesheet_tag }}
+    <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- endif -%}
+{%- schema -%}
+    {
+      "name": "Icon box",
+      "tag": "section",
+      "class": "t4s-section t4s-section-all t4s-iconbox",
+      "settings": [
+        {
+            "type": "header",
+            "content": "1. Heading options"
+        },
+        {
+            "type": "select",
+            "id": "design_heading",
+            "label": "+ Design heading",
+            "default": "1",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "Design 01"
+                },
+                {
+                    "value": "2",
+                    "label": "Design 02"
+                },
+                {
+                    "value": "3",
+                    "label": "Design 03"
+                },
+                {
+                    "value": "4",
+                    "label": "Design 04"
+                },
+                {
+                    "value": "5",
+                    "label": "Design 05"
+                },
+                {
+                    "value": "6",
+                    "label": "Design 06 (width line-awesome)"
+                },
+                {
+                    "value": "7",
+                    "label": "Design 07"
+                },
+                {
+                    "value": "8",
+                    "label": "Design 08"
+                },
+                {
+                    "value": "9",
+                    "label": "Design 09"
+                },
+                {
+                    "value": "10",
+                    "label": "Design 10"
+                },
+                {
+                    "value": "11",
+                    "label": "Design 11"
+                },
+                {
+                    "value": "12",
+                    "label": "Design 12"
+                },
+                {
+                    "value": "13",
+                    "label": "Design 13"
+                },
+                {
+                    "value": "14",
+                    "label": "Design 14"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "heading_align",
+            "label": "+ Heading align",
+            "default": "t4s-text-center",
+            "options": [
+            {
+                "value": "t4s-text-start",
+                "label": "Left"
+            },
+            {
+                "value": "t4s-text-center",
+                "label": "Center"
+            },
+            {
+                "value": "t4s-text-end",
+                "label": "Right"
+            }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "top_heading",
+            "label": "+ Heading"
+        },
+        {
+            "type": "text",
+            "id": "icon_heading",
+            "label": "Enter a name icon [LineAwesome](https://kalles.the4.co/font-lineawesome/)",
+            "info": "Only used for design 6",
+            "default": "las la-gem"
+        },
+        {
+            "type": "textarea",
+            "id": "top_subheading",
+            "label": "+ Subheading"
+        },
+        {
+            "type": "number",
+            "id": "tophead_mb",
+            "label": "+ Space bottom (px)",
+            "info": "The vertical spacing between heading and content.",
+            "default": 30
+        },
+        {
+            "type": "header",
+            "content": "2. General options"
+        },
+        {
+            "type":"header",
+            "content":"+ Content options"
+        },
+        {
+            "type": "select",
+            "id": "source",
+            "label": "Source icon",
+            "default": "line_awe",
+            "options": [
+                {
+                    "value": "line_awe",
+                    "label": "Line awesome"
+                },
+                {
+                    "value": "get_image",
+                    "label": "Use image"
+                },
+                {
+                    "value": "svg_icon",
+                    "label": "SVG"
+                }
+            ]
+        },
+        {
+            "type":"text",
+            "id":"pd_content",
+            "label":"Padding content",
+            "default": "20px,20px,20px,20px",
+            "placeholder": "20px,20px,20px,20px"
+        },
+        {
+            "type": "select",
+            "id": "layout_des",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "Grid"
+                },
+                {
+                    "value": "2",
+                    "label": "Carousel"
+                }
+            ],
+            "label": "Layout design",
+            "default": "1"
+        },
+        {
+            "type": "select",
+            "id": "col_dk",
+            "label": "Items per row",
+            "default": "3",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "1"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                },
+                {
+                    "value": "3",
+                    "label": "3"
+                },
+                {
+                    "value": "4",
+                    "label": "4"
+                },
+                {
+                    "value": "5",
+                    "label": "5"
+                },
+                {
+                    "value": "6",
+                    "label": "6"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "col_tb",
+            "label": "Items per row (Tablet)",
+            "default": "2",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "1"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                },
+                {
+                    "value": "3",
+                    "label": "3"
+                },
+                {
+                    "value": "4",
+                    "label": "4"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "col_mb",
+            "label": "Items per row (Mobile)",
+            "default": "1",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "1"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "space_h_item",
+            "options": [
+                {
+                    "value": "0", 
+                    "label": "0"
+                },
+                {
+                    "value": "2", 
+                    "label": "2px"
+                },
+                {
+                    "value": "4", 
+                    "label": "4px"
+                },
+                {
+                    "value": "6", 
+                    "label": "6px"
+                },
+                {
+                    "value": "8", 
+                    "label": "8px"
+                },
+                {
+                    "value": "10", 
+                    "label": "10px"
+                },
+                {
+                    "value": "20",
+                    "label": "20px"
+                },
+                {
+                    "value": "30",
+                    "label": "30px"
+                }
+            ],
+            "label": "Space horizontal between items",
+            "default": "20"
+        },
+        {
+            "type": "select",
+            "id": "space_v_item",
+            "options": [
+                {
+                    "value": "0", 
+                    "label": "0"
+                },
+                {
+                    "value": "2", 
+                    "label": "2px"
+                },
+                {
+                    "value": "4", 
+                    "label": "4px"
+                },
+                {
+                    "value": "6", 
+                    "label": "6px"
+                },
+                {
+                    "value": "8", 
+                    "label": "8px"
+                },
+                {
+                    "value": "10", 
+                    "label": "10px"
+                },
+                {
+                    "value": "20",
+                    "label": "20px"
+                },
+                {
+                    "value": "30",
+                    "label": "30px"
+                }
+            ],
+            "label": "Space vertical vertical items",
+            "default": "10"
+        },
+        {
+        "type": "select",
+        "id": "space_h_item_mb",
+        "options": [
+            {
+                "value": "0", 
+                "label": "0"
+            },
+            {
+                "value": "2", 
+                "label": "2px"
+            },
+            {
+                "value": "4", 
+                "label": "4px"
+            },
+            {
+                "value": "6", 
+                "label": "6px"
+            },
+            {
+                "value": "8", 
+                "label": "8px"
+            },
+            {
+                "value": "10", 
+                "label": "10px"
+            },
+            {
+                "value": "20",
+                "label": "20px"
+            },
+            {
+                "value": "30",
+                "label": "30px"
+            }
+        ],
+        "label": "Space horizontal between items (Mobile)",
+        "default": "20"
+        },
+    {
+      "type": "select",
+      "id": "space_v_item_mb",
+      "options": [
+            {
+                "value": "0", 
+                "label": "0"
+            },
+            {
+                "value": "2", 
+                "label": "2px"
+            },
+            {
+                "value": "4", 
+                "label": "4px"
+            },
+            {
+                "value": "6", 
+                "label": "6px"
+            },
+            {
+                "value": "8", 
+                "label": "8px"
+            },
+            {
+                "value": "10", 
+                "label": "10px"
+            },
+            {
+                "value": "20",
+                "label": "20px"
+            },
+            {
+                "value": "30",
+                "label": "30px"
+            }
+        ],
+      "label": "Space vertical vertical items (Mobile)",
+      "default": "10"
+    },
+    {
+        "type": "header",
+        "content": "+Options for carousel layout"
+    },
+    {
+        "type": "checkbox",
+        "id": "loop",
+        "label": "Enable loop",
+        "info": "At the end of cells, wrap-around to the other end for infinite scrolling",
+        "default": true
+    },
+    {
+        "type": "range",
+        "id": "au_time",
+        "min": 0,
+        "max": 30,
+        "step": 0.5,
+        "label": "Autoplay speed in second.",
+        "info": "Set is '0' to disable autoplay",
+        "unit": "s",
+        "default": 0
+    },
+    {
+        "type": "checkbox",
+        "id": "au_hover",
+        "label": "Pause autoplay on hover",
+        "info": "Auto-playing will pause when the user hovers over the carousel",
+        "default": true
+    },
+    {
+        "type": "paragraph",
+        "content": "—————————————————"
+    },
+    {
+        "type": "paragraph",
+        "content": "Prev next button"
+    },
+    {
+        "type": "checkbox",
+        "id": "nav_btn",
+        "label": "Use prev next button",
+        "info": "Creates and show previous & next buttons",
+        "default": false
+    },
+    {
+        "type": "select",
+        "id": "btn_vi",
+        "label": "Visible",
+        "default": "hover",
+        "options": [
+            {
+                "value": "always",
+                "label": "Always"
+            },
+            {
+                "value": "hover",
+                "label": "Only hover"
+            }
+        ]
+    },
+    {
+        "type": "select",
+        "id": "btn_owl",
+        "label": "Button style",
+        "default": "default",
+        "options": [
+            {
+                "value": "default",
+                "label": "Default"
+            },
+            {
+                "value": "outline",
+                "label": "Outline"
+            },
+            {
+                "value": "simple",
+                "label": "Simple"
+            }
+        ]
+    },
+    {
+        "type": "select",
+        "id": "btn_shape",
+        "label": "Button shape",
+        "info": "Not working with button style 'Simple'",
+        "default": "none",
+        "options": [
+            {
+                "value": "none",
+                "label": "Default"
+            },
+            {
+                "value": "round",
+                "label": "Round"
+            },
+            {
+                "value": "rotate",
+                "label": "Rotate"
+            }
+        ]
+    },
+    {
+        "type": "select",
+        "id": "btn_cl",
+        "label": "Button color",
+        "default": "dark",
+        "options": [
+            {
+                "value": "light",
+                "label": "Light"
+            },
+            {
+                "value": "dark",
+                "label": "Dark"
+            },
+            {
+                "value": "primary",
+                "label": "Primary"
+            },
+            {
+                "value": "custom1",
+                "label": "Custom color 1"
+            },
+            {
+                "value": "custom2",
+                "label": "Custom color 2"
+            }
+        ]
+    },
+    {
+        "type": "select",
+        "id": "btn_size",
+        "label": "Buttons size",
+        "default": "small",
+        "options": [
+            {
+                "value": "small",
+                "label": "Small"
+            },
+            {
+                "value": "medium",
+                "label": "Medium"
+            },
+            {
+                "value": "large",
+                "label": "Large"
+            }
+        ]
+    },
+    {
+        "type":"checkbox",
+        "id":"btn_hidden_mobile",
+        "label":"Hidden buttons on mobile ",
+        "default": true
+    },
+    {
+        "type": "paragraph",
+        "content": "—————————————————"
+    },
+    {
+        "type": "paragraph",
+        "content": "Page dots"
+    },
+    {
+        "type": "checkbox",
+        "id": "nav_dot",
+        "label": "Use page dots",
+        "info": "Creates and show page dots",
+        "default": false
+    },
+    {
+        "type": "select",
+        "id": "dot_owl",
+        "label": "Dots style",
+        "default": "default",
+        "options": [
+            {
+                "value": "default",
+                "label": "Default"
+            },
+            {
+                "value": "outline",
+                "label": "Outline"
+            },
+            {
+                "value": "elessi",
+                "label": "Elessi"
+            }
+        ]
+    },
+    {
+        "type": "select",
+        "id": "dots_cl",
+        "label": "Dots color",
+        "default": "dark",
+        "options": [
+            {
+                "value": "light",
+                "label": "Light (Best on dark background)"
+            },
+            {
+                "value": "dark",
+                "label": "Dark"
+            },
+            {
+                "value": "primary",
+                "label": "Primary"
+            },
+            {
+                "value": "custom1",
+                "label": "Custom color 1"
+            },
+            {
+                "value": "custom2",
+                "label": "Custom color 2"
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "id": "dots_round",
+        "label": "Enable dots round",
+        "default": true
+    },
+    {
+        "type": "range",
+        "id": "dots_space",
+        "min": 2,
+        "max": 20,
+        "step": 1,
+        "label": "Dot between horizontal",
+        "unit": "px",
+        "default": 10
+    },
+    {
+        "type":"checkbox",
+        "id":"dots_hidden_mobile",
+        "label":"Hidden dots on mobile ",
+        "default": false
+    },  
+    {
+        "type":"header",
+        "content":"+ Color options / Box shadow / Border"
+    },
+    {
+        "type": "checkbox",
+        "id": "enable_border",
+        "label": "Enable border",
+        "default": true
+    },
+    {
+        "type":"checkbox",
+        "id":"enable_shadow",
+        "label":"Enable box shadow",
+        "default":true
+    },
+    {
+        "type":"color",
+        "id":"cl_border",
+        "label":"Color boder",
+        "default":"#f6f6f8"
+    },
+    {
+        "type":"color",
+        "id":"cl_head",
+        "label":"Color heading",
+        "default":"#222"
+    },
+    {
+        "type":"color",
+        "id":"cl_icon",
+        "label":"Color icon",
+        "default":"#222"
+    },
+    {
+        "type":"color",
+        "id":"cl_des",
+        "label":"Color description",
+        "default":"#878787"
+    },
+    {
+        "type":"color",
+        "id":"cl_box",
+        "label":"Color box",
+        "default":"#fff"
+    },
+    {
+        "type":"color",
+        "id":"cl_box_hover",
+        "label":"Color box hover",
+        "default":"#eb4c4e"
+    },
+    {
+        "type":"color",
+        "id":"cl_content_hover",
+        "label":"Color content hover",
+        "default":"#fff"
+    },
+    {
+      "type": "header",
+      "content": "3. Design options"
+    },
+    {
+        "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+        "options": [
+          { "value": "t4s-se-container", "label": "Container"},
+          { "value": "t4s-container-wrap", "label": "Wrapped container"},
+          { "value": "t4s-container-fluid", "label": "Full width"}
+        ]
+    },
+    {
+        "type": "color",
+        "id": "cl_bg",
+        "label": "Background"
+    },
+    {
+        "type": "color_background",
+        "id": "cl_bg_gradient",
+        "label": "Background gradient"
+    },
+    {
+        "type": "image_picker",
+        "id": "image_bg",
+        "label": "Background image"
+    },
+    {
+        "type": "text",
+        "id": "mg",
+        "label": "Margin",
+        "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+        "default": ",,50px,",
+        "placeholder": ",,50px,"
+    },
+    {
+        "type": "text",
+        "id": "pd",
+        "label": "Padding",
+        "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+        "placeholder": "50px,,50px,"
+    },
+    {
+        "type": "header",
+        "content": "+ Design Tablet Options"
+    },
+    {
+        "type": "text",
+        "id": "mg_tb",
+        "label": "Margin",
+        "placeholder": ",,50px,"
+    },
+    {
+        "type": "text",
+        "id": "pd_tb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+    }, 
+    {
+        "type": "header",
+        "content": "+ Design mobile options"
+    },
+    {
+        "type": "text",
+        "id": "mg_mb",
+        "label": "Margin",
+        "default": ",,30px,",
+        "placeholder": ",,50px,"
+    },
+    {
+        "type": "text",
+        "id": "pd_mb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+    },
+    {
+        "type": "header",
+        "content": "4. Custom css"
+    },
+    {
+        "id": "use_cus_css",
+        "type": "checkbox",
+        "label": "Use custom css",
+        "default":false,
+        "info": "If you want custom style for this section."
+    },
+    { 
+        "id": "code_cus_css",
+        "type": "textarea",
+        "label": "Code custom css",
+        "info": "Use selector .SectionID to style css"
+        
+    }
+    ],
+    "blocks":[
+        {
+            "type":"item",
+            "name":"Box",
+            "settings":[
+                {
+                    "type":"header",
+                    "content":"+ Content options"
+                },
+                {
+                    "type":"url",
+                    "id":"link",
+                    "label":"Link to"
+                },
+                {
+                    "type": "select",
+                    "id": "open_link",
+                    "options": [
+                        {
+                            "value": "_self",
+                            "label": "Current window (_self)"
+                        },
+                        {
+                            "value": "_blank",
+                            "label": "New window (_blank)"
+                        }
+                    ],
+                    "label": "Open link in",
+                    "default": "_self"
+                },
+                {
+                    "type":"select",
+                    "id":"icon_pos",
+                    "label":"Icon position",
+                    "options":[
+                        {
+                            "value":"start",
+                            "label":"Left"
+                        },
+                        {
+                            "value":"right",
+                            "label":"Right"   
+                        }
+                    ]
+                },
+                {
+                    "type":"header",
+                    "content":"+ Icon options"
+                },
+                {
+                    "type": "text",
+                    "id": "icon",
+                    "label": "Enter name icon",
+                    "default": "las la-gem",
+                    "info":"Only used for source line awesome icon. [LineAwesome](https://kalles.the4.co/font-lineawesome/)"
+                },
+                {
+                    "type":"number",
+                    "id":"icon_awesome_fs",
+                    "label":"Icon awesome font size (Unit: px)",
+                    "default":50
+                },
+                {
+                    "type": "paragraph",
+                    "content": "—————————————————"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image_icon",
+                    "label": "Choose image",
+                    "info":"Only used for source image"
+                },
+                {
+                    "type":"number",
+                    "id":"icon_image_width",
+                    "label":"Icon image width (Unit: px)",
+                    "default":0,
+                    "info":"Set 0 to use width default of image"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "—————————————————"
+                },
+                {
+                    "type":"html",
+                    "label":"Image svg",
+                    "id":"img_svg",
+                    "info":"Only used for source svg"
+                },
+                {
+                    "type":"range",
+                    "id":"w_image_svg",
+                    "label":"Width image svg",
+                    "min":20,
+                    "max":100,
+                    "default":60,
+                    "unit":"px"
+                },
+                {
+                    "type":"range",
+                    "id":"w_image_svg_mb",
+                    "label":"Width image svg (Mobile)",
+                    "min":20,
+                    "max":100,
+                    "default":40,
+                    "unit":"px"
+                },
+                {
+                    "type":"header",
+                    "content":"+ Text options"
+                },
+                {
+                    "type":"text",
+                    "id":"heading",
+                    "label":"Heading",
+                    "default":"Heading"
+                },
+                {
+                    "type":"textarea",
+                    "id":"des",
+                    "label":"Description",
+                    "default":"Use this text to description"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Icon box",
+            "category": "homepage",
+            "blocks":[
+                {"type":"item"},{"type":"item"},{"type":"item"}
+            ]
+        }
+      ]
+    }
+ {% endschema %}
+  

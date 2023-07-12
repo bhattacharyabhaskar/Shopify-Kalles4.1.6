@@ -1,0 +1,797 @@
+<!-- sections/collections-list-manual.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'collection.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign image_fix = image_nt | image_tag
+  assign sid = section.id
+  assign se_stts = section.settings
+  assign se_blocks = section.blocks
+  assign stt_layout = se_stts.layout
+  assign stt_image_bg = se_stts.image_bg
+  if stt_layout == 't4s-se-container' 
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+  assign block_size = se_blocks.size
+  assign collection = collections[se_stts.collection]
+  assign collection_des = se_stts.collection_des
+  assign coll_layout = se_stts.coll_layout
+  assign b_effect = se_stts.b_effect
+  assign img_effect = se_stts.img_effect
+  if image_ratio == "ratioadapt"
+    assign imgatt = ''
+   else 
+    assign imgatt = 'data-'
+  endif
+  assign open_link = se_stts.open_link
+  assign subtitle = se_stts.collection_subtitle
+
+  assign t4s_se_class = 't4s_nt_se_' | append: sid
+  if se_stts.use_cus_css and se_stts.code_cus_css != blank
+    render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+  endif 
+
+  assign title_cl_pri       = se_stts.title_cl | color_extract: 'lightness'
+  assign title_cl_hover_pri       = se_stts.title_cl_hover | color_extract: 'lightness'
+  assign subtitle_cl_pri       = se_stts.subtitle_cl | color_extract: 'lightness'
+  assign count_cl_pri       = se_stts.count_cl | color_extract: 'lightness'
+
+  if title_cl_pri < 85  
+    assign title_cl_sec = "#fff"
+  else 
+    assign title_cl_sec = "#222"
+  endif
+  if title_cl_hover_pri < 85 
+    assign title_cl_hover_sec = "#fff"
+  else 
+    assign title_cl_hover_sec = "#222"
+  endif
+  if subtitle_cl_pri < 85 
+    assign subtitle_cl_sec = "#fff"
+  else 
+    assign subtitle_cl_sec = "#222"
+  endif
+  if count_cl_pri < 85 
+    assign count_cl_sec = "#fff"
+  else  
+    assign count_cl_sec = "#222"
+  endif
+
+ -%} 
+<div data-ntajax-container data-ntajax-options='{"id":"{{ sid }}","type":"{{ typeAjax }}","isProduct":true,"view":""}' class="t4s-section-inner t4s_nt_se_{{ sid }} t4s_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+    {%- render 'section_tophead', se_stts: se_stts -%}
+      {%- assign cll_class = "t4s-collection-item t4s_ratioadapt t4s_position_{{ se_stts.image_position }} t4s_cover" -%}
+      {%- capture str_html -%}  
+        {%- case block_size -%}
+          {%- assign html_layout = '__' | split: '__' -%}
+          {%- when 1 -%},12,12,12,1170,400,1170,400,1170,400,
+          {%- when 2 -%},6,6,6,570,400,570,400,570,400,|,6,6,6,570,400,570,400,570,400,
+          {%- when 3 -%}
+            {%- if coll_layout == '1' -%},4,6,6,400,400,400,400,400,400,|,4,6,6,400,400,400,400,400,400,|,4,12,12,400,400,400,400,400,400,
+             {%- elsif coll_layout == '2' -%},6,12,12,570,630,570,630,570,630,|<div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,570,300,570,300,400,300,|,12,6,6,570,300,570,300,400,300,</div></div>
+             {%- elsif coll_layout == '3' -%}<div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,570,300,570,300,400,300,|,12,6,6,570,300,570,300,400,300,</div></div>|,6,12,12,570,630,570,630,570,630,
+             {%- elsif coll_layout == '4' -%}
+             ,6,12,12,570,630,570,630,570,630,|,3,6,6,270,630,270,300,270,300,|,3,6,6,270,630,270,300,270,300,
+             {%- elsif coll_layout == '5' -%}
+             ,3,12,12,270,630,270,630,270,300,|,6,12,12,570,630,570,630,570,630,|,3,12,12,270,630,270,630,270,300,
+             {%- else -%}
+             ,3,6,6,270,630,270,300,270,300,|,3,6,6,270,630,270,300,270,300,|,6,12,12,570,630,570,630,570,630,
+            {%- endif 
+             -%}
+          {%- when 4 -%}
+            {% if coll_layout == "1" %}
+              ,6,6,12,570,630,570,630,570,630,|<div class="t4s-col-item t4s-col-6 t4s-col-md-3 t4s-col-lg-3"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,270,300,270,300,270,300,|,12,12,12,270,300,270,300,270,300,</div></div>|,3,3,6,270,630,270,612,270,609,
+            {% elsif coll_layout == "2" %}
+              <div class="t4s-col-item t4s-col-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,570,505,570,505,570,505,|,12,12,12,570,315,570,315,570,315,</div></div>|<div class="t4s-col-item t4s-col-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,570,315,570,315,570,315,|,12,12,12,570,505,570,505,570,505,</div></div>
+            {% elsif coll_layout == "3" %}
+              ,6,12,12,570,630,570,400,570,400,|<div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-6">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,6,6,6,270,300,270,300,270,300,|,6,6,6,270,300,270,300,270,300,|,12,12,12,570,300,570,300,570,300,</div></div>
+            {% elsif coll_layout == "4" %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-3"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,270,300,270,300,270,300,|,12,6,6,270,300,270,300,270,300,</div></div>|,6,8,12,570,630,570,400,570,400,|,3,4,12,270,630,270,400,270,300,
+            {% elsif coll_layout == "5" %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,6,6,6,270,300,270,300,270,300,|,6,6,6,270,300,270,300,270,300,|,12,12,12,570,300,570,300,570,300,</div></div>|,6,12,12,570,630,570,400,570,400,
+            {% elsif coll_layout == "6" %}
+              ,4,4,12,400,630,400,612,400,400,|<div class="t4s-col-item t4s-col-12 t4s-col-md-4 t4s-col-lg-4"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,6,400,300,400,300,400,300,|,12,12,6,400,300,400,300,400,300,</div></div>|,4,4,12,400,630,400,612,400,400,
+            {% else %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,570,300,570,300,570,300,|,6,6,6,270,300,270,300,270,300,|,6,6,6,270,300,270,300,270,300,</div></div>|,6,12,12,570,630,570,400,570,400,
+            {% endif %}
+          {%- when 5 -%}
+            {% if coll_layout == "1" %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,570,200,570,200,570,200,|,12,12,12,570,200,570,200,570,200,|,12,12,12,570,200,570,200,570,200,</div></div>|<div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,570,315,570,315,570,315,|,12,6,6,570,315,570,315,570,315,</div></div>
+            {% elsif coll_layout == "2" %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-6 t4s-col-lg-4"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,6,400,300,400,300,400,300,|,12,12,6,400,300,400,300,400,300,</div></div>|,4,6,12,400,630,400,630,400,400,|<div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-4">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,6,400,300,400,300,400,300,|,12,12,6,400,300,400,300,400,300,</div></div>
+            {% elsif coll_layout == "3" %}
+              ,4,4,6,400,300,400,300,400,300,|,4,4,6,400,300,400,300,400,300,|,4,4,12,400,300,400,300,400,300,|,6,6,6,570,300,570,300,570,300,|,6,6,6,570,300,570,300,570,300,
+            {% elsif coll_layout == "4" %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-3"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,270,300,270,300,270,300,|,12,6,6,270,300,270,300,270,300,</div></div>|,6,12,12,570,630,570,630,570,630,|<div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-3"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,270,300,270,300,270,300,|,12,6,6,270,300,270,300,270,300,</div></div>
+            {% elsif coll_layout == "5" %}
+              ,4,6,12,400,665,400,665,400,665,|<div class="t4s-col-item t4s-col-12 t4s-col-md-6 t4s-col-lg-4">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,6,400,200,400,200,400,200,|,12,12,6,400,200,400,200,400,200,|,12,12,12,400,200,400,200,400,200,</div></div>|,4,12,12,400,665,400,665,400,665,
+            {% elsif coll_layout == "6" %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-6 t4s-col-lg-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,570,570,570,570,570,570,|,6,6,6,270,250,270,250,270,250,|,6,6,6,270,250,270,250,270,250,</div></div>|<div class="t4s-col-item t4s-col-12 t4s-col-md-6 t4s-col-lg-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,570,250,570,250,570,250,|,12,12,12,570,570,570,570,570,570,</div></div>
+            {% else %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-6 t4s-col-lg-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,6,6,6,270,300,270,300,270,300,|,6,6,6,270,300,270,300,270,300,|,6,6,6,270,300,270,300,270,300,|,6,6,6,270,300,270,300,270,300,</div></div>|,6,6,12,570,630,570,630,570,400,
+            {% endif %}
+          {%- when 6 -%}
+            {% if coll_layout == "1" %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,570,200,570,200,570,200,|,12,12,12,570,200,570,200,570,200,|,12,12,12,570,200,570,200,570,200,</div></div>|<div class="t4s-col-item t4s-col-12 t4s-col-md-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,570,200,570,200,570,200,|,12,12,12,570,200,570,200,570,200,|,12,12,12,570,200,570,200,570,200,</div></div>
+            {% elsif coll_layout == "2" %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-6 t4s-col-lg-4"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,400,300,400,300,400,300,|,12,6,6,400,300,400,300,400,300,</div></div>|<div class="t4s-col-item t4s-col-12 t4s-col-md-6 t4s-col-lg-4"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,400,300,400,300,400,300,|,12,6,6,400,300,400,300,400,300,</div></div>|<div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-4">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,400,300,400,300,400,300,|,12,6,6,400,300,400,300,400,300,</div></div>
+            {% elsif coll_layout == "3" %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-6 t4s-col-lg-6"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,6,6,6,270,300,270,300,270,300,|,6,6,6,270,300,270,300,270,300,|,12,12,12,570,300,570,300,570,300,</div></div>|<div class="t4s-col-item t4s-col-12 t4s-col-md-6 t4s-col-lg-6">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,570,300,570,300,570,300,|,6,6,6,270,300,270,300,270,300,|,6,6,6,270,300,270,300,270,300,</div></div>
+            {% elsif coll_layout == "4" %}
+              ,6,6,6,570,300,570,300,570,300,|,6,6,6,570,300,570,300,570,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,
+            {% else %}
+              ,4,6,12,400,660,400,660,400,660,|<div class="t4s-col-item t4s-col-12 t4s-col-md-6 t4s-col-lg-4">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,6,400,315,400,315,400,315,|,12,12,6,400,315,400,315,400,315,</div></div>|<div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-4">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,4,6,400,200,400,200,400,200,|,12,4,6,400,200,400,200,400,200,|,12,4,12,400,200,400,200,400,200,</div></div>
+            {% endif %}
+          {%- when 7 -%}
+            {% if coll_layout == "1" %}
+              <div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-4">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,400,315,400,315,400,315,|,12,6,6,400,315,400,315,400,315,</div></div>|<div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-4">
+              <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,4,6,400,200,400,200,400,200,|,12,4,6,400,200,400,200,400,200,|,12,4,12,400,200,400,200,400,200,</div></div>|<div class="t4s-col-item t4s-col-12 t4s-col-md-12 t4s-col-lg-4"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,6,6,400,315,400,315,400,315,|,12,6,6,400,315,400,315,400,315,</div></div>
+            {% elsif coll_layout == "2" %}
+              ,3,4,6,270,300,270,300,270,300,|,3,4,6,270,300,270,300,270,300,|,3,4,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,12,270,300,270,300,270,300,|,6,12,12,570,300,570,300,570,300,|,3,12,12,270,300,270,300,270,300,
+            {% elsif coll_layout == "3" %}
+              ,6,6,6,570,300,570,300,570,300,|,6,6,6,570,300,570,300,570,300,|,4,6,6,400,300,400,300,400,300,|,4,6,6,400,300,400,300,400,300,|,4,12,12,400,300,400,300,400,300,|,6,6,6,570,300,570,300,570,300,|,6,6,6,570,300,570,300,570,300,
+            {% elsif coll_layout == "4" %}
+              ,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,6,6,6,570,300,570,300,570,300,|,6,6,6,570,300,570,300,570,300,|,12,12,12,1170,300,767,300,767,300,
+            {% else %}
+              <div class="t4s-col-item t4s-col-6 t4s-col-md-6 t4s-col-lg-3">
+                <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">
+                  ,12,12,12,270,270,270,270,270,270,|,12,12,12,270,270,270,270,270,270,
+                </div>
+              </div>|
+              <div class="t4s-col-item t4s-col-6 t4s-col-md-6 t4s-col-lg-3">
+                <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">
+                  ,12,12,12,270,270,270,270,270,270,|,12,12,12,270,270,270,270,270,270,
+                </div>
+              </div>|,3,6,6,270,570,270,550,270,550,|
+              <div class="t4s-col-item t4s-col-6 t4s-col-md-6 t4s-col-lg-3">
+                <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">
+                ,12,12,12,270,270,270,270,270,270,|,12,12,12,270,270,270,270,270,270,
+                </div>
+              </div>
+            {% endif %}
+          {%- else -%}
+            {% if coll_layout == "1" %}
+              ,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,|,3,6,6,270,300,270,300,270,300,
+            {% elsif coll_layout == "2" %}
+            {% else %}
+              <div class="t4s-col-item t4s-col-6 t4s-col-md-6 t4s-col-lg-3"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,270,200,270,200,270,200,|,12,12,12,270,300,270,300,270,300,</div></div>|<div class="t4s-col-item t4s-col-6 t4s-col-md-6 t4s-col-lg-3"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,270,300,270,300,270,300,|,12,12,12,270,200,270,200,270,200,</div></div>|<div class="t4s-col-item t4s-col-6 t4s-col-md-6 t4s-col-lg-3">
+                <div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,270,200,270,200,270,200,|,12,12,12,270,300,270,300,270,300,</div></div>|<div class="t4s-col-item t4s-col-6 t4s-col-md-6 t4s-col-lg-3"><div class="t4s-row t4s-g-lg-30 t4s-g-md-10 t4s-g-10">,12,12,12,270,300,270,300,270,300,|,12,12,12,270,200,270,200,270,200,</div></div>
+            {% endif %}
+        {%- endcase -%}
+      {%- endcapture -%}
+      {%- assign arr_html = str_html | split: '|' -%}
+
+      <div class="t4s-collection-manual has-{{ block_size }}-item t4s-coll-layout-{{ coll_layout }} t4s-collection-border-{{ se_stts.border }} t4s-row t4s_ratioadapt t4s_position_{{ se_stts.image_position }} t4s_{{ image_ratio }} t4s-g-lg-30 t4s-g-md-10 t4s-g-10" style="--title-cl-pri: {{ se_stts.title_cl }};--title-cl-pri-hover: {{ se_stts.title_cl_hover }};--title-cl-second: {{ title_cl_sec }};--title-cl-second-hover: {{ title_cl_hover_sec }};--subtitle-cl: {{ se_stts.subtitle_cl }};--subtitle-cl2: {{ subtitle_cl_sec }};--count-cl-pri: {{ se_stts.count_cl }};--count-cl-second: {{ count_cl_sec }};--border-cl: {{ se_stts.border_cl }};--item-rd: {{ se_stts.item_rd }}{{ se_stts.item_rd_unit }};--item-pd: {{ se_stts.item_pd }}px;--space-bottom: {{ se_stts.space_bottom }}px;--space-bottom-mb: {{ se_stts.space_bottom_mb }}px;">
+        {%- assign stt = 0 -%}
+        {% for block in se_blocks %}
+          {%- assign bk_stts = block.settings -%}
+          {%- assign stt = stt | plus: 1 -%}
+          {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+          {%- render 'collection_template',collection_des:collection_des,source:"image",b_effect:b_effect,img_effect:img_effect,stt:stt, se_stts: se_stts, bk_stts: bk_stts,cur_html:arr_html[forloop.index0],image_ratio:image_ratio,imgatt:imgatt,open_link:open_link,subtitle:subtitle,index0:forloop.index0,current:current -%}
+        {% endfor %}
+    </div>
+  {{- html_layout[1] -}}
+  </div>
+  <style>
+    @media (max-width:1024px) and (min-width: 768px) {
+      .t4s-collections-list-manual .t4s_ratioadapt .t4s_ratio_hasmb::before, 
+      .t4s-collections-list-manual .t4s_ratioadapt_f .t4s_ratio_hasmb::before {
+          --t4s-aspect-ratio: calc(100% / (var(--aspect-ratioapttb)));
+      }
+    }
+  </style>
+
+{%- schema -%}
+  {
+    "name": "Collections list manual",
+    "tag": "section",
+    "class": "t4s-section t4s-section-all t4s_tp_cdt t4s-layout-default t4s-collections-list-manual",
+    "max_blocks": 8,
+    "settings": [
+      {
+          "type": "header",
+          "content": "1. Heading options"
+      },
+      {
+          "type": "select",
+          "id": "design_heading",
+          "label": "+ Design heading",
+          "default": "1",
+          "options": [
+              {
+                  "value": "1",
+                  "label": "Design 01"
+              },
+              {
+                  "value": "2",
+                  "label": "Design 02"
+              },
+              {
+                  "value": "3",
+                  "label": "Design 03"
+              },
+              {
+                  "value": "4",
+                  "label": "Design 04"
+              },
+              {
+                  "value": "5",
+                  "label": "Design 05"
+              },
+              {
+                  "value": "6",
+                  "label": "Design 06 (width line-awesome)"
+              },
+              {
+                  "value": "7",
+                  "label": "Design 07"
+              },
+              {
+                  "value": "8",
+                  "label": "Design 08"
+              },
+              {
+                  "value": "9",
+                  "label": "Design 09"
+              },
+              {
+                  "value": "10",
+                  "label": "Design 10"
+              },
+              {
+                  "value": "11",
+                  "label": "Design 11"
+              },
+              {
+                  "value": "12",
+                  "label": "Design 12"
+              },
+              {
+                  "value": "13",
+                  "label": "Design 13"
+              },
+              {
+                  "value": "14",
+                  "label": "Design 14"
+              }
+          ]
+      },
+      {
+          "type": "select",
+          "id": "heading_align",
+          "label": "+ Heading align",
+          "default": "t4s-text-center",
+          "options": [
+              {
+                  "value": "t4s-text-start",
+                  "label": "Left"
+              },
+              {
+                  "value": "t4s-text-center",
+                  "label": "Center"
+              },
+              {
+                  "value": "t4s-text-end",
+                  "label": "Right"
+              }
+          ]
+      },
+      {
+          "type": "text",
+          "id": "top_heading",
+          "label": "+ Heading",
+          "default": "Collections list manual"
+      },
+      {
+        "type": "text",
+        "id": "icon_heading",
+        "label": "Enter a icon name on heading",
+        "info": "Only used for design 6 [LineAwesome](https://kalles.the4.co/font-lineawesome/)",
+        "default": "las la-gem"
+      },
+      {
+          "type": "textarea",
+          "id": "top_subheading",
+          "label": "+ Subheading"
+      }, 
+      {
+        "type": "number",
+        "id": "tophead_mb",
+        "label": "+ Space bottom (px)",
+        "info": "The vertical spacing between heading and content",
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "2.General options"
+      },
+      {
+        "type": "select",
+        "id": "collection_des",
+        "label": "Collection item design",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "Design 1"
+          },
+          {
+            "value": "2",
+            "label": "Design 2"
+          },
+          {
+            "value": "3",
+            "label": "Design 3"
+          },
+          {
+            "value": "4",
+            "label": "Design 4"
+          },
+          {
+            "value": "5",
+            "label": "Design 5"
+          },
+          {
+            "value": "6",
+            "label": "Design 6"
+          },
+          {
+            "value": "7",
+            "label": "Design 7"
+          },
+          {
+            "value": "8",
+            "label": "Design 8 (Only image)"
+          },
+          {
+            "value": "9",
+            "label": "Design 9"
+          },
+          {
+            "value": "10",
+            "label": "Design 10"
+          },
+          {
+            "value": "11",
+            "label": "Design 11"
+          },
+          {
+            "value": "12",
+            "label": "Design 12"
+          },
+          {
+            "value": "13",
+            "label": "Design 13"
+          },
+          {
+            "value": "14",
+            "label": "Design 14"
+          },
+          {
+            "value": "15",
+            "label": "Design 15"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "title_cl",
+        "label": "Title color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "title_cl_hover",
+        "label": "Title hover color",
+        "default": "#222222"
+      },
+      {
+        "type": "color",
+        "id": "subtitle_cl",
+        "label": "Subtitle color",
+        "default": "#878787"
+      },
+      {
+        "type": "color",
+        "id": "count_cl",
+        "label": "Count color",
+        "default": "#222222"
+      },
+      {
+        "type": "color",
+        "id": "border_cl",
+        "label": "Border color",
+        "default": "#e5e5e5"
+      },
+      {
+        "type": "text",
+        "id": "collection_subtitle",
+        "label": "Collection subtitle",
+        "default": "Products"
+      },
+      {
+        "type": "select",
+        "id": "open_link",
+        "info": "Works when the item has a link",
+        "options": [
+          {
+            "value": "_self",
+            "label": "Current window"
+          },
+         {
+            "value": "_blank",
+            "label": "New window"
+          }
+        ],
+        "label": "Open link in",
+        "default": "_self"
+      },
+      {
+        "type": "header",
+        "content": "+ Options image collection"
+      },
+      {
+        "type": "range",
+        "id": "space_bottom",
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "label": "Space bottom",
+        "unit": "px",
+        "default": 20,
+        "info": "Space between image and info of collection"
+      },
+      {
+        "type": "range",
+        "id": "space_bottom_mb",
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "label": "Space bottom (Mobile)",
+        "unit": "px",
+        "default": 10
+      },
+      {
+        "type": "checkbox",
+        "id": "border",
+        "label": "Enable border",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "item_rd",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "label": "Image rounded",
+        "default": 0
+      },
+      {
+        "type": "select",
+        "id": "item_rd_unit",
+        "label": "Image rounded unit",
+        "default": "%",
+        "options": [
+          {
+            "value": "px",
+            "label": "px"
+          },
+          {
+            "value": "%",
+            "label": "%"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "img_effect",
+        "label": "Image hover effect",
+            "info": "Waring: Hovering effect will resize your images",
+        "default": "none",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "zoom",
+            "label": "Zoom in"
+          },
+          {
+            "value": "rotate",
+            "label": "Rotate"
+          },
+          {
+            "value": "translateToTop",
+            "label": "Move to top "
+          },
+          {
+            "value": "translateToRight",
+            "label": "Move to right"
+          },
+          {
+            "value": "translateToBottom",
+            "label": "Move to bottom"
+          },
+          {
+            "value": "translateToLeft",
+            "label": "Move to left"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "b_effect",
+        "label": "Collection hover effect",
+        "default": "none",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "border-run",
+            "label": "Border run"
+          },
+          {
+            "value": "pervasive-circle",
+            "label": "Pervasive circle"
+          },
+          {
+            "value": "plus-zoom-overlay",
+            "label": "Plus zoom overlay"
+          },
+          {
+            "value": "dark-overlay",
+            "label": "Dark overlay"
+          },
+          {
+            "value": "light-overlay",
+            "label": "Light overlay"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info": "The first value is the horizontal position and the second value is the vertical. These settings apply only if the image ratio is not set to 'Adapt to image', it also does not work when using 'Focal point' on the image.",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "1",
+            "label": "Left top"
+          },
+          {
+            "value": "2",
+            "label": "Left center"
+          },
+          {
+            "value": "3",
+            "label": "Left bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right top"
+          },
+          {
+            "value": "5",
+            "label": "Right center"
+          },
+          {
+            "value": "6",
+            "label": "Right bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center top"
+          },
+          {
+            "value": "8",
+            "label": "Center center"
+          },
+          {
+            "value": "9",
+            "label": "Center bottom"
+          }
+        ],
+        "label": "Image position",
+        "default": "8"
+      },
+      {
+        "type": "header",
+        "content": "--Collection box layout",
+        "info": "Depends on the item collection"
+      },
+      {
+        "type": "select",
+        "id": "coll_layout",
+        "label": "Select layout for group collection",
+        "default": "3",
+        "options": [
+          {
+            "value": "1",
+            "label": "Design 01"
+          },
+          {
+            "value": "2",
+            "label": "Design 02"
+          },
+          {
+            "value": "3",
+            "label": "Design 03"
+          },
+          {
+            "value": "4",
+            "label": "Design 04 (When has 3,4,5,6,7 blocks)"
+          },
+          {
+            "value": "5",
+            "label": "Design 05 (When has 3,4,5,6,7 blocks)"
+          },
+          {
+            "value": "6",
+            "label": "Design 06 (When has 3,4,5 blocks)"
+          },
+          {
+            "value": "7",
+            "label": "Design 07 (When has 4,5 blocks)"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "3.Design options"
+      },
+      {
+        "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+        "options": [
+            { "value": "t4s-se-container", "label": "Container"},
+            { "value": "t4s-container-wrap", "label": "Wrapped container"},
+            { "value": "t4s-container-fluid", "label": "Full width"}
+        ]
+      },
+      {
+        "type": "color",
+        "id": "cl_bg",
+        "label": "Background"
+      },
+      {
+        "type": "color_background",
+        "id": "cl_bg_gradient",
+        "label": "Background gradient"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_bg",
+        "label": "Background image"
+      },
+      {
+          "type": "text",
+          "id": "mg",
+          "label": "Margin",
+          "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+          "default": ",,50px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd",
+          "label": "Padding",
+          "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+          "placeholder": "50px,,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design Tablet Options"
+      },
+      {
+        "type": "text",
+        "id": "mg_tb",
+        "label": "Margin",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "text",
+        "id": "pd_tb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+      }, 
+      {
+        "type": "header",
+        "content": "+ Design mobile options"
+      },
+      {
+          "type": "text",
+          "id": "mg_mb",
+          "label": "Margin",
+          "default": ",,30px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd_mb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+      },
+      {
+        "type": "header",
+        "content": "4. Custom css"
+      },
+      {
+        "id": "use_cus_css",
+        "type": "checkbox",
+        "label": "Use custom css",
+        "default":false,
+        "info": "If you want custom style for this section."
+      },
+      { 
+        "id": "code_cus_css",
+        "type": "textarea",
+        "label": "Code custom css",
+        "info": "Use selector .SectionID to style css"
+        
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection_item",
+        "name": "Collection item",
+        "settings": [
+          {
+              "id": "collection",
+              "type": "collection",
+              "label": "Collection"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Collection image"
+          },
+          {
+            "type": "text",
+            "id": "collection_title",
+            "label": "Collection label",
+            "info" : "Leave empty to use 'collection title'.",
+            "default": "Collection title"
+          },
+          {
+            "type": "url",
+            "id": "collection_link",
+            "label": "Link (optional)",
+            "info" : "Leave empty to use 'collection url'."
+          }
+        ]
+      }
+    ],
+  "presets": [
+      {
+        "name": "Collections list manual",
+        "category": "Homepage",
+        "blocks": [
+          { "type": "collection_item"},
+          { "type": "collection_item"},
+          { "type": "collection_item"}
+        ]
+      }
+    ]
+  }
+{%- endschema -%}
+
+{%- javascript -%}
+{%- endjavascript -%}

@@ -1,0 +1,261 @@
+{%- if section.settings.show_announcement -%}
+  {%- liquid
+    assign theme_name = 'kalles'
+    assign se_stts = section.settings
+    assign label = 'sections.announcement.label' | t -%}
+  {%- capture cap_btn -%}{%- if se_stts.close != '0' -%}<div class="t4s-col-item t4s-col-auto t4s-d-none t4s-d-md-block"><button class="t4s-announcement-bar__close t4s-op-0"><svg role="presentation" class="t4s-iconsvg-close" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg> {{ 'sections.announcement.close' | t }}</button></div>{%- endif -%}{%- endcapture -%}
+  {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+
+  {%- style -%}
+    {%- assign bg_op = se_stts.bg_op | divided_by: 100.0 -%}
+    .t4s-announcement-bar { background-color: {{ se_stts.bg | color_modify: 'alpha', bg_op }};min-height:{{ se_stts.height }}px;font-size:{{ se_stts.fontsize }}px;}
+    .t4s-announcement-bar__wrap,.t4s-announcement-bar__wrap a { color:{{ se_stts.cl }} }
+    .t4s-announcement-bar__wrap {padding: 5px 10px;min-height:{{ se_stts.height }}px}
+    .t4s-announcement-bar__item p a { z-index: 5;position: relative; }.t4s-announcement-bar__item p {margin-bottom:0} .t4s-announcement-bar__item strong {font-size: 14px;font-weight: 600;}
+    .t4s-announcement-bar__close { color:{{ se_stts.cl_btn }};padding: 0;background-color: transparent;line-height: 1;transition: .2s;font-size:{{ se_stts.fontsize }}px; }
+    .t4s-announcement-bar__close:hover,.t4s-announcement-bar__close:focus { background-color: transparent !important; opacity: .7; color:{{ se_stts.cl_btn }} !important; }
+    .t4s-announcement-bar .t4s-col-auto { line-height: 1; }.t4s-announcement-bar__item p a:hover { opacity: .7 }.t4s-announcement-bar.t4s-type-close-1 .t4s-iconsvg-close {width: 9px;height: 9px;stroke-width: 2px;}.t4s-announcement-bar:not(.t4s-type-close-1) .t4s-iconsvg-close {width: 15px;height: 15px;stroke-width: 1.5px;}.t4s-announcement-bar.t4s-type-close-2 .t4s-announcement-bar__close { font-size:0 !important }.t4s-announcement-bar.t4s-type-close-3 .t4s-iconsvg-close { display: none !important }.t4s-announcement-bar__close.t4s-op-0 { opacity: 0 !important; }
+    svg.t4s-icon-arrow {
+      width: 12px;display: inline-block;
+    }
+    .t4s-announcement-bar__item .t4s-icon-arrow {
+      -webkit-transition: .2s ease-in-out;
+      transition: -webkit-transform .2s ease-in-out,transform .2s ease-in-out;
+    }
+    .t4s-announcement-bar__item:hover .t4s-icon-arrow {
+       transform: translateX(0.25rem);
+    }
+    .t4s-announcement-bar .t4s-countdown-enabled {display: inline-block}
+  {%- endstyle -%}
+
+<svg class="t4s-d-none"><symbol id="icon-{{ section.id }}" viewBox="0 0 14 10" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.537.808a.5.5 0 01.817-.162l4 4a.5.5 0 010 .708l-4 4a.5.5 0 11-.708-.708L11.793 5.5H1a.5.5 0 010-1h10.793L8.646 1.354a.5.5 0 01-.109-.546z" fill="currentColor"></path></symbol></svg>
+{%- capture cap_arrow %}<svg class="t4s-icon t4s-icon-arrow" width="13" viewBox="0 0 14 10" fill="none" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg"><use href="#icon-{{ section.id }}"/></svg>{% endcapture -%}
+
+  <div aria-hidden="false" class="t4s-announcement-bar t4s-pr t4s-oh t4s-type-close-{{ se_stts.close }}" data-ver='{{ se_stts.version }}_nt' data-date='{{ se_stts.date }}'>
+    <div class="t4s-container">
+       <div class="t4s-row t4s-gx-0 t4s-flex-nowrap t4s-align-items-center">
+          
+          {{- cap_btn -}}
+
+          {%- if section.blocks.size > 0 -%}
+
+             <div class="t4s-announcement-bar__wrap t4s-col t4s-col-item t4s-d-flex t4s-align-items-center t4s-text-center t4s-row t4s-row-cols-1 t4s-g-0 flickityt4s{% if se_stts.effect == '1' %} t4s-slide-eff-fade{% endif %}" data-flickityt4s-js='{ "cellAlign": "center","imagesLoaded": 0,"lazyLoad": 0,"freeScroll": 0,"wrapAround": true,"autoPlay" : {{ se_stts.au_time | times: 1000 }},"pauseAutoPlayOnHover" : true, "prevNextButtons": false,"pageDots": false, "contain" : 1,"adaptiveHeight" : 1,"dragThreshold" : 5,"percentPosition": 1 }'>
+               {%- for block in section.blocks -%}{%- assign bk_stts = block.settings -%}
+                  {%- capture cap_date %}{% assign se_dayx = bk_stts.dayx %}<span data-refresh-owl data-countdown-t4s data-loop="{% if se_dayx > 0 %}true{% else %}false{% endif %}" data-date="{{ bk_stts.countdown }}" data-dayl="{{ se_dayx }}">%D {{ bk_stts.txt_day }} %H:%M:%S</span>{% endcapture -%}
+                  
+                  <div id="b_{{ block.id }}" {{ block.shopify_attributes }} data-select-flickity class="t4s-col-item t4s-announcement-bar__item t4s-pr t4s-oh">
+                  {%- if bk_stts.link != blank -%}<a href="{{ bk_stts.link }}" aria-label="{{ label }}" class="t4s-full-width-link"></a>{%- endif -%}
+                  {{- bk_stts.content | replace: '[countdown]',cap_date | replace: '[icon_arrow]',cap_arrow -}}
+                  </div>
+               {%- endfor -%}
+             </div>
+            {%- endif -%}
+
+          {{- cap_btn | replace: 't4s-op-0','t4s-z-100' | remove: ' t4s-d-none t4s-d-md-block' -}}
+       </div>
+    </div> 
+  </div>
+  <script>try { if (document.cookie.indexOf('t4s_announcement_{{ theme_name }}_{{ se_stts.version }}_nt') > -1) { document.getElementById('shopify-section-announcement-bar').setAttribute("aria-hidden", true);document.getElementsByClassName('t4s-announcement-bar')[0].setAttribute("aria-hidden", true);document.getElementsByClassName('t4s-announcement-bar')[0].classList.add('t4s-d-none'); } }catch(err) {}</script>
+{%- else -%}
+<script>try { if (window.Shopify && !Shopify.designMode) { document.getElementById('shopify-section-announcement-bar').remove() } else { document.getElementById('shopify-section-announcement-bar').setAttribute("aria-hidden", true) } }catch(err) {}</script>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Announcement bar",
+    "class": "t4-section t4-section-announcement-bar t4s_bk_flickity t4s_tp_cd",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_announcement",
+        "label": "Show announcement",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "effect",
+        "label": "Effect slider",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "Fade"
+          },
+          {
+            "value": "0",
+            "label": "Slide"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "au_time",
+        "min": 0,
+        "max": 30,
+        "step": 0.5,
+        "label": "Autoplay speed in second.",
+        "info": "Set is '0' to disable autoplay.",
+        "unit": "sec",
+        "default": 3.5
+      },
+      {
+        "type": "range",
+        "id": "height",
+        "label": "Min height",
+        "default": 41,
+        "min": 20,
+        "max": 120,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "fontsize",
+        "label": "Font size",
+        "default": 12,
+        "min": 12,
+        "max": 18,
+        "step": 0.5,
+        "unit": "px"
+      },
+      {
+        "type": "color",
+        "id": "cl",
+        "label": "Text color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "bg",
+        "label": "Background color",
+        "default": "#e91e63"
+      },
+      {
+        "type": "range",
+        "id": "bg_op",
+        "label": "Background opacity",
+        "default": 100,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%"
+      },
+      {
+        "type": "select",
+        "id": "close",
+        "label": "Button close",
+        "default": "1",
+        "options": [
+          {
+            "value": "0",
+            "label": "Disable"
+          },
+          {
+            "value": "1",
+            "label": "Icon & text"
+          },
+          {
+            "value": "2",
+            "label": "Only icon"
+          },
+          {
+            "value": "3",
+            "label": "Only text"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "cl_btn",
+        "label": "Button close color",
+        "default": "#fff"
+      },
+      {
+        "type": "radio",
+        "id": "version",
+        "label": "Announcement version",
+        "info": "If you apply any changes to your announcement settings or content you might want to force the announcement to all visitor who already close it again. In this case, you just need to change the announcement version.",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          },
+          {
+            "value": "2",
+            "label": "2"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "date",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "day",
+        "label": "Header banner expires",
+        "info": "You will be able to specify when to expire the cookie. Once you click the \"CLOSE\" button",
+        "default": 60
+      }
+    ],
+   "blocks": [
+       {
+          "type": "announcement",
+          "name": "Announcement",
+          "limit": 10,
+          "settings": [
+            {
+              "type": "url",
+              "id": "link",
+              "label": "Banner link"
+            },
+            {
+              "type": "richtext",
+              "id": "content",
+              "label": "Banner content",
+              "default": "<p>Today deal sale off 70%. End in [countdown]. Hurry Up!! [icon_arrow]</p>",
+              "info": "Place here text you want to see in the header banner. You can use shortocdes: [countdown], [icon_arrow]"
+            }, 
+            {
+              "type": "text",
+              "id": "countdown",
+              "label": "Date countdown",
+              "default": "2023\/12\/26",
+              "info": "Use shortocdes: [countdown]. Countdown to the end sale date will be shown.( 2023\/12\/26 or 2023\/12\/26 20:00:30 )"
+            },
+            {
+              "type": "text",
+              "id": "txt_day",
+              "label": "Text day countdown",
+              "default": "days"
+            },
+            {
+              "type": "range",
+              "id": "dayx",
+              "min": 0,
+              "max": 100,
+              "step": 1,
+              "label": "Reset countdown every x days from an initial date.",
+              "info": "Set is '0' to disable reset countdown.",
+              "unit": "day",
+              "default": 0
+            }
+          ]
+       }
+   ],
+  "default": {
+    "blocks": [
+      {
+        "type": "announcement"
+      },
+      {
+        "type": "announcement"
+      },
+      {
+        "type": "announcement"
+      }
+    ]
+  }
+  }
+{% endschema %}

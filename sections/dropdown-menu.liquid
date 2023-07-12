@@ -1,0 +1,19 @@
+[nt_drop_split1]
+
+{%- liquid
+for tag in current_tags
+  assign tag_handle = tag | handle
+  render 'menu_dropdown',handle_menu:tag_handle
+  unless forloop.last
+   echo '[nt_drop_split2]'
+  endunless
+endfor -%}
+
+[nt_drop_split1]
+
+
+{%- schema -%}
+{
+   "name": "Dropdown menu"
+}
+{% endschema %}

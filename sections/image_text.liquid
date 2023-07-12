@@ -1,0 +1,1404 @@
+<!-- sections/image_text.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'image-text.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign image_fix = image_nt | image_tag
+    assign sid = section.id
+    assign se_stts = section.settings
+    assign se_blocks = section.blocks
+    assign block_first = se_blocks.first
+    assign stt_layout = se_stts.layout
+    assign stt_image_bg = se_stts.image_bg
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif
+    assign use_button = false 
+    assign use_carousel = false
+    assign t4s_se_class = 't4s_nt_se_' | append: sid
+    if se_stts.use_cus_css and se_stts.code_cus_css != blank
+        render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+    endif 
+ -%}
+<div class="t4s-section-inner {{ t4s_se_class }} t4s_nt_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}
+    <div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+    {%- render 'section_tophead', se_stts: se_stts -%}
+    <div class="t4s-image-text t4s-row t4s-align-items-center t4s-row t4s-gx-md-{{ se_stts.space_h_item }} t4s-gy-md-{{ se_stts.space_v_item }} t4s-gx-{{ se_stts.space_h_item_mb }} t4s-gy-{{ se_stts.space_v_item_mb }}">
+      {%- for block in se_blocks -%}
+        {%- liquid
+          assign bk_stts = block.settings 
+          assign image = bk_stts.image 
+          assign text_size = bk_stts.text_size | split: "," 
+          assign button_style = bk_stts.button_style 
+          assign forloop_index =  forloop.index
+       -%}
+        {%- case block.type -%}
+            {%- when 'bl_image' -%}
+                {%- liquid 
+                    assign index = 0 
+                    if bk_stts.btn_owl == "outline"
+                        assign arrow_icon = 1
+                    else
+                        assign arrow_icon = 2
+                    endif
+               -%}
+                {%- capture html_img_text -%}
+                    {%- for i in (1..5) -%}
+                        {%- assign image_list = 'image' | append: i -%}
+                        {%- assign image = bk_stts[image_list] -%}
+                        {%- if forloop.first -%}
+                            {%- if image == blank -%}
+                                {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg' }}
+                            {%- endif -%} 
+                        {%- endif -%}
+                        {%- if bk_stts.layout_des == "grid" -%}
+                            {%- if image != blank -%}
+                                {%- assign index = index | plus: 1 -%}   
+                                <div class="t4s-image-text-overlap-item" >           
+                                    <img {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image.presentation.focal_point }}"{% endif %} class="lazyloadt4s" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">    
+                                    <span class="lazyloadt4s-loader"></span>              
+                                </div>
+                            {%- endif -%}
+                        {%- else -%}
+                            {%- if image != blank -%}
+                                <div class="t4s-col-item" >
+                                    <div class="t4s_ratio" style="--aspect-ratioapt:{{ image.aspect_ratio }}">
+                                        <img {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image.presentation.focal_point }}"{% endif %} class="lazyloadt4s" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">    
+                                        <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span>
+                                    </div>
+                                </div>
+                            {%- endif -%} 
+                        {%- endif -%} 
+                    {%- endfor -%}  
+                {%- endcapture -%}
+                {%- liquid
+                    if bk_stts.post_mobile == "default"
+                        assign order_mobile = 1
+                    elsif bk_stts.post_mobile == "reverse" and forloop_index == 1
+                        assign order_mobile = 2
+                    else
+                        assign order_mobile = 0
+                    endif
+               -%}
+                <div class="t4s-col-img t4s-col-item t4s-col-lg-{{ bk_stts.col_dk }} t4s-col-md-{{ bk_stts.col_tb }} t4s-col-12 t4s-order-md-{{ forloop_index }} t4s-order-{{ order_mobile }} t4s-image-text-layout-{{ bk_stts.layout_des }} {% if block_first.type == 'bl_image' %}t4s-image-text-col-img-left{% else %}t4s-image-text-col-img-right{% endif %}"> 
+                    {%- if bk_stts.layout_des == "grid" -%}
+                        <div class="t4s-image-text-overlap">
+                            <div class="t4s-image-text-overlap-centered t4s-image-text-overlap-{{ index }}">{{ html_img_text }}</div>
+                        </div> 
+                    {%- else -%}    
+                        {%- assign use_carousel = true -%}
+                        <div class="t4s-image-text-carousel t4s-flicky-slider t4s-row t4s-gx-0 t4s-gy-0 t4s-row-cols-1 t4s_{{ bk_stts.image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }}{% if bk_stts.nav_btn == true %}  t4s-slider-btn-style-{{ bk_stts.btn_owl }} t4s-slider-btn-{{ bk_stts.btn_shape }} t4s-slider-btn-{{ bk_stts.btn_size }} t4s-slider-btn-cl-{{ bk_stts.btn_cl }} t4s-slider-btn-vi-{{ bk_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ bk_stts.btn_hidden_mobile }} {% endif %} {% if bk_stts.nav_dot == true %}t4s-dots-style-{{ bk_stts.dot_owl }} t4s-dots-cl-{{ bk_stts.dots_cl }} t4s-dots-round-{{ bk_stts.dots_round }} t4s-dots-hidden-mobile-{{ se_stts.dots_hidden_mobile }} {% endif %}  flickityt4s" data-flickityt4s-js='{ "arrowIcon":"{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 1, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{ bk_stts.loop }},"prevNextButtons": {{ bk_stts.nav_btn }},"percentPosition": 1,"pageDots": {{ bk_stts.nav_dot }}, "autoPlay" : {{ bk_stts.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ bk_stts.au_hover }} }' style="--space-dots: {{ bk_stts.dots_space }}px;--flickity-btn-pos: {{ se_stts.space_h_item }}px;--flickity-btn-pos-mb: {{ se_stts.space_h_item_mb }}px;">
+                            {{ html_img_text }}
+                        </div>  
+                    {%- endif -%}     
+
+                </div>
+            {%- when 'bl_text' -%}
+                <div class="t4s-col-text t4s-col-item t4s-col-lg-{{ bk_stts.col_dk }} t4s-col-md-{{ bk_stts.col_tb }} t4s-order-md-{{ forloop_index }} t4s-order-1 t4s-col-12 t4s-txt-shadow-{{ bk_stts.use_shadow }}">
+                    <div class="t4s-image-text-content t4s-text-{{ bk_stts.txt_align }} t4s-shadow-wrap" style="--imtxt-subhd-color:{{ bk_stts.subhd_color }};--imtxt-hd-color:{{ bk_stts.hd_color }};--imtxt-des-color:{{ bk_stts.des_color }}">
+                        {%- if bk_stts.sub_heading != blank -%}<p class="t4s-image-text-subheading t4s-fs-md-{{ text_size[1] }} t4s-fs-15">{{ bk_stts.sub_heading }}</p>{%- endif -%}
+                        {%- if bk_stts.heading != blank -%}<h3 class="t4s-image-text-heading t4s-fs-md-{{ text_size[0] }} t4-fs-30" >{{ bk_stts.heading }}</h3>{%- endif -%}
+                        {%- if bk_stts.text -%}<div class="t4s-image-text-des t4-fs-md-{{ text_size[1] }} t4s-fs-15 t4s-rte">{{ bk_stts.text }}</div>{%- endif -%}
+                        {%- if bk_stts.button_link != blank and bk_stts.button_label != blank -%}
+                        {%- assign use_button = true -%}
+                            <a class="t4s-btn t4s-btn-base t4s-btn-style-{{ button_style }} t4s-btn-size-{{ bk_stts.btn_size }} t4s-btn-color-{{ bk_stts.btn_cl }} {% if button_style == 'default' or button_style == 'outline' %}t4s-btn-effect-{{ bk_stts.button_effect }} t4s-btn-radius-{{ bk_stts.btn_bdr }}{% endif %}" href="{{ bk_stts.button_link }}"  target="{{ bk_stts.open_link }}">{{ bk_stts.button_label }} {%- if bk_stts.btn_icon -%}<svg class="t4s-btn-icon"><use xlink:href="#t4s-icon-btn"></use></svg>{%- endif -%}</a>
+                        {%- endif -%}
+                    </div>
+                </div>
+          {%- endcase -%}
+      {%- endfor -%}
+    </div>
+    {{- html_layout[1] -}}
+</div>
+{%- if use_carousel -%}
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+{{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- if use_button -%}
+    {{ 'button-style.css' | asset_url | stylesheet_tag }}
+    <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- endif -%}
+{%- schema -%}
+    {
+      "name": "Image with text",
+      "tag": "section",
+      "class": "t4s-section t4s-section-all t4s_tp_flickity",
+      "settings": [
+        {
+            "type": "header",
+            "content": "1. Heading options"
+        },
+        {
+            "type": "select",
+            "id": "design_heading",
+            "label": "+ Design heading",
+            "default": "1",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "Design 01"
+                },
+                {
+                    "value": "2",
+                    "label": "Design 02"
+                },
+                {
+                    "value": "3",
+                    "label": "Design 03"
+                },
+                {
+                    "value": "4",
+                    "label": "Design 04"
+                },
+                {
+                    "value": "5",
+                    "label": "Design 05"
+                },
+                {
+                    "value": "6",
+                    "label": "Design 06 (width line-awesome)"
+                },
+                {
+                    "value": "7",
+                    "label": "Design 07"
+                },
+                {
+                    "value": "8",
+                    "label": "Design 08"
+                },
+                {
+                    "value": "9",
+                    "label": "Design 09"
+                },
+                {
+                    "value": "10",
+                    "label": "Design 10"
+                },
+                {
+                    "value": "11",
+                    "label": "Design 11"
+                },
+                {
+                    "value": "12",
+                    "label": "Design 12"
+                },
+                {
+                    "value": "13",
+                    "label": "Design 13"
+                },
+                {
+                    "value": "14",
+                    "label": "Design 14"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "heading_align",
+            "label": "+ Heading align",
+            "default": "t4s-text-center",
+            "options": [
+            {
+                "value": "t4s-text-start",
+                "label": "Left"
+            },
+            {
+                "value": "t4s-text-center",
+                "label": "Center"
+            },
+            {
+                "value": "t4s-text-end",
+                "label": "Right"
+            }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "top_heading",
+            "label": "+ Heading"
+        },
+        {
+            "type": "text",
+            "id": "icon_heading",
+            "label": "Enter a name icon [LineAwesome](https://kalles.the4.co/font-lineawesome/)",
+            "info": "Only used for design 6",
+            "default": "las la-gem"
+        },
+        {
+            "type": "textarea",
+            "id": "top_subheading",
+            "label": "+ Subheading"
+        },
+        {
+            "type": "number",
+            "id": "tophead_mb",
+            "label": "+ Space bottom (px)",
+            "info": "The vertical spacing between heading and content.",
+            "default": 30
+        },
+        {
+            "type": "header",
+            "content": "2. General options"
+        },
+        {
+            "type": "select",
+            "id": "space_h_item",
+            "options": [
+                {
+                    "value": "0", 
+                    "label": "0"
+                },
+                {
+                    "value": "2", 
+                    "label": "2px"
+                },
+                {
+                    "value": "4", 
+                    "label": "4px"
+                },
+                {
+                    "value": "6", 
+                    "label": "6px"
+                },
+                {
+                    "value": "8", 
+                    "label": "8px"
+                },
+                {
+                    "value": "10", 
+                    "label": "10px"
+                },
+                {
+                    "value": "20",
+                    "label": "20px"
+                },
+                {
+                    "value": "30",
+                    "label": "30px"
+                }
+            ],
+            "label": "Space horizontal between items",
+            "default": "20"
+        },
+        {
+            "type": "select",
+            "id": "space_v_item",
+            "options": [
+                {
+                    "value": "0", 
+                    "label": "0"
+                },
+                {
+                    "value": "2", 
+                    "label": "2px"
+                },
+                {
+                    "value": "4", 
+                    "label": "4px"
+                },
+                {
+                    "value": "6", 
+                    "label": "6px"
+                },
+                {
+                    "value": "8", 
+                    "label": "8px"
+                },
+                {
+                    "value": "10", 
+                    "label": "10px"
+                },
+                {
+                    "value": "20",
+                    "label": "20px"
+                },
+                {
+                    "value": "30",
+                    "label": "30px"
+                }
+            ],
+            "label": "Space vertical vertical items",
+            "default": "10"
+        },
+        {
+        "type": "select",
+        "id": "space_h_item_mb",
+        "options": [
+            {
+                "value": "0", 
+                "label": "0"
+            },
+            {
+                "value": "2", 
+                "label": "2px"
+            },
+            {
+                "value": "4", 
+                "label": "4px"
+            },
+            {
+                "value": "6", 
+                "label": "6px"
+            },
+            {
+                "value": "8", 
+                "label": "8px"
+            },
+            {
+                "value": "10", 
+                "label": "10px"
+            },
+            {
+                "value": "20",
+                "label": "20px"
+            },
+            {
+                "value": "30",
+                "label": "30px"
+            }
+        ],
+        "label": "Space horizontal between items (Mobile)",
+        "default": "20"
+        },
+    {
+      "type": "select",
+      "id": "space_v_item_mb",
+      "options": [
+            {
+                "value": "0", 
+                "label": "0"
+            },
+            {
+                "value": "2", 
+                "label": "2px"
+            },
+            {
+                "value": "4", 
+                "label": "4px"
+            },
+            {
+                "value": "6", 
+                "label": "6px"
+            },
+            {
+                "value": "8", 
+                "label": "8px"
+            },
+            {
+                "value": "10", 
+                "label": "10px"
+            },
+            {
+                "value": "20",
+                "label": "20px"
+            },
+            {
+                "value": "30",
+                "label": "30px"
+            }
+        ],
+      "label": "Space vertical vertical items (Mobile)",
+      "default": "10"
+    },  
+    {
+      "type": "header",
+      "content": "3. Design options"
+    },
+    {
+        "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+        "options": [
+          { "value": "t4s-se-container", "label": "Container"},
+          { "value": "t4s-container-wrap", "label": "Wrapped container"},
+          { "value": "t4s-container-fluid", "label": "Full width"}
+        ]
+    },
+    {
+        "type": "color",
+        "id": "cl_bg",
+        "label": "Background"
+    },
+    {
+        "type": "color_background",
+        "id": "cl_bg_gradient",
+        "label": "Background gradient"
+    },
+    {
+        "type": "image_picker",
+        "id": "image_bg",
+        "label": "Background image"
+    },
+    {
+        "type": "text",
+        "id": "mg",
+        "label": "Margin",
+        "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+        "default": ",,50px,",
+        "placeholder": ",,50px,"
+    },
+    {
+        "type": "text",
+        "id": "pd",
+        "label": "Padding",
+        "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+        "placeholder": "50px,,50px,"
+    },
+    {
+        "type": "header",
+        "content": "+ Design Tablet Options"
+    },
+    {
+        "type": "text",
+        "id": "mg_tb",
+        "label": "Margin",
+        "placeholder": ",,50px,"
+    },
+    {
+        "type": "text",
+        "id": "pd_tb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+    }, 
+    {
+        "type": "header",
+        "content": "+ Design mobile options"
+    },
+    {
+        "type": "text",
+        "id": "mg_mb",
+        "label": "Margin",
+        "default": ",,30px,",
+        "placeholder": ",,50px,"
+    },
+    {
+        "type": "text",
+        "id": "pd_mb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+    },
+    {
+        "type": "header",
+        "content": "4. Custom css"
+    },
+    {
+        "id": "use_cus_css",
+        "type": "checkbox",
+        "label": "Use custom css",
+        "default":false,
+        "info": "If you want custom style for this section."
+    },
+    { 
+        "id": "code_cus_css",
+        "type": "textarea",
+        "label": "Code custom css",
+        "info": "Use selector .SectionID to style css"
+    }
+    ],
+    "blocks":[
+      {
+        "type":"bl_image",
+        "name":"Image",
+        "limit":1,
+        "settings":[
+            {
+                "type": "image_picker",
+                "id": "image1",
+                "label": "Image 1"
+            },
+            {
+                "type": "image_picker",
+                "id": "image2",
+                "label": "Image 2"
+            },
+            {
+                "type": "image_picker",
+                "id": "image3",
+                "label": "Image 3"
+            },
+            {
+                "type": "image_picker",
+                "id": "image4",
+                "label": "Image 4"
+            },
+            {
+                "type": "image_picker",
+                "id": "image5",
+                "label": "Image 5"
+            },
+            {
+                "type": "select",
+                "id": "col_dk",
+                "label": "Item width (Desktop)",
+                "default": "6",
+                "options": [
+                {
+                    "value": "12",
+                    "label": "100%"
+                },
+                {
+                    "value": "9",
+                    "label": "75%"
+                },
+                {
+                    "value": "8",
+                    "label": "66.66%"
+                },
+                {
+                    "value": "7",
+                    "label": "58.33%"
+                },
+                {
+                    "value": "6",
+                    "label": "50%"
+                },
+                {
+                    "value": "5",
+                    "label": "41.66%"
+                },
+                {
+                    "value": "4",
+                    "label": "33.33%"
+                },
+                {
+                    "value": "3",
+                    "label": "25%"
+                }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "col_tb",
+                "label": "Item width (Tablet)",
+                "default": "6",
+                "options": [
+                {
+                    "value": "12",
+                    "label": "100%"
+                },
+                {
+                    "value": "9",
+                    "label": "75%"
+                },
+                {
+                    "value": "8",
+                    "label": "66.66%"
+                },
+                {
+                    "value": "7",
+                    "label": "58.33%"
+                },
+                {
+                    "value": "6",
+                    "label": "50%"
+                },
+                {
+                    "value": "5",
+                    "label": "41.66%"
+                },
+                {
+                    "value": "4",
+                    "label": "33.33%"
+                },
+                {
+                    "value": "3",
+                    "label": "25%"
+                }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "layout_des",
+                "options": [
+                    {
+                        "value": "grid",
+                        "label": "Grid"
+                    },
+                    {
+                        "value": "carousel",
+                        "label": "Carousel"
+                    }
+                ],
+                "label": "Layout design",
+                "default": "carousel"
+            },
+            {
+                "type": "header",
+                "content": "+ Position image on mobile"
+            },
+            {
+                "type": "select",
+                "id": "post_mobile",
+                "label": "Position image",
+                "default": "default",
+                "options": [
+                    {
+                        "value": "default",
+                        "label": "Default"
+                    },
+                    {
+                        "value": "reverse",
+                        "label": "Reverse"
+                    }
+                ]
+            },
+            {
+                "type": "header",
+                "content": "+Options image for carousel layout"
+            },
+            {
+                "type": "select",
+                "id": "image_ratio",
+                "label": "Image ratio",
+                "default": "ratioadapt",
+                "info": "Aspect Ratio Custom will settings in General panel.",
+                "options": [
+                {
+                    "group": "Natural",
+                    "value": "ratioadapt",
+                    "label": "Adapt to image"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio2_1",
+                    "label": "2:1"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio16_9",
+                    "label": "16:9"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio8_5",
+                    "label": "8:5"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio3_2",
+                    "label": "3:2"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio4_3",
+                    "label": "4:3"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "rationt",
+                    "label": "Ratio ASOS"
+                },
+                {
+                    "group": "Squared",
+                    "value": "ratio1_1",
+                    "label": "1:1"
+                },
+                {
+                    "group": "Portrait",
+                    "value": "ratio2_3",
+                    "label": "2:3"
+                },
+                {
+                    "group": "Portrait",
+                    "value": "ratio1_2",
+                    "label": "1:2"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus1",
+                    "label": "Ratio custom 1"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus2",
+                    "label": "Ratio custom 2"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratio_us3",
+                    "label": "Ratio custom 3"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus4",
+                    "label": "Ratio custom 4"
+                }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "image_size",
+                "label": "Image size",
+                "default": "cover",
+                "info": "This settings apply only if the image ratio is not set to 'Adapt to image'.",
+                "options": [
+                    {
+                        "value": "cover",
+                        "label": "Full"
+                    },
+                    {
+                        "value": "contain",
+                        "label": "Auto"
+                    }
+                ]
+            }, 
+            {
+                "type": "select",
+                "id": "image_position",
+                "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'.. And 'Not works when use 'Focal point' on image'",
+                "options": [
+                    {
+                        "value": "default",
+                        "label": "Default"
+                    },
+                    {
+                        "value": "1",
+                        "label": "Left top"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Left center"
+                    },
+                    {
+                        "value": "3",
+                        "label": "Left bottom"
+                    },
+                    {
+                        "value": "4",
+                        "label": "Right top"
+                    },
+                    {
+                        "value": "5",
+                        "label": "Right center"
+                    },
+                    {
+                        "value": "6",
+                        "label": "Right bottom"
+                    },
+                    {
+                        "value": "7",
+                        "label": "Center top"
+                    },
+                    {
+                        "value": "8",
+                        "label": "Center center"
+                    },
+                    {
+                        "value": "9",
+                        "label": "Center bottom"
+                    }
+                ],
+                "label": "Image position",
+                "default": "8"
+            },  
+            {
+                "type": "header",
+                "content": "+Options for carousel layout"
+            },
+            {
+                "type": "checkbox",
+                "id": "loop",
+                "label": "Enable loop",
+                "info": "At the end of cells, wrap-around to the other end for infinite scrolling",
+                "default": true
+            },
+            {
+                "type": "range",
+                "id": "au_time",
+                "min": 0,
+                "max": 30,
+                "step": 0.5,
+                "label": "Autoplay speed in second.",
+                "info": "Set is '0' to disable autoplay",
+                "unit": "s",
+                "default": 0
+            },
+            {
+                "type": "checkbox",
+                "id": "au_hover",
+                "label": "Pause autoplay on hover",
+                "info": "Auto-playing will pause when the user hovers over the carousel",
+                "default": true
+            },
+            {
+                "type": "paragraph",
+                "content": "—————————————————"
+            },
+            {
+                "type": "paragraph",
+                "content": "Prev next button"
+            },
+            {
+                "type": "checkbox",
+                "id": "nav_btn",
+                "label": "Use prev next button",
+                "info": "Creates and show previous & next buttons",
+                "default": false
+            },
+            {
+                "type": "select",
+                "id": "btn_vi",
+                "label": "Visible",
+                "default": "hover",
+                "options": [
+                    {
+                        "value": "always",
+                        "label": "Always"
+                    },
+                    {
+                        "value": "hover",
+                        "label": "Only hover"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "btn_owl",
+                "label": "Button style",
+                "default": "default",
+                "options": [
+                    {
+                        "value": "default",
+                        "label": "Default"
+                    },
+                    {
+                        "value": "outline",
+                        "label": "Outline"
+                    },
+                    {
+                        "value": "simple",
+                        "label": "Simple"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "btn_shape",
+                "label": "Button shape",
+                "info": "Not working with button style 'Simple'",
+                "default": "none",
+                "options": [
+                    {
+                        "value": "none",
+                        "label": "Default"
+                    },
+                    {
+                        "value": "round",
+                        "label": "Round"
+                    },
+                    {
+                        "value": "rotate",
+                        "label": "Rotate"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "btn_cl",
+                "label": "Button color",
+                "default": "dark",
+                "options": [
+                    {
+                        "value": "light",
+                        "label": "Light"
+                    },
+                    {
+                        "value": "dark",
+                        "label": "Dark"
+                    },
+                    {
+                        "value": "primary",
+                        "label": "Primary"
+                    },
+                    {
+                        "value": "custom1",
+                        "label": "Custom color 1"
+                    },
+                    {
+                        "value": "custom2",
+                        "label": "Custom color 2"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "btn_size",
+                "label": "Buttons size",
+                "default": "small",
+                "options": [
+                    {
+                        "value": "small",
+                        "label": "Small"
+                    },
+                    {
+                        "value": "medium",
+                        "label": "Medium"
+                    },
+                    {
+                        "value": "large",
+                        "label": "Large"
+                    }
+                ]
+            },
+            {
+                "type":"checkbox",
+                "id":"btn_hidden_mobile",
+                "label":"Hidden buttons on mobile ",
+                "default": true
+            },
+            {
+                "type": "paragraph",
+                "content": "—————————————————"
+            },
+            {
+                "type": "paragraph",
+                "content": "Page dots"
+            },
+            {
+                "type": "checkbox",
+                "id": "nav_dot",
+                "label": "Use page dots",
+                "info": "Creates and show page dots",
+                "default": false
+            },
+            {
+                "type": "select",
+                "id": "dot_owl",
+                "label": "Dots style",
+                "default": "default",
+                "options": [
+                    {
+                        "value": "default",
+                        "label": "Default"
+                    },
+                    {
+                        "value": "outline",
+                        "label": "Outline"
+                    },
+                    {
+                        "value": "elessi",
+                        "label": "Elessi"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "dots_cl",
+                "label": "Dots color",
+                "default": "dark",
+                "options": [
+                    {
+                        "value": "light",
+                        "label": "Light (Best on dark background)"
+                    },
+                    {
+                        "value": "dark",
+                        "label": "Dark"
+                    },
+                    {
+                        "value": "primary",
+                        "label": "Primary"
+                    },
+                    {
+                        "value": "custom1",
+                        "label": "Custom color 1"
+                    },
+                    {
+                        "value": "custom2",
+                        "label": "Custom color 2"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "dots_round",
+                "label": "Enable dots round",
+                "default": true
+            },
+            {
+                "type": "range",
+                "id": "dots_space",
+                "min": 2,
+                "max": 20,
+                "step": 1,
+                "label": "Dot between horizontal",
+                "unit": "px",
+                "default": 10
+            },
+            {
+                "type":"checkbox",
+                "id":"dots_hidden_mobile",
+                "label":"Hidden dots on mobile ",
+                "default": false
+            }
+        ]
+      },
+      {
+        "type":"bl_text",
+        "limit":1,
+        "name":"Text",
+        "settings":[
+            {
+                "type": "header",
+                "content": "+ Text"
+            },
+            {
+                "type": "select",
+                "id": "col_dk",
+                "label": "Item width (Desktop)",
+                "default": "6",
+                "options": [
+                {
+                    "value": "12",
+                    "label": "100%"
+                },
+                {
+                    "value": "9",
+                    "label": "75%"
+                },
+                {
+                    "value": "8",
+                    "label": "66.66%"
+                },
+                {
+                    "value": "7",
+                    "label": "58.33%"
+                },
+                {
+                    "value": "6",
+                    "label": "50%"
+                },
+                {
+                    "value": "5",
+                    "label": "41.66%"
+                },
+                {
+                    "value": "4",
+                    "label": "33.33%"
+                },
+                {
+                    "value": "3",
+                    "label": "25%"
+                }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "col_tb",
+                "label": "Item width (Tablet)",
+                "default": "6",
+                "options": [
+                {
+                    "value": "12",
+                    "label": "100%"
+                },
+                {
+                    "value": "9",
+                    "label": "75%"
+                },
+                {
+                    "value": "8",
+                    "label": "66.66%"
+                },
+                {
+                    "value": "7",
+                    "label": "58.33%"
+                },
+                {
+                    "value": "6",
+                    "label": "50%"
+                },
+                {
+                    "value": "5",
+                    "label": "41.66%"
+                },
+                {
+                    "value": "4",
+                    "label": "33.33%"
+                },
+                {
+                    "value": "3",
+                    "label": "25%"
+                }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "text_size",
+                "label": "Text size",
+                "default": "40,15",
+                "options": [
+                {
+                    "value": "30,15",
+                    "label": "Small"
+                },
+                {
+                    "value": "40,15",
+                    "label": "Medium"
+                },
+                {
+                    "value": "60,18",
+                    "label": "Large"
+                }
+                ]    
+            },
+            {
+                "type": "select",
+                "id": "txt_align",
+                "label": "Text alignment",
+                "default": "center",
+                "options": [
+                {
+                    "value": "start",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "end",
+                    "label": "Right"
+                }
+                ]
+            },
+            {
+                "type": "text",
+                "id": "sub_heading",
+                "label": "Sub heading"
+            },
+            {
+                "type": "text",
+                "id": "heading",
+                "label": "Heading",
+                "default": "Image with text"
+            },
+            {
+                "type": "richtext",
+                "id": "text",
+                "label": "Text",
+                "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+            },
+            {
+                "type": "header",
+                "content": "+ Color"
+            },
+            {
+                "type":"color",
+                "id":"subhd_color",
+                "label":"Subheading color",
+                "default":"#222222"
+            },
+            {
+                "type":"color",
+                "id":"hd_color",
+                "label":"Heading color",
+                "default":"#222222"
+            },
+            {
+                "type":"color",
+                "id":"des_color",
+                "label":"Description color",
+                "default":"#878787"
+            },
+            {
+                "type": "checkbox",
+                "id": "use_shadow",
+                "label": "Enable text shadow",
+                "default": false
+            },
+            {
+                "type":"header",
+                "content":"+ Button"
+            },
+            {
+                "type": "text",
+                "id": "button_label",
+                "label": "Button label",
+                "info":"If set blank will not show",
+                "default": "Button label"
+            },
+            {
+                "type": "url",
+                "id": "button_link",
+                "label": "Button link",
+                "info":"If set blank will not show"
+            },
+            {
+                "type": "select",
+                "id": "open_link",
+                "label": "Open link in",
+                "default": "_blank",
+                "info":"Only working when has a link",
+                "options": [
+                {
+                    "value": "_self",
+                    "label": "Current window"
+                },
+                {
+                    "value": "_blank",
+                    "label": "New window"
+                }
+                ]
+            },
+            {
+                "type":"checkbox",
+                "id":"btn_icon",
+                "label":"Enable button icon",
+                "default":false
+            },
+            {
+                "type": "select",
+                "id": "button_style",
+                "label": "Button style",
+                "options": [
+                    {
+                        "label": "Default",
+                        "value": "default"
+                    },
+                    {
+                        "label": "Outline",
+                        "value": "outline"
+                    },
+                    {
+                        "label": "Bordered bottom",
+                        "value": "bordered"
+                    },
+                    {
+                        "label": "Link",
+                        "value": "link"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "btn_size",
+                "label": "Button size",
+                "default":"large",
+                "options": [
+                    {
+                        "label": "Extra small",
+                        "value": "small"
+                    },
+                    {
+                        "label": "Small",
+                        "value": "extra-small"
+                    },
+                    {
+                        "label": "Medium",
+                        "value": "medium"
+                    },
+                    {
+                        "label": "Large",
+                        "value": "extra-medium"
+                    },
+                    {
+                        "label": "Extra large",
+                        "value": "large"
+                    },
+                    {
+                        "label": "Extra extra large",
+                        "value": "extra-large"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "btn_cl",
+                "label": "Button color",
+                "default": "dark",
+                "options": [
+                    {
+                        "value": "light",
+                        "label": "Light"
+                    },
+                    {
+                        "value": "dark",
+                        "label": "Dark"
+                    },
+                    {
+                        "value": "primary",
+                        "label": "Primary"
+                    },
+                    {
+                        "value": "custom1",
+                        "label": "Custom color 1"
+                    },
+                    {
+                        "value": "custom2",
+                        "label": "Custom color 2"
+                    }
+                ]
+            },
+            {
+                "type":"select",
+                "id":"button_effect",
+                "label":"Button hover effect",
+                "default":"default",
+                "info":"Only working button style default, outline",
+                "options":[
+                    {
+                        "label":"Default",
+                        "value":"default"
+                    },
+                    {
+                        "label":"Fade",
+                        "value":"fade"
+                    },
+                    {
+                    "label":"Rectangle out",
+                    "value":"rectangle-out"
+                    },
+                    {
+                        "label":"Sweep to right",
+                        "value":"sweep-to-right"
+                    },
+                    {
+                        "label":"Sweep to left",
+                        "value":"sweep-to-left"
+                    },
+                    {
+                        "label":"Sweep to bottom",
+                        "value":"sweep-to-bottom"
+                    },
+                    {
+                        "label":"Sweep to top",
+                        "value":"sweep-to-top"
+                    },
+                    {
+                        "label":"Shutter out horizontal",
+                        "value":"shutter-out-horizontal"
+                    },
+                    {
+                        "label":"Outline",
+                        "value":"outline"
+                    },
+                    {
+                        "label":"Shadow",
+                        "value":"shadow"
+                    }
+                ]
+            }
+        ]
+      }
+    ],
+    "presets": [
+        {
+          "name": "Image with text",
+          "category": "homepage",
+          "blocks":[
+            {
+              "type":"bl_image"
+            },
+            {
+              "type":"bl_text"
+            }
+          ]
+        }
+      ]
+    }
+ {% endschema %}
+  

@@ -1,0 +1,29 @@
+{%- assign link = section.settings.link | default: routes.root_url -%}
+
+<div class="error-404-wrap t4s-text-center t4s-empty__page">
+	<div class="t4s-container">
+     <h1 class="error-404-title">{{ 'templates.404.title' | t }}</h1>
+     <h3 class="error-404-subtext">{{ 'templates.404.subtext' | t }}</h3>
+     <p class="error-404-link">{{ 'templates.404.link_html' | t: link:link }}</p>
+	</div>
+</div>
+<style>
+.error-404.not-found{letter-spacing:2px}.error-404.not-found h1{font-size:80px;letter-spacing:8px;font-weight:700;margin:0 0 5px}.error-404.not-found h3{text-transform:uppercase;font-size:18px;margin:0 0 15px}
+.error-404.not-found a{font-weight:700;border-bottom:1px solid #222;padding:2px 5px}
+.error-404.not-found a:hover{background:#222;color:#fff}
+</style>
+
+{%- schema -%}
+{
+  "name": "404",
+  "tag": "section",
+  "class": "t4s-section t4s-section-main error-404 not-found t4s-pr t4s-oh",
+  "settings": [
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Link Button"
+      }
+  ]
+}
+{% endschema %}

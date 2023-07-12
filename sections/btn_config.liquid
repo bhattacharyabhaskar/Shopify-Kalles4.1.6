@@ -1,0 +1,282 @@
+{%- liquid 
+    assign se_stts = section.settings
+    assign se_blocks = section.blocks
+    assign isShowHTMl = false
+    if template.suffix == 'config' and request.design_mode
+        assign isShowHTMl = true
+    endif 
+ -%}
+{%- if isShowHTMl -%}
+    {{ 'button-style.css' | asset_url | stylesheet_tag }}
+    <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+    <div class="t4s-container" style="margin-top:100px;margin-bottom: 100px;">
+        <h3 class="t4s-text-center" style="margin-bottom: 30px;">Button config</h3>
+        <div class="t4s-row t4s-row-cols-lg-4 t4s-row-cols-md-2 t4s-row-cols-1 t4s-gx-30 t4s-gy-30 t4s-align-items-center t4s-text-center">
+            {%- for block in se_blocks -%}
+            {%- assign index = forloop.index -%}
+                <div class="t4s-col-item">
+                    <a href="#" class="t4s-btn t4s-btn-base t4s-btn-size-large t4s-btn-style-default t4s-btn-color-custom{{ index }} t4s-btn-effect-{{ se_stts.button_effect }}">Button default</a>
+                </div>
+                <div class="t4s-col-item">
+                    <a href="#" class="t4s-btn t4s-btn-base t4s-btn-size-large t4s-btn-style-outline t4s-btn-color-custom{{ index }} t4s-btn-effect-{{ se_stts.button_effect }}">Button outline</a>
+                </div>
+                <div class="t4s-col-item">
+                    <a href="#" class="t4s-btn t4s-btn-base t4s-btn-size-large t4s-btn-style-bordered t4s-btn-color-custom{{ index }}">Button bordered</a>
+                </div>
+                <div class="t4s-col-item">
+                    <a href="#" class="t4s-btn t4s-btn-base t4s-btn-size-large t4s-btn-style-link t4s-btn-color-custom{{ index }}">Button link</a>
+                </div>
+            {%- endfor -%} 
+        </div>
+    </div>  
+{%- endif -%}
+{%- style -%} 
+    :root {
+        --btn-radius:{{ se_stts.btn_bdr }}px;
+        --t4s-other-radius : {{ se_stts.other_radius }}px;
+    }
+    button{
+        font-family: var({{ se_stts.fnt_fm_button }}) !important; 
+    }
+    .t4s-btn-base {
+        font-family: var({{ se_stts.fnt_fm_button }}) !important; 
+        --btn-fw:{{ se_stts.btn_fw }};
+    }
+{%- comment -%}
+    html button:not([data-btn-as-a]), html input[type=button]:not(.t4s-btn), input[type=reset], input[type=submit]:not(.t4s-btn) {
+        font-family: var({{ se_stts.fnt_fm_button }}) !important;
+        --btn-radius:{{ se_stts.btn_bdr }}px;
+        --btn-fw:{{ se_stts.btn_fw }};
+        font-weight: var(--btn-fw);
+        font-family: var(--font-family-1) !important;
+        border-radius: var(--btn-radius);
+    }
+{%- endcomment -%}
+{%- endstyle -%}
+{%- for block in se_blocks -%}
+    {%- liquid 
+        assign bk_stts = block.settings 
+        assign index = forloop.index 
+        assign color_primary = bk_stts.color_primary
+        assign color_second = bk_stts.color_second
+        assign color_primary_hover =  bk_stts.color_primary_hover
+        assign color_second_hover =  bk_stts.color_second_hover
+   -%}
+    {%- style -%}
+        .t4s-pr__notify-stock.t4s-btn-color-custom{{ index }},
+        .t4s-payment-button.t4s-btn-color-custom{{ index }},
+        .t4s-btn-base.t4s-btn-style-default.t4s-btn-color-custom{{ index }},
+        .t4s-lm-bar.t4s-btn-color-custom{{ index }} {
+            --btn-color           : {{ color_second }};
+            --btn-background      : {{ color_primary }};
+            --btn-border          : {{ color_primary }};
+            --btn-color-hover     : {{ color_second_hover }};
+            --btn-background-hover: {{ color_primary_hover }};
+            --btn-border-hover    :{{ color_primary_hover }};           
+        }
+        .t4s-btn-base.t4s-btn-style-outline.t4s-btn-color-custom{{ index }}{
+            --btn-color           : {{ color_primary }};
+            --btn-border          : {{ color_primary }};
+            --btn-color-hover     : {{ color_second_hover }};
+            --btn-background-hover : {{ color_primary_hover }};
+        }
+        .t4s-btn-base.t4s-btn-style-bordered.t4s-btn-color-custom{{ index }}{
+            --btn-color           : {{ color_primary }};
+            --btn-border          : {{ color_primary }};
+            --btn-color-hover     : {{ color_primary_hover }};
+            --btn-border-hover    : {{ color_primary_hover }};
+        }
+        .t4s-btn-base.t4s-btn-style-link.t4s-btn-color-custom{{ index }}{
+            --btn-color           : {{ color_primary }};
+            --btn-border          : {{ color_primary }};
+            --btn-color-hover     : {{ color_primary_hover }};
+            --btn-border-hover    : {{ color_primary_hover }};
+        }
+    {%- endstyle -%}
+{%- endfor -%}
+{%- schema -%}
+    {
+        "name": "Button Configs",
+        "tag": "div",
+        "class": "t4s-section t4s-section-config t4s-section-admn-fixed",
+        "settings": [
+            {
+                "type": "select",
+                "id": "fnt_fm_button",
+                "label": "Font family",
+                "default": "--font-family-1",
+                "options": [
+                    {
+                        "value": "--font-family-1",
+                        "label": "Font family #1"
+                    },
+                    {
+                        "value": "--font-family-2",
+                        "label": "Font family #2"
+                    },
+                    {
+                        "value": "--font-family-3",
+                        "label": "Font family #3"
+                    }
+                ]
+            },
+            {
+                "type":"range",
+                "id":"btn_fw",
+                "label":"Font weight",
+                "min":100,
+                "max":900,
+                "step":100,
+                "default":600
+            },
+            {
+                "type": "range",
+                "id": "btn_bdr",
+                "min": 0,
+                "max": 60,
+                "step": 1,
+                "label": "Border radius",
+                "unit": "px",
+                "default": 0
+            },
+            {
+                "type": "range",
+                "id": "other_radius",
+                "min": 0,
+                "max": 60,
+                "step": 1,
+                "label": "Other corner radius",
+                "unit": "px",
+                "default": 0,
+                "info": "This option will help you to set border-radius for specific elements... Except for elements which have their own options."
+            },
+            {
+                "type":"select",
+                "id":"button_effect",
+                "label":"Button hover effect",
+                "default":"default",
+                "info":"Only show here to preview (Not setting for all button of site). This effect only working button style default, outline",
+                "options":[
+                    {
+                        "label":"Default",
+                        "value":"default"
+                    },
+                    {
+                        "label":"Fade",
+                        "value":"fade"
+                    },
+                    {
+                        "label":"Rectangle out",
+                        "value":"rectangle-out"
+                    },
+                    {
+                        "label":"Sweep to right",
+                        "value":"sweep-to-right"
+                    },
+                    {
+                        "label":"Sweep to left",
+                        "value":"sweep-to-left"
+                    },
+                    {
+                        "label":"Sweep to bottom",
+                        "value":"sweep-to-bottom"
+                    },
+                    {
+                        "label":"Sweep to top",
+                        "value":"sweep-to-top"
+                    },
+                    {
+                        "label":"Shutter out horizontal",
+                        "value":"shutter-out-horizontal"
+                    },
+                    {
+                        "label":"Outline",
+                        "value":"outline"
+                    },
+                    {
+                        "label":"Shadow",
+                        "value":"shadow"
+                    }
+                ]
+            }
+        ],
+       "blocks": [
+            {
+                "type": "custom1",
+                "name": "Custom color 1",
+                "limit": 1,
+                "settings":[
+                    {
+                        "type":"color",
+                        "id":"color_primary",
+                        "label":"Primary color",
+                        "default":"#ffb100"
+                    },
+                    {
+                        "type":"color",
+                        "id":"color_second",
+                        "label":"Secondary color",
+                        "default":"#fff",
+                        "info":"Only working button style default"
+                    },
+                    {
+                        "type":"color",
+                        "id":"color_primary_hover",
+                        "label":"Primary color hover",
+                        "default":"#ff4e00"
+                    },
+                    {
+                        "type":"color",
+                        "id":"color_second_hover",
+                        "label":"Secondary color hover",
+                        "default":"#fff",
+                        "info":"Only working button style default, outline"
+                    }
+                ]
+            },
+            {
+                "type": "custom2",
+                "name": "Custom color 2",
+                "limit": 1,
+                "settings":[
+                    {
+                        "type":"color",
+                        "id":"color_primary",
+                        "label":"Primary color",
+                        "default":"#27ae60"
+                    },
+                    {
+                        "type":"color",
+                        "id":"color_second",
+                        "label":"Secondary color",
+                        "default":"#fff",
+                        "info":"Only working button style default"
+                    },
+                    {
+                        "type":"color",
+                        "id":"color_primary_hover",
+                        "label":"Primary color hover",
+                        "default":"#0048ff"
+                    },
+                    {
+                        "type":"color",
+                        "id":"color_second_hover",
+                        "label":"Secondary color hover",
+                        "default":"#fff",
+                        "info":"Only working button style default, outline"
+                    }
+                ]
+            }
+        ],
+        "default": {
+            "blocks": [
+                {
+                    "type": "custom1"
+                },
+                {
+                    "type": "custom2"
+                }
+            ]
+        }
+    }
+    {% endschema %}

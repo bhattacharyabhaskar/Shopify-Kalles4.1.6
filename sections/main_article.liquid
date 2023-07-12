@@ -1,0 +1,1459 @@
+<!-- sections/main_article.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign sid = section.id
+    assign se_blocks = section.blocks
+    assign se_stts = section.settings    
+    assign stt_layout = se_stts.layout
+    assign class_main = '12'
+    assign blocks_sidebar = se_blocks | where: "type", 'sidebar_article' | first
+    assign blocks_sidebar_setts = blocks_sidebar.settings
+    assign blocks_sidebar_id = blocks_sidebar.id
+    assign on_sale_txt = 'products.badge.on_sale' | t
+    assign save_percent = 'products.badge.save_amoun_html' | t: saved_amount: 'saved_amount' 
+    assign from_price = 'products.product.from_price_html' | t: class: "t4s-text-from", price_min: 'price_min'
+    assign blog_url = blog.url
+    assign article_id = article.id
+    assign image_article = article.image
+    assign number_of_comments = article.comments_count
+    assign use_icon_social= false
+    assign use_carousel = false
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif  
+ -%}
+<div class="t4s-section-inner t4s_nt_se_{{ sid }} t4s-main-blog {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}
+        <div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+        <div class="t4s-row t4s-row-cols-1">
+            <div class="t4s-col-item">
+                {%- for block in section.blocks -%}
+                    {%- assign bk_stts = block.settings -%}
+                    {%- case block.type -%}
+                        {%- when 'bl_img' -%}
+                            {% if image_article == blank %}{% continue %}{% endif -%}
+                            <div class="t4s-article-image t4s-text-center t4s-pr">
+                                <img class="lazyloadt4s" data-src="{{ image_article | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image_article.width, h: image_article.height %}" width="{{ image_article.width }}" height="{{ image_article.height }}" alt="{{ image_article.alt | escape }}">
+                                <span class="lazyloadt4s-loader"></span>
+                            </div>
+                        {%- when 'bl_content' -%}
+                            <div class="t4s-article-content t4s-rte"><article id="t4s-article-{{ article_id }}" class="article-{{ article_id }}">{{ article.content }}</article></div>
+                        {%- when 'bl_tags' -%}
+                            {%- if number_of_comments > 0 %}{% assign cm_link = '#comments' %}{% else %}{% assign cm_link = '#comment_form' %}{% endif -%}
+                            <div class="t4s-article-tags">
+                                <div class="t4s-row t4s-align-items-center">
+                                    <div class="t4s-col-item t4s-col-md t4s-col-12 t4s-text-md-start t4s-text-center t4s-article-tags-list">
+                                        {% if article.tags.size > 0 %}<i class="las la-tags"></i>
+                                            {% for tag in article.tags %} 
+                                                <a href="{{ blog_url }}/tagged/{{ tag | handle }}" rel="tag">{{ tag | capitalize }}</a>{% unless forloop.last %}, {% endunless %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    {%- if blog.comments_enabled? %}
+                                        <div class="t4s-col-item t4s-col-md-auto t4s-text-md-end t4s-text-center t4s-comment-link">
+                                            <a href="{{ article.url }}{{ cm_link }}">{{ 'blogs.comments.with_count_2.other' | t: count: number_of_comments }}</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {%- when 'bl_social' -%}
+                            {%- assign use_icon_social = true -%}      
+                            <div class="t4s-article-social-share t4s-text-center" style="--cl:{{ bk_stts.icon_cl }};--bg-cl:{{ bk_stts.bg_cl }};--bd-radius:{{ bk_stts.bd_radius }}px">
+                                {%- if bk_stts.social_mode == '1' -%} 
+                                    {%- assign follow_social = true -%} 
+                                {%- else -%} 
+                                    {%- assign share_image = settings.share_image | default: page_image | default: settings.logo -%} 
+                                {%- endif -%} 
+                                    {%- render 'social_sharing', style: bk_stts.social_style, use_color_set: bk_stts.use_color_set, size: bk_stts.social_size, space_h_item: bk_stts.space_h_item, space_h_item_mb: bk_stts.space_h_item_mb, space_v_item: bk_stts.space_v_item, space_v_item_mb: bk_stts.space_v_item_mb, share_permalink: shop.url, share_title: shop.name, share_image: share_image, follow_social: follow_social -%} 
+                                </div>   
+                        {%- when 'bl_navigation' -%}
+                            <div class="t4s-article-navigation t4s-d-flex t4s-align-items-center t4s-justify-content-center">
+                                {%- if blog.previous_article %}
+                                    <a href="{{ blog.previous_article.url }}">
+                                        <i class="las la-angle-left" data-tooltip="top" title="{{ blog.previous_article.title }}"></i>
+                                    </a>
+                                {% else %}
+                                    <a href="{{ blog.url }}" class=""><i class="las la-angle-left" ></i></a>
+                                {% endif -%}
+                                <a href="{{ blog.url }}">
+                                    <i class="lab la-buromobelexperte" data-tooltip="top" title="{{ 'blogs.article.back_to' | t: title: blog.title }}"></i></span>
+                                </a>
+                                {%- if blog.next_article %}
+                                    <a href="{{ blog.next_article.url }}">
+                                        <i class="las la-angle-right" data-tooltip="top" title="{{ blog.next_article.title }}"></i>
+                                    </a>
+                                {% else %}
+                                    <a href="{{ blog.url }}"><i class="las la-angle-right"></i></a>
+                                {% endif -%}
+                            </div>
+                        {%- when 'bl_related' -%}
+                            {%- liquid 
+                                assign use_carousel = true
+                                assign index = 0 
+                                assign image_ratio = bk_stts.image_ratio
+                                if image_ratio == "ratioadapt"
+                                    assign imgatt = ''
+                                else 
+                                    assign imgatt = 'data-'
+                                endif
+                                if bk_stts.btn_owl == "outline"
+                                    assign arrow_icon = 1
+                                else
+                                    assign arrow_icon = 2
+                                endif
+                           -%}
+                            <div class="t4s-article-related">
+                                <h4 class="t4s-article-related-heading{% if bk_stts.en_hd_related %} t4s-text-center{% endif %}">{{ bk_stts.hd_related }}</h4>
+                                <div class="t4s-flicky-slider t4s_{{ image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} t4s-row t4s-row-cols-lg-{{ bk_stts.col_dk }} t4s-row-cols-md-{{ bk_stts.col_tb }} t4s-row-cols-{{ bk_stts.col_mb }} t4s-gx-md-{{ bk_stts.space_h_item }} t4s-gy-md-{{ bk_stts.space_v_item }} t4s-gx-{{ bk_stts.space_h_item_mb }} t4s-gy-{{ bk_stts.space_v_item_mb }} {% if bk_stts.nav_btn == true %}t4s-btn-style-{{ bk_stts.btn_owl }} t4s-btn-{{ bk_stts.btn_shape }} t4s-btn-{{ bk_stts.btn_size }} t4s-btn-cl-{{ bk_stts.btn_cl }} t4s-btn-vi-{{ bk_stts.btn_vi }}{% endif %} t4s-btn-hidden-mobile-{{ bk_stts.btn_hidden_mobile }} {% if bk_stts.nav_dot == true %}t4s-dots-style-{{ bk_stts.dot_owl }} t4s-dots-cl-{{ bk_stts.dots_cl }} t4s-dots-round-{{ bk_stts.dots_round }} t4s-dots-hidden-mobile-{{ bk_stts.dots_hidden_mobile }}{% endif %} flickityt4s" data-flickityt4s-js='{"setPrevNextButtons":true,"arrowIcon":"{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{ bk_stts.loop }},"prevNextButtons": {{ bk_stts.nav_btn }},"percentPosition": 1,"pageDots": {{ bk_stts.nav_dot }}, "autoPlay" : {{ bk_stts.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ bk_stts.au_hover }} }'  style="--space-dots: {{ bk_stts.dots_space }}px;--flickity-btn-pos: {{ bk_stts.space_h_item }}px;--flickity-btn-pos-mb: {{ bk_stts.space_h_item_mb }}px;">                   
+                                    {%- for article in blog.articles -%}
+                                        {%- if article.id == article_id -%}{% continue %}{% endif -%}
+                                        {%- assign index = index | plus: 1 -%}
+                                        {%- assign art_url = article.url -%}
+                                        {%- assign image = article.image -%}
+                                        <div class="t4s-col-item t4s-post-item">
+                                            <a href="{{ art_url }}" class="t4s-d-block t4s-eff t4s-eff-{{ bk_stts.b_effect }} t4s-eff-img-{{ bk_stts.img_effect }}">
+                                                <div class="t4s_ratio" {{ imgatt }}style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1.7777 }}" data-cacl-slide>
+                                                    {%- if image != blank -%}
+                                                        <img class="lazyloadt4s t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                                        <span class="lazyloadt4s-loader"></span>
+                                                    {%- else -%}
+                                                        {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg obj-eff' }}
+                                                    {%- endif -%} 
+                                                </div>
+                                            </a>
+                                            <div class="t4s-post-content t4s-rte">
+                                                <h5 class="t4s-post-title">
+                                                    <a href="{{ art_url }}">{{ article.title }}</a>
+                                                </h5>
+                                                <span class="t4s-post-time t4s-fnt-fm-3"><time class="t4s-entry-date">{{ article.published_at | time_tag: format: bk_stts.date_post_related }}</time></span>
+                                            </div>
+                                        </div>
+                                        {%- if index == bk_stts.limit_related -%}{% break %}{% endif -%}
+                                    {%- endfor -%}
+                                </div>
+                            </div>
+                        {%- when 'bl_html' -%}
+                            <div class="t4s-article-html">{{ bk_stts.html }}</div>
+                        {%- when 'bl_comments' -%}
+                            {% unless blog.comments_enabled? %}{% continue %}{% endunless -%}
+                            <div class="t4s-article-comments">
+                                {%- if number_of_comments > 0 -%}
+                                    <div class="t4s-space"></div>
+                                    <div class="t4s-comments-list">
+                                        <h2 class="t4s-comments-heading">{{ 'blogs.comments.comments_title_html' | t: count: number_of_comments, title: article.title }}</h2>
+                                        {%- paginate article.comments by 5 -%}
+                                            <div class="t4s-row t4s-row-cols-1 t4s-gy-30">
+                                                {%- if comment.status == 'pending' and none -%} {%- comment -%}If a comment was just submitted with no blank field, show it.{%- endcomment -%}
+                                                    <div id="{{ comment.id }}" class="t4s-col-item">{%- render 'comment', comment: comment -%}</div>
+                                                {%- endif -%}
+                                                {%- for comment in article.comments -%}
+                                                    <div id="{{ comment.id }}" class="t4s-col-item">{%- render 'comment', comment: comment -%}</div>
+                                                {%- endfor -%}
+                                                {%- if paginate.pages > 1 -%}
+                                                    <div class="t4s-col-item t4s-comments-pagination">{%- render 'pagination_default', paginate: paginate -%}</div>
+                                                {%- endif -%}
+                                            </div>
+                                        {%- endpaginate -%}
+                                    </div>
+                                {%- endif -%}
+                                <div class="t4s-space"></div>
+                                <div class="t4s-comments-form">
+                                    {%- form 'new_comment', article -%}{%- assign formId = 'CommentForm' -%}
+                                        <h2 class="t4s-comments-title">{{ 'blogs.comments.title' | t }}</h2>
+                                        <p class="t4s-comments-notes">{{ 'blogs.comments.comments_note_html' | t }}</p>
+                                        {%- assign post_message = 'blogs.comments.success' -%}
+                                        {%- if blog.moderated? and comment.status == 'pending' -%}
+                                          {%- assign post_message = 'blogs.comments.success_moderated' -%}
+                                        {%- elsif comment.status == 'unapproved' or comment.status == 'spam' -%}
+                                          {%- assign post_message = 'blogs.comments.unapproved' -%}
+                                        {%- endif -%}
+                                        {%- render 'form-status', form: form, form_id: formId, success_message: post_message -%}
+                                        <div class="t4s-comments-input t4s-row t4s-gx-30 t4s-gy-30">
+                                            <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                                                <label for="{{ formId }}-author">{{ 'blogs.comments.name' | t }} <span class="t4s-required">*</span></label>
+                                                <input type="text" name="comment[author]" id="{{ formId }}-author" class="t4s-input-full{% if form.errors contains 'author' %} t4s-input--error{% endif %}" value="{{ form.author | default: customer.name }}"{% if form.errors contains 'author' %} aria-invalid="true" aria-describedby="{{ formId }}-author-error"{% endif %}>
+                                                {% if form.errors contains 'author' %}
+                                                    <span id="{{ formId }}-author-error" class="t4s-input-error-message">
+                                                        <i class="las la-exclamation-triangle"></i>
+                                                        <span>{{ 'blogs.comments.name' | t }} {{ form.errors.messages['author'] }}.</span>
+                                                    </span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="t4s-col-item t4s-col-md-6 t4s-col-12">
+                                                <label for="{{ formId }}-email">{{ 'blogs.comments.email' | t }} <span class="t4s-required">*</span></label>
+                                                <input type="email" name="comment[email]" id="{{ formId }}-email" class="t4s-input-full{% if form.errors contains 'email' %} t4s-input--error{% endif %}" value="{{ form.email | default: customer.email }}" autocorrect="off" autocapitalize="off" {% if form.errors contains 'email' %} aria-invalid="true" aria-describedby="{{ formId }}-email-error"{% endif %}>
+                                                {% if form.errors contains 'email' %}
+                                                    <span id="{{ formId }}-email-error" class="t4s-input-error-message">
+                                                        <i class="las la-exclamation-triangle"></i>
+                                                        <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                                                    </span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="t4s-col-item t4s-col-md-12 t4s-col-12">
+                                                <label for="{{ formId }}-body">{{ 'blogs.comments.message' | t }} <span class="t4s-required">*</span></label>
+                                                <textarea cols="45" rows="8" name="comment[body]" id="{{ formId }}-body" class="t4s-input-full{% if form.errors contains 'body' %} t4s-input--error{% endif %}"{% if form.errors contains 'body' %} aria-invalid="true" aria-describedby="{{ formId }}-body-error"{% endif %}>{{ form.body }}</textarea>
+                                                {% if form.errors contains 'body' %}
+                                                    <span id="{{ formId }}-body-error" class="t4s-input-error-message">
+                                                        <i class="las la-exclamation-triangle"></i>
+                                                        <span>{{ 'blogs.comments.message' | t }} {{ form.errors.messages['body'] }}.</span>
+                                                    </span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        {%- if blog.moderated? %}<p class="t4s-fine-print t4s-fnt-fm-3">{{ 'blogs.comments.moderated' | t }}</p>{% endif -%}
+                                        <input type="submit" class="t4s-button-submit" value="{{ 'blogs.comments.post' | t }}">
+                                    {%- endform -%}
+                                </div>
+                            </div>
+                    {%- endcase -%}
+                {%- endfor -%}
+            </div>
+        </div>
+    {{- html_layout[1] -}}
+</div>
+{%- if use_icon_social -%}
+    {{ 'icon-social.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- if use_carousel -%}
+    {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+    {{ 'custom-effect.css' | asset_url | stylesheet_tag }}
+    {{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- style -%}
+    .t4s-article-image{margin-bottom: 30px;}
+    .t4s-article-tags{border: 1px solid #f1f1f1;padding: 15px 20px;margin-top:40px;}
+    .t4s-socials{justify-content:center;margin-top:40px;}
+    .t4s-article-navigation{font-size:20px;margin-top:60px;}
+    .t4s-article-navigation a{margin-left:30px;margin-right:30px;}
+    .t4s-article-navigation a:nth-child(2){font-size:40px;}
+    .t4s-article-related{margin-top:50px;}
+    .t4s-article-related-heading{margin:0;margin-bottom:30px;font-weight:700;text-transform:uppercase;}
+    .t4s-post-content h5{font-size:14px;}
+    .t4s-post-title{margin-top:20px;}
+    .t4s-space{margin: 55px 0;border-bottom: 1px solid #e8e9eb;}
+    .t4s-comments-heading{font-size:24px;margin-bottom:30px;}
+    .t4s-comments-title{font-size:16px;text-transform:uppercase;margin-bottom:5px;}
+    .t4s-comments-notes{margin-bottom:30px;}
+    .t4s-comments-input{margin-bottom:25px;}
+    input:not([type=submit]):not([type=checkbox]), select, textarea {
+        border: 1px solid #ccc;
+        font-size: 13px;
+        outline: 0;
+        padding: 0 15px;
+        color: #878787;
+        border-radius: 0;
+        max-width: 100%;
+    }
+    input:not([type=submit]):not([type=checkbox]):focus, textarea:focus {
+        border-color: #222;
+    }
+    input.t4s-input--error {
+        border-color: #d20000!important;
+        margin-bottom: 5px;
+    }
+    input[type=date], input[type=email], input[type=number], input[type=password], input[type=tel], input[type=text], input[type=url], select, textarea {
+        width: 100%;
+        height: 40px;
+        line-height: 18px;
+        transition: border-color .5s;
+        box-shadow: none;
+        border-radius: 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+    #CommentForm-body {
+        min-height: 230px;
+        overflow:hidden;
+        padding: 10px 15px;
+    }
+    .t4s-comments-form .t4s-button-submit{
+        display:inline-block;
+        cursor: pointer;
+        border: 2px solid #222;
+        padding: 5px 25px;
+        background: #fff;
+        color: #222;
+        border-radius: var(--btn-radius);
+        font-size: 14px;
+        font-weight: 600;
+        min-height: 40px;
+        transition:color 0.3s ease-in-out, background 0.3s ease-in-out, border-color 0.1s ease-in-out;
+    }
+    .t4s-comments-form .t4s-button-submit:hover{
+        color: #fff;
+        background:var(--accent-color);
+        border-color:var(--accent-color);
+    }
+    .t4s-fine-print{font-style:italic}
+    .t4s-input-error-message i{color:#ec0101;margin-right:5px;}
+    .t4s-form-message ul li{
+        list-style:disc;
+    }
+    .t4s-form-message--error{
+        color: #651818;
+        border: 1px solid #d20000;
+        background-color: #fff8f8;
+        padding: 15px 20px;
+        text-align: left;
+        width: 100%;
+        margin: 0 0 27.5px;
+    }
+    .t4s-form-message__title {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    .t4s-comment__author{font-size:13px;text-transform:uppercase;margin-bottom:5px;}
+    .t4s-comment__content p{margin-bottom:5px;}
+    .t4s-comment__date{font-size:12px;font-style: italic;}
+{%- endstyle -%}
+{%- schema -%}
+{
+    "name":"Blog post",
+    "tag":"section",
+    "class":"t4s-section t4s-main-content t4s_tp_flickity",
+    "settings":[
+        {
+            "type": "header",
+            "content": "Design options"
+        },
+        {
+            "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+            "options": [
+                { "value": "t4s-se-container", "label": "Container"},
+                { "value": "t4s-container-wrap", "label": "Wrapped container"},
+                { "value": "t4s-container-fluid", "label": "Full width"}
+            ]
+        },
+        {
+            "type": "color",
+            "id": "cl_bg",
+            "label": "Background"
+        },
+        {
+            "type": "color_background",
+            "id": "cl_bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_bg",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+            "default": ",,50px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+            "placeholder": "50px,,50px,"
+        },
+        {
+          "type": "header",
+          "content": "+ Design Tablet Options"
+        },
+        {
+          "type": "text",
+          "id": "mg_tb",
+          "label": "Margin",
+          "placeholder": ",,50px,"
+        },
+        {
+          "type": "text",
+          "id": "pd_tb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+        },
+        {
+            "type": "header",
+            "content": "+ Design mobile options"
+        },
+        {
+            "type": "text",
+            "id": "mg_mb",
+            "label": "Margin",
+            "default": ",,30px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd_mb",
+            "label": "Padding",
+            "placeholder": ",,50px,"
+        }
+    ],
+    "blocks":[
+        {
+            "type": "bl_img",
+            "name": "Article featured image",
+            "limit": 1
+        },
+        {
+            "type": "bl_content",
+            "name": "Article content",
+            "limit": 1
+        },
+        {
+            "type": "bl_tags",
+            "name": "Tags, comments link",
+            "limit": 1
+        },
+        {
+            "type": "bl_social",
+            "name": "Social",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "social_mode",
+                    "label": "Socials mode",
+                    "default": "2",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": "Follow"
+                        },
+                        {
+                            "value": "2",
+                            "label": "Share"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "social_style",
+                    "label": "Socials style",
+                    "default": "2",
+                    "options": [
+                        { "value": "1", "label": "Style 1"},
+                        { "value": "2", "label": "Style 2 (Has background)"},
+                        { "value": "3", "label": "Style 3 (Has border)"},
+                        { "value": "4", "label": "Style 4 (Has border & background)"}
+                    ]         
+                },
+                {
+                    "type": "select",
+                    "id": "social_size",
+                    "label": "Socials size",
+                    "default": "small",
+                    "options": [
+                        { "value": "small", "label": "Small"},
+                        { "value": "medium", "label": "Medium"},
+                        { "value": "large", "label": "Large"}
+                    ]
+                },
+                {
+                    "type": "range",
+                    "id": "bd_radius", 
+                    "label": "Border radius",
+                    "unit":"px",
+                    "min": 0,
+                    "max": 30,
+                    "default": 30,
+                    "step": 1
+                },
+                {
+                    "type": "checkbox",
+                    "id": "use_color_set",
+                    "label": "Use color settings",
+                    "default": false
+                },
+                {
+                    "type": "header",
+                    "content": "only true when check to box Color Settings"
+                },
+                {
+                    "type": "color",
+                    "id": "icon_cl",
+                    "label": "Primary color",
+                    "default": "#878787"
+                },
+                {
+                    "type": "color",
+                    "id": "bg_cl",
+                    "label": "Secondary color",
+                    "default": "#222222"
+                },
+                {
+                    "type": "select",
+                    "id": "space_h_item",
+                    "label": "Space horizontal items",
+                    "default": "5",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "5", 
+                            "label": "5px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "space_v_item",
+                    "label": "Space vertical items",
+                    "default": "5",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "5", 
+                            "label": "5px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "space_h_item_mb",
+                    "label": "Space horizontal items (Mobile)",
+                    "default": "2",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "6", 
+                            "label": "6px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "space_v_item_mb",
+                    "label": "Space vertical items (Mobile)",
+                    "default": "2",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "6", 
+                            "label": "6px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "bl_navigation",
+            "name": "Navigation",
+            "limit": 1
+        },
+        {
+            "type":"bl_related",
+            "name":"Post related",
+            "limit":1,
+            "settings":[
+                {
+                    "type": "text",
+                    "id": "hd_related",
+                    "label": "Heading",
+                    "default": "Related Articles"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "en_hd_related",
+                    "label": "Enable heading center?",
+                    "default": true
+                },
+                {
+                    "type": "range",
+                    "id": "limit_related",
+                    "min": 1,
+                    "max": 10,
+                    "step": 1,
+                    "label": "Articles per page",
+                    "info": "Number of articles per page",
+                    "default": 6
+                },
+                {
+                    "type": "select",
+                    "id": "date_post_related",
+                    "label": "Date format",
+                    "info":"Different format options display for various languages.",
+                    "default": "date",
+                    "options": [
+                        {
+                            "value": "abbreviated_date",
+                            "label": "Apr 19, 1994"
+                        },
+                        {
+                            "value": "basic",
+                            "label": "4/19/1994"
+                        },
+                        {
+                            "value": "date",
+                            "label": "April 19, 1994"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "space_h_item",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "6", 
+                            "label": "6px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ],
+                    "label": "Space horizontal between items",
+                    "default": "30"
+                },
+                {
+                    "type": "select",
+                    "id": "space_v_item",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "6", 
+                            "label": "6px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ],
+                    "label": "Space vertical vertical items",
+                    "default": "30"
+                },
+                {
+                    "type": "select",
+                    "id": "space_h_item_mb",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "6", 
+                            "label": "6px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ],
+                    "label": "Space horizontal between items (Mobile)",
+                    "default": "10"
+                },
+                {
+                    "type": "select",
+                    "id": "space_v_item_mb",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "6", 
+                            "label": "6px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ],
+                    "label": "Space vertical vertical items (Mobile)",
+                    "default": "10"
+                },
+                {
+                    "type": "select",
+                    "id": "col_dk",
+                    "label": "Articles per row",
+                    "default": "3",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": "1"
+                        },
+                        {
+                            "value": "2",
+                            "label": "2"
+                        },
+                        {
+                            "value": "3",
+                            "label": "3"
+                        },
+                        {
+                            "value": "4",
+                            "label": "4"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "col_tb",
+                    "label": "Articles per row (Tablet)",
+                    "default": "2",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": "1"
+                        },
+                        {
+                            "value": "2",
+                            "label": "2"
+                        },
+                        {
+                            "value": "3",
+                            "label": "3"
+                        },
+                        {
+                            "value": "4",
+                            "label": "4"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "col_mb",
+                    "label": "Articles per row (Mobile)",
+                    "default": "1",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": "1"
+                        },
+                        {
+                            "value": "2",
+                            "label": "2"
+                        }
+                    ]
+                },
+                {
+                    "type": "header",
+                    "content": "+Options for image"
+                },
+                {
+                    "type": "select",
+                    "id": "image_ratio",
+                    "label": "Aspect ratio",
+                    "default": "ratio4_3",
+                    "info": "Aspect ratio custom will settings in general panel.",
+                    "options": [
+                        {
+                            "group": "Auto",
+                            "value": "ratioadapt",
+                            "label": "Adapt to image"
+                        },
+                        {
+                            "group": "Landscape",
+                            "value": "ratio2_1",
+                            "label": "2:1"
+                        },
+                        {
+                            "group": "Landscape",
+                            "value": "ratio16_9",
+                            "label": "16:9"
+                        },
+                        {
+                            "group": "Landscape",
+                            "value": "ratio8_5",
+                            "label": "8:5"
+                        },
+                        {
+                            "group": "Landscape",
+                            "value": "ratio3_2",
+                            "label": "3:2"
+                        },
+                        {
+                            "group": "Landscape",
+                            "value": "ratio4_3",
+                            "label": "4:3"
+                        },
+                        {
+                            "group": "Landscape",
+                            "value": "rationt",
+                            "label": "Ratio ASOS"
+                        },
+                        {
+                            "group": "Squared",
+                            "value": "ratio1_1",
+                            "label": "1:1"
+                        },
+                        {
+                            "group": "Portrait",
+                            "value": "ratio2_3",
+                            "label": "2:3"
+                        },
+                        {
+                            "group": "Portrait",
+                            "value": "ratio1_2",
+                            "label": "1:2"
+                        },
+                        {
+                            "group": "Custom",
+                            "value": "ratiocus1",
+                            "label": "Ratio custom 1"
+                        },
+                        {
+                            "group": "Custom",
+                            "value": "ratiocus2",
+                            "label": "Ratio custom 2"
+                        },
+                        {
+                            "group": "Custom",
+                            "value": "ratiocus3",
+                            "label": "Ratio custom 3"
+                        },
+                        {
+                            "group": "Custom",
+                            "value": "ratiocus4",
+                            "label": "Ratio custom 4"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "image_position",
+                    "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'.",
+                    "options": [
+                        {
+                            "value": "default",
+                            "label": "Default"
+                        },
+                        {
+                            "value": "1",
+                            "label": "Left top"
+                        },
+                        {
+                            "value": "2",
+                            "label": "Left center"
+                        },
+                        {
+                            "value": "3",
+                            "label": "Left bottom"
+                        },
+                        {
+                            "value": "4",
+                            "label": "Right top"
+                        },
+                        {
+                            "value": "5",
+                            "label": "Right center"
+                        },
+                        {
+                            "value": "6",
+                            "label": "Right bottom"
+                        },
+                        {
+                            "value": "7",
+                            "label": "Center top"
+                        },
+                        {
+                            "value": "8",
+                            "label": "Center center"
+                        },
+                        {
+                            "value": "9",
+                            "label": "Center bottom"
+                        }
+                    ],
+                    "label": "Image position",
+                    "default": "8"
+                },
+                {
+                    "type": "select",
+                    "id": "image_size",
+                    "label": "Image size",
+                    "default": "cover",
+                    "info": "This settings apply only if the image ratio is not set to 'Adapt to image'.",
+                    "options": [
+                        {
+                            "value": "cover",
+                            "label": "Full"
+                        },
+                        {
+                            "value": "contain",
+                            "label": "Auto"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "img_effect",
+                    "label": "Image hover effect",
+            "info": "Waring: Hovering effect will resize your images",
+                    "default": "none",
+                    "options": [
+                        {
+                            "value": "none",
+                            "label": "None"
+                        },
+                        {
+                            "value": "zoom",
+                            "label": "Zoom in"
+                        },
+                        {
+                            "value": "rotate",
+                            "label": "Rotate"
+                        },
+                        {
+                            "value": "translateToTop",
+                            "label": "Move to top "
+                        },
+                        {
+                            "value": "translateToRight",
+                            "label": "Move to right"
+                        },
+                        {
+                            "value": "translateToBottom",
+                            "label": "Move to bottom"
+                        },
+                        {
+                            "value": "translateToLeft",
+                            "label": "Move to feft"
+                        },
+                        {
+                            "value": "filter",
+                            "label": "Filter"
+                        },
+                        {
+                            "value": "bounceIn",
+                            "label": "BounceIn"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "b_effect",
+                    "label": "Effect",
+                    "default": "none",
+                    "options": [
+                        {
+                            "value": "none",
+                            "label": "None"
+                        },
+                        {
+                            "value": "border-run",
+                            "label": "Border run"
+                        },
+                        {
+                            "value": "pervasive-circle",
+                            "label": "Pervasive circle"
+                        },
+                        {
+                            "value": "plus-zoom-overlay",
+                            "label": "Plus zoom overlay"
+                        },
+                        {
+                            "value": "dark-overlay",
+                            "label": "Dark overlay"
+                        },
+                        {
+                            "value": "light-overlay",
+                            "label": "Light overlay"
+                        } 
+                    ]
+                },
+                {
+                    "type": "header",
+                    "content": "+Color Articles Design"
+                },
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Color text",
+                    "default": "#fff"
+                },
+                {
+                    "type": "color",
+                    "id": "cl2",
+                    "label": "Color text 2",
+                    "default": "#878787"
+                },
+                {
+                    "type": "color",
+                    "id": "bg",
+                    "label": "Background color",
+                    "default": "#000"
+                },
+                {
+                    "type": "header",
+                    "content": "+Options for carousel layout"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "loop",
+                    "label": "Enable loop",
+                    "info": "At the end of cells, wrap-around to the other end for infinite scrolling.",
+                    "default": true
+                },
+                {
+                    "type": "range",
+                    "id": "au_time",
+                    "min": 0,
+                    "max": 30,
+                    "step": 0.5,
+                    "label": "Autoplay speed in second.",
+                    "info": "Set is '0' to disable autoplay.",
+                    "unit": "s",
+                    "default": 0
+                },
+                {
+                    "type": "checkbox",
+                    "id": "au_hover",
+                    "label": "Pause autoplay on hover",
+                    "info": "Auto-playing will pause when the user hovers over the carousel.",
+                    "default": true
+                },
+                {
+                    "type": "paragraph",
+                    "content": "—————————————————"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Prev next button"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "nav_btn",
+                    "label": "Use prev next buttons",
+                    "info": "Creates and show previous & next buttons.",
+                    "default": true
+                },
+                {
+                    "type": "select",
+                    "id": "btn_vi",
+                    "label": "Visible",
+                    "default": "hover",
+                    "options": [
+                        {
+                            "value": "always",
+                            "label": "Always"
+                        },
+                        {
+                            "value": "hover",
+                            "label": "Only hover"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "btn_owl",
+                    "label": "Button style",
+                    "default": "default",
+                    "options": [
+                        {
+                            "value": "default",
+                            "label": "Default"
+                        },
+                        {
+                            "value": "outline",
+                            "label": "Outline"
+                        },
+                        {
+                            "value": "simple",
+                            "label": "Simple"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "btn_shape",
+                    "label": "Button shape",
+                    "info": "Not working with button style 'simple'",
+                    "default": "none",
+                    "options": [
+                        {
+                            "value": "none",
+                            "label": "Default"
+                        },
+                        {
+                            "value": "round",
+                            "label": "Round"
+                        },
+                        {
+                            "value": "rotate",
+                            "label": "Rotate"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "btn_cl",
+                    "label": "Button color",
+                    "default": "dark",
+                    "options": [
+                        {
+                            "value": "light",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "dark",
+                            "label": "Dark"
+                        },
+                        {
+                            "value": "primary",
+                            "label": "Primary"
+                        },
+                        {
+                            "value": "1",
+                            "label": "Color scheme 1"
+                        },
+                        {
+                            "value": "2",
+                            "label": "Color scheme 2"
+                        },
+                        {
+                            "value": "3",
+                            "label": "Color scheme 3"
+                        },
+                        {
+                            "value": "4",
+                            "label": "Color scheme 4"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "btn_size",
+                    "label": "Buttons size",
+                    "default": "small",
+                    "options": [
+                        {
+                            "value": "small",
+                            "label": "Small"
+                        },
+                        {
+                            "value": "medium",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "large",
+                            "label": "Large"
+                        }
+                    ]
+                },
+                {
+                    "type":"checkbox",
+                    "id":"btn_hidden_mobile",
+                    "label":"Hidden buttons on mobile ",
+                    "default":false
+                },
+                {
+                    "type": "paragraph",
+                    "content": "—————————————————"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Page dots"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "nav_dot",
+                    "label": "Use page dots",
+                    "info": "Creates and show page dots.",
+                    "default": true
+                },
+                {
+                    "type": "select",
+                    "id": "dot_owl",
+                    "label": "Dots style",
+                    "default": "default",
+                    "options": [
+                        {
+                            "value": "default",
+                            "label": "Default"
+                        },
+                        {
+                            "value": "outline",
+                            "label": "Outline"
+                        },
+                        {
+                            "value": "elessi",
+                            "label": "Elessi"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "dots_cl",
+                    "label": "Dots color",
+                    "info": "Show scheme background color",
+                    "default": "dark",
+                    "options": [
+                        {
+                            "value": "light",
+                            "label": "Light (Best on dark background)"
+                        },
+                        {
+                            "value": "dark",
+                            "label": "Dark"
+                        },
+                        {
+                            "value": "primary",
+                            "label": "Primary"
+                        },
+                        {
+                            "value": "1",
+                            "label": "Color scheme 1"
+                        },
+                        {
+                            "value": "2",
+                            "label": "Color scheme 2"
+                        },
+                        {
+                            "value": "3",
+                            "label": "Color scheme 3"
+                        },
+                        {
+                            "value": "4",
+                            "label": "Color scheme 4"
+                        }
+                    ]
+                },
+                {
+                    "type": "checkbox",
+                    "id": "dots_round",
+                    "label": "Enable dots round",
+                    "default": false
+                },
+                {
+                    "type": "range",
+                    "id": "dots_space",
+                    "min": 2,
+                    "max": 20,
+                    "step": 1,
+                    "label": "Dot between horizontal",
+                    "unit": "px",
+                    "default": 10
+                },
+                {
+                    "type":"checkbox",
+                    "id":"dots_hidden_mobile",
+                    "label":"Hidden dots on mobile ",
+                    "default":false
+                }
+            ]
+        },
+        {
+            "type": "bl_comments",
+            "name": "Comments List",
+            "limit": 1
+        },
+        {
+            "type": "bl_html",
+            "name": "Custom HTML",
+            "settings": [
+             {
+               "type": "html",
+               "id": "html",
+               "label": "Custom HTML",
+               "default": "<div>Custom HTML</div>"
+             }
+            ]
+        }
+    ],
+    "default":{
+        "blocks":[
+            { "type": "bl_img" },{ "type": "bl_content" },{ "type": "bl_tags" },{ "type": "bl_social" },{ "type": "bl_navigation" },{ "type": "bl_related" },{ "type": "bl_html" },{ "type": "bl_comments" }
+        ]
+    }
+}
+{% endschema %}

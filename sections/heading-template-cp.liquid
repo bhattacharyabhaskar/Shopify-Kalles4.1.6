@@ -1,0 +1,588 @@
+{%- liquid
+  assign se_id = section.id 
+  assign se_stts = section.settings
+  assign se_bks = section.blocks
+  assign page_type = request.page_type 
+  if page_type contains 'customers'
+    assign page_type = 'customers'  
+  endif 
+  if page_type == 'collection' and collection.image != blank and se_stts.use_specify_image 
+      assign image = collection.image 
+  else 
+      assign image = se_stts.image  
+  endif
+  assign t4s_se_class = 't4s_nt_se_' | append: se_id
+  if se_stts.use_cus_css and se_stts.code_cus_css != blank
+    render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class 
+  endif 
+  assign general_block = false
+ -%}  
+{{ 'heading-template.css' | asset_url | stylesheet_tag }} 
+<div class="header-banner {% if se_stts.parallax == true %}t4s-parallax t4s-parallax-bg{% endif %} lazyloadt4s" {% if se_stts.parallax == true %}data-parallax-t4strue{% endif %} {%- if image != blank -%} data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1" {%- endif -%} {% render 'style_heading', se_stts: se_stts %}>   
+    {%- render 'heading_search', se_stts: se_stts, se_bks: se_bks -%}
+</div>  
+{%- schema -%}
+  {
+    "name": "Page heading",
+    "class": "page_section_heading",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "+ Background image"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_specify_image",
+        "label": "Specify other image for particular page",
+        "info": "Use collection image for 'Collection' page",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "parallax",
+        "label": "Use scroll parallax?",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Background color",
+        "default": "#000"
+      },
+      {
+        "type": "range",
+        "id": "overlay",
+        "label": "Background overlay",
+        "default": 54,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%"
+      },
+      {
+        "type": "range",
+        "id": "padding",
+        "label": "Padding space (Desktop)",
+        "default": 50,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "paddingmb",
+        "label": "Padding space (Mobile)",
+        "default": 50,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "mg_b",
+        "label": "Margin space bottom (Desktop)",
+        "default": 50,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "mg_bmb",
+        "label": "Margin space bottom (Mobile)",
+        "default": 50,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "content_align",
+        "label": "+ Content align",
+        "default": "t4s-text-center",
+        "options": [
+          {
+            "label": "Left",
+            "value": "t4s-text-start"
+          },
+          {
+            "label": "Center",
+            "value": "t4s-text-center"
+          },
+          {
+            "label": "Right",
+            "value": "t4s-text-end"
+          }
+        ]
+      },
+      
+      {
+        "type": "header",
+        "content": "+ Background image config:"
+      },
+      {
+        "type": "paragraph",
+        "content": "Not active when you enable scroll parallax."
+      },
+      {
+        "type": "select",
+        "id": "bg_pos",
+        "label": "Background image position",
+        "default": "center center",
+        "options": [
+          {
+            "value": "left top",
+            "label": "Left Top"
+          },
+          {
+            "value": "left center",
+            "label": "Left Center"
+          },
+          {
+            "value": "left bottom",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "center top",
+            "label": "Center Top"
+          },
+          {
+            "value": "center center",
+            "label": "Center Center"
+          },
+          {
+            "value": "center bottom",
+            "label": "Center Bottom"
+          },
+          {
+            "value": "right top",
+            "label": "Right Top"
+          },
+          {
+            "value": "right center",
+            "label": "Right Center"
+          },
+          {
+            "value": "right bottom",
+            "label": "Right Bottom"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "bg_repeat",
+        "options": [
+          {
+            "value": "no-repeat",
+            "label": "No repeat"
+          },
+          {
+            "value": "repeat",
+            "label": "Repeat all"
+          },
+          {
+            "value": "repeat-x",
+            "label": "Repeat horizontally"
+          },
+          {
+            "value": "repeat-y",
+            "label": "Repeat vertically"
+          },
+          {
+            "value": "inherit",
+            "label": "Inherit"
+          }
+        ],
+        "label": "Background repeat",
+        "default": "no-repeat",
+        "info": "[Specifies how to repeat the background images](https:\/\/w3schools.com\/cssref\/pr_background-repeat.asp)"
+      },
+      {
+        "type": "select",
+        "id": "bg_size",
+        "options": [
+          {
+            "value": "auto",
+            "label": "Auto"
+          },
+          {
+            "value": "inherit",
+            "label": "Inherit"
+          },
+          {
+            "value": "cover",
+            "label": "Cover"
+          },
+          {
+            "value": "contain",
+            "label": "Contain"
+          }
+        ], 
+        "label": "Background size",
+        "default": "cover",
+        "info": "[Specifies the size of the background images](https:\/\/w3schools.com\/cssref\/css3_pr_background-size.asp)"
+      },
+      {
+        "type": "header",
+        "content": "+ Custom css"
+      },
+      {
+        "id": "use_cus_css",
+        "type": "checkbox",
+        "label": "Use custom css",
+        "default":false,
+        "info": "If you want custom style for this section."
+      },
+      { 
+        "id": "code_cus_css",
+        "type": "textarea",
+        "label": "Code custom css",
+        "info": "Use selector .SectionID to style css"
+        
+      }
+    ],
+    "blocks": [
+      {
+        "type": "1",
+        "name": "Page heading", 
+        "limit": 1,
+        "settings":[
+          {
+            "type":"text",
+            "id":"heading",
+            "label":"Page Heading",
+            "info": "Page heading automatically shows the heading of the current page, please leave it blank. Note: It does not work with the 'Blog' and 'Collection' page."
+          },
+          {
+              "type": "select",
+              "id": "fontf",
+              "default":"inherit",
+              "label": "Font family",
+              "options": [
+                  {
+                      "label": "Inherit",
+                      "value": "inherit"
+                  },
+                  {
+                      "label": "Font family #1",
+                      "value": "1"
+                  },
+                  {
+                      "label": "Font family #2",
+                      "value": "2"
+                  },
+                  {
+                      "label": "Font family #3",
+                      "value": "3"
+                  }
+              ]
+          },   
+          {
+              "type":"color",
+              "id":"text_cl",
+              "label":"Color text",
+              "default":"#fff"
+          },
+          {
+              "type":"range",
+              "id":"text_fs",
+              "label":"Font size",
+              "max":100,
+              "min":10,
+              "step":1,
+              "unit":"px",
+              "default":20
+          },
+          {
+              "type":"range",
+              "id":"text_lh",
+              "label":"Line height",
+              "max":100,
+              "min":0,
+              "step":1,
+              "default":0,
+              "unit":"px",
+              "info":"Set is '0' use to default"            
+          },
+          {
+              "type":"range",
+              "id":"text_fw",
+              "label":"Font weight",
+              "min":100,
+              "max":900,
+              "step":100,
+              "default":400
+          },
+          {
+              "type":"range",
+              "id":"text_ls",
+              "label":"Letter spacing",
+              "max":10,
+              "min":0,
+              "default":0,
+              "step":0.1,
+              "unit":"px"
+          },
+          {
+              "type":"checkbox",
+              "id":"font_italic",
+              "label": "Enable font style italic",
+              "default":false
+          }, 
+          {
+              "type":"checkbox",
+              "id":"font_uppercase",
+              "label": "Enable font uppercase",
+              "default":false
+          },
+          {
+              "type":"checkbox",
+              "id":"text_shadow",
+              "label": "Enable text shadow",
+              "default":false
+          },
+          {
+              "type": "number",
+              "id": "text_mgb",
+              "label": "Margin bottom",
+              "default": 0
+          },
+          {
+              "type":"header",
+              "content":"+ Option mobile "
+          },
+          {
+              "type":"checkbox",
+              "id":"hidden_mobile",
+              "label":"Hidden on mobile ",
+              "default":false
+          },
+          {
+              "type":"range",
+              "id":"text_fs_mb",
+              "label":"Font size (Mobile)",
+              "max":60,
+              "min":10,
+              "step":1,
+              "unit":"px",
+              "default":20
+          },
+          {
+              "type":"range",
+              "id":"text_lh_mb",
+              "label":"Line height (Mobile)",
+              "max":70,
+              "min":0,
+              "step":1,
+              "default":0,
+              "unit":"px",
+              "info":"Set is '0' use to default"            
+          },
+          {
+              "type":"range",
+              "id":"text_ls_mb",
+              "label":"Letter spacing (Mobile)",
+              "min":0,
+              "max":10,
+              "step":0.1,
+              "unit":"px",
+              "default":0
+          },
+          {
+              "type": "number",
+              "id": "text_mgb_mobile",
+              "label": "Margin bottom (Mobile)",
+              "default": 0
+          }
+        ]
+      },
+      {
+        "type": "2",
+        "name": "Page subheading", 
+        "limit": 1,
+        "settings":[
+          {
+            "type":"richtext",
+            "id":"content",
+            "label":"Page subheading",
+            "default":"<p>Sub title page content</p>" 
+          },
+          {
+              "type": "select",
+              "id": "fontf",
+              "default":"inherit",
+              "label": "Font family",
+              "options": [
+                  {
+                      "label": "Inherit",
+                      "value": "inherit"
+                  },
+                  {
+                      "label": "Font family #1",
+                      "value": "1"
+                  },
+                  {
+                      "label": "Font family #2",
+                      "value": "2"
+                  },
+                  {
+                      "label": "Font family #3",
+                      "value": "3"
+                  }
+              ]
+          },   
+          {
+              "type":"color",
+              "id":"text_cl",
+              "label":"Color text",
+              "default":"#fff"
+          },
+          {
+              "type":"range",
+              "id":"text_fs",
+              "label":"Font size",
+              "max":100,
+              "min":10,
+              "step":1,
+              "unit":"px",
+              "default":16
+          },
+          {
+              "type":"range",
+              "id":"text_lh",
+              "label":"Line height",
+              "max":100,
+              "min":0,
+              "step":1,
+              "default":0,
+              "unit":"px",
+              "info":"Set is '0' use to default"            
+          },
+          {
+              "type":"range",
+              "id":"text_fw",
+              "label":"Font weight",
+              "min":100,
+              "max":900,
+              "step":100,
+              "default":400
+          },
+          {
+              "type":"range",
+              "id":"text_ls",
+              "label":"Letter spacing",
+              "max":10,
+              "min":0,
+              "default":0,
+              "step":0.1,
+              "unit":"px"
+          },
+          {
+              "type":"checkbox",
+              "id":"font_italic",
+              "label": "Enable font style italic",
+              "default":false
+          },
+          {
+              "type":"checkbox",
+              "id":"font_uppercase",
+              "label": "Enable font uppercase",
+              "default":false
+          },
+          {
+              "type":"checkbox",
+              "id":"text_shadow",
+              "label": "Enable text shadow",
+              "default":false
+          },
+          {
+              "type": "number",
+              "id": "text_mgb",
+              "label": "Margin bottom",
+              "default": 0
+          },
+          {
+              "type":"header",
+              "content":"+ Option mobile"
+          },
+          {
+              "type":"checkbox",
+              "id":"hidden_mobile",
+              "label":"Hidden on mobile ",
+              "default":false
+          },
+          {
+              "type":"range",
+              "id":"text_fs_mb",
+              "label":"Font size (Mobile)",
+              "max":60,
+              "min":10,
+              "step":1,
+              "unit":"px",
+              "default":16
+          },
+          {
+              "type":"range",
+              "id":"text_lh_mb",
+              "label":"Line height (Mobile)",
+              "max":70,
+              "min":0,
+              "step":1,
+              "default":0,
+              "unit":"px",
+              "info":"Set is '0' use to default"            
+          },
+          {
+              "type":"range",
+              "id":"text_ls_mb",
+              "label":"Letter spacing (Mobile)",
+              "min":0,
+              "max":10,
+              "step":0.1,
+              "unit":"px",
+              "default":0
+          },
+          {
+              "type": "number",
+              "id": "text_mgb_mobile",
+              "label": "Margin bottom (Mobile)",
+              "default": 0
+          }
+        ]
+      },
+      {
+        "type": "3",
+        "name": "Breadcrumb", 
+        "limit": 1,
+        "settings":[
+          {
+          "type": "color",
+          "id": "breadcrumb_color",
+          "label": "Breadcrumb color",
+          "default": "#f2f2f2"
+          },
+          {
+            "type": "number",
+            "id": "brc_mgb",
+            "label": "Margin bottom",
+            "default": 5
+          }
+        ]
+      }
+    ],
+    "default": {
+      "blocks": [
+        { 
+          "type": "1", 
+          "type": "3"
+        }
+      ]
+    }
+  }
+{% endschema %}

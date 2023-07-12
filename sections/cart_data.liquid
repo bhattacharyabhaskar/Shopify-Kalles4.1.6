@@ -1,0 +1,5 @@
+{%- liquid 
+assign gift_pr = all_products[settings.gift_wrap_pr]
+assign arr_gift_id = cart.items | where: 'product_id',gift_pr.id -%}
+
+[t4s_split1]{{ cart.item_count }}[t4s_split2]{{ cart.total_price | money }}[t4s_split2]{%- if arr_gift_id.size > 0 %}1{% else %}0{% endif -%}[t4s_split1]

@@ -1,0 +1,193 @@
+{%- if collection.all_tags.size > 0 -%}
+<link rel="stylesheet" href="{{ 'drawer.min.css' | asset_url }}" media="all">
+<link rel="stylesheet" href="{{ 'facets.css' | asset_url }}" media="all">
+<div data-filter-links id="t4s-filter-hidden" class="t4s-filter-hidden is--t4s-filter-tags t4s-drawer t4s-drawer__left" aria-hidden="true">
+   <div class="t4s-drawer__header">
+      <span>{{ 'products.facets.filter_title' | t }}</span>
+      <button class="t4s-drawer__close" data-drawer-close aria-label="{{ 'search.general.close_search' | t }}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+   </div>
+
+   <div class="t4s-drawer__content">
+      <div class="t4s-drawer__main">
+         <div data-t4s-scroll-me class="t4s-drawer__scroll t4s-current-scrollbar">
+            {%- if section.blocks.size > 0 -%}
+               
+               {%- liquid 
+                assign tags_dow = collection.all_tags | join: ',' | replace : '  ', ' ' | downcase
+                assign tags_dow_arr = tags_dow | split: ','
+                if current_tags
+                   assign has_current_tag = true
+                   assign current_arr = current_tags | join: ',' | replace : '  ', ' ' | downcase
+                   assign current_tags = current_arr | split: ','
+                   if collection.tags.size > 0 and collection.products_count > 0
+                     assign tags_dow2 = collection.tags | join: ',' | downcase 
+                     assign tags_dow_arr2 = tags_dow2 | split: ','
+                   elsif collection.products_count > 0
+                    assign tags_dow_arr2 = tags_dow_arr
+                   else 
+                    assign tags_dow_arr2 = '' | split: ','
+                   endif
+                 else
+                   assign has_current_tag = false
+                 endif -%}
+
+               <div id="FacetFiltersForm" data-sidebar-links class="t4s-facets__form t4s-row t4s-g-0">
+                  
+                  {%- liquid
+                  for block in section.blocks
+                     if block.settings.hidden_block
+                        continue
+                     endif
+                     case block.type
+                        when 'color'
+                           render 'block_color', tags_dow_arr: tags_dow_arr, block: block, current_tags: current_tags, has_current_tag: has_current_tag, tags_dow_arr2: tags_dow_arr2
+                        else
+                           render 'block_other', tags_dow_arr: tags_dow_arr, block: block, current_tags: current_tags, has_current_tag: has_current_tag, tags_dow_arr2: tags_dow_arr2
+                     endcase
+                  endfor -%}
+
+               </div>
+            {%- else -%}
+            <div class="t4s-text-center" style="margin-top: 20px;">{{ 'onboarding.no_content' | t }}</div>   
+            {%- endif -%}
+         </div>
+      </div>
+      {%- if current_tags.size > 1 -%}
+            <div class="t4s-drawer__bottom">
+               <a href="{{ collection.url }}" class="t4s-mini-search__viewAll">{{ 'products.facets.clear_all' | t }} <svg width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 18.71875 6.78125 L 17.28125 8.21875 L 24.0625 15 L 4 15 L 4 17 L 24.0625 17 L 17.28125 23.78125 L 18.71875 25.21875 L 27.21875 16.71875 L 27.90625 16 L 27.21875 15.28125 Z"/></svg></a>
+            </div>
+      {%- endif -%}
+   </div>
+</div>
+{%- endif -%}
+
+
+{% schema %}
+  {
+    "name": "Filter tags",
+    "class": "t4s-section-filter t4s-section-admn2-fixed",
+    "max_blocks": 50,
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Tags must start with group- and look like group-TAG-NAME where TAG-NAME can be anything you choose, group is a key word."
+      },
+      {
+        "type": "paragraph",
+        "content": "Works: color-Blue or color_Blue"
+      },
+      {
+        "type": "paragraph",
+        "content": "Doesn't work: colors-Blue, colors_Blue, colorBlue"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "color",
+        "name": "By Color",
+        "limit": 10,
+        "settings": [
+          {
+          "type": "checkbox",
+          "id": "hidden_block",
+          "label": "Hidden block",
+          "info": "if checked block will be set to hidden.",
+          "default": false
+        },
+          { 
+          "type":"text",
+          "id":"title",
+          "label":"Filter by categories title",
+          "default":"By Color"
+          },
+          {
+           "type": "textarea",
+           "id": "arra_enter",
+           "label": "Shop by tags list",
+           "default":"Red,White,Brown,Blue, Black, Green, Grey, Sliver,Pink",
+           "info": "Separate by a comma, i.e \"Tag1, Tag2, Tag3\"."
+         },
+         {
+          "type": "checkbox",
+          "id": "use_auto_filter_tag",
+          "label": "Use auto filter groups",
+          "default": false
+         },
+         { 
+          "type":"text",
+          "id":"key",
+          "label":"Filter key word",
+          "placeholder": "Color",
+          "default":"Color"
+          },
+         {
+          "type": "paragraph",
+          "content": "Create tag filter groups in Shopify. This snippet is designed to group and separate out collection tags. Use admin extensions"
+          }
+        ]
+      },
+      {
+        "type": "other",
+        "name": "By Other",
+        "settings": [
+          {
+          "type": "checkbox",
+          "id": "hidden_block",
+          "label": "Hidden block",
+          "info": "if checked block will be set to hidden.",
+          "default": false
+        },
+          { 
+          "type":"text",
+          "id":"title",
+          "label":"Filter by categories title",
+          "default":"By Other"
+          },
+           {
+              "type": "textarea",
+              "id": "arra_enter",
+              "label": "Shop by tags list",
+              "info": "Separate by a comma, i.e \"Tag1, Tag2, Tag3\"."
+            },
+          {
+          "type": "checkbox",
+          "id": "use_auto_filter_tag",
+          "label": "Use auto filter groups",
+          "default": false
+         },
+         { 
+          "type":"text",
+          "id":"key",
+          "label":"Filter key word",
+          "placeholder": "Other",
+          "default":"Other"
+          },
+          {
+           "type": "select",
+           "id": "style",
+           "default":"checkbox",
+           "label": "Design block filter",
+           "options": [
+             {
+               "value": "default",
+               "label": "Default"
+             },
+             {
+               "value": "checkbox",
+               "label": "Checkbox"
+             },
+             {
+               "value": "tag",
+               "label": "Tag"
+             }
+           ]
+         },
+         {
+          "type": "paragraph",
+          "content": "Create tag filter groups in Shopify. This snippet is designed to group and separate out collection tags. Use admin extensions"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

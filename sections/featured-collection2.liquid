@@ -1,0 +1,1252 @@
+<!-- sections/featured-collection2.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'collection-products2.css' | asset_url | stylesheet_tag }}
+{{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+<link href="{{ 'loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- liquid
+  assign sid = section.id
+  assign se_stts = section.settings
+  assign se_blocks = section.blocks
+  assign stt_layout = se_stts.layout
+  assign stt_image_bg = se_stts.image_bg
+  if stt_layout == 't4s-se-container'
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+  assign layout_des = se_stts.layout_des
+  assign image_ratio = se_stts.image_ratio
+  if image_ratio == "ratioadapt"
+    assign imgatt = ''
+   else
+    assign imgatt = 'data-'
+  endif
+  assign sett_equal = se_stts.use_eq_height
+  assign limit = se_stts.limit
+  if se_stts.btn_owl == "outline"
+    assign arrow_icon = 1
+  else
+    assign arrow_icon = 2
+  endif
+
+  assign price_varies_style = settings.price_varies_style
+
+  assign t4s_se_class = 't4s_nt_se_' | append: sid
+  if se_stts.use_cus_css and se_stts.code_cus_css != blank
+    render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+  endif
+ -%}
+
+
+<div data-not-main data-ntajax-options='{"id":"{{ sid }}","type":"{{ typeAjax }}","isProduct":true}' class="t4s-section-inner t4s_nt_se_{{ sid }} t4s_se_{{ sid }} {{ stt_layout }} {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s {% endif %}"  {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2" {% endif %} {% render 'section_style', se_stts: se_stts %} >
+  {{- html_layout[0] -}}
+  {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner {% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s {% endif %} "  {% if stt_image_bg != blank %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2" {% endif %} > {%- endif -%}
+  {%- render 'section_tophead', se_stts: se_stts -%}
+  {%- if layout_des == "1" -%}
+    {{ 'button-style.css' | asset_url | stylesheet_tag }}
+    <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+    <div data-collection-url="{{ collection.url }}" data-contentlm-replace class="t4s_box_pr_grid t4s-products t4s-justify-content-center t4s-text-{{ se_stts.content_align }} t4s_{{ image_ratio }} t4s_position_{{ se_stts.image_position }} t4s_{{ se_stts.image_size }} t4s-row t4s-row-cols-lg-{{ se_stts.col_dk }} t4s-row-cols-md-{{ se_stts.col_tb }} t4s-row-cols-{{ se_stts.col_mb }} t4s-gx-md-{{ se_stts.space_h_item }} t4s-gy-md-{{ se_stts.space_v_item }} t4s-gx-{{ se_stts.space_h_item_mb }} t4s-gy-{{ se_stts.space_v_item_mb }}">
+  {%- elsif layout_des == "2" -%}
+    <div data-collection-url="{{ collection.url }}" data-t4s-resizeobserver class="t4s-flicky-slider t4s_box_pr_slider t4s-products t4s-text-{{ se_stts.content_align }} t4s_{{ image_ratio }} t4s_position_{{ se_stts.image_position }} t4s_{{ se_stts.image_size }} {% if se_stts.nav_btn %}  t4s-slider-btn-style-{{ se_stts.btn_owl }} t4s-slider-btn-{{ se_stts.btn_shape }} t4s-slider-btn-{{ se_stts.btn_size }} t4s-slider-btn-cl-{{ se_stts.btn_cl }} t4s-slider-btn-vi-{{ se_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ se_stts.btn_hidden_mobile }} {% endif %} {% if se_stts.nav_dot == true %}   t4s-dots-style-{{ se_stts.dot_owl }} t4s-dots-cl-{{ se_stts.dots_cl }} t4s-dots-round-{{ se_stts.dots_round }} t4s-dots-hidden-mobile-{{ se_stts.dots_hidden_mobile }} {% endif %}  t4s-row t4s-row-cols-lg-{{ se_stts.col_dk }} t4s-row-cols-md-{{ se_stts.col_tb }} t4s-row-cols-{{ se_stts.col_mb }} t4s-gx-md-{{ se_stts.space_h_item }} t4s-gy-md-{{ se_stts.space_v_item }} t4s-gx-{{ se_stts.space_h_item_mb }} t4s-gy-{{ se_stts.space_v_item_mb }}  flickityt4s" data-flickityt4s-js='{"setPrevNextButtons":true,"arrowIcon":"{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{ se_stts.loop }},"prevNextButtons": {{ se_stts.nav_btn }},"percentPosition": 1,"pageDots": {{ se_stts.nav_dot }}, "autoPlay" : {{ se_stts.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ se_stts.au_hover }} }' style="--space-dots: {{ se_stts.dots_space }}px;--flickity-btn-pos: {{ se_stts.space_h_item }}px;--flickity-btn-pos-mb: {{ se_stts.space_h_item_mb }}px;">
+  {%- else -%}
+    {{ 'button-style.css' | asset_url | stylesheet_tag }}
+    <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+    <div data-collection-url="{{ collection.url }}"  data-contentlm-replace class="isotopet4s t4s_box_pr_masonry t4s-products t4s-text-{{ se_stts.content_align }} t4s_{{ image_ratio }} t4s_position_{{ se_stts.image_position }} t4s_{{ se_stts.image_size }} t4s-row t4s-row-cols-lg-{{ se_stts.col_dk }} t4s-row-cols-md-{{ se_stts.col_tb }} t4s-row-cols-{{ se_stts.col_mb }} t4s-gx-md-{{ se_stts.space_h_item }} t4s-gy-md-{{ se_stts.space_v_item }} t4s-gx-{{ se_stts.space_h_item_mb }} t4s-gy-{{ se_stts.space_v_item_mb }}" data-isotopet4s-js='{ "itemSelector": ".t4s-product2", "layoutMode": "masonry" }'>
+  {%- endif -%}
+    {%- if se_blocks.size > 0 -%}
+        {%- for block in se_blocks limit: limit -%}
+          {%- liquid
+          assign bk_stts = block.settings
+          assign link = bk_stts.link_product
+          if link.type == "product_link" and link != blank
+            assign product = link.object
+          else
+            continue
+          endif
+          assign pr_url = product.url
+          if bk_stts.image != blank
+            assign image = bk_stts.image
+          else
+            assign image = product.featured_media | default: placeholder_img
+            assign image2 = product.media[1]
+          endif -%}
+
+          <div class="t4s-product2 t4s-pr-grid t4s-pr-{{ pid }} {{ col }} t4s-col-item">
+            <div class="t4s-product-wrapper">
+              <div data-cacl-slide class="t4s-product-inner t4s-pr t4s-oh">
+                <div class="t4s-product-img t4s_ratio {% if image2 != blank %}is-show-img2{% endif %}" {{ imgatt }}style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1 }}">
+                    <img data-pr-img class="t4s-product-main-img lazyloadt4s" loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900]" data-optimumx="2" data-sizes="auto" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                    <span class="lazyloadt4s-loader"></span>
+                    {%- if image2 != blank -%}
+                      <img data-pr-img class="t4s-product-hover-img lazyloadt4s" loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image2 | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900]" data-optimumx="2" data-sizes="auto" width="{{ image2.width }}" height="{{ image2.height }}" alt="{{ image2.alt | escape }}">
+                    {%- endif -%}
+                    <noscript><img class="t4s-product-main-img" loading="lazy" src="{{ image | image_url: width: 600 }}"  alt="{{ image.alt | escape }}"></noscript>
+                </div>
+                <div class="t4s-product-info">
+                  <div class="t4s-product-info__inner"> 
+                     <h3 class="t4s-product-title"><a data-pr-href href="{{ pr_url }}">{% if bk_stts.title != blank %}{{ bk_stts.title }}{% else %}{{ product.title }}{% endif %}</a></h3>
+                     {%- if bk_stts.pr_price != blank %} <span class="t4s-product-price">{{ bk_stts.pr_price | times: 100 | money }}</span>
+                     {% else %}
+                      {%- render 'product-price', product: product, price_varies_style: price_varies_style, type: 'card', isGrouped: false -%}
+                     {% endif %}
+                     {%- if se_stts.show_des_pr %}
+                       <div class="t4s-product-des">
+                         {%- if  bk_stts.desc != blank -%}
+                            {{ bk_stts.desc }}
+                         {%- else -%}
+                            <p>{{- product.description | strip_html | truncatewords: 30 -}}</p>
+                         {%- endif -%}
+                       </div>
+                     {%- endif -%}
+                    {%- if se_stts.show_btn %}
+                      <a href="{% if bk_stts.btn_url != blank %} {{ bk_stts.btn_url }} {% else %} {{ pr_url }} {% endif %}" class="t4s-product-btn t4s-btn t4s-btn-base t4s-btn-style-{{ se_stts.button_style }} t4s-btn-size-{{ se_stts.btns_size }} t4s-btn-icon-{{ se_stts.btn_icon }} t4s-btn-color-{{ se_stts.btns_cl }} {% if se_stts.button_style == 'default' or se_stts.button_style == 'outline' %}t4s-btn-effect-{{ se_stts.button_effect }} {% endif %}">{{ bk_stts.btn_txt }}
+                        {% if se_stts.btn_icon %}
+                          <svg class="t4s-btn-icon"><use xlink:href="#t4s-icon-btn"></use></svg>
+                        {% endif %}
+                       
+                      </a> 
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+          </div>
+          </div>
+        {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..18) limit: limit -%}
+        <div class="t4s-col-item t4s-product2 t4s-pr-grid t4s-pr-item">
+          <div class="t4s-product-wrapper" data-cacl-slide >
+            <div class="t4s-product-inner">
+              <div class="t4s-product-img t4s-oh">
+               {%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+                {{ 'product-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg' }}
+              </div>
+              <div class="t4s-product-info">
+                <div class="t4s-product-info__inner">
+                  <h3 class="t4s-product-title"><a href="/admin/products">{{ 'onboarding.product_title' | t }}</a></h3>
+                  <span class="t4s-product-price">$99.00</span>
+                  <div class="t4s-product-des">The perfect leggings for your fitness program. Suitable for all sports and universally applicable. Ingenious design and high-quality workmanship.</div>
+                  <a href="/admin/products" class="t4s-product-btn t4s-btn t4s-btn-base t4s-btn-style-{{ se_stts.button_style }} t4s-btn-size-{{ se_stts.btns_size }} t4s-btn-icon-{{ se_stts.btn_icon }} t4s-btn-color-{{ se_stts.btns_cl }} {% if se_stts.button_style == 'default' or se_stts.button_style == 'outline' %}t4s-btn-effect-{{ se_stts.button_effect }} {% endif %}">Shop now  {% if se_stts.btn_icon %}
+                        <svg class="t4s-btn-icon"><use xlink:href="#t4s-icon-btn"></use></svg>
+                      {% endif %}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+  {{- html_layout[1] -}}
+</div>
+
+
+{%- schema -%}
+  {
+    "name": "Featured collection 2",
+    "tag": "section",
+    "class": "t4s-section t4s_bk_flickity t4s-section-all t4s_tp_cd t4s-featured-collection2 t4s_tp_istope",
+    "settings": [
+      {
+          "type": "header",
+          "content": "1. Heading options"
+      },
+      {
+          "type": "select",
+          "id": "design_heading",
+          "label": "+ Design heading",
+          "default": "1",
+          "options": [
+              {
+                  "value": "1",
+                  "label": "Design 01"
+              },
+              {
+                  "value": "2",
+                  "label": "Design 02"
+              },
+              {
+                  "value": "3",
+                  "label": "Design 03"
+              },
+              {
+                  "value": "4",
+                  "label": "Design 04"
+              },
+              {
+                  "value": "5",
+                  "label": "Design 05"
+              },
+              {
+                  "value": "6",
+                  "label": "Design 06 (width line-awesome)"
+              },
+              {
+                  "value": "7",
+                  "label": "Design 07"
+              },
+              {
+                  "value": "8",
+                  "label": "Design 08"
+              },
+              {
+                  "value": "9",
+                  "label": "Design 09"
+              },
+              {
+                  "value": "10",
+                  "label": "Design 10"
+              },
+              {
+                  "value": "11",
+                  "label": "Design 11"
+              },
+              {
+                  "value": "12",
+                  "label": "Design 12"
+              },
+              {
+                  "value": "13",
+                  "label": "Design 13"
+              },
+              {
+                  "value": "14",
+                  "label": "Design 14"
+              }
+          ]
+      },
+      {
+          "type": "select",
+          "id": "heading_align",
+          "label": "+ Heading align",
+          "default": "t4s-text-center",
+          "options": [
+              {
+                  "value": "t4s-text-start",
+                  "label": "Left"
+              },
+              {
+                  "value": "t4s-text-center",
+                  "label": "Center"
+              },
+              {
+                  "value": "t4s-text-end",
+                  "label": "Right"
+              }
+          ]
+      },
+      {
+          "type": "text",
+          "id": "top_heading",
+          "label": "+ Heading",
+          "default": "Featured collection"
+      },
+      {
+        "type": "text",
+        "id": "icon_heading",
+        "label": "Enter a icon name on heading",
+        "info": "Only used for design 6 [LineAwesome](https://kalles.the4.co/font-lineawesome/)",
+        "default": "las la-gem"
+      },
+      {
+          "type": "textarea",
+          "id": "top_subheading",
+          "label": "+ Subheading"
+      },
+      {
+        "type": "number",
+        "id": "tophead_mb",
+        "label": "+ Space bottom (px)",
+        "info": "The vertical spacing between heading and content",
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "2. General options"
+      },
+      {
+        "type": "header",
+        "content": "+ Options image products"
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image ratio",
+        "default": "rationt",
+        "info": "Aspect ratio custom will settings in general panel",
+        "options": [
+          {
+            "group": "Natural",
+            "value": "ratioadapt",
+            "label": "Adapt to image"
+          },
+          {
+            "group": "Landscape",
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "group": "Landscape",
+            "value": "ratio16_9",
+            "label": "16:9"
+          },
+          {
+            "group": "Landscape",
+            "value": "ratio8_5",
+            "label": "8:5"
+          },
+          {
+            "group": "Landscape",
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "group": "Landscape",
+            "value": "ratio4_3",
+            "label": "4:3"
+          },
+          {
+            "group": "Landscape",
+            "value": "rationt",
+            "label": "Ratio ASOS"
+          },
+          {
+            "group": "Squared",
+            "value": "ratio1_1",
+            "label": "1:1"
+          },
+          {
+            "group": "Portrait",
+            "value": "ratio2_3",
+            "label": "2:3"
+          },
+          {
+            "group": "Portrait",
+            "value": "ratio1_2",
+            "label": "1:2"
+          },
+          {
+            "group": "Custom",
+            "value": "ratiocus1",
+            "label": "Ratio custom 1"
+          },
+          {
+            "group": "Custom",
+            "value": "ratiocus2",
+            "label": "Ratio custom 2"
+          },
+          {
+            "group": "Custom",
+            "value": "ratio_us3",
+            "label": "Ratio custom 3"
+          },
+          {
+            "group": "Custom",
+            "value": "ratiocus4",
+            "label": "Ratio custom 4"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image size",
+        "default": "cover",
+        "info": "This settings apply only if the image ratio is not set to 'Adapt to image'",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Full"
+          },
+          {
+            "value": "contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "1",
+            "label": "Left top"
+          },
+          {
+            "value": "2",
+            "label": "Left center"
+          },
+          {
+            "value": "3",
+            "label": "Left bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right top"
+          },
+          {
+            "value": "5",
+            "label": "Right center"
+          },
+          {
+            "value": "6",
+            "label": "Right bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center top"
+          },
+          {
+            "value": "8",
+            "label": "Center center"
+          },
+          {
+            "value": "9",
+            "label": "Center bottom"
+          }
+        ],
+        "label": "Image position",
+        "default": "8"
+      },
+      {
+        "type": "header",
+        "content": "+Options for product items"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_des_pr",
+        "label": "Show description product"
+      },
+      {
+        "type": "paragraph",
+        "content": "+ BUTTONS PRODUCT"
+      },
+      {
+          "type": "checkbox",
+          "id": "show_btn",
+          "label": "Show button product",
+          "default": true
+      },
+      {
+        "type":"checkbox",
+        "id":"btn_icon",
+        "label":"Enable button icon",
+        "default":false
+      },
+      {
+        "type": "select",
+        "id": "button_style",
+        "label": "Button style",
+        "options": [
+            {
+                "label": "Default",
+                "value": "default"
+            },
+            {
+                "label": "Outline",
+                "value": "outline"
+            },
+            {
+                "label": "Bordered bottom",
+                "value": "bordered"
+            },
+            {
+                "label": "Link",
+                "value": "link"
+            }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "btns_size",
+        "label": "Button size",
+        "default":"large",
+        "options": [
+            {
+                "label": "Extra small",
+                "value": "small"
+            },
+            {
+                "label": "Small",
+                "value": "extra-small"
+            },
+            {
+                "label": "Medium",
+                "value": "medium"
+            },
+            {
+                "label": "Large",
+                "value": "extra-medium"
+            },
+            {
+                "label": "Extra large",
+                "value": "large"
+            },
+            {
+                "label": "Extra extra large",
+                "value": "extra-large"
+            }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "btns_cl",
+        "label": "Button color",
+        "default": "dark",
+        "options": [
+          {
+              "value": "light",
+              "label": "Light"
+          },
+          {
+              "value": "dark",
+              "label": "Dark"
+          },
+          {
+              "value": "primary",
+              "label": "Primary"
+          },
+          {
+              "value": "custom1",
+              "label": "Custom color 1"
+          },
+          {
+              "value": "custom2",
+              "label": "Custom color 2"
+          }
+        ]
+      },
+      {
+          "type":"select",
+          "id":"button_effect",
+          "label":"Button hover effect",
+          "default":"default",
+          "info":"Only working button style default, outline",
+          "options":[
+              {
+                  "label":"Default",
+                  "value":"default"
+              },
+              {
+                  "label":"Fade",
+                  "value":"fade"
+              },
+              {
+                  "label":"Rectangle out",
+                  "value":"rectangle-out"
+              },
+              {
+                  "label":"Sweep to right",
+                  "value":"sweep-to-right"
+              },
+              {
+                  "label":"Sweep to left",
+                  "value":"sweep-to-left"
+              },
+              {
+                  "label":"Sweep to bottom",
+                  "value":"sweep-to-bottom"
+              },
+              {
+                  "label":"Sweep to top",
+                  "value":"sweep-to-top"
+              },
+              {
+                  "label":"Shutter out horizontal",
+                  "value":"shutter-out-horizontal"
+              },
+              {
+                  "label":"Outline",
+                  "value":"outline"
+              },
+              {
+                  "label":"Shadow",
+                  "value":"shadow"
+              }
+          ]
+      },
+      {
+        "type": "select",
+        "id": "content_align",
+        "label": "Product content align",
+        "default": "center",
+        "options": [
+          {
+            "label": "Default",
+            "value": "default"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "limit",
+        "min": 1,
+        "max": 50,
+        "step": 1,
+        "label": "Maximum products to show",
+        "default": 8
+      },
+      {
+        "type": "select",
+        "id": "col_dk",
+        "label": "Items per row",
+        "default": "3",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          },
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "col_tb",
+        "label": "Items per row (Tablet)",
+        "default": "2",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          },
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "col_mb",
+        "label": "Items per row (Mobile)",
+        "default": "2",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          },
+          {
+            "value": "2",
+            "label": "2"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "space_h_item",
+        "options": [
+          {
+              "value": "0",
+              "label": "0"
+          },
+          {
+              "value": "2",
+              "label": "2px"
+          },
+          {
+              "value": "4",
+              "label": "4px"
+          },
+          {
+              "value": "6",
+              "label": "6px"
+          },
+          {
+              "value": "8",
+              "label": "8px"
+          },
+          {
+              "value": "10",
+              "label": "10px"
+          },
+          {
+              "value": "20",
+              "label": "20px"
+          },
+          {
+              "value": "30",
+              "label": "30px"
+          }
+        ],
+        "label": "Space horizontal items",
+        "default": "30"
+      },
+      {
+        "type": "select",
+        "id": "space_v_item",
+        "options": [
+          {
+              "value": "0",
+              "label": "0"
+          },
+          {
+              "value": "2",
+              "label": "2px"
+          },
+          {
+              "value": "4",
+              "label": "4px"
+          },
+          {
+              "value": "6",
+              "label": "6px"
+          },
+          {
+              "value": "8",
+              "label": "8px"
+          },
+          {
+              "value": "10",
+              "label": "10px"
+          },
+          {
+              "value": "20",
+              "label": "20px"
+          },
+          {
+              "value": "30",
+              "label": "30px"
+          }
+        ],
+        "label": "Space vertical items",
+        "default": "30"
+      },
+      {
+        "type": "select",
+        "id": "space_h_item_mb",
+        "options": [
+          {
+              "value": "0",
+              "label": "0"
+          },
+          {
+              "value": "2",
+              "label": "2px"
+          },
+          {
+              "value": "4",
+              "label": "4px"
+          },
+          {
+              "value": "6",
+              "label": "6px"
+          },
+          {
+              "value": "8",
+              "label": "8px"
+          },
+          {
+              "value": "10",
+              "label": "10px"
+          },
+          {
+              "value": "20",
+              "label": "20px"
+          },
+          {
+              "value": "30",
+              "label": "30px"
+          }
+        ],
+        "label": "Space horizontal items (Mobile)",
+        "default": "10"
+      },
+      {
+        "type": "select",
+        "id": "space_v_item_mb",
+        "options": [
+          {
+              "value": "0",
+              "label": "0"
+          },
+          {
+              "value": "2",
+              "label": "2px"
+          },
+          {
+              "value": "4",
+              "label": "4px"
+          },
+          {
+              "value": "6",
+              "label": "6px"
+          },
+          {
+              "value": "8",
+              "label": "8px"
+          },
+          {
+              "value": "10",
+              "label": "10px"
+          },
+          {
+              "value": "20",
+              "label": "20px"
+          },
+          {
+              "value": "30",
+              "label": "30px"
+          }
+        ],
+        "label": "Space vertical items (Mobile)",
+        "default": "10"
+      },
+      {
+        "type": "header",
+        "content": "--Box options--"
+      },
+      {
+        "type": "select",
+        "id": "layout_des",
+        "options": [
+          {
+            "value": "1",
+            "label": "Grid"
+          },
+          {
+            "value": "2",
+            "label": "Carousel"
+          },
+          {
+            "value": "3",
+            "label": "Masonry"
+          }
+        ],
+        "label": "Layout design",
+        "default": "2"
+      },
+      {
+        "type": "header",
+        "content": "+Options for carousel layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "loop",
+        "label": "Enable loop",
+        "info": "At the end of cells, wrap-around to the other end for infinite scrolling",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "au_time",
+        "min": 0,
+        "max": 30,
+        "step": 0.5,
+        "label": "Autoplay speed in second.",
+        "info": "Set is '0' to disable autoplay",
+        "unit": "s",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "au_hover",
+        "label": "Pause autoplay on hover",
+        "info": "Auto-playing will pause when the user hovers over the carousel",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "—————————————————"
+      },
+      {
+        "type": "paragraph",
+        "content": "Prev next button"
+      },
+      {
+        "type": "checkbox",
+        "id": "nav_btn",
+        "label": "Use prev next button",
+        "info": "Creates and show previous & next buttons",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "btn_vi",
+        "label": "Visible",
+        "default": "hover",
+        "options": [
+          {
+            "value": "always",
+            "label": "Always"
+          },
+          {
+            "value": "hover",
+            "label": "Only hover"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "btn_owl",
+        "label": "Button style",
+        "default": "default",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "outline",
+            "label": "Outline"
+          },
+          {
+            "value": "simple",
+            "label": "Simple"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "btn_shape",
+        "label": "Button shape",
+        "info": "Not working with button style 'Simple'",
+        "default": "none",
+        "options": [
+          {
+            "value": "none",
+            "label": "Default"
+          },
+          {
+            "value": "round",
+            "label": "Round"
+          },
+          {
+            "value": "rotate",
+            "label": "Rotate"
+          }
+        ]
+      },
+      {
+          "type": "select",
+          "id": "btn_cl",
+          "label": "Button color",
+          "default": "dark",
+          "options": [
+              {
+                  "value": "light",
+                  "label": "Light"
+              },
+              {
+                  "value": "dark",
+                  "label": "Dark"
+              },
+              {
+                  "value": "primary",
+                  "label": "Primary"
+              },
+              {
+                  "value": "custom1",
+                  "label": "Custom color 1"
+              },
+              {
+                  "value": "custom2",
+                  "label": "Custom color 2"
+              }
+          ]
+      },
+      {
+        "type": "select",
+        "id": "btn_size",
+        "label": "Button size",
+        "default": "small",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ]
+      },
+      {
+        "type":"checkbox",
+        "id":"btn_hidden_mobile",
+        "label":"Hidden buttons on mobile ",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "—————————————————"
+      },
+      {
+        "type": "paragraph",
+        "content": "Page dots"
+      },
+      {
+        "type": "checkbox",
+        "id": "nav_dot",
+        "label": "Use page dots",
+        "info": "Creates and show page dots",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "dot_owl",
+        "label": "Dots style",
+        "default": "default",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "outline",
+            "label": "Outline"
+          },
+          {
+            "value": "elessi",
+            "label": "Elessi"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "dots_cl",
+        "label": "Dots color",
+        "default": "dark",
+        "options": [
+          {
+              "value": "light",
+              "label": "Light (Best on dark background)"
+          },
+          {
+              "value": "dark",
+              "label": "Dark"
+          },
+          {
+              "value": "primary",
+              "label": "Primary"
+          },
+          {
+              "value": "custom1",
+              "label": "Custom color 1"
+          },
+          {
+              "value": "custom2",
+              "label": "Custom color 2"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "dots_round",
+        "label": "Enable dots round",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "dots_space",
+        "min": 2,
+        "max": 20,
+        "step": 1,
+        "label": "Dot between horizontal",
+        "unit": "px",
+        "default": 10
+      },
+      {
+        "type":"checkbox",
+        "id":"dots_hidden_mobile",
+        "label":"Hidden dots on mobile ",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "3. Design options"
+      },
+      {
+        "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+        "options": [
+            { "value": "t4s-se-container", "label": "Container"},
+            { "value": "t4s-container-wrap", "label": "Wrapped container"},
+            { "value": "t4s-container-fluid", "label": "Full width"}
+        ]
+      },
+      {
+        "type": "color",
+        "id": "cl_bg",
+        "label": "Background"
+      },
+      {
+        "type": "color_background",
+        "id": "cl_bg_gradient",
+        "label": "Background gradient"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_bg",
+        "label": "Background image"
+      },
+      {
+          "type": "text",
+          "id": "mg",
+          "label": "Margin",
+          "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+          "default": ",,50px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd",
+          "label": "Padding",
+          "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+          "placeholder": "50px,,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design Tablet Options"
+      },
+      {
+        "type": "text",
+        "id": "mg_tb",
+        "label": "Margin",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "text",
+        "id": "pd_tb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+      }, 
+      {
+        "type": "header",
+        "content": "+ Design mobile options"
+      },
+      {
+          "type": "text",
+          "id": "mg_mb",
+          "label": "Margin",
+          "default": ",,30px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd_mb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+      },
+      {
+        "type": "header",
+        "content": "4. Custom css"
+      },
+      {
+        "id": "use_cus_css",
+        "type": "checkbox",
+        "label": "Use custom css",
+        "default":false,
+        "info": "If you want custom style for this section."
+      },
+      {
+        "id": "code_cus_css",
+        "type": "textarea",
+        "label": "Code custom css",
+        "info": "Use selector .SectionID to style css"
+
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "url",
+            "id": "link_product",
+            "info": "Only show when choose link product",
+            "label": "+ Choose Product (recommended)"
+          },
+          {
+            "type": "paragraph",
+            "content": "—————————————————"
+          },
+          {
+            "type": "paragraph",
+            "content": "All blank if getting data from product"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Product image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Product title"
+          },
+          {
+            "type": "number",
+            "id": "pr_price",
+            "label": "Product price"
+          },
+          {
+            "type": "textarea",
+            "id": "desc",
+            "label": "Product description"
+          },
+          {
+            "type": "text",
+            "id": "btn_txt",
+            "label": "Button label",
+            "default": "Shop now"
+          },
+          {
+            "type": "url",
+            "id": "btn_url",
+            "label": "Button link",
+            "info": "Link default is product's link.If this box is empty"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured collection 2",
+        "category": "Homepage"
+      }
+    ]
+  }
+{%- endschema -%}

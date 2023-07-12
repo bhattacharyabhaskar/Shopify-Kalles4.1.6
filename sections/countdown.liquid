@@ -1,0 +1,399 @@
+<!-- sections/countdown.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'countdown.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign sid = section.id
+  assign se_stts = section.settings
+  assign stt_layout = se_stts.layout
+  assign stt_image_bg = se_stts.image_bg
+  if stt_layout == 't4s-se-container' 
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+
+  assign t4s_se_class = 't4s_nt_se_' | append: sid
+  if se_stts.use_cus_css and se_stts.code_cus_css != blank
+    render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+  endif 
+ -%} 
+<div class="t4s-section-inner t4s_nt_se_{{ sid }} t4s_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+    {%- render 'section_tophead', se_stts: se_stts -%}
+     {% if se_stts.date != blank %}
+        <div class="t4s-countdown t4s-countdown-des-{{ se_stts.cdt_des }} t4s-countdown-size-{{ se_stts.cdt_size }} {{ se_stts.content_align }}" id="b_{{ block.id }}" {{ block.shopify_attributes }} style="--number-cl:{{ se_stts.number_cl }};--text-cl:{{ se_stts.text_cl }};--border-cl:{{ se_stts.border_cl }};--bg-cl:{{ se_stts.bg_cl }}; --bd-width:{{ se_stts.bd_width }}px; --bdr:{{ se_stts.box_bdr }}%; --space-item:{{ se_stts.space_item }}px;" >
+          <div class="time" data-countdown-t4s data-date='{{ se_stts.date }}'>
+            <span class="countdown-days">
+              <span class="cd_timet4 cd-number">%-D</span>
+              <span class="cd_txtt4 cd-text">%!D:{{ "sections.countdown_text.day" | t }},{{ "sections.countdown_text.day_plural" | t }};</span>
+            </span>
+            <span class="countdown-hours">
+              <span class="cd_timet4 cd-number">%H</span> 
+              <span class="cd_txtt4 cd-text">%!H:{{ "sections.countdown_text.hr" | t }},{{ "sections.countdown_text.hr_plural" | t }};</span>
+            </span>
+            <span class="countdown-min">
+              <span class="cd_timet4 cd-number">%M</span> 
+              <span class="cd_txtt4 cd-text">%!M:{{ "sections.countdown_text.min" | t }},{{ "sections.countdown_text.min_plural" | t }};</span>
+            </span>
+            <span class="countdown-sec">
+              <span class="cd_timet4 cd-number">%S</span> 
+              <span class="cd_txtt4 cd-text">%!S:{{ "sections.countdown_text.sec" | t }},{{ "sections.countdown_text.sec_plural" | t }};</span>
+            </span>
+          </div>
+        </div>
+    {% endif %}
+    {{- html_layout[1] -}}
+  </div>
+
+{%- schema -%}
+  {
+    "name": "Countdown",
+    "tag": "section",
+    "class": "t4s-section t4s-section-all t4s_tp_cdt t4s_tp_cd t4s-se-countdown",
+    "settings": [
+      {
+          "type": "header",
+          "content": "1. Heading options"
+      },
+      {
+          "type": "select",
+          "id": "design_heading",
+          "label": "+ Design heading",
+          "default": "1",
+          "options": [
+              {
+                  "value": "1",
+                  "label": "Design 01"
+              },
+              {
+                  "value": "2",
+                  "label": "Design 02"
+              },
+              {
+                  "value": "3",
+                  "label": "Design 03"
+              },
+              {
+                  "value": "4",
+                  "label": "Design 04"
+              },
+              {
+                  "value": "5",
+                  "label": "Design 05"
+              },
+              {
+                  "value": "6",
+                  "label": "Design 06 (width line-awesome)"
+              },
+              {
+                  "value": "7",
+                  "label": "Design 07"
+              },
+              {
+                  "value": "8",
+                  "label": "Design 08"
+              },
+              {
+                  "value": "9",
+                  "label": "Design 09"
+              },
+              {
+                  "value": "10",
+                  "label": "Design 10"
+              },
+              {
+                  "value": "11",
+                  "label": "Design 11"
+              },
+              {
+                  "value": "12",
+                  "label": "Design 12"
+              },
+              {
+                  "value": "13",
+                  "label": "Design 13"
+              },
+              {
+                  "value": "14",
+                  "label": "Design 14"
+              }
+          ]
+      },
+      {
+          "type": "select",
+          "id": "heading_align",
+          "label": "+ Heading align",
+          "default": "t4s-text-center",
+          "options": [
+              {
+                  "value": "t4s-text-start",
+                  "label": "Left"
+              },
+              {
+                  "value": "t4s-text-center",
+                  "label": "Center"
+              },
+              {
+                  "value": "t4s-text-end",
+                  "label": "Right"
+              }
+          ]
+      },
+      {
+          "type": "text",
+          "id": "top_heading",
+          "label": "+ Heading",
+          "default": "Countdown timer"
+      },
+      {
+        "type": "text",
+        "id": "icon_heading",
+        "label": "Enter a icon name on heading",
+        "info": "Only used for design 6 [LineAwesome](https://kalles.the4.co/font-lineawesome/)",
+        "default": "las la-gem"
+      },
+      {
+          "type": "textarea",
+          "id": "top_subheading",
+          "label": "+ Subheading"
+      }, 
+      {
+        "type": "number",
+        "id": "tophead_mb",
+        "label": "+ Space bottom (px)",
+        "info": "The vertical spacing between heading and content",
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "2. General options"
+      },
+      {
+        "type": "text",
+        "id": "date",
+        "label": "Date countdown",
+        "default": "2023\/12\/26",
+        "info": "Countdown to the end sale date will be shown"
+      },
+      {
+        "type": "select",
+        "id": "cdt_des",
+        "label": "Countdown design",
+        "default": "1",
+        "options": [
+          {
+              "value": "1",
+              "label": "Design 1"
+          },
+          {
+              "value": "2",
+              "label": "Design 2"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "cdt_size",
+        "label": "Countdown size",
+        "default": "medium",
+        "options": [
+          {
+          "value": "small",
+          "label": "Small"
+          },
+          {
+              "value": "medium",
+              "label": "Medium"
+          },
+          {
+              "value": "large",
+              "label": "Large"
+          },
+          {
+              "value": "extra_large",
+              "label": "Extra large"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "box_bdr",
+        "label": "Border radius",
+        "default": 0,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%"
+      },
+      {
+        "type": "range",
+        "id": "bd_width",
+        "label": "Border width",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "space_item",
+        "label": "Space between items",
+        "default": 10,
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "color",
+        "id": "number_cl",
+        "label": "Number color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "text_cl",
+        "label": "Text color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "border_cl",
+        "label": "Border color item time",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "bg_cl",
+        "label": "Background item time",
+        "default": "#000000"
+      }, 
+      {
+        "type": "select",
+        "id": "content_align",
+        "label": "Content align",
+        "default": "t4s-text-center",
+        "options": [
+          {
+            "value": "t4s-text-start",
+            "label": "Left"
+          },
+          {
+            "value": "t4s-text-center",
+            "label": "Center"
+          },
+          {
+            "value": "t4s-text-end",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "3. Design options"
+      },
+      {
+        "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+        "options": [
+            { "value": "t4s-se-container", "label": "Container"},
+            { "value": "t4s-container-wrap", "label": "Wrapped container"},
+            { "value": "t4s-container-fluid", "label": "Full width"}
+        ]
+      },
+      {
+        "type": "color",
+        "id": "cl_bg",
+        "label": "Background"
+      },
+      {
+        "type": "color_background",
+        "id": "cl_bg_gradient",
+        "label": "Background gradient"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_bg",
+        "label": "Background image"
+      },
+      {
+          "type": "text",
+          "id": "mg",
+          "label": "Margin",
+          "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+          "default": ",,50px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd",
+          "label": "Padding",
+          "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+          "placeholder": "50px,,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design Tablet Options"
+      },
+      {
+        "type": "text",
+        "id": "mg_tb",
+        "label": "Margin",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "text",
+        "id": "pd_tb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+      }, 
+      {
+        "type": "header",
+        "content": "+ Design mobile options"
+      },
+      {
+          "type": "text",
+          "id": "mg_mb",
+          "label": "Margin",
+          "default": ",,30px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd_mb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+      },
+      {
+        "type": "header",
+        "content": "4. Custom css"
+      },
+      {
+        "id": "use_cus_css",
+        "type": "checkbox",
+        "label": "Use custom css",
+        "default":false,
+        "info": "If you want custom style for this section."
+      },
+      { 
+        "id": "code_cus_css",
+        "type": "textarea",
+        "label": "Code custom css",
+        "info": "Use selector .SectionID to style css"
+        
+      }
+    ],
+    "presets": [
+      {
+        "name": "Countdown",
+        "category": "Homepage"
+      }
+    ]
+  }
+{% endschema %}
+
+{%- javascript -%}
+{%- endjavascript -%}

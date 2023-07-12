@@ -1,0 +1,528 @@
+{{ 'heading-template.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign se_id = section.id 
+    assign se_stts = section.settings
+    assign se_bks = section.blocks
+    if article.image != blank and se_stts.use_specify_image 
+        assign image = article.image 
+    else 
+        assign image = se_stts.image 
+    endif
+    if article.comments_count > 0 
+        assign cm_link = '#comments' 
+    else 
+        assign cm_link = '#comment_form' 
+    endif 
+    assign t4s_se_class = 't4s_nt_se_' | append: se_id
+    if se_stts.use_cus_css and se_stts.code_cus_css != blank
+      render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class 
+    endif 
+ -%} 
+  <div class="header-banner {% if se_stts.parallax == true %}t4s-parallax t4s-parallax-bg{% endif %} lazyloadt4s t4s_{{ se_stts.image_size }}" {% if se_stts.parallax == true %}data-parallax-t4strue{% endif %} {%- if image != blank -%} data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1" {%- endif -%} {% render 'style_heading', se_stts: se_stts %}>  
+    {%- if se_bks.size > 0 -%}
+    <div class="page-head t4s-pr t4s-oh page_bg_img {{ se_stts.content_align }}">
+       <div class="t4s-container t4s-pr t4s-z-100">
+            {%- for block in se_bks -%}
+                {%- assign bk_stts = block.settings -%}
+                {%- case block.type -%}
+                    {%- when '1' -%}
+                        <h1 data-lh="{{ bk_stts.text_lh_mb }}" data-lh-md="{{ bk_stts.text_lh }}" data-lh-lg="{{ bk_stts.text_lh }}" class="title-head  t4s-bl-item t4s-animation-none t4s-text-bl t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }} t4s-uppercase-{{ bk_stts.font_uppercase }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }} t4s-br-mb-{{ bk_stts.remove_br_tag }} t4s-text-shadow-{{ bk_stts.text_shadow }}" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'custom_text', bk_stts: bk_stts, ani_delay: ani_delay -%}>{{ article.title }}</h1>
+                    {%- when '2' -%}
+                        <time class="t4s-entry-date t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }}" datetime="{{ article.published_at }}">{{ article.published_at | date: format: 'date' }}</time>
+                    {%- when '3' -%}
+                    <div class="t4s-article-heading-category t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }}">
+                        <span>{{ 'blogs.article.in' | t }} <a href="{{ blog.url }}">{{ blog.title }}</a> </span>
+                        <span class="t4s-comment-number t4s-pr"><a href="{{ article.url }}{{ cm_link }}">{{ 'blogs.comments.with_count' | t: count: article.comments_count }}</a></span>
+                    </div>
+                {%- endcase -%} 
+            {%- endfor -%}
+       </div>
+    </div>
+    {%- endif -%}
+  </div>  
+  <style>
+      .t4s-page-heading-article{ color: #ededed;}
+      .t4s-page-heading-article .t4s-article-heading-category{margin-top: 10px;}
+      .t4s-page-heading-article a{color: var(--t4s-light-color);}
+      .t4s-page-heading-article a:hover{color: var(--accent-color);}
+  </style>
+  {%- schema -%}
+    {
+      "name": "Page heading",
+      "class": "page_section_heading t4s-page-heading-article",
+      "max_blocks": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "+ Background image"
+        },
+        {
+            "type": "checkbox",
+            "id": "use_specify_image",
+            "label": "Specify other image for particular page",
+            "info": "Use article image",
+            "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "parallax",
+          "label": "Use scroll parallax",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Background color",
+          "default": "#000"
+        },
+        {
+          "type": "range",
+          "id": "overlay",
+          "label": "Background overlay",
+          "default": 54,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "padding",
+          "label": "Padding space (Desktop)",
+          "default": 50,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "paddingmb",
+          "label": "Padding space (Mobile)",
+          "default": 50,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "mg_b",
+          "label": "Margin space bottom (Desktop)",
+          "default": 50,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "mg_bmb",
+          "label": "Margin space bottom (Mobile)",
+          "default": 50,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "content_align",
+          "label": "+ Content align",
+          "default": "t4s-text-center",
+          "options": [
+            {
+              "label": "Left",
+              "value": "t4s-text-start"
+            },
+            {
+              "label": "Center",
+              "value": "t4s-text-center"
+            },
+            {
+              "label": "Right",
+              "value": "t4s-text-end"
+            }
+          ]
+        },
+        
+        {
+          "type": "header",
+          "content": "+ Background image config:"
+        },
+        {
+          "type": "paragraph",
+          "content": "Not active when you enable scroll parallax."
+        },
+        {
+          "type": "select",
+          "id": "bg_pos",
+          "label": "Background image position",
+          "default": "center center",
+          "options": [
+            {
+              "value": "left top",
+              "label": "Left Top"
+            },
+            {
+              "value": "left center",
+              "label": "Left Center"
+            },
+            {
+              "value": "left bottom",
+              "label": "Left Bottom"
+            },
+            {
+              "value": "center top",
+              "label": "Center Top"
+            },
+            {
+              "value": "center center",
+              "label": "Center Center"
+            },
+            {
+              "value": "center bottom",
+              "label": "Center Bottom"
+            },
+            {
+              "value": "right top",
+              "label": "Right Top"
+            },
+            {
+              "value": "right center",
+              "label": "Right Center"
+            },
+            {
+              "value": "right bottom",
+              "label": "Right Bottom"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "bg_repeat",
+          "options": [
+            {
+              "value": "no-repeat",
+              "label": "No repeat"
+            },
+            {
+              "value": "repeat",
+              "label": "Repeat all"
+            },
+            {
+              "value": "repeat-x",
+              "label": "Repeat horizontally"
+            },
+            {
+              "value": "repeat-y",
+              "label": "Repeat vertically"
+            },
+            {
+              "value": "inherit",
+              "label": "Inherit"
+            }
+          ],
+          "label": "Background repeat",
+          "default": "no-repeat",
+          "info": "[Specifies how to repeat the background images](https:\/\/w3schools.com\/cssref\/pr_background-repeat.asp)"
+        },
+        {
+          "type": "select",
+          "id": "bg_size",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Auto"
+            },
+            {
+              "value": "inherit",
+              "label": "Inherit"
+            },
+            {
+              "value": "cover",
+              "label": "Cover"
+            },
+            {
+              "value": "contain",
+              "label": "Contain"
+            }
+          ], 
+          "label": "Background size",
+          "default": "cover",
+          "info": "[Specifies the size of the background images](https:\/\/w3schools.com\/cssref\/css3_pr_background-size.asp)"
+        },
+        {
+          "type": "select",
+          "id": "bg_att",
+          "options": [
+            {
+              "value": "fixed",
+              "label": "Fixed"
+            },
+            {
+              "value": "scroll",
+              "label": "Scroll"
+            },
+            { 
+              "value": "inherit",
+              "label": "Inherit"
+            }
+          ],
+          "label": "Background attachment",
+          "default": "scroll",
+          "info": "[Specifies whether the background images are fixed or scrolls with the rest of the page](https:\/\/w3schools.com\/cssref\/pr_background-attachment.asp)"
+        },
+        {
+          "type": "header",
+          "content": "+ Custom css"
+        },
+        {
+          "id": "use_cus_css",
+          "type": "checkbox",
+          "label": "Use custom css",
+          "default":false,
+          "info": "If you want custom style for this section."
+        },
+        { 
+          "id": "code_cus_css",
+          "type": "textarea",
+          "label": "Code custom css",
+          "info": "Use selector .SectionID to style css"
+          
+        }
+      ],
+      "blocks": [
+        {
+          "type": "1",
+          "name": "Title", 
+          "limit": 1,
+          "settings":[
+            {
+                "type": "select",
+                "id": "fontf",
+                "default":"inherit",
+                "label": "Font family",
+                "options": [
+                    {
+                        "label": "Inherit",
+                        "value": "inherit"
+                    },
+                    {
+                        "label": "Font family #1",
+                        "value": "1"
+                    },
+                    {
+                        "label": "Font family #2",
+                        "value": "2"
+                    },
+                    {
+                        "label": "Font family #3",
+                        "value": "3"
+                    }
+                ]
+            },   
+            {
+                "type":"color",
+                "id":"text_cl",
+                "label":"Color text",
+                "default":"#fff"
+            },
+            {
+                "type":"range",
+                "id":"text_fs",
+                "label":"Font size",
+                "max":100,
+                "min":10,
+                "step":1,
+                "unit":"px",
+                "default":20
+            },
+            {
+                "type":"range",
+                "id":"text_lh",
+                "label":"Line height",
+                "max":100,
+                "min":0,
+                "step":1,
+                "default":0,
+                "unit":"px",
+                "info":"Set is '0' use to default"            
+            },
+            {
+                "type":"range",
+                "id":"text_fw",
+                "label":"Font weight",
+                "min":100,
+                "max":900,
+                "step":100,
+                "default":400
+            },
+            {
+                "type":"range",
+                "id":"text_ls",
+                "label":"Letter spacing",
+                "max":10,
+                "min":0,
+                "default":0,
+                "step":0.1,
+                "unit":"px"
+            },
+            {
+                "type":"checkbox",
+                "id":"font_italic",
+                "label": "Enable font style italic",
+                "default":false
+            }, 
+            {
+                "type":"checkbox",
+                "id":"font_uppercase",
+                "label": "Enable font uppercase",
+                "default":false
+            },
+            {
+                "type":"checkbox",
+                "id":"text_shadow",
+                "label": "Enable text shadow",
+                "default":false
+            },
+            {
+                "type": "number",
+                "id": "text_mgb",
+                "label": "Margin bottom",
+                "default": 0
+            },
+            {
+                "type":"header",
+                "content":"+ Option mobile "
+            },
+            {
+                "type":"checkbox",
+                "id":"hidden_mobile",
+                "label":"Hidden on mobile ",
+                "default":false
+            },
+            {
+                "type":"range",
+                "id":"text_fs_mb",
+                "label":"Font size (Mobile)",
+                "max":60,
+                "min":10,
+                "step":1,
+                "unit":"px",
+                "default":20
+            },
+            {
+                "type":"range",
+                "id":"text_lh_mb",
+                "label":"Line height (Mobile)",
+                "max":70,
+                "min":0,
+                "step":1,
+                "default":0,
+                "unit":"px",
+                "info":"Set is '0' use to default"            
+            },
+            {
+                "type":"range",
+                "id":"text_ls_mb",
+                "label":"Letter spacing (Mobile)",
+                "min":0,
+                "max":10,
+                "step":0.1,
+                "unit":"px",
+                "default":0
+            },
+            {
+                "type": "number",
+                "id": "text_mgb_mobile",
+                "label": "Margin bottom (Mobile)",
+                "default": 0
+            }
+          ]
+        },
+        {
+          "type": "2",
+          "name": "Time", 
+          "limit": 1,
+          "settings":[
+            {
+                "type": "select",
+                "id": "fontf",
+                "default":"3",
+                "label": "Font family",
+                "options": [
+                    {
+                        "label": "Inherit",
+                        "value": "inherit"
+                    },
+                    {
+                        "label": "Font family #1",
+                        "value": "1"
+                    },
+                    {
+                        "label": "Font family #2",
+                        "value": "2"
+                    },
+                    {
+                        "label": "Font family #3",
+                        "value": "3"
+                    }
+                ]
+            },
+            {
+                "type":"checkbox",
+                "id":"font_italic",
+                "label": "Enable font style italic",
+                "default":true
+            }
+          ]
+        },
+        {
+          "type": "3",
+          "name": "Category",
+          "limit": 1,
+          "settings":[
+            {
+              "type": "select",
+              "id": "fontf",
+              "default":"inherit",
+              "label": "Font family",
+              "options": [
+                  {
+                      "label": "Inherit",
+                      "value": "inherit"
+                  },
+                  {
+                      "label": "Font family #1",
+                      "value": "1"
+                  },
+                  {
+                      "label": "Font family #2",
+                      "value": "2"
+                  },
+                  {
+                      "label": "Font family #3",
+                      "value": "3"
+                  }
+              ]
+            },
+            {
+                "type":"checkbox",
+                "id":"font_italic",
+                "label": "Enable font style italic",
+                "default":false
+            }
+          ]
+        }
+      ],
+      "default": {
+        "blocks": [
+          { 
+            "type": "1"
+          }
+        ]
+      }
+    }
+  {% endschema %}

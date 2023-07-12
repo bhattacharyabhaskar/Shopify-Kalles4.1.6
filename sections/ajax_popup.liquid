@@ -1,0 +1,145 @@
+[t4splitlz]
+{%- if request.page_type == 'product' -%}
+    
+    <style>
+    	#t4s-pr-popup__contact h3 {
+		    margin-bottom: 20px;
+		    font-size: 23px;
+		}
+		#t4s-pr-popup__contact form>p {
+			margin-bottom: 18px;
+		}
+		#t4s-pr-popup__contact form>p>input {
+		    width: 100%;
+		    height: 40px;
+            line-height: 18px;
+		}
+		#t4s-pr-popup__contact form>p>textarea {
+		    width: 100%;
+		    overflow: auto;
+		    padding: 10px 15px;
+		    min-height: 190px;
+          line-height: 18px;
+		}
+		#t4s-pr-popup__contact {
+		    padding: 0;
+		}
+		#t4s-pr-popup__contact form {
+		    padding: 22px 30px;
+		}
+		.t4s-product-Ask {
+		    padding: 22px 30px;
+		    background-color: rgba(var(--border-color-rgb),.3);
+		    display: flex;
+		    flex-wrap: nowrap;
+		    align-items: center;
+		}
+		.t4s-product-Ask__img {
+		    width: 80px;
+		    height: 80px;
+		    min-width: 80px;
+		    border-radius: 50%;
+		    overflow: hidden;
+		    display: block;
+		    position: relative;
+		    margin-inline-end: 20px;
+		}
+		.t4s-product-Ask__img img {
+		    position: absolute;
+		    left: 0;
+		    right: 0;
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		    object-position: center;
+		}
+		.t4s-product-Ask__title {
+		    color: var(--secondary-color);
+		    font-weight: 500;
+		}
+		.t4s-product-Ask__price {
+		    color: var(--secondary-price-color);
+		}
+		.t4s-product-Ask__price ins{
+		    color: var(--primary-price-color);
+		}
+		#t4s-pr-popup__contact input.button {
+		   background-color: var(--accent-color);
+		   color: var(--t4s-light-color);
+		   border-radius: var(--btn-radius);
+		}
+		#t4s-pr-popup__contact input.button:hover {
+		   background-color: var(--accent-color-darken);
+		}
+    </style>	
+	{%- assign formId = 'ContactFormAsk' | append: product.id -%}
+	{%- assign image = product.featured_image | default: settings.placeholder_img -%}
+
+   <div class="t4s-product-Ask">
+	  	 {%- if image != blank -%}
+	  	 <div class="t4s-product-Ask__img t4s-bg-11" style="background: url({{ image | image_url: width: 1 }})">
+		 	<img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[80,120,160,200]" data-optimumx="1.2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+	  	 </div>
+	  	 {%- endif -%}
+	  	 <div class="t4s-product-Ask__infos">
+		  	 <div class="t4s-product-Ask__title">{{ product.title }}</div>
+		  	 <div class="t4s-product-Ask__price">{%- if product.compare_at_price > product.price -%} <del>{{ product.compare_at_price | money }}</del> <ins>{{ product.price | money }}</ins>{%- else -%}{{ product.price | money }}{%- endif -%}</div>
+	  	 </div>
+   </div>
+
+	{%- form 'contact', id: formId -%}
+
+	  {%- render 'form-status', form: form, form_id: formId -%}
+	  <h3 class="t4s-text-center">{{ 'products.product.ask_question' | t }}</h3>
+	  <p>
+	      <label for="{{ formId }}-name">{{ 'templates.contact.form.name' | t }}</label>
+	      <input type="text" id="{{ formId }}-name" name="contact[name]" required="required" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+	  </p>
+	  <p>
+	      <label for="{{ formId }}-email">{{ 'templates.contact.form.email' | t }}</label>
+	      <input
+	        type="email"
+	        id="{{ formId }}-email"
+	        name="contact[email]"
+	        autocorrect="off"
+	        autocapitalize="off"
+	        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+	        aria-required="true"
+	        required="required"
+	        {%- if form.errors contains 'email' %} class="input--error" aria-invalid="true" aria-describedby="{{ formId }}-email-error"{%- endif -%}>
+	      {%- if form.errors contains 'email' -%}
+	        <span id="{{ formId }}-email-error" class="input-error-message"><i class="facl facl-attention cr mr__5"></i>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+	      {%- endif -%}
+	   </p>
+
+	  <p id="t4s-ContactFormAsk__phone">
+	  <label for="{{ formId }}-phone">{{ 'templates.contact.form.phone' | t }}</label>
+	  <input type="tel" id="{{ formId }}-phone" name="contact[phone]" pattern="[0-9\-]*" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+	  </p>
+	  
+	  <p class="t4s-d-none">
+	  <label for="{{ formId }}-product">Product</label> 
+	  <textarea rows="20" id="{{ formId }}-product" name="contact[product]" required="required">{{ product.title }} - {{ request.origin }}{{ product.url }}</textarea>
+	  </p>
+	  <p>
+	  <label for="{{ formId }}-message">{{ 'templates.contact.form.message' | t }}</label>
+	  <textarea rows="9" id="{{ formId }}-message" name="contact[body]" required="required">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+	  </p>
+	  <input type="submit" class="button t4s-w-100" value="{{ 'templates.contact.form.submit' | t }}">
+
+	{%- endform -%}
+
+{%- else -%}
+   
+   {{- page.content -}}
+
+{%- endif -%}
+
+[t4splitlz]
+
+{% schema %}
+{
+  "name": {},
+  "settings": []
+}
+{% endschema %}

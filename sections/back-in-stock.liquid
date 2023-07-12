@@ -1,0 +1,150 @@
+[t4splitlz]
+{%- liquid
+assign product         = product_variant.product
+assign image           = product_variant.featured_image | default: product.featured_image | default: settings.placeholder_img
+assign variant_options = product_variant.options
+assign formId          = 'ContactFormNotify' | append: product_variant.id
+ -%}
+   <style>
+   #t4s-pr-popup__notify-stock {
+          max-width: 500px;
+   }
+   #t4s-pr-popup__notify-stock h3 {
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+    #t4s-pr-popup__notify-stock form>p {
+      margin-bottom: 18px;
+    }
+    #t4s-pr-popup__notify-stock form>p>input {
+        width: 100%;
+        height: 40px;
+            line-height: 18px;
+    }
+    #t4s-pr-popup__notify-stock form>p>textarea {
+        width: 100%;
+        overflow: auto;
+        padding: 10px 15px;
+        min-height: 190px;
+          line-height: 18px;
+    }
+    #t4s-pr-popup__notify-stock {
+        padding: 0;
+    }
+    #t4s-pr-popup__notify-stock form {
+        padding: 30px;
+    }
+    .t4s-product-notify-stock {
+        padding: 30px;
+        background-color: #f5f5f5;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+    .t4s-product-notify-stock__img {
+        width: 80px;
+        height: 80px;
+        min-width: 80px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: block;
+        position: relative;
+        margin-right: 20px;
+    }
+    .t4s-product-notify-stock__img img {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    .t4s-product-notify-stock__title {
+        color: var(--secondary-color);
+        font-weight: 500;
+    }
+    .t4s-product-notify-stock__price {
+        color: var(--secondary-price-color);
+    }
+    .t4s-product-notify-stock__price ins{
+        color: var(--primary-price-color);
+    }
+    #t4s-pr-popup__notify-stock input.button {
+       background-color: var(--accent-color);
+       color: var(--t4s-light-color);
+       border-radius: 2px;
+    }
+    #t4s-pr-popup__notify-stock input.button:hover {
+       background-color: var(--accent-color-darken);
+    }
+    .t4s-product-notify-stock__variant {margin-bottom: 2px;}
+    </style>  
+  {%- assign formId = 'ContactFormNotifyStock' | append: product_variant.id -%}
+
+   <div class="t4s-product-notify-stock">
+       {%- if image != blank -%}
+       <div class="t4s-product-notify-stock__img t4s-bg-11" style="background: url({{ image | image_url: width: 1 }})">
+          <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[80,120,160,200]" data-optimumx="1.2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+       </div>
+       {%- endif -%}
+       <div class="t4s-product-notify-stock__infos">
+         <div class="t4s-product-notify-stock__title">{{ product.title | escape }}</div>
+         {%- unless product.has_only_default_variant -%}
+          <p class="t4s-product-notify-stock__variant">
+            {%- for product_option in product.options_with_values -%}
+              {{ product_option.name | escape }}:&nbsp;<span class="t4s-csecondary">{{ variant_options[forloop.index0] | escape }}</span>
+              {%- unless forloop.last -%},&nbsp;{%- endunless forloop.last -%}
+            {%- endfor -%}
+          </p>
+         {%- endunless -%}
+         <div class="t4s-product-notify-stock__price">{%- if product_variant.compare_at_price > product_variant.price -%} <del>{{ product_variant.compare_at_price | money }}</del> <ins>{{ product_variant.price | money }}</ins>{%- else -%}{{ product_variant.price | money }}{%- endif -%}</div>
+       </div>
+   </div>
+
+  {%- form 'contact', id: formId -%}
+
+    {%- render 'form-status', form: form, form_id: formId -%}
+    <h3 class="t4s-text-center">{{ 'products.notify_stock.title' | t }}</h3>
+    {%- if customer and customer.name != blank -%}
+    <p class="t4s-d-none">
+        <label for="{{ formId }}-name">Name</label>
+        <input type="text" id="{{ formId }}-name" name="contact[name]" required="required" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+    </p>
+    {%- endif -%}
+    <p>
+        <label for="{{ formId }}-email">{{ 'products.notify_stock.email' | t }}</label>
+        <input
+          type="email"
+          id="{{ formId }}-email"
+          name="contact[email]"
+          autocorrect="off"
+          autocapitalize="off"
+          value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+          aria-required="true"
+          required="required"
+          {%- if form.errors contains 'email' %} class="input--error" aria-invalid="true" aria-describedby="{{ formId }}-email-error"{%- endif -%}>
+        {%- if form.errors contains 'email' -%}
+          <span id="{{ formId }}-email-error" class="input-error-message"><i class="facl facl-attention cr mr__5"></i>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+        {%- endif -%}
+     </p>
+    
+    <p class="t4s-d-none">
+       <label for="{{ formId }}-product">Product</label> 
+       <textarea rows="20" id="{{ formId }}-product" name="contact[product]" required="required">{{ product.title }} {% if product_variant.title != blank %}( {{ product_variant.title }} ){% endif %} - {{ request.origin }}{{ product_variant.url }}</textarea>
+    </p>
+    <p class="t4s-d-none">
+       <label for="{{ formId }}-message">Message</label>
+       <textarea rows="9" id="{{ formId }}-message" name="contact[body]" required="required">{{ 'products.notify_stock.please' | t }}</textarea>
+    </p>
+    <input type="submit" class="button t4s-w-100" value="{{ 'products.notify_stock.button' | t }}">
+
+  {%- endform -%}
+[t4splitlz]
+
+{% schema %}
+{
+  "name": {},
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,1623 @@
+<!-- sections/footer1.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'general-block.css' | asset_url | stylesheet_tag }}
+{{ 'newsletter.css' | asset_url | stylesheet_tag }}
+{{ 'icon-social.css' | asset_url | stylesheet_tag }}
+{{ 'footer.css' | asset_url | stylesheet_tag }}
+{%- liquid 
+  assign sid = section.id
+  assign se_stts = section.settings 
+  assign se_blocks = section.blocks
+  assign stt_layout = se_stts.layout
+  assign stt_image_bg = se_stts.image_bg 
+  if stt_layout == 't4s-se-container' 
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+  assign index = 0
+  assign index2 = 1
+  assign arr_item = se_blocks | where: "type", 'bl_col'  
+  assign sticky   = se_stts.sticky
+  assign collapse = se_stts.collapse
+ -%} 
+<div class="t4s-section-inner t4s_nt_se_{{ sid }} t4s_se_{{ sid }} {{ stt_layout }} {%- if  se_stts.border_top == true -%} t4s-footer-has-border t4s-footer-border-{{ se_stts.border_pos }} {%- endif -%}  {%- if stt_image_bg != blank and stt_layout != 't4s-se-container' -%}  t4s-has-imgbg lazyloadt4s {%- endif -%} "  {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2" {% endif %}   {% render 'section_style', se_stts: se_stts %}>
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner {% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s {% endif %} "  {% if stt_image_bg != blank %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2" {% endif %} > {%- endif -%}
+    <div class="t4s-footer-wrap t4s-row is--footer-sticky-{{ sticky }} is--footer-collapse-{{ collapse }} t4s-gx-md-{{ se_stts.space_h_item }} t4s-gy-md-{{ se_stts.space_v_item }} t4s-gx-{{ se_stts.space_h_item_mb }} t4s-gy-{{ se_stts.space_v_item_mb }}" style="--heading-fs:{{ se_stts.heading_fs }}px;--heading-fw:{{ se_stts.heading_fw }};--heading-lh:{{ se_stts.heading_lh }}px;--heading-ls: {{ se_stts.heading_ls }}px;--heading-cl:{{ se_stts.heading_cl }};--text-fs:{{ se_stts.text_fs }}px;--text-fw:{{ se_stts.text_fw }};--text-cl:{{ se_stts.text_cl }};--link-cl:{{ se_stts.link_cl }};--link-hover-cl:{{ se_stts.link_hover_cl }};--border-cl:{{ se_stts.border_cl }};--heading-mgb:{{ se_stts.mgb }}px;--heading-mgbm:{{ se_stts.mgb_mb }}px;">   
+        {%- for block in arr_item offset: index -%}
+            {%- assign bk_stts = block.settings -%}
+            {%- assign index = index | plus: 1 -%}
+            {%- assign pd_item = bk_stts.padding_inner | remove: ' ' | split: ',' -%}
+            {%- assign pd_item_mb = bk_stts.padding_inner_mb | remove: ' ' | split: ',' -%}
+            <div class="t4s-custom-col t4s-col-item t4s-col-lg-{{ bk_stts.col_dk }} t4s-col-md-{{ bk_stts.col_tb }} t4s-col-{{ bk_stts.col_mb }} bl-{{ block.id }}">
+                <div class="t4s-col-inner {{ bk_stts.content_align }} {{ bk_stts.content_align_mb }} {%- if bk_stts.bg_image != blank -%}  lazyloadt4s t4s-has-imgbg  {%- endif -%} "  {%- if bk_stts.bg_image != blank -%}  data-bgset="{{ bk_stts.bg_image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2" {%- endif -%}  style="--pd: {{ pd_item[0] | default: 0 }} {{ pd_item[1] | default: 0 }} {{ pd_item[2] | default: 0 }} {{ pd_item[3] | default: 0 }};--pd-mb: {{ pd_item_mb[0] | default: 0 }} {{ pd_item_mb[1] | default: 0 }} {{ pd_item_mb[2] | default: 0 }} {{ pd_item_mb[3] | default: 0 }};">
+                    {% if bk_stts.col_heading != blank %}  
+                      <div class="t4s-footer-heading t4s-d-flex t4s-align-items-center t4s-justify-content-between t4s-d-md-block t4s-d-none">
+                          <h3 class="t4s-col-heading t4s-fnt-fm-{{ se_stts.heading_fontf }}">{{ bk_stts.col_heading }}</h3>
+                      </div>
+                    {%- endif -%} 
+                    {%- if bk_stts.col_heading_mobile != blank or bk_stts.col_heading != blank -%}   
+                    <div data-footer-open class="t4s-footer-heading t4s-footer-heading-mobile t4s-d-flex t4s-align-items-center t4s-justify-content-between t4s-d-md-none">
+                      {% if bk_stts.col_heading_mobile != blank %}  
+                          <h3 class="t4s-col-heading t4s-fnt-fm-{{ se_stts.heading_fontf }}">{{ bk_stts.col_heading_mobile }}</h3> 
+                      {%- else -%}     
+                          <h3 class="t4s-col-heading t4s-fnt-fm-{{ se_stts.heading_fontf }}">{{ bk_stts.col_heading }}</h3> 
+                      {%- endif -%}     
+                          <span class="t4s-footer-collapse-icon"></span>
+                      </div>
+                    {%- endif -%} 
+                    <div {% if bk_stts.col_heading != blank or bk_stts.col_heading_mobile != blank %}data-footer-content{% endif %} class="t4s-footer-content">
+                        {%- if bk_stts.menu !=blank -%} 
+                            <div class="t4s-footer-menu t4s-footer-menu-style{{ bk_stts.menu_style }}" style="--menu-mgb:{{ bk_stts.mgb }}px;--menu-mgb-mb:{{ bk_stts.mgb_mb }}px;">
+                            <ul class="t4s-footer-linklist">
+                                {%- for link in bk_stts.menu.links -%}
+                                <li>
+                                    <a href="{{ link.url }}" class="t4s-footer-link {% if link.current %}t4s-footer-link-active{% endif %}" {% if link.current%}  aria-current="page" {% endif %}>
+                                    {{ link.title | escape }}
+                                    </a>
+                                </li>
+                                {%- endfor -%} 
+                            </ul>
+                            </div> 
+                        {%- endif -%}    
+                        {%- for block in se_blocks offset: index2 -%}
+                        {%- assign index2 = index2| plus: 1 -%}
+                        {%- assign bk_stts = block.settings -%}
+                        {%- if  block.type != "bl_col" -%}
+                            {%- render 'footer_content', block: block, bk_stts: bk_stts -%}  
+                        {%- else -%} 
+                            {%- break -%}
+                        {%- endif -%}
+                        {%- endfor -%}
+                    </div>
+                </div>
+            </div>
+        {%- endfor -%}
+    </div>
+    {{- html_layout[1] -}}
+</div>
+{%- if sticky %}<style>@media (min-width: 1025px) { #MainContent,#shopify-section-announcement-bar,#shopify-section-top-bar,#t4s-header,.t4s-prefooter,.t4s-section-header{position:relative;z-index:4}#shopify-section-top-bar {z-index: 466;} #MainContent { z-index: 2;background-color: {%- if settings.body_bg != blank and settings.body_bg != 'rgba(0,0,0,0)' %}{{ settings.body_bg }}{% else %}#fff{% endif -%};}  .t4s-prefooter{z-index:1}#t4s-footer{position:sticky;position:-webkit-sticky;bottom:0;left:0;right:0;width:100%} }</style>{% endif -%}
+{%- schema -%}
+{
+  "name": "Footer",
+  "tag": "section",
+  "class": "t4s-section t4s-section-footer t4s_tp_cdt t4s-footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "1. Advance options"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Enable sticky footer",
+      "default": false,
+      "info":"Working on screen Desktop"
+    },
+    {
+      "type": "checkbox",
+      "id": "collapse",
+      "label": "Enable accordions mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "border_top",
+      "label": "Use border top",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "border_pos",
+      "label": "Border position",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full width"
+        },
+        {
+          "value": "in",
+          "label": "In container"
+        }
+      ],
+      "default": "in"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item",
+      "options": [
+        {
+            "value": "0", 
+            "label": "0"
+        },
+        {
+            "value": "2", 
+            "label": "2px"
+        },
+        {
+            "value": "4", 
+            "label": "4px"
+        },
+        {
+            "value": "6", 
+            "label": "6px"
+        },
+        {
+            "value": "8", 
+            "label": "8px"
+        },
+        {
+            "value": "10", 
+            "label": "10px"
+        },
+        {
+            "value": "15", 
+            "label": "15px"
+        },
+        {
+            "value": "20",
+            "label": "20px"
+        },
+        {
+            "value": "30",
+            "label": "30px"
+        }
+      ],
+      "label": "Space horizontal items",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item",
+      "options": [
+        {
+            "value": "0", 
+            "label": "0"
+        },
+        {
+            "value": "2", 
+            "label": "2px"
+        },
+        {
+            "value": "4", 
+            "label": "4px"
+        },
+        {
+            "value": "6", 
+            "label": "6px"
+        },
+        {
+            "value": "8", 
+            "label": "8px"
+        },
+        {
+            "value": "10", 
+            "label": "10px"
+        },
+        {
+            "value": "15", 
+            "label": "15px"
+        },
+        {
+            "value": "20",
+            "label": "20px"
+        },
+        {
+            "value": "30",
+            "label": "30px"
+        }
+      ],
+      "label": "Space vertical items",
+      "default": "30"
+    },
+    {
+      "type": "select",
+      "id": "space_h_item_mb",
+      "options": [
+        {
+            "value": "0", 
+            "label": "0"
+        },
+        {
+            "value": "2", 
+            "label": "2px"
+        },
+        {
+            "value": "4", 
+            "label": "4px"
+        },
+        {
+            "value": "6", 
+            "label": "6px"
+        },
+        {
+            "value": "8", 
+            "label": "8px"
+        },
+        {
+            "value": "10", 
+            "label": "10px"
+        },
+        {
+            "value": "15", 
+            "label": "15px"
+        },
+        {
+            "value": "20",
+            "label": "20px"
+        },
+        {
+            "value": "30",
+            "label": "30px"
+        }
+      ],
+      "label": "Space horizontal items (Mobile)",
+      "default": "10"
+    },
+    {
+      "type": "select",
+      "id": "space_v_item_mb",
+      "options": [
+        {
+            "value": "0", 
+            "label": "0"
+        },
+        {
+            "value": "2", 
+            "label": "2px"
+        },
+        {
+            "value": "4", 
+            "label": "4px"
+        },
+        {
+            "value": "6", 
+            "label": "6px"
+        },
+        {
+            "value": "8", 
+            "label": "8px"
+        },
+        {
+            "value": "10", 
+            "label": "10px"
+        },
+        {
+            "value": "15", 
+            "label": "15px"
+        },
+        {
+            "value": "20",
+            "label": "20px"
+        },
+        {
+            "value": "30",
+            "label": "30px"
+        }
+      ],
+      "label": "Space vertical items (Mobile)",
+      "default": "10"
+    },
+    {
+      "type": "header",
+      "content": "Heading options"
+    },
+    {
+      "type": "select",
+      "id": "heading_fontf",
+      "default":"inherit",
+      "label": "Font family",
+      "options": [
+          {
+              "label": "Inherit",
+              "value": "inherit"
+          },
+          {
+              "label": "Font family #1",
+              "value": "1"
+          },
+          {
+              "label": "Font family #2",
+              "value": "2"
+          },
+          {
+              "label": "Font family #3",
+              "value": "3"
+          }
+      ]
+    },
+    {
+        "type":"range",
+        "id":"heading_fs",
+        "label":"Font size",
+        "max":60,
+        "min":10,
+        "step":1,
+        "unit":"px",
+        "default":16
+    },
+    {
+        "type":"range",
+        "id":"heading_lh",
+        "label":"Line height",
+        "max":60,
+        "min":0,
+        "step":1,
+        "default":22,
+        "unit":"px",
+        "info":"Set is '0' use to default"            
+    },
+    {
+        "type":"range",
+        "id":"heading_fw",
+        "label":"Font weight",
+        "min":100,
+        "max":900,
+        "step":100,
+        "default":500
+    },
+    {
+        "type":"range",
+        "id":"heading_ls",
+        "label":"Letter spacing",
+        "max":10,
+        "min":0,
+        "default":0,
+        "step":0.1,
+        "unit":"px"
+    },
+    {
+        "type": "number",
+        "id": "mgb",
+        "label": "Heading margin bottom (px)",
+        "default": 30
+    },
+    {
+        "type": "number",
+        "id": "mgb_mb",
+        "label": "Heading margin bottom mobile (px)",
+        "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Text content options"
+    },
+    {
+        "type":"range",
+        "id":"text_fs",
+        "label":"Font size",
+        "max":50,
+        "min":10,
+        "step":1,
+        "unit":"px",
+        "default":14
+    },
+    {
+        "type":"range",
+        "id":"text_fw",
+        "label":"Font weight",
+        "min":100,
+        "max":900,
+        "step":100,
+        "default":400
+    },
+    {
+      "type": "header",
+      "content": "Color options"
+    },
+    {
+      "type": "color",
+      "id": "heading_cl",
+      "label": "Heading color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "text_cl",
+      "label": "Text color",
+      "default": "#878787"
+    },
+    {
+      "type": "color",
+      "id": "link_cl",
+      "label": "Link color",
+      "default": "#878787"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_cl",
+      "label": "Link hover color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "border_cl",
+      "label": "Border color",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "header",
+      "content": "2. Design options"
+    },
+    {
+      "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+      "options": [
+          { "value": "t4s-se-container", "label": "Container"},
+          { "value": "t4s-container-wrap", "label": "Wrapped container"},
+          { "value": "t4s-container-fluid", "label": "Full width"}
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background" 
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"  
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+        "type": "text",
+        "id": "mg",
+        "label": "Margin",
+        "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+        "placeholder": ",,50px,"
+    },
+    {
+        "type": "text",
+        "id": "pd",
+        "label": "Padding",
+        "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+        "placeholder": "50px,,50px,"
+    },
+    {
+        "type": "header",
+        "content": "+ Design Tablet Options"
+      },
+      {
+          "type": "text",
+          "id": "mg_tb",
+          "label": "Margin",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd_tb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+      },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+        "type": "text",
+        "id": "mg_mb",
+        "label": "Margin",
+        "placeholder": ",,50px,"
+    },
+    {
+        "type": "text",
+        "id": "pd_mb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bl_col",
+      "name": "Col (Parent)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "col_heading",
+          "label": "Heading"
+        },
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label":"Menu"
+        },
+        {
+          "type": "select",
+          "id": "menu_style",
+          "label": "Menu style",
+          "options": [
+              { "value": "1", "label": "Style 1"},
+              { "value": "2", "label": "Style 2"}
+          ],
+          "default": "1"
+        },
+        {
+          "type": "select",
+          "id": "col_dk",
+          "label": "Item width",
+          "default": "3",
+          "options": [
+            {
+              "value": "12",
+              "label": "100%"
+            },
+            {
+              "value": "11",
+              "label": "91.66%"
+            },
+            {
+              "value": "10",
+              "label": "83.33%"
+            },
+            {
+              "value": "9",
+              "label": "75%"
+            },
+            {
+              "value": "8",
+              "label": "66.66%"
+            },
+            {
+              "value": "7",
+              "label": "58.33%"
+            },
+            {
+              "value": "6",
+              "label": "50%"
+            },
+            {
+              "value": "5",
+              "label": "41.66%"
+            },
+            {
+              "value": "4",
+              "label": "33.33%"
+            },
+            {
+              "value": "3",
+              "label": "25%"
+            },
+            {
+              "value": "15",
+              "label": "20%"
+            },
+            {
+              "value": "2",
+              "label": "16.66%"
+            },
+            {
+              "value": "1",
+              "label": "8.33%"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "col_tb",
+          "label": "Item width (Tablet)",
+          "default": "6",
+          "options": [
+            {
+              "value": "12",
+              "label": "100%"
+            },
+            {
+              "value": "11",
+              "label": "91.66%"
+            },
+            {
+              "value": "10",
+              "label": "83.33%"
+            },
+            {
+              "value": "9",
+              "label": "75%"
+            },
+            {
+              "value": "8",
+              "label": "66.66%"
+            },
+            {
+              "value": "7",
+              "label": "58.33%"
+            },
+            {
+              "value": "6",
+              "label": "50%"
+            },
+            {
+              "value": "5",
+              "label": "41.66%"
+            },
+            {
+              "value": "4",
+              "label": "33.33%"
+            },
+            {
+              "value": "3",
+              "label": "25%"
+            },
+            {
+              "value": "15",
+              "label": "20%"
+            },
+            {
+              "value": "2",
+              "label": "16.66%"
+            },
+            {
+              "value": "1",
+              "label": "8.33%"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "col_mb",
+          "label": "Item width (Mobile)",
+          "default": "12",
+          "options": [
+            {
+              "value": "12",
+              "label": "100%"
+            },
+            {
+              "value": "11",
+              "label": "91.66%"
+            },
+            {
+              "value": "10",
+              "label": "83.33%"
+            },
+            {
+              "value": "9",
+              "label": "75%"
+            },
+            {
+              "value": "8",
+              "label": "66.66%"
+            },
+            {
+              "value": "7",
+              "label": "58.33%"
+            },
+            {
+              "value": "6",
+              "label": "50%"
+            },
+            {
+              "value": "5",
+              "label": "41.66%"
+            },
+            {
+              "value": "4",
+              "label": "33.33%"
+            },
+            {
+              "value": "3",
+              "label": "25%"
+            },
+            {
+              "value": "15",
+              "label": "20%"
+            },
+            {
+              "value": "2",
+              "label": "16.66%"
+            },
+            {
+              "value": "1",
+              "label": "8.33%"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "content_align",
+          "options": [
+            {
+              "label": "Left",
+              "value": "t4s-text-md-start"
+            },
+            {
+              "label": "Center",
+              "value": "t4s-text-md-center"
+            },
+            {
+              "label": "Right",
+              "value": "t4s-text-md-end"
+            }
+          ],
+          "label": "Content align",
+           "default": "t4s-text-md-start"
+        },
+        {
+          "type": "text",
+          "id": "padding_inner",
+          "label": "Padding inner",
+          "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+          "placeholder": "30px,,30px," 
+        },
+        {
+          "type": "header",
+          "content": "+ Options on Mobile"
+        },
+        {
+          "type": "text",
+          "id": "col_heading_mobile",
+          "label": "Heading mobile"
+        },
+        {
+          "type": "select",
+          "id": "content_align_mb",
+          "options": [
+            {
+              "label": "Left",
+              "value": "t4s-text-start"
+            },
+            {
+              "label": "Center",
+              "value": "t4s-text-center"
+            },
+            {
+              "label": "Right",
+              "value": "t4s-text-end"
+            }
+          ],
+          "label": "Content align",
+           "default": "t4s-text-start"
+        },
+        {
+          "type": "text",
+          "id": "padding_inner_mb",
+          "label": "Padding inner",
+          "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+          "placeholder": "30px,,30px,"
+        } 
+      ]
+    },
+    {
+      "type":"custom_text",
+      "name":"Text",
+      "settings":[
+          {
+              "type":"textarea",
+              "id":"text",
+              "label":"Input text",
+              "default":"Text",
+              "info":"If you want to line break, please add a <br> tag in the text"
+          },
+          {
+              "type":"checkbox",
+              "id":"remove_br_tag",
+              "label":"Remove <br> tag on mobile",
+              "default":false
+          },
+          {
+              "type": "select",
+              "id": "tag",
+              "default": "p",
+              "options": [
+                 {
+                    "value": "h2",
+                    "label": "H2"
+                 },
+                 {
+                    "value": "h3",
+                    "label": "H3"
+                 },
+                 {
+                    "value": "h4",
+                    "label": "H4"
+                 },
+                 {
+                    "value": "h5",
+                    "label": "H5"
+                 },
+                 {
+                    "value": "h6",
+                    "label": "H6"
+                 },
+                 {
+                    "value": "p",
+                    "label": "P"
+                  },
+                 {
+                    "value": "div",
+                    "label": "DIV"
+                  }
+              ],
+              "label": "Html tag"
+            },
+          {
+              "type": "select",
+              "id": "fontf",
+              "default":"inherit",
+              "label": "Font family",
+              "options": [
+                  {
+                      "label": "Inherit",
+                      "value": "inherit"
+                  },
+                  {
+                      "label": "Font family #1",
+                      "value": "1"
+                  },
+                  {
+                      "label": "Font family #2",
+                      "value": "2"
+                  },
+                  {
+                      "label": "Font family #3",
+                      "value": "3"
+                  }
+              ]
+          },
+          
+          {
+              "type":"color",
+              "id":"text_cl",
+              "label":"Color text",
+              "default":"#222"
+          },
+          {
+              "type":"range",
+              "id":"text_fs",
+              "label":"Font size",
+              "max":100,
+              "min":10,
+              "step":1,
+              "unit":"px",
+              "default":16
+          },
+          {
+              "type":"range",
+              "id":"text_lh",
+              "label":"Line height",
+              "max":100,
+              "min":0,
+              "step":1,
+              "default":0,
+              "unit":"px",
+              "info":"Set is '0' use to default"            
+          },
+          {
+              "type":"range",
+              "id":"text_fw",
+              "label":"Font weight",
+              "min":100,
+              "max":900,
+              "step":100,
+              "default":400
+          },
+          {
+              "type":"range",
+              "id":"text_ls",
+              "label":"Letter spacing",
+              "max":10,
+              "min":0,
+              "default":0,
+              "step":0.1,
+              "unit":"px"
+          },
+          {
+              "type":"checkbox",
+              "id":"font_italic",
+              "label": "Enable font style italic",
+              "default":false
+          },
+          {
+              "type":"checkbox",
+              "id":"text_shadow",
+              "label": "Enable text shadow",
+              "default":false
+          },
+          {
+              "type": "number",
+              "id": "text_mgb",
+              "label": "Margin bottom",
+              "default": 15
+          },
+          {
+              "type":"header",
+              "content":"+ Option mobile"
+          },
+          {
+              "type":"checkbox",
+              "id":"hidden_mobile",
+              "label":"Hidden on mobile ",
+              "default":false
+          },
+          {
+              "type":"range",
+              "id":"text_fs_mb",
+              "label":"Font size (Mobile)",
+              "max":60,
+              "min":10,
+              "step":1,
+              "unit":"px",
+              "default":16
+          },
+          {
+              "type":"range",
+              "id":"text_lh_mb",
+              "label":"Line height (Mobile)",
+              "max":70,
+              "min":0,
+              "step":1,
+              "default":0,
+              "unit":"px",
+              "info":"Set is '0' use to default"            
+          },
+          {
+              "type":"range",
+              "id":"text_ls_mb",
+              "label":"Letter spacing (Mobile)",
+              "min":0,
+              "max":10,
+              "step":0.1,
+              "unit":"px",
+              "default":0
+          },
+          {
+              "type": "number",
+              "id": "text_mgb_mobile",
+              "label": "Margin bottom (Mobile)",
+              "default": 10
+          }
+      ]
+    },
+    {
+      "type": "html",
+      "name": "HTML",
+      "settings": [
+        {
+          "type": "html",
+          "id": "html_content",
+          "label": "Type html"
+        },
+        {
+          "type":"checkbox",
+          "id":"hidden_mobile",
+          "label":"Hidden on mobile ",
+          "default":false
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image (Child)",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_child",
+          "label": "Image (Child)"
+        },
+        {
+          "type":"url",
+          "id":"link_img",
+          "label":"Link image",
+          "info":"If set blank will use link homepage"
+        },
+        {
+          "type": "number",
+          "id": "img_width",
+          "label": "Image width (Unit: px)",
+          "default":0,
+          "info": "Set 0 to use width default of image"
+        },
+        {
+          "type": "number",
+          "id": "img_width_mb",
+          "label": "Image width on mobile (Unit: px)",
+          "default":0,
+          "info": "Set 0 to use width default of image"
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)",
+          "default": 20
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom on mobile(Unit: px)",
+          "default": 20
+        }
+      ]
+    },
+    {
+      "type":"payments",
+      "name":"Payments",
+      "settings":[
+        {
+          "type": "textarea",
+          "id": "svg",
+          "label": "SVG list",
+          "default": "amazon_payments,american_express,apple_pay,bitcoin,dankort,diners_club,discover,dogecoin,dwolla,forbrugsforeningen,interac,google_pay,jcb,klarna,klarna-pay-later,litecoin,maestro,master,paypal,shopify_pay,sofort,visa",
+          "info": "amazon_payments,american_express,apple_pay,bitcoin,dankort,diners_club,discover,dogecoin,dwolla,forbrugsforeningen,interac,google_pay,jcb,klarna,klarna-pay-later,litecoin,maestro,master,paypal,shopify_pay,sofort,visa"
+        },
+        {
+          "type": "number",
+          "id": "height",
+          "label": "SVG height",
+          "default": 30
+        },
+        {
+          "type":"checkbox",
+          "id":"hidden_mobile",
+          "label":"Hidden on mobile ",
+          "default":false
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom (Unit: px)",
+          "default": 20
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom on mobile(Unit: px)",
+          "default": 10
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Form newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "form_width",
+          "label": "Maximum form width ",
+          "info": "Default is 100% when you set to \"0\" (Unit:px)",
+          "default":0
+        },
+        {
+          "type": "number",
+          "id": "form_width_mb",
+          "label": "Maximum form width (Mobile)",
+          "info": "Default is 100% when you set to \"0\" (Unit:px)",
+           "default":0
+        },
+        {
+            "type": "select",
+            "id": "newl_des",
+            "label": "Newsletter design",
+            "info": "Design 11 always show icon",
+            "default": "1",
+            "options": [
+                {
+                  "value": "1",
+                  "label": "Design 1"
+                },
+                {
+                  "value": "2",
+                  "label": "Design 2"
+                },
+                {
+                  "value": "3",
+                  "label": "Design 3"
+                },
+                {
+                  "value": "4",
+                  "label": "Design 4"
+                },
+                {
+                  "value": "5",
+                  "label": "Design 5"
+                },
+                {
+                  "value": "6",
+                  "label": "Design 6"
+                },
+                {
+                  "value": "7",
+                  "label": "Design 7"
+                },
+                {
+                  "value": "8",
+                  "label": "Design 8"
+                },
+                {
+                  "value": "9",
+                  "label": "Design 9"
+                },
+                {
+                  "value": "10",
+                  "label": "Design 10"
+                },
+                {
+                  "value": "11",
+                  "label": "Design 11"
+                },
+                {
+                  "value": "12",
+                  "label": "Design 12"
+                }
+              ]
+          },
+        {
+          "type": "select",
+          "id": "news_align",
+          "label": "Newsletter input align",
+          "default": "center",
+          "options":[
+              {
+                "label":"Default",
+                "value":"start"
+              },
+              {
+                "label":"Center",
+                "value":"center"
+              }
+          ]
+        },
+        {
+        "type": "select",
+        "id": "newl_size",
+        "label": "Newsletter size",
+        "default": "small",
+        "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "btn_icon",
+          "label": "Show button icon",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "input_cl",
+          "label": "Input color",
+          "default": "#878787"
+        },
+        {
+          "type": "color",
+          "id": "border_cl",
+          "label": "Border color",
+          "default": "#000"
+        },
+        {
+          "type": "color",
+          "id": "btn_cl",
+          "label": "Button color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_cl",
+          "label": "Button background color",
+          "default": "#222222"
+        },
+        {
+          "type": "color",
+          "id": "btn_hover_cl",
+          "label": "Button hover color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "btn_hover_bg_cl",
+          "label": "Button hover background color",
+          "default": "#56CFE1"
+        },
+        {
+          "type":"checkbox",
+          "id":"hidden_mobile",
+          "label":"Hidden on mobile ",
+          "default":false
+        },
+        {
+          "type": "number",
+          "id": "mgb",
+          "label": "Margin bottom",
+          "default": 15
+        },
+        {
+          "type": "number",
+          "id": "mgb_mb",
+          "label": "Margin bottom (Mobile)",
+          "default": 10
+        }
+      ]
+    },
+    {
+      "type": "cus_menu",
+      "name": "Menu",
+      "settings": [
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu"
+        },
+        {
+          "type": "select",
+          "id": "menu_style",
+          "label": "Menu style",
+          "options": [
+              { "value": "1", "label": "Style 1"},
+              { "value": "2", "label": "Style 2"}
+          ],
+          "default": "1"
+        },
+        {
+            "type": "header",
+            "content": "+ Setting space"
+        },
+        {
+            "type": "number",
+            "id": "mgb",
+            "label": "Margin bottom (Unit:px)"
+        },
+        {
+            "type": "number",
+            "id": "mgb_mb",
+            "label": "Margin bottom on mobile (Unit:px)"
+        }
+      ]
+    },
+    {
+      "type": "cus_socials",
+      "name": "Socials",
+      "settings": [
+        {
+            "type": "text",
+            "id": "title", 
+            "label": "Title"
+        },
+        {
+          "type": "select",
+          "id": "social_mode",
+          "label": "Socials mode",
+          "options": [
+              {
+                "value": "1",
+                "label": "Follow"
+              },
+              {
+                "value": "2",
+                "label": "Share"
+              }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "select",
+          "id": "social_style",
+          "label": "Socials style",
+          "options": [
+              { "value": "1", "label": "Style 1"},
+              { "value": "2", "label": "Style 2 (Has background)"},
+              { "value": "3", "label": "Style 3 (Has border)"},
+              { "value": "4", "label": "Style 4 (Has border & background)"}
+          ],
+          "default": "3"
+        },
+        {
+          "type": "select",
+          "id": "social_size",
+          "label": "Socials size",
+          "options": [
+              { "value": "small", "label": "Small"},
+              { "value": "medium", "label": "Medium"},
+              { "value": "large", "label": "Large"}
+          ],
+          "default": "small"
+        },
+        {
+          "type": "range",
+          "id": "bd_radius", 
+          "label": "Border radius",
+          "unit":"px",
+          "min": 0,
+          "max": 30,
+          "default": 0,
+          "step": 1
+        },
+        {
+          "type": "checkbox",
+          "id": "use_color_set",
+          "label": "Use color settings",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "only true when check to box Color Settings"
+        },
+        {
+          "type": "color",
+          "id": "icon_cl",
+          "label": "Primary color",
+          "default": "#878787"
+        },
+        {
+          "type": "color",
+          "id": "bg_cl",
+          "label": "Secondary color",
+          "default": "#222222"
+        },
+        {
+          "type": "select",
+          "id": "space_h_item",
+          "options": [
+            {
+                "value": "0", 
+                "label": "0"
+            },
+            {
+                "value": "2", 
+                "label": "2px"
+            },
+            {
+                "value": "4", 
+                "label": "4px"
+            },
+            {
+                "value": "5", 
+                "label": "5px"
+            },
+            {
+                "value": "8", 
+                "label": "8px"
+            },
+            {
+                "value": "10", 
+                "label": "10px"
+            },
+            {
+                "value": "20",
+                "label": "20px"
+            },
+            {
+                "value": "30",
+                "label": "30px"
+            }
+          ],
+          "label": "Space horizontal items",
+          "default": "5"
+        },
+        {
+          "type": "select",
+          "id": "space_v_item",
+          "options": [
+            {
+                "value": "0", 
+                "label": "0"
+            },
+            {
+                "value": "2", 
+                "label": "2px"
+            },
+            {
+                "value": "4", 
+                "label": "4px"
+            },
+            {
+                "value": "5", 
+                "label": "5px"
+            },
+            {
+                "value": "8", 
+                "label": "8px"
+            },
+            {
+                "value": "10", 
+                "label": "10px"
+            },
+            {
+                "value": "20",
+                "label": "20px"
+            },
+            {
+                "value": "30",
+                "label": "30px"
+            }
+          ],
+          "label": "Space vertical items",
+          "default": "5"
+        },
+        {
+          "type": "select",
+          "id": "space_h_item_mb",
+          "options": [
+            {
+                "value": "0", 
+                "label": "0"
+            },
+            {
+                "value": "2", 
+                "label": "2px"
+            },
+            {
+                "value": "4", 
+                "label": "4px"
+            },
+            {
+                "value": "6", 
+                "label": "6px"
+            },
+            {
+                "value": "8", 
+                "label": "8px"
+            },
+            {
+                "value": "10", 
+                "label": "10px"
+            },
+            {
+                "value": "20",
+                "label": "20px"
+            },
+            {
+                "value": "30",
+                "label": "30px"
+            }
+          ],
+          "label": "Space horizontal items (Mobile)",
+          "default": "2"
+        },
+        {
+          "type": "select",
+          "id": "space_v_item_mb",
+          "options": [
+            {
+                "value": "0", 
+                "label": "0"
+            },
+            {
+                "value": "2", 
+                "label": "2px"
+            },
+            {
+                "value": "4", 
+                "label": "4px"
+            },
+            {
+                "value": "6", 
+                "label": "6px"
+            },
+            {
+                "value": "8", 
+                "label": "8px"
+            },
+            {
+                "value": "10", 
+                "label": "10px"
+            },
+            {
+                "value": "20",
+                "label": "20px"
+            },
+            {
+                "value": "30",
+                "label": "30px"
+            }
+          ],
+          "label": "Space vertical items (Mobile)",
+          "default": "2"
+        },
+        {
+            "type": "number",
+            "id": "mgb",
+            "label": "Margin bottom (Unit:px)"
+        },
+        {
+            "type": "number",
+            "id": "mgb_mb",
+            "label": "Margin bottom on mobile (Unit:px)"
+        }
+      ]
+    }
+  ],
+  "default": {
+      "blocks": [
+        { "type": "bl_col",
+          "settings": {
+            "col_dk": "3",
+            "col_tb": "6",
+            "col_mb": "12"
+          }
+        },
+        { "type": "custom_text",
+          "settings": {
+            "text": "kalles",
+            "text_fs":30,
+            "text_ls": 0,
+            "text_cl": "#000",
+            "text_fw": 700,
+            "text_mgb": 35
+          }
+        },
+        { "type": "html",
+          "settings": {
+            "html_content": "<p>184 Main Rd E, St Albans VIC 3021, Australia</p> <p>contact@company.com</p> <p>+001 2233 456</p>"
+          }
+        },
+        { "type": "cus_socials"},
+        { "type": "bl_col",
+          "settings": {
+            "col_dk": "2",
+            "col_tb": "6",
+            "col_mb": "12"
+          }
+        },
+        { "type": "cus_menu",
+          "settings": {
+            "menu": "main-menu" 
+          }
+        },
+
+        { "type": "bl_col",
+          "settings": {
+            "col_dk": "2",
+            "col_tb": "6",
+            "col_mb": "12"
+          }
+        },
+         { "type": "cus_menu",
+          "settings": {
+             "menu": "main-menu"
+          } 
+        },
+        { "type": "bl_col",
+          "settings": {
+            "col_dk": "2",
+            "col_tb": "6",
+            "col_mb": "12"
+          }
+        },
+        { "type": "cus_menu",
+          "settings": {
+             "menu": "main-menu"
+          }
+        },
+        { "type": "bl_col",
+          "settings": {
+            "col_heading": "Newsletter Signup",
+            "col_dk": "3",
+            "col_tb": "6",
+            "col_mb": "12"
+          }
+        },
+        { "type": "custom_text",
+          "settings": {
+            "text": "Subscribe to our newsletter and get 10% off your first purchase",
+            "text_fs":14,
+            "text_ls": 0,
+            "text_lh":24,
+            "text_cl": "#878787",
+            "text_fw": 400,
+            "text_mgb": 18
+          }
+        },
+        { "type": "newsletter"}
+      ]
+  }
+}
+{%- endschema -%}
+
+{%- javascript -%}
+{%- endjavascript -%}

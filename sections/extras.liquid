@@ -1,0 +1,446 @@
+{%- comment -%}
+0. Catalog mode
+1. Inactive tab message
+2. Shop protect
+3. Falling snow effect
+4. Falling snow effect
+{%- endcomment -%}
+
+{%- liquid 
+assign se_stts     = section.settings
+assign sid       = section.id
+ -%}
+
+{%- comment -%}
+{%- if se_stts.catalog_mode -%}
+<script>documentElementT4s.className += ' is-catalog__mode-true'</script>
+<style>
+  button[data-atc-form], a[data-atc-selector], .t4s-product-atc-qty, .t4s-payment-button, form[action="/cart/add"] .shopify-payment-button, .t4s-quantity-wrapper.t4s-product-form__qty, .t4s-mini_cart__edit, .t4s-page_cart__edit {
+      display: none !important;
+  }
+  .t4s-quantity-wrapper.t4s-product-form__qty + * { margin-left: 0 !important; }  
+</style>
+{%- endif -%}
+{%- endcomment -%}
+
+{%- if section.blocks.size > 0 -%}
+   {%- for block in section.blocks %}{% assign bk_stts = block.settings -%}
+
+		{%- case block.type -%}
+    
+    {%- when 'inactive_tab' -%}
+      <template id="t4s-inactive_tab" class="t4s-d-none">{ "message": {{ bk_stts.message | split: ';' | json }},"delay": {{ bk_stts.delay }} }</template><script src="{{ 'inactiveTab.min.js' | asset_url }}" defer="defer"></script>    
+    {%- when 'shop_protect' -%}
+			{%- style -%}
+			  {%- if bk_stts.disable_text_copy -%}
+				body, .t4s-disable--copy {
+				      -webkit-touch-callout: none;
+				    -webkit-user-select: none;
+				    -html-user-select: none;
+				    -moz-user-select: none;
+				    -ms-user-select: none;
+				    user-select: none;
+				}
+				{%- endif -%}
+	      {%- if bk_stts.disable_img_drag -%}
+				img { -webkit-user-drag: none;user-drag: none; }
+				{%- endif -%}
+			{%- endstyle -%}
+
+		  <script>
+        (function() {
+		  	{%- if bk_stts.disable_text_copy %}
+		    // disable_right_click
+		    document.addEventListener("contextmenu", function(event) {
+		      event.preventDefault();
+		      // console.log(event.target)
+		      // var notInput = (event.target || event.srcElement).tagName.toLowerCase() !== "input" && (event.target || event.srcElement).tagName.toLowerCase() !== "textarea";if (notInput && (event.target || event.srcElement).innerText) {event.preventDefault();} 
+		    });
+		    {% endif -%}
+		    {%- if bk_stts.disable_img_copy %}
+		    // disable_right_click_img
+		    document.addEventListener("mousedown", function(event) { if ((event.target || event.srcElement).tagName.toLowerCase() === "img") {
+		        // Middle-click to open in new tab
+		        if (event.which == 2) { event.preventDefault(); } 
+		    } });
+		    document.addEventListener("contextmenu", function(event) { if ((event.target || event.srcElement).tagName.toLowerCase() === "img") { event.preventDefault(); } });
+		    // disable_right_click_bg_img
+		    document.addEventListener("contextmenu", function(event) { if ((event.target || event.srcElement).style.backgroundImage) { event.preventDefault(); } });
+		    {% endif -%}
+		    {%- if bk_stts.disable_img_drag -%}
+		    // Drag and drop <img> elements
+		    const disableDragAndDropT4s = function(){ document.body.setAttribute("ondragstart", "return false;");document.body.setAttribute("ondrop", "return false;"); };
+		    if (document.readyState === "complete") { disableDragAndDropT4s(); } else { document.addEventListener("DOMContentLoaded", disableDragAndDropT4s); }
+		    {% endif -%}
+		    {%- if bk_stts.disable_best_seller -%}
+		    const bestSellingItemsT4s = document.querySelectorAll('[data-value="best-selling"]');
+				bestSellingItemsT4s.forEach((item) => { item.remove(); });
+				if ( window.location.search.indexOf('sort_by=best-selling') > -1 ) window.location.replace(window.location.pathname);
+		    {% endif -%}
+        }());
+		  </script>
+
+    {%- when 'snow_efff' -%}
+
+			{%- style -%}
+			#t4s-snow_ef {
+				--snow_eff-speed: {{ bk_stts.speed }}s;
+				--snow_eff-op: {{ bk_stts.opacity | divided_by: 100.0 }};
+			  display: block;
+			  height: 100%;
+			  width: 100%;
+			  top: 0;
+			  left: 0;
+			  position: fixed;
+			  background-color: rgba(0, 0, 0, var(--snow_eff-op));
+			  background-image: url({{ 'snow.png' | asset_url }}), url({{ 'snow1.png' | asset_url }}), url({{ 'snow2.png' | asset_url }});
+			  background-repeat: repeat;
+			  z-index: 100000;
+			  pointer-events: none;
+			  -moz-animation: snow_ef_t4 var(--snow_eff-speed) linear infinite;
+			  -webkit-animation: snow_ef_t4 var(--snow_eff-speed) linear infinite;
+			  animation: snow_ef_t4 var(--snow_eff-speed) linear infinite;
+			}
+			@-moz-keyframes snow_ef_t4 {
+			  0% {
+			    background-position: 0 0, 0 0, 0 0;
+			  }
+			  100% {
+			    background-position: 500px 3000px, 0 400px, 0 300px;
+			  }
+			}
+			@-webkit-keyframes snow_ef_t4 {
+			  0% {
+			    background-position: 0 0, 0 0, 0 0;
+			  }
+			  100% {
+			    background-position: 500px 3000px, 0 400px, 0 300px;
+			  }
+			}
+			@keyframes snow_ef_t4 {
+			  0% {
+			    background-position: 0 0, 0 0, 0 0;
+			  }
+			  100% {
+			    background-position: 500px 3000px, 0 400px, 0 300px;
+			  }
+			}
+			{%- endstyle -%}
+
+    {%- when 'catalog_mode' -%}
+			<script>documentElementT4s.className += ' is-catalog__mode-true'</script>
+			<style>
+			  button[data-atc-form], a[data-atc-selector], .t4s-product-atc-qty, .t4s-payment-button, form[action="/cart/add"] .shopify-payment-button, .t4s-quantity-wrapper.t4s-product-form__qty, .t4s-mini_cart__edit, .t4s-page_cart__edit, .t4s-sticky-atc {
+			  display: none !important;margin: 0 !important;  }.t4s-quantity-wrapper.t4s-product-form__qty + * { margin-left: 0 !important; }
+			  .t4s-product-form__buttons .t4s-pr__wis_cp { margin-top: 0 !important; }
+			</style>
+
+    {%- when 'favicon_count' -%}
+	    {%- liquid
+	    if settings.favicon == blank 
+	    continue
+	    endif -%}
+      <script id="t4s-favico-js" src="{{ 'favico.min.js' | asset_url }}" data-js='{ "bgColor" : "{{ bk_stts.bgColor }}", "textColor" : "{{ bk_stts.textColor }}", "type" : "{{ bk_stts.type }}", "animation": "{{ bk_stts.animation }}", "position" : "{{ bk_stts.position }}", "cartCount" : {{ cart.item_count }} }' defer="defer"></script>
+
+    {%- when 'page_transition' -%}
+      {%- comment %}<div class="t4s-pageTransition"><div class="t4s-pageTransition--bar"></div></div> 
+      <style>
+       .no-js .t4s-pageTransition{display:none}
+       .js .t4s-pageTransition {    
+            --duration-default: .25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: var(--t4s-body-background);
+            z-index: 99999;
+            pointer-events: none;
+            transition-property: opacity,visibility;
+            transition-duration: var(--duration-default);
+            transition-timing-function: ease;
+      }
+      .js .t4s-pageTransition .t4s-pageTransition--bar {
+          width: 13rem;
+          height: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: var(--border-color);
+          position: relative;
+          overflow: hidden;
+      }
+      .js .t4s-pageTransition .t4s-pageTransition--bar:after {
+          content: "";
+          height: 100%;
+          width: 6.8rem;
+          position: absolute;
+          transform: translate(-3.4rem);
+          background-color: var(--t4s-dark-color);
+          border-radius: 0.2rem;
+          animation: pageTransition-ani 1.5s ease infinite;
+      }
+      .is--loaded .t4s-pageTransition {
+          opacity: 0;
+          visibility: hidden;
+      }
+      .is--unloading .t4s-pageTransition {
+          opacity: 1;
+          visibility: visible;
+      }
+      @keyframes pageTransition-ani{0%{transform:translate(-3.4rem)}50%{transform:translate(9.6rem)}to{transform:translate(-3.4rem) }}
+      .is--unloading.is--loaded .t4s-pageTransition--bar{display:none}
+      </style>  
+      <script>
+        (function () {
+        // Page transition
+        window.addEventListener('beforeunload', () => {
+          document.body.classList.add('is--unloading');
+          setTimeout(function(){ document.body.classList.remove('is--loaded'); }, 80);
+        });
+        window.addEventListener('DOMContentLoaded', () => {
+          document.body.classList.add('is--loaded');
+          setTimeout(function(){ document.body.classList.remove('is--unloading'); }, 50);
+          //document.dispatchEvent(new CustomEvent('page:is--loaded'));
+        });
+        window.addEventListener('pageshow', (event) => {
+          // Removes unload class when returning to page via history
+          if (event.persisted) {
+            document.body.classList.remove('is--unloading');
+          }
+        });
+        })();
+      </script>
+      {%- endcomment %}       
+		{%- endcase -%}
+
+	{%- endfor -%}
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "⚡ Extras",
+    "class": "t4s-section-extras t4s-section-admn2-fixed",
+    "settings": [
+      /*{
+        "type": "checkbox",
+        "id": "catalog_mode",
+        "label": "Enable catalog mode",
+        "info": "You can hide all 'Add to cart' buttons. This will allow you to showcase your products as an online catalog without ability to make a purchase.",
+        "default": false
+      }*/
+    ],
+    "blocks": [
+      {
+         "type": "inactive_tab",
+         "name": "⚡ Inactive tab message",
+         "limit": 1,
+         "settings": [
+		      {
+		        "type": "paragraph",
+		        "content": "This add-on reduces cart abandonment by dynamically modifying the browser tab's title when the visitors navigate away from your store. You can customize the message that shows on the page title, don't forget to use [emojis](https://emojipedia.org/), and make sure your visitors remember to return."
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "message",
+		        "label": "Message",
+		        "default": "🔥 Don't forget this...; 🔥 Come back!",
+		        "info": "Use ';' to create multi message. Use [emojis](https://getemoji.com/), [emojis 2](https://emojipedia.org/)"
+		      },
+		      {
+		        "type": "range",
+		        "id": "delay",
+		        "min": 100,
+		        "max": 5000,
+		        "step": 100,
+		        "unit": "ms",
+		        "label": "Delay",
+		        "info": "Delay between transitions (in milliseconds). If only a message will be disabled. Not can preview on admin editor.",
+		        "default": 1000
+		      }
+         ]
+      },
+      {
+         "type": "shop_protect",
+         "name": "🛡️ Shop protect",
+         "limit": 1,
+         "settings": [
+			      {
+			        "type": "paragraph",
+			        "content": "Prevent image and content theft from your website"
+			      },
+			      {
+			        "type": "checkbox",
+			        "id": "disable_img_copy",
+			        "label": "Disable images copy",
+			        "default": true
+			      },
+			      {
+			        "type": "checkbox",
+			        "id": "disable_img_drag",
+			        "label": "Disable images drag & drop",
+			        "default": true
+			      },
+			      {
+			        "type": "checkbox",
+			        "id": "disable_text_copy",
+			        "label": "Disable text copy",
+			        "default": true
+			      },
+			      {
+			        "type": "paragraph",
+			        "content": "Disable sort by with best selling on collection and search page. Use to prevent competitors from snooping around by automatically hiding the best selling sort option on your collection page. Make sure your collections are not sorted by best selling. Basically making sure the competitor will not see your best-sellers."
+			      },
+			      {
+			        "type": "checkbox",
+			        "id": "disable_best_seller",
+			        "label": "Disable best selling",
+			        "default": false
+			      }
+         ]
+      },
+      {
+         "type": "favicon_count",
+         "name": "⚡ Favicon Cart Count",
+         "limit": 1,
+         "settings": [
+		      {
+		        "type": "paragraph",
+		        "content": "Display the number of items added to the cart over the browser's favicon. Not can preview on admin editor."
+		      },
+		      {
+		        "type": "color",
+		        "id": "bgColor",
+		        "label": "Badge background color",
+		        "default": "#34c134"
+		      },
+		      {
+		        "type": "color",
+		        "id": "textColor",
+		        "label": "Badge text color",
+		        "default": "#fff"
+		      },
+		      {
+		        "type": "select",
+		        "id": "type",
+		        "options": [
+		          {
+		            "value": "circle",
+		            "label": "Circle"
+		          },
+		          {
+		            "value": "rectangle",
+		            "label": "Rectangle"
+		          }
+		        ],
+		        "label": "Badge shape",
+		        "default": "circle"
+		      },
+		      {
+		        "type": "select",
+		        "id": "position",
+		        "options": [
+		          {
+		            "value": "up",
+		            "label": "Up"
+		          },
+		          {
+		            "value": "down",
+		            "label": "Down"
+		          },
+		          {
+		            "value": "left",
+		            "label": "Left"
+		          },
+		          {
+		            "value": "upleft",
+		            "label": "Upleft"
+		          }
+		        ],
+		        "label": "Badge position",
+		        "default": "down"
+		      },
+		      {
+		        "type": "select",
+		        "id": "animation",
+		        "options": [
+		          {
+		            "value": "none",
+		            "label": "None"
+		          },
+		          {
+		            "value": "slide",
+		            "label": "Slide"
+		          },
+		          {
+		            "value": "fade",
+		            "label": "Fade"
+		          },
+		          {
+		            "value": "pop",
+		            "label": "Pop"
+		          },
+		          {
+		            "value": "popFade",
+		            "label": "PopFade"
+		          }
+		        ],
+		        "label": "Badge animation",
+		        "default": "slide"
+		      }
+         ]
+      },
+      /*{
+         "type": "page_transition",
+         "name": "⚡ Page Transition",
+         "limit": 1,
+         "settings": [
+         ]
+      },*/
+      {
+         "type": "snow_efff",
+         "name": "❄️ Falling snow effect",
+         "limit": 1,
+         "settings": [
+		      {
+		        "type": "range",
+		        "id": "speed",
+		        "min": 1,
+		        "max": 50,
+		        "step": 0.5,
+		        "unit": "sec",
+		        "label": "Speed falling snow (in seconds)",
+		        "default": 10
+		      },
+		      {
+		        "type": "range",
+		        "id": "opacity",
+		        "min": 1,
+		        "max": 50,
+		        "step": 0.5,
+		        "label": "Opacity overlay",
+		        "default": 1
+		      }
+         ]
+      },
+      {
+         "type": "catalog_mode",
+         "name": "🌒 Catalog mode",
+         "limit": 1,
+         "settings": [
+		      {
+		        "type": "paragraph",
+		        "content": "You can hide all 'Add to cart' buttons. This will allow you to showcase your products as an online catalog without ability to make a purchase."
+		      }/*,
+		      {
+		        "type": "checkbox",
+		        "id": "catalog_mode",
+		        "label": "Enable catalog mode",
+		        "default": true
+		      }*/
+         ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,1145 @@
+<!-- sections/main-blog.liquid -->
+{{ 'blog.css' | asset_url | stylesheet_tag }}
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'loading.css' | asset_url | stylesheet_tag }}
+{{ 'button-style.css' | asset_url | stylesheet_tag }}
+{{ 'custom-effect.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign stt_layout = section.settings.layout
+    assign stt_image_bg = section.settings.image_bg
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif 
+    assign layout_des = section.settings.layout_des
+    assign art_des = section.settings.art_des
+    assign by_txt = 'blogs.article.by' | t
+    assign on_txt = 'blogs.article.on' | t
+    assign readmore_txt = 'blogs.article.read_more' | t
+    assign all_tags = blog.all_tags
+    assign date = section.settings.date
+    assign b_effect = section.settings.b_effect
+    assign img_effect = section.settings.img_effect
+    assign show_cate = section.settings.show_cate
+    assign show_tags = section.settings.show_tags
+    assign show_cnt = section.settings.show_cnt
+    assign show_au = section.settings.show_au
+    assign show_cm = section.settings.show_cm
+    assign show_dt = section.settings.show_dt
+    assign show_rm = section.settings.show_rm
+    assign show_irm = section.settings.show_irm
+    assign col_dk = section.settings.col_dk
+    assign col_tb = section.settings.col_tb
+    assign col_mb = section.settings.col_mb
+    if art_des == '4'
+        if col_dk != '1'
+            assign col_dk = '2'
+        endif
+        if col_tb != '1'
+            assign col_tb = '2'
+        endif
+    endif
+    assign source = section.settings.source
+    assign limit = section.settings.limit
+    assign blog_url =  blog.url
+    assign use_pagination = section.settings.use_pagination
+    assign isLoadmore = false
+    if layout_des != "2"
+        if use_pagination == "load-more" or use_pagination == "infinite" 
+            assign isLoadmore = true
+            assign typeAjax = 'LmDefault'
+        else
+            assign typeAjax = 'AjaxDefault'
+        endif
+    else
+        if use_pagination == "load-more" or use_pagination == "infinite" 
+            assign isLoadmore = true
+            assign typeAjax = 'LmIsotope'
+        else
+            assign typeAjax = 'AjaxIsotope'
+        endif
+    endif
+    assign use_bar_lm = section.settings.use_bar_lm
+    assign results_count = blog.articles_count
+ -%}
+{%- paginate blog.articles by limit -%}
+    <div class="t4s-section-inner t4s_nt_se_{{ section.id }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} {% render 'section_style', se_stts: section.settings -%} >
+        {{- html_layout[0] -}}
+        {%- if stt_layout == 't4s-se-container' -%}
+            <div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+            <div class="t4s-row">
+                <div data-ntajax-container data-ntajax-options='{"id":"{{ section.id }}","type":"{{ typeAjax }}","isProduct":false,"updateURL":true,"updateURLPrev":true}' class="t4s-col-item t4s-main-blog-page t4s-main-area">
+                    {%- if source != '0' -%}
+                        <div class="t4s-blog-tags t4s-blog-count-{{ section.settings.show_count }}">
+                            <ul class="t4s-tags-ul t4s-text-center t4s-active-filters">
+                                {%- if source == '1' -%}
+                                    <li class="t4s-d-inline-flex"><a class="{% unless current_tags %}is--selected{% endunless %}" href="{{ blog_url }}">{{ 'blogs.filter_all' | t }}</a></li>
+                                    {%- for tag in all_tags -%}
+                                        {%- if current_tags contains tag -%}
+                                            <li class="t4s-d-inline-flex"><a href="{{ blog_url }}" class="is--selected">{{ tag | remove : 'category_' | strip }}<span class="t4s-blog-count"> ({{ tag.total_count }})</span></a></li>
+                                        {%- else -%}
+                                            <li class="t4s-d-inline-flex"><a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove : 'category_' | strip }}<span class="t4s-blog-count"> ({{ tag.total_count }})</span></a></li>
+                                        {%- endif -%}
+                                    {%- endfor -%}
+                                {%- elsif source == '2' -%}
+                                    <li class="t4s-d-inline-flex"><a class="{% unless current_tags %} is--selected{% endunless %}" href="{{ blog_url }}">{{ 'blogs.filter_all' | t }}</a></li>
+                                    {%- for block in section.blocks -%}
+                                        {%- assign tag = block.settings.title -%}
+                                        {%- if current_tags contains tag -%}
+                                            <li class="t4s-d-inline-flex"><a href="{{ blog_url }}" class="is--selected">{{ tag | remove : 'category_' | strip }}</a></li>
+                                        {%- elsif all_tags contains tag -%}
+                                            <li class="t4s-d-inline-flex"><a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove : 'category_' | strip }}</a></li>
+                                        {%- endif -%}
+                                    {%- endfor -%}
+                                {%- endif -%}
+                            </ul>
+                        </div>
+                  	{%- endif -%}
+                    {%- if paginate.previous.is_link and isLoadmore -%}
+                        <div data-wrap-lm-prev class="t4s-pagination-wrapper t4s-prev-head t4s-has-btn-{{ use_pagination }} {{ section.settings.btn_pos }} t4s-w-100">
+                            <a data-load-more data-is-prev href="{{ paginate.previous.url }}" class="t4s-pr t4s-loadmore-btn t4s-btn t4s-btn-loading__svg t4s-btn-base t4s-btn-style-{{ section.settings.button_style }} t4s-btn-size-{{ section.settings.btn_size }} t4s-btn-icon-{{ section.settings.btn_icon }} t4s-btn-color-{{ section.settings.btn_cl }} {% if section.settings.button_style == 'default' or section.settings.button_style == 'outline' %}t4s-btn-effect-{{ section.settings.button_effect }}{% endif %}">
+                                <span class="t4s-btn-atc_text">{{ 'search.pagination.load_prev' | t }}</span> 
+                                {% if section.settings.btn_icon %}<svg class="t4s-btn-icon" viewBox="0 0 32 32"><path d="M 15 4 L 15 24.0625 L 8.21875 17.28125 L 6.78125 18.71875 L 15.28125 27.21875 L 16 27.90625 L 16.71875 27.21875 L 25.21875 18.71875 L 23.78125 17.28125 L 17 24.0625 L 17 4 Z"/></svg>{% endif %}
+                                <div class="t4s-loading__spinner t4s-dn"><svg  width="16" height="16" aria-hidden="true" focusable="false" role="presentation" class="t4s-svg__spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg></div> 
+                            </a>
+                        </div>
+                    {%- endif -%}   
+                    {%- if section.settings.layout_des == '1' -%}
+                        <div data-contentlm-replace class="t4s-row t4s_{{ section.settings.image_ratio }} t4s_position_{{ section.settings.image_position }} t4s-gx-md-{{ section.settings.space_h_item }} t4s-gy-md-{{ section.settings.space_v_item }} t4s-gx-{{ section.settings.space_h_item_mb }} t4s-gy-{{ section.settings.space_v_item_mb }} t4s-row-cols-lg-{{ col_dk }} t4s-row-cols-md-{{ col_tb }} t4s-row-cols-{{ col_mb }} t4s-text-{{ section.settings.text_align }} t4s_{{ section.settings.image_size }}">
+                    {%- else -%}
+                        <div data-contentlm-replace class="isotopet4s t4s_blog_masonry t4s_{{ section.settings.image_ratio }} t4s_position_{{ section.settings.image_position }} t4s-gx-md-{{ section.settings.space_h_item }} t4s-gy-md-{{ section.settings.space_v_item }} t4s-gx-{{ section.settings.space_h_item_mb }} t4s-gy-{{ section.settings.space_v_item_mb }} t4s-row t4s-row-cols-lg-{{ col_dk }} t4s-row-cols-md-{{ col_tb }} t4s-row-cols-{{ col_mb }} t4s-text-{{ section.settings.text_align }} t4s_{{ section.settings.image_size }}" data-isotopet4s-js='{ "itemSelector": ".t4s-post-item", "layoutMode": "masonry" }'>
+                    {%- endif -%}
+                    {%- case art_des -%}
+                        {%-  when '1' -%}
+                        {%- render 'post_loop_1' for blog.articles as post, blog_url: blog_url, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_dt: show_dt, show_au: show_au, show_cm: show_cm, show_cate: show_cate, show_tags: show_tags, show_cnt: show_cnt, show_rm: show_rm, show_irm: show_irm, date: date, readmore_txt: readmore_txt -%}
+                    {%-  when '2' -%}
+                        {%- render 'post_loop_2' for blog.articles as post, blog_url: blog_url, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_dt: show_dt, show_au: show_au, show_cm: show_cm, show_cate: show_cate, show_tags: show_tags, show_cnt: show_cnt, show_rm: show_rm, show_irm: show_irm, date: date, readmore_txt: readmore_txt -%}
+                    {%-  when '3' -%}
+                        {%- render 'post_loop_3' for blog.articles as post, blog_url: blog_url, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_dt: show_dt, show_au: show_au, show_cm: show_cm, show_cate: show_cate, show_tags: show_tags, show_cnt: show_cnt, show_rm: show_rm, show_irm: show_irm, date: date, readmore_txt: readmore_txt -%}
+                    {%-  when '4' -%}
+                        {%- render 'post_loop_4' for blog.articles as post, blog_url: blog_url, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_dt: show_dt, show_au: show_au, show_cm: show_cm, show_cate: show_cate, show_tags: show_tags, show_cnt: show_cnt, show_rm: show_rm, show_irm: show_irm, date: date, readmore_txt: readmore_txt -%}
+                    {%-  when '5' -%}
+                        {%- render 'post_loop_5' for blog.articles as post, blog_url: blog_url, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_dt: show_dt, show_au: show_au, show_cm: show_cm, show_cate: show_cate, show_tags: show_tags, show_cnt: show_cnt, show_rm: show_rm, show_irm: show_irm, date: date, readmore_txt: readmore_txt -%}
+                    {%-  when '6' -%}
+                        {%- render 'post_loop_6' for blog.articles as post, blog_url: blog_url, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_dt: show_dt, show_au: show_au, show_cm: show_cm, show_cate: show_cate, show_tags: show_tags, show_cnt: show_cnt, show_rm: show_rm, show_irm: show_irm, date: date, readmore_txt: readmore_txt -%}  
+                    {%-  when '7' -%}
+                        {%- render 'post_loop_7' for blog.articles as post, blog_url: blog_url, by_txt: by_txt, on_txt: on_txt, b_effect: b_effect, img_effect: img_effect, show_dt: show_dt, show_au: show_au, show_cm: show_cm, show_cate: show_cate, show_tags: show_tags, show_cnt: show_cnt, show_rm: show_rm, show_irm: show_irm, date: date, readmore_txt: readmore_txt -%}    
+                    {%- endcase -%}
+                    </div>
+                    {%- if paginate.pages > 1 -%}
+                        <div class="t4s-blog-footer t4s-col-item t4s-has-btn-{{ use_pagination }} {{ section.settings.btn_pos }}">
+                            {%- if use_pagination == 'default' -%}
+                                {%- render 'pagination', paginate: paginate, anchor: '' -%}
+                            {%- elsif paginate.next.is_link -%}
+                                <div data-wrap-lm class="t4s-pagination-wrapper t4s-w-100">
+                                    {%- if use_bar_lm -%}
+                                        <div data-wrap-lm-bar class="t4s-lm-bar t4s-btn-color-{{ section.settings.btn_cl }}">
+                                            {%- assign current_pr_size = blog.articles.size | plus: paginate.current_offset -%}
+                                            <span class="t4s-lm-bar--txt">{{ 'blogs.pagination.bar_with_count_html' | t: current_count: current_pr_size, total_count: results_count }}</span>
+                                            <div class="t4s-lm-bar--progress t4s-pr t4s-oh"><span class="t4s-lm-bar--current t4s-pa t4s-l-0 t4s-r-0 t4s-t-0 t4s-b-0" style="width: {{ current_pr_size | times: 100.0 | divided_by: results_count }}%"></span></div>
+                                        </div>
+                                    {%- endif -%}
+                                    <a data-load-more {% if use_pagination == 'infinite' %}data-load-onscroll{% endif %} href="{{ paginate.next.url }}" class="t4s-pr t4s-btn-loading__svg t4s-btn t4s-btn-base t4s-btn-style-{{ section.settings.button_style }} t4s-btn-size-{{ section.settings.btn_size }} t4s-btn-icon-{{ section.settings.btn_icon }} t4s-btn-color-{{ section.settings.btn_cl }} {% if section.settings.button_style == 'default' or section.settings.button_style == 'outline' %}t4s-btn-effect-{{ section.settings.button_effect }}{% endif %}"><span class="t4s-btn-atc_text">{{ 'blogs.pagination.load_more' | t }}</span>
+                                        {%- if section.settings.btn_icon -%}<svg class="t4s-btn-icon" viewBox="0 0 32 32"><path d="M 15 4 L 15 24.0625 L 8.21875 17.28125 L 6.78125 18.71875 L 15.28125 27.21875 L 16 27.90625 L 16.71875 27.21875 L 25.21875 18.71875 L 23.78125 17.28125 L 17 24.0625 L 17 4 Z"/></svg>{%- endif -%} 
+                                        <div class="t4s-loading__spinner t4s-dn">
+                                            <svg width="16" height="16" aria-hidden="true" focusable="false" role="presentation" class="t4s-svg__spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+                                        </div> 
+                                    </a>
+                                </div>
+                            {%- endif -%}
+                        </div>
+                    {%- endif -%}             
+                </div> 
+                <aside data-sidebar-content class="t4s-col-item t4s-col-12 t4s-col-lg-3 t4s-sidebar t4s-dn"><div class="t4s-loading--bg"></div></aside>
+            </div>
+        {{- html_layout[1] -}}
+    </div>
+{%- endpaginate -%}
+<style>
+    .t4s-prev-head { margin:40px 0px;}
+    .t4s-main-blog .t4s-post-item .t4s-post-thumb {margin-bottom: 25px;}
+    .t4s-main-blog .t4s-blog-tags {
+        margin-bottom: 25px;
+    }
+    .t4s-main-blog .t4s-tags-ul{padding-left: 0px;}
+    .t4s-main-blog .t4s-tags-ul li a {
+        height: 40px;
+        line-height: 40px;
+        border: 1px solid transparent;
+        padding: 0 20px;
+        border-radius: var(--btn-radius);
+        font-weight: 500;
+        color: var(--text-color);
+    }
+    .t4s-main-blog .t4s-tags-ul li a:focus, .t4s-tags-ul li a:hover{
+        color: var(--secondary-color);
+    }
+    .t4s-main-blog .t4s-tags-ul li a.is--selected {
+        color: var(--secondary-color);
+        border-color: var(--secondary-color);
+    }
+    .t4s-blog-count-false .t4s-blog-count{display:none;}
+  	.t4s-main-blog .t4s-post-item.t4s-post-des-5 .t4s-post-thumb,
+  	.t4s-main-blog .t4s-post-item.t4s-post-des-6 .t4s-post-thumb{margin-bottom: 0px;}
+</style>
+{%- schema -%}
+{
+    "name":"Blog",
+    "tag":"section",
+    "class":"t4s-section t4s-section-main t4s_tp_istope t4s-main-blog",
+    "settings":[
+        {
+            "type":"header",
+            "content":"1.General options"
+        },
+        {
+            "type": "select",
+            "id": "layout_des",
+            "label": "Layout design",
+            "default": "1",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "Grid"
+                },
+                {
+                    "value": "2",
+                    "label": "Masonry"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "art_des",
+            "label":"Articles design",
+            "default":"1",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "Design 1"
+                },
+                {
+                    "value": "2",
+                    "label": "Design 2"
+                },
+                {
+                    "value": "3",
+                    "label": "Design 3"
+                },
+                {
+                    "value": "4",
+                    "label": "Design 4 (Always show <= 2 items per row)"
+                },
+                {
+                    "value": "5",
+                    "label": "Design 5"
+                },
+                {
+                    "value": "6",
+                    "label": "Design 6"
+                },
+                {
+                    "value": "7",
+                    "label": "Design 7"
+                }
+            ]
+        },
+        {
+            "type": "range",
+            "max":50,
+            "min":1,
+            "step":1,
+            "id": "limit",
+            "label": "Number of articles to show",
+            "default": 6
+        },
+        {
+            "type": "select",
+            "id": "date",
+            "label": "Date format",
+            "info":"different format options display for various languages.",
+            "default": "date",
+            "options": [
+                {
+                    "value": "abbreviated_date",
+                    "label": "Apr 19, 1994"
+                },
+                {
+                    "value": "basic",
+                    "label": "4/19/1994"
+                },
+                {
+                    "value": "date",
+                    "label": "April 19, 1994"
+                },
+                {
+                    "value": "%b %d",
+                    "label": "Apr 19"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "show_cate",
+            "label": "Show categories",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "show_tags",
+            "label": "Show tags",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "show_cnt",
+            "label": "Show short content",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_au",
+            "label": "Show author",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_dt",
+            "label": "Show date",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_cm",
+            "label": "Show comment",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "show_rm",
+            "label": "Show readmore",
+            "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_irm",
+          "label": "Show icon readmore",
+          "default": false
+      	},
+        {
+            "type":"header",
+            "content":"+ Content options"
+        },
+        {
+            "type":"select",
+            "id":"text_align",
+            "label":"Content align",
+            "default":"center",
+            "options":[
+                {
+                    "label":"Left",
+                    "value":"start"
+                },
+                {
+                    "label":"Center",
+                    "value":"center"
+                },
+                {
+                    "label":"Right",
+                    "value":"end"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "col_dk",
+            "label": "Items per row",
+            "default": "3",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "1"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                },
+                {
+                    "value": "3",
+                    "label": "3"
+                },
+                {
+                    "value": "4",
+                    "label": "4"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "col_tb",
+            "label": "Items per row (Tablet)",
+            "default": "2",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "1"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                },
+                {
+                    "value": "3",
+                    "label": "3"
+                },
+                {
+                    "value": "4",
+                    "label": "4"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "col_mb",
+            "label": "Items per row (Mobile)",
+            "default": "1",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "1"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                }
+            ]
+        }, 
+        {
+            "type": "select",
+            "id": "space_h_item",
+            "options": [
+                {
+                    "value": "0", 
+                    "label": "0"
+                },
+                {
+                    "value": "2", 
+                    "label": "2px"
+                },
+                {
+                    "value": "4", 
+                    "label": "4px"
+                },
+                {
+                    "value": "6", 
+                    "label": "6px"
+                },
+                {
+                    "value": "8", 
+                    "label": "8px"
+                },
+                {
+                    "value": "10", 
+                    "label": "10px"
+                },
+                {
+                    "value": "20",
+                    "label": "20px"
+                },
+                {
+                    "value": "30",
+                    "label": "30px"
+                },
+                {
+                    "value": "40",
+                    "label": "40px"
+                }
+            ],
+            "label": "Space horizontal between items",
+            "default": "30"
+        },
+        {
+            "type": "select",
+            "id": "space_v_item",
+            "options": [
+                {
+                    "value": "0", 
+                    "label": "0"
+                },
+                {
+                    "value": "2", 
+                    "label": "2px"
+                },
+                {
+                    "value": "4", 
+                    "label": "4px"
+                },
+                {
+                    "value": "6", 
+                    "label": "6px"
+                },
+                {
+                    "value": "8", 
+                    "label": "8px"
+                },
+                {
+                    "value": "10", 
+                    "label": "10px"
+                },
+                {
+                    "value": "20",
+                    "label": "20px"
+                },
+                {
+                    "value": "30",
+                    "label": "30px"
+                },
+                {
+                    "value": "40",
+                    "label": "40px"
+                }
+            ],
+            "label": "Space vertical vertical items",
+            "default": "30"
+        },
+        {
+            "type": "select",
+            "id": "space_h_item_mb",
+            "options": [
+                {
+                    "value": "0", 
+                    "label": "0"
+                },
+                {
+                    "value": "2", 
+                    "label": "2px"
+                },
+                {
+                    "value": "4", 
+                    "label": "4px"
+                },
+                {
+                    "value": "6", 
+                    "label": "6px"
+                },
+                {
+                    "value": "8", 
+                    "label": "8px"
+                },
+                {
+                    "value": "10", 
+                    "label": "10px"
+                },
+                {
+                    "value": "20",
+                    "label": "20px"
+                },
+                {
+                    "value": "30",
+                    "label": "30px"
+                },
+                {
+                    "value": "40",
+                    "label": "40px"
+                }
+            ],
+            "label": "Space horizontal between items (Mobile)",
+            "default": "30"
+        },
+        {
+            "type": "select",
+            "id": "space_v_item_mb",
+            "options": [
+                {
+                    "value": "0", 
+                    "label": "0"
+                },
+                {
+                    "value": "2", 
+                    "label": "2px"
+                },
+                {
+                    "value": "4", 
+                    "label": "4px"
+                },
+                {
+                    "value": "6", 
+                    "label": "6px"
+                },
+                {
+                    "value": "8", 
+                    "label": "8px"
+                },
+                {
+                    "value": "10", 
+                    "label": "10px"
+                },
+                {
+                    "value": "20",
+                    "label": "20px"
+                },
+                {
+                    "value": "30",
+                    "label": "30px"
+                },
+                {
+                    "value": "40",
+                    "label": "40px"
+                }
+            ],
+            "label": "Space vertical vertical items (Mobile)",
+            "default": "30"
+        },
+        {
+            "type": "header",
+            "content": "Pagination options"
+        },
+        {
+            "type": "select",
+            "id": "use_pagination",
+            "label": "Pagination",
+            "default": "default",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "load-more",
+                    "label": "'Load more' button"
+                },
+                {
+                    "value": "infinite",
+                    "label": "Infinit scrolling"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "use_bar_lm",
+            "label": "Use progress bar",
+            "info": "Only active when you use 'Load more'",
+            "default": true
+        },
+        {
+            "type": "paragraph",
+            "content": "Page-loading speed is everything for good user experience. Multiple researches have shown that slow load times result in people leaving your site or delete your app which result in low conversion rates. And that’s bad news for those who use an infinite-scrolling. The more users scroll down a page, more content has to load on the same page. As a result, the page performance will increasingly slow down."
+        },
+        {
+            "type": "paragraph",
+            "content": "Another problem is limited resources of the user’s device. On many infinite scrolling sites, especially those with many images, devices with limited resources (such as mobile devices or tablets with dated hardware) can start slowing down because of the sheer number of assets it has loaded."
+        },
+        {
+            "type": "paragraph",
+            "content": "Therefore, we recommend that you only use 'Load more', 'Infinite scrolling' for when your collection is less than or equal to 400 posts"
+        },
+        {
+            "type":"checkbox",
+            "id":"btn_icon",
+            "label":"Enable button icon",
+            "default":false
+        },
+        {
+            "type": "select",
+            "id": "button_style",
+            "label": "Button style",
+            "options": [
+                {
+                    "label": "Default",
+                    "value": "default"
+                },
+                {
+                    "label": "Outline",
+                    "value": "outline"
+                },
+                {
+                    "label": "Bordered bottom",
+                    "value": "bordered"
+                },
+                {
+                    "label": "Link",
+                    "value": "link"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_size",
+            "label": "Button size",
+            "default":"medium",
+            "options": [
+                {
+                    "label": "Extra small",
+                    "value": "small"
+                },
+                {
+                    "label": "Small",
+                    "value": "extra-small"
+                },
+                {
+                    "label": "Medium",
+                    "value": "medium"
+                },
+                {
+                    "label": "Large",
+                    "value": "extra-medium"
+                },
+                {
+                    "label": "Extra large",
+                    "value": "large"
+                },
+                {
+                    "label": "Extra extra large",
+                    "value": "extra-large"
+                }
+            ]
+        }, 
+        {
+            "type": "select",
+            "id": "btn_cl",
+            "label": "Button color",
+            "default": "dark",
+            "options": [
+                {
+                    "value": "light",
+                    "label": "Light"
+                },
+                {
+                    "value": "dark",
+                    "label": "Dark"
+                },
+                {
+                    "value": "primary",
+                    "label": "Primary"
+                },
+                {
+                    "value": "custom1",
+                    "label": "Custom color 1"
+                },
+                {
+                    "value": "custom2",
+                    "label": "Custom color 2"
+                }
+            ]
+        },   
+        {
+            "type":"select",
+            "id":"button_effect",
+            "label":"Button hover effect",
+            "default":"default",
+            "info":"Only working button style default, outline",
+            "options":[
+                {
+                    "label":"Default",
+                    "value":"default"
+                },
+                {
+                    "label":"Fade",
+                    "value":"fade"
+                },
+                {
+                  "label":"Rectangle out",
+                  "value":"rectangle-out"
+                },
+                {
+                    "label":"Sweep to right",
+                    "value":"sweep-to-right"
+                },
+                {
+                    "label":"Sweep to left",
+                    "value":"sweep-to-left"
+                },
+                {
+                    "label":"Sweep to bottom",
+                    "value":"sweep-to-bottom"
+                },
+                {
+                    "label":"Sweep to top",
+                    "value":"sweep-to-top"
+                },
+                {
+                    "label":"Shutter out horizontal",
+                    "value":"shutter-out-horizontal"
+                },
+                {
+                    "label":"Outline",
+                    "value":"outline"
+                },
+                {
+                    "label":"Shadow",
+                    "value":"shadow"
+                }
+            ]
+        },  
+        {
+            "type": "select",
+            "id": "btn_pos",
+            "label": "Button position",
+            "default": "t4s-text-center",
+            "options": [
+                {
+                    "value": "t4s-text-start",
+                    "label": "Left"
+                },
+                {
+                    "value": "t4s-text-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "t4s-text-end",
+                    "label": "Right"
+                }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "+Options for image"
+        },
+        {
+            "type": "select",
+            "id": "image_ratio",
+            "label": "Aspect ratio",
+            "default": "ratio4_3",
+            "info": "Aspect ratio custom will settings in general panel.",
+            "options": [
+                {
+                    "group": "Auto",
+                    "value": "ratioadapt",
+                    "label": "Adapt to image"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio2_1",
+                    "label": "2:1"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio16_9",
+                    "label": "16:9"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio8_5",
+                    "label": "8:5"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio3_2",
+                    "label": "3:2"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "ratio4_3",
+                    "label": "4:3"
+                },
+                {
+                    "group": "Landscape",
+                    "value": "rationt",
+                    "label": "Ratio ASOS"
+                },
+                {
+                    "group": "Squared",
+                    "value": "ratio1_1",
+                    "label": "1:1"
+                },
+                {
+                    "group": "Portrait",
+                    "value": "ratio2_3",
+                    "label": "2:3"
+                },
+                {
+                    "group": "Portrait",
+                    "value": "ratio1_2",
+                    "label": "1:2"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus1",
+                    "label": "Ratio custom 1"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus2",
+                    "label": "Ratio custom 2"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus3",
+                    "label": "Ratio custom 3"
+                },
+                {
+                    "group": "Custom",
+                    "value": "ratiocus4",
+                    "label": "Ratio custom 4"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "image_position",
+            "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'.",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "1",
+                    "label": "Left top"
+                },
+                {
+                    "value": "2",
+                    "label": "Left center"
+                },
+                {
+                    "value": "3",
+                    "label": "Left bottom"
+                },
+                {
+                    "value": "4",
+                    "label": "Right top"
+                },
+                {
+                    "value": "5",
+                    "label": "Right center"
+                },
+                {
+                    "value": "6",
+                    "label": "Right bottom"
+                },
+                {
+                    "value": "7",
+                    "label": "Center top"
+                },
+                {
+                    "value": "8",
+                    "label": "Center center"
+                },
+                {
+                    "value": "9",
+                    "label": "Center bottom"
+                }
+            ],
+            "label": "Image position",
+            "default": "8"
+        },
+        {
+            "type": "select",
+            "id": "image_size",
+            "label": "Image size",
+            "default": "cover",
+            "info": "This settings apply only if the image ratio is not set to 'Adapt to image'.",
+            "options": [
+                {
+                    "value": "cover",
+                    "label": "Full"
+                },
+                {
+                    "value": "contain",
+                    "label": "Auto"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "img_effect",
+            "label": "Image hover effect",
+            "info": "Waring: Hovering effect will resize your images",
+            "default": "none",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "None"
+                },
+                {
+                    "value": "zoom",
+                    "label": "Zoom in"
+                },
+                {
+                    "value": "rotate",
+                    "label": "Rotate"
+                },
+                {
+                    "value": "translateToTop",
+                    "label": "Move to top "
+                },
+                {
+                    "value": "translateToRight",
+                    "label": "Move to right"
+                },
+                {
+                    "value": "translateToBottom",
+                    "label": "Move to bottom"
+                },
+                {
+                    "value": "translateToLeft",
+                    "label": "Move to feft"
+                },
+                {
+                    "value": "filter",
+                    "label": "Filter"
+                },
+                {
+                    "value": "bounceIn",
+                    "label": "BounceIn"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "b_effect",
+            "label": "Effect",
+            "default": "none",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "None"
+                },
+                {
+                    "value": "border-run",
+                    "label": "Border run"
+                },
+                {
+                    "value": "pervasive-circle",
+                    "label": "Pervasive circle"
+                },
+                {
+                    "value": "plus-zoom-overlay",
+                    "label": "Plus zoom overlay"
+                },
+                {
+                    "value": "dark-overlay",
+                    "label": "Dark overlay"
+                },
+                {
+                    "value": "light-overlay",
+                    "label": "Light overlay"
+                } 
+            ]
+        },
+        {
+            "type":"header",
+            "content":"+ FILTER BY TAG"
+        },
+        {
+            "type": "radio",
+            "id": "source",
+            "default": "0",
+            "label": "Disable\/Show all \/ Manually block",
+            "options": [
+                {
+                    "value": "0",
+                    "label": "Disable"
+                },
+                {
+                    "value": "1",
+                    "label": "Show all"
+                },
+                {
+                    "value": "2",
+                    "label": "Manually block"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "show_count",
+            "label": "Show count",
+            "info": "Count only show all. Not working manually block",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "2.Design options"
+        },
+        {
+            "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+            "options": [
+                { "value": "t4s-se-container", "label": "Container"},
+                { "value": "t4s-container-wrap", "label": "Wrapped container"},
+                { "value": "t4s-container-fluid", "label": "Full width"}
+            ]
+        },
+        {
+            "type": "color",
+            "id": "cl_bg",
+            "label": "Background"
+        },
+        {
+            "type": "color_background",
+            "id": "cl_bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_bg",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+            "default": ",,50px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+            "placeholder": "50px,,50px,"
+        },
+        {
+          "type": "header",
+          "content": "+ Design Tablet Options"
+        },
+        {
+          "type": "text",
+          "id": "mg_tb",
+          "label": "Margin",
+          "placeholder": ",,50px,"
+        },
+        {
+          "type": "text",
+          "id": "pd_tb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+        },
+        {
+            "type": "header",
+            "content": "+ Design mobile options"
+        },
+        {
+            "type": "text",
+            "id": "mg_mb",
+            "label": "Margin",
+            "default": ",,30px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd_mb",
+            "label": "Padding",
+            "placeholder": ",,50px,"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "tag",
+            "name": "Tag",
+            "limit": 10,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Tag name"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

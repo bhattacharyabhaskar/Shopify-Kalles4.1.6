@@ -1,0 +1,195 @@
+{%- liquid
+  assign style_color         = section.settings.style_color_filter | replace: ' ,', ',' | replace: ', ', ',' | split: ','
+  assign style_tag           = section.settings.style_tag_filter | replace: ' ,', ',' | replace: ', ', ',' | split: ','
+  assign results             = search | default: collection
+  assign sort_by             = results.sort_by | default: results.default_sort_by
+  assign total_active_values = 0
+   if results.url
+       assign results_url = results.url
+   else 
+       assign terms = results.terms | escape
+       assign results_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
+   endif
+   assign results_count = results.results_count | default: results.products_count -%}
+
+<link rel="stylesheet" href="{{ 'drawer.min.css' | asset_url }}" media="all">
+<link rel="stylesheet" href="{{ 'facets.css' | asset_url }}" media="all">
+<div data-filter-links id="t4s-filter-hidden" class="t4s-filter-hidden is--t4s-filter-native t4s-drawer t4s-drawer__left" aria-hidden="true">
+   <div class="t4s-drawer__header">
+      <span>{{ 'products.facets.filter_title' | t }}</span>
+      <button class="t4s-drawer__close" data-drawer-close aria-label="{{ 'search.general.close_search' | t }}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+   </div>
+
+   <div class="t4s-drawer__content">
+      <div class="t4s-drawer__main">
+         <div data-t4s-scroll-me class="t4s-drawer__scroll t4s-current-scrollbar">
+            <form id="FacetFiltersForm" data-sidebar-links class="t4s-facets__form t4s-row t4s-g-0">
+
+               {%- if results.terms -%}
+                 <input type="hidden" name="q" value="{{ search.terms | escape }}">
+                 <input type="hidden" name="type" value="product">
+                 <input type="hidden" name="options[unavailable_products]" value="{{ settings.unavailable_prs }}">
+                 <input type="hidden" name="options[prefix]" value="last">
+               {%- endif -%}
+
+               {%- if results.current_vendor or results.current_type -%}
+                   <input type="hidden" name="q" value="{{ results.current_vendor }}{{ results.current_type }}">
+               {%- endif -%}
+
+               {%- for filter in results.filters -%}
+
+                  {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
+
+                  {%- case filter.type -%}
+
+                     {%- when 'boolean' or 'list' -%}
+
+                        {%- if filter.values.size == 0 %}{% continue %}{% endif %}{% assign ck_style = true -%}
+                         
+                        {%- if style_color contains filter.label -%}
+
+                           <div id="blockid_{{ forloop.index }}" class="t4s-col-item t4s-col-12 t4s-facet is--blockidColor">
+                              <h5 class="t4s-facet-title">{{ filter.label | escape }}</h5>
+                              <div class="t4s-facet-content">
+                                 <ul class="t4s-filter__values is--style-color t4s-current-scrollbar">
+
+                                    {%- for value in filter.values -%}
+
+                                      {%- liquid
+                                      assign value_label = value.label
+                                      assign label = value_label | escape
+                                      if value_label contains 't4_'
+                                      continue
+                                      endif -%}
+
+                                      {%- if value.active -%}
+                                          <li class="{% if value.count == 0 and value.active == false %}is--disabled {% endif %}is--selected"><a href="{{ value.url_to_remove }}"><div class="t4s-filter_color t4s-pr t4s-oh"><span class="bg_color_{{ value_label | handle }} lazyloadt4s"></span><svg focusable="false" viewBox="0 0 24 24" width="14" height="14" role="presentation"><path fill="currentColor" d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg></div> {{ label }}<span class="t4s-value-count">({{ value.count }})</span></a></li>
+                                      {%- else -%}
+                                          <li {% if value.count == 0 and value.active == false %}class="is--disabled"{% endif %}><a href="{{ value.url_to_add }}"><div class="t4s-filter_color t4s-pr t4s-oh"><span class="bg_color_{{ value_label | handle }} lazyloadt4s"></span><svg focusable="false" viewBox="0 0 24 24" width="14" height="14" role="presentation"><path fill="currentColor" d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg></div> {{ label }}<span class="t4s-value-count">({{ value.count }})</span></a></li>
+                                      {%- endif -%}
+
+                                    {%- endfor -%}
+
+                                 </ul>
+                              </div>
+                            </div>
+
+                        {%- elsif style_tag contains filter.label -%}
+
+                           <div id="blockid_{{ forloop.index }}" class="t4s-col-item t4s-col-12 t4s-facet is--blockid{{ filter.label | handle }}">
+                                 <h5 class="t4s-facet-title">{{ filter.label | escape }}</h5>
+                                 <div class="t4s-facet-content">
+                                    <ul class="t4s-filter__values is--style-tag t4s-current-scrollbar">
+                                     
+                                       {%- for value in filter.values -%}
+                                         
+                                         {%- liquid
+                                         if value.label contains 't4_'
+                                         continue
+                                         endif -%}
+
+                                         {%- if value.active -%}
+                                             <li class="{% if value.count == 0 and value.active == false %}is--disabled {% endif %}is--selected"><a href="{{ value.url_to_remove }}">{{ value.label | escape }}<span class="t4s-value-count">({{ value.count }})</span></a></li>
+                                         {%- else -%}
+                                             <li {% if value.count == 0 and value.active == false %}class="is--disabled"{% endif %}><a href="{{ value.url_to_add }}">{{ value.label | escape }}<span class="t4s-value-count">({{ value.count }})</span></a></li>
+                                         {%- endif -%}
+
+                                       {%- endfor -%}
+
+                                    </ul>
+                                 </div>
+                           </div>
+
+                         {%- else -%}
+
+                           <div id="blockid_{{ forloop.index }}" class="t4s-col-item t4s-col-12 t4s-facet is--blockid{{ filter.label | handle }}">
+                                 <h5 class="t4s-facet-title">{{ filter.label | escape }}</h5>
+                                 <div class="t4s-facet-content">
+                                    <ul class="t4s-filter__values is--style-checkbox t4s-current-scrollbar">
+                                     
+                                       {%- for value in filter.values -%}
+
+                                          {%- liquid
+                                            if value.label contains 't4_'
+                                            continue
+                                            endif -%}
+
+                                         {%- if value.active -%}
+                                             <li class="is--selected"><a href="{{ value.url_to_remove }}">
+                                                <div class="t4s-checkbox-wrapper t4s-pr t4s-oh"><svg focusable="false" viewBox="0 0 24 24" width="14" height="14" role="presentation"><path fill="currentColor" d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg></div>{{ value.label | escape }}<span class="t4s-value-count">({{ value.count }})</span>
+                                             </a></li>
+                                         {%- else -%}
+                                             <li {% if value.count == 0 and value.active == false %}class="is--disabled"{% endif %}><a href="{{ value.url_to_add }}"><div class="t4s-checkbox-wrapper t4s-pr t4s-oh"><svg focusable="false" viewBox="0 0 24 24" width="14" height="14" role="presentation"><path fill="currentColor" d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg></div>{{ value.label | escape }}<span class="t4s-value-count">({{ value.count }})</span></a></li>
+                                         {%- endif -%}
+
+                                       {%- endfor -%}
+
+                                    </ul>
+                                 </div>
+                           </div>
+
+                         {%- endif -%}
+
+                      {%- when 'price_range' -%}
+                          {%- assign min_value_price = filter.min_value.value | default: 0 -%}
+                          {%- assign max_value_price = filter.max_value.value | default: filter.range_max | default: 0 -%}
+
+                          {%- if min_value_price == max_value_price %}{% continue %}{% endif %}{% assign ck_style = true -%}
+                            
+                           <div id="blockid_{{ forloop.index }}" class="t4s-col-item t4s-col-12 t4s-facet is--blockid_price">
+                              <h5 class="t4s-facet-title">{{ filter.label| escape }}</h5>
+                              <div class="t4s-price_slider_wrapper">
+                                <div class="t4s-price_slider"></div>
+                                <div class="t4s-price_slider_amount" data-step="1" data-maxstr='{{ filter.max_value.param_name }}' data-minstr='{{ filter.min_value.param_name }}'>
+                                  <input type="hidden" class="t4s-url_price" name="url_price" value="">
+                                  <input type="hidden" class="t4s-min_price" name="min_price" value="{{ min_value_price }}" data-min="0" placeholder="Min price">
+                                  <input type="hidden" class="t4s-max_price" name="max_price" value="{{ max_value_price }}" data-max="{{ filter.range_max }}" placeholder="Max price">
+                                  <div class="t4s-price_steps_slider"></div>
+                                  <button type="button" class="t4s-price_slider_btn t4s-dn">{{ 'products.facets.button_price' | t }}</button>
+                                  <div class="t4s-price_label">
+                                    {{ 'products.facets.title_price' | t }}: <span class="t4s-from">{{ min_value_price | money }}</span> — <span class="t4s-to">{{ max_value_price | money }}</span>
+                                  </div>
+                                </div>
+                              </div>
+                           </div>
+
+
+                   {%- endcase -%}
+               {%- endfor -%}
+
+             </form>
+         </div>
+      </div>
+      {%- if total_active_values > 1 -%}
+            <div class="t4s-drawer__bottom">
+               <a href="{{ results_url }}" class="t4s-mini-search__viewAll">{{ 'products.facets.clear_all' | t }} <svg width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 18.71875 6.78125 L 17.28125 8.21875 L 24.0625 15 L 4 15 L 4 17 L 24.0625 17 L 17.28125 23.78125 L 18.71875 25.21875 L 27.21875 16.71875 L 27.90625 16 L 27.21875 15.28125 Z"/></svg></a>
+            </div>
+      {%- endif -%}
+   </div>
+</div>
+
+{%- schema -%}
+  {
+    "name": "Filter products",
+    "class": "t4s-section-filter t4s-section-admn2-fixed",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Customize [Filter by product options](\/admin\/menus). Filter product options will be empty for collections that contain over 1000 products."
+      },
+      {
+        "type": "textarea",
+        "id": "style_color_filter",
+        "label": "Filter style color",
+        "info": "Enter filter label, you want has style color .Separate by a comma, i.e \"label1, label2, label3\". Only active when you use 'Filter by product options'",
+        "default": "Color, color, Colour , colour"
+      },
+      {
+        "type": "textarea",
+        "id": "style_tag_filter",
+        "label": "Filter style tag",
+        "info": "Enter filter label, you want has style tag .Separate by a comma, i.e \"label1, label2, label3\". Only active when you use 'Filter by product options'"
+      }
+    ]
+  }
+{% endschema %}

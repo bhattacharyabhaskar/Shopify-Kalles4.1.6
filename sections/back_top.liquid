@@ -1,0 +1,83 @@
+{%- comment -%}
+  vertical_offset_for_trigger: Reduce below value if you need the back to the top button to appear higher up on the page. That value is in pixels.
+{%- endcomment -%}
+
+{%- liquid
+  assign vertical_offset_for_trigger = 100
+  assign se_stts = section.settings
+-%}
+
+{%- if se_stts.enable_backtop -%}
+<link rel="stylesheet" href="{{ 'back-to-top.css' | asset_url }}" media="print" onload="this.media='all'">
+<a id="t4s-backToTop" class="t4s-back-to-top t4s-back-to-top__design{{ se_stts.backtop_des }} t4s-pf t4s-progress_bar_{{ se_stts.enable_progress_bar }}" data-hidden-mobile="{{ se_stts.enable_hidden_mobile }}" data-scrollTop="{{ vertical_offset_for_trigger }}" rel="nofollow" href="#" aria-label="{{ 'general.aria.back_to_top' | t }}" style="--border-w:2px;--cricle-normal:{{ se_stts.border_cl }};--cricle-active:{{ se_stts.border_cl_active }};">
+  {%- if se_stts.enable_progress_bar -%}
+    <div class="t4s-circle-css" style="--border-w:2px;">
+      <div class="t4s-circle--inner">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="9.98 12.06 12.05 6.79" width="14" height="14"><path d="M16.767 12.809l-0.754-0.754-6.035 6.035 0.754 0.754 5.281-5.281 5.256 5.256 0.754-0.754-3.013-3.013z" fill="currentColor"></path></svg>
+      </div>
+      <div class="t4s-circle--bg"></div>
+    </div>
+  {%- else -%}
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="9.98 12.06 12.05 6.79" width="14" height="14"><path d="M16.767 12.809l-0.754-0.754-6.035 6.035 0.754 0.754 5.281-5.281 5.256 5.256 0.754-0.754-3.013-3.013z" fill="currentColor"></path></svg>
+  {%- endif -%}
+</a>
+{%- endif -%}
+
+{%- schema -%}
+  {
+    "name": "Back to top",
+    "class": "t4s-section-admn2-fixed",
+    "settings": [ 
+      {
+        "type": "checkbox",
+        "id": "enable_backtop",
+        "label": "Enable back to top",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_hidden_mobile",
+        "label": "Enable hidden mobile",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "backtop_des",
+        "default": "1",
+        "label": "Design",
+        "options": [
+          {
+            "value": "1",
+            "label": "Design 1"
+          },
+          {
+            "value": "2",
+            "label": "Design 2"
+          }
+        ]
+      },
+      {
+          "type": "header",
+          "content": "+ Progress bar options"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_progress_bar",
+        "label": "Enable progress bar",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "border_cl",
+        "label": "Progress bar color",
+        "default": "#f5f5f5"
+      },
+      {
+        "type": "color",
+        "id": "border_cl_active",
+        "label": "Progress bar active color",
+        "default": "#000000"
+      }
+    ]
+  }
+{% endschema %}
