@@ -1540,50 +1540,6 @@
             "hidden_mobile": false
           }
         },
-        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-1": {
-          "type": "custom_text",
-          "settings": {
-            "text": "LOOKBOOK 2023",
-            "remove_br_tag": false,
-            "tag": "p",
-            "fontf": "inherit",
-            "text_cl": "#000000",
-            "text_fs": 24,
-            "text_lh": 0,
-            "text_fw": 500,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "text_mgb": 5,
-            "hidden_mobile": false,
-            "text_fs_mb": 16,
-            "text_lh_mb": 0,
-            "text_ls_mb": 0,
-            "text_mgb_mobile": 10
-          }
-        },
-        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-2": {
-          "type": "custom_text",
-          "settings": {
-            "text": "MAKE LOVE THIS LOOK",
-            "remove_br_tag": false,
-            "tag": "p",
-            "fontf": "inherit",
-            "text_cl": "#000000",
-            "text_fs": 14,
-            "text_lh": 24,
-            "text_fw": 400,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "text_mgb": 0,
-            "hidden_mobile": false,
-            "text_fs_mb": 16,
-            "text_lh_mb": 0,
-            "text_ls_mb": 0,
-            "text_mgb_mobile": 10
-          }
-        },
         "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-3": {
           "type": "bl_col",
           "settings": {
@@ -1599,35 +1555,12 @@
             "padding_inner_mb": "",
             "bg_cl": "#d2a2a2"
           }
-        },
-        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-4": {
-          "type": "newsletter",
-          "settings": {
-            "form_width": 0,
-            "form_width_mb": 0,
-            "newl_des": "1",
-            "news_align": "center",
-            "newl_size": "small",
-            "btn_icon": false,
-            "input_cl": "#878787",
-            "border_cl": "#000",
-            "btn_cl": "#ffffff",
-            "btn_bg_cl": "#222222",
-            "btn_hover_cl": "#ffffff",
-            "btn_hover_bg_cl": "#56CFE1",
-            "hidden_mobile": false,
-            "mgb": 15,
-            "mgb_mb": 10
-          }
         }
       },
       "block_order": [
         "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-0",
         "28b8fd05-435d-460a-9d5d-fc7c3fe4d25e",
-        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-1",
-        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-2",
-        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-3",
-        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-4"
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-3"
       ],
       "settings": {
         "space_h_item": "30",
