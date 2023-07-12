@@ -96,6 +96,18 @@
             ]
           }
         },
+        "23551ebc-3be1-40d6-81b2-30f03478cccb": {
+          "type": "img",
+          "settings": {
+            "al": "start",
+            "mess": "",
+            "size": 16,
+            "source": "1",
+            "wimg": 70,
+            "svg": "visa,master,american_express,discover,apple_pay,google_pay,paypal,shopify_pay",
+            "height": 44
+          }
+        },
         "33ac43b4-4e60-4c85-a131-cff713232f38": {
           "type": "custom_liquid",
           "settings": {
@@ -110,32 +122,6 @@
             "length": 31,
             "readm": false,
             "readm_txt": "Read more"
-          }
-        },
-        "23551ebc-3be1-40d6-81b2-30f03478cccb": {
-          "type": "img",
-          "settings": {
-            "al": "start",
-            "mess": "",
-            "size": 16,
-            "source": "1",
-            "wimg": 70,
-            "svg": "visa,master,american_express,discover,apple_pay,google_pay,paypal,shopify_pay",
-            "height": 44
-          }
-        },
-        "size_delivery_ask": {
-          "type": "size_delivery_ask",
-          "settings": {
-            "size_chart": "3",
-            "pos_sizeg": "1",
-            "sc_type": "1",
-            "page": "",
-            "size_ck": "",
-            "delivery": true,
-            "page_dr": "delivery-return",
-            "ask": true,
-            "phone": true
           }
         },
         "95d4f334-8ea7-4cd2-b609-2373b1e848b8": {
@@ -169,23 +155,6 @@
           "type": "store_pickup",
           "settings": {
           }
-        },
-        "94011ade-ec25-4d68-b37a-70660ede49dd": {
-          "type": "social",
-          "settings": {
-            "socials_align": "start",
-            "social_mode": "2",
-            "social_style": "1",
-            "social_size": "extra_small",
-            "bd_radius": 0,
-            "use_color_set": true,
-            "icon_cl": "#222222",
-            "bg_cl": "#00badb",
-            "space_h_item": "20",
-            "space_v_item": "5",
-            "space_h_item_mb": "10",
-            "space_v_item_mb": "2"
-          }
         }
       },
       "block_order": [
@@ -194,16 +163,14 @@
         "meta",
         "price_review",
         "form",
+        "23551ebc-3be1-40d6-81b2-30f03478cccb",
         "33ac43b4-4e60-4c85-a131-cff713232f38",
         "description",
-        "23551ebc-3be1-40d6-81b2-30f03478cccb",
-        "size_delivery_ask",
         "95d4f334-8ea7-4cd2-b609-2373b1e848b8",
         "e36839f5-0847-44e2-97d3-2885597bd1ff",
         "754ad4a0-7308-4a3e-b325-e2f2c0b85d4c",
         "56e67368-7424-4d73-8f14-dacdda4c59be",
-        "1e8c05dd-a0a8-4e7e-b9b1-6e3572ad24e3",
-        "94011ade-ec25-4d68-b37a-70660ede49dd"
+        "1e8c05dd-a0a8-4e7e-b9b1-6e3572ad24e3"
       ],
       "settings": {
         "pr_layout": "default",
