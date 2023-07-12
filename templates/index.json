@@ -745,7 +745,7 @@
             "padding_inner": "30px,,30px",
             "padding_inner_tb": "",
             "padding_inner_mb": "",
-            "bg_cl": "#fff"
+            "bg_cl": "#ffffff"
           }
         },
         "28b8fd05-435d-460a-9d5d-fc7c3fe4d25e": {
@@ -768,7 +768,7 @@
             "padding_inner": "30px,,30px",
             "padding_inner_tb": "",
             "padding_inner_mb": "",
-            "bg_cl": "#fff"
+            "bg_cl": "#ffffff"
           }
         },
         "02f8da76-c992-4fbc-ac5c-fdc59197cb94": {
@@ -1622,23 +1622,6 @@
       ],
       "settings": {
       }
-    },
-    "8e174364-8bd9-46c8-97a5-1aa59551e56e": {
-      "type": "custom-html",
-      "settings": {
-        "code": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #000;color: #fff;\">This is an advanced section. Knowledge of web design languages such as HTML, CSS is required.<\/div>",
-        "layout": "t4s-container-wrap",
-        "cl_bg": "",
-        "cl_bg_gradient": "",
-        "mg": ",,50px,",
-        "pd": "",
-        "mg_tb": "",
-        "pd_tb": "",
-        "mg_mb": ",,30px,",
-        "pd_mb": "",
-        "use_cus_css": false,
-        "code_cus_css": ""
-      }
     }
   },
   "order": [
@@ -1655,7 +1638,6 @@
     "164603686708691778",
     "16460368750174c54a",
     "1646209857bf69e76a",
-    "16891733191dfe92fe",
-    "8e174364-8bd9-46c8-97a5-1aa59551e56e"
+    "16891733191dfe92fe"
   ]
 }
