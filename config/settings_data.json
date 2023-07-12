@@ -200,7 +200,222 @@
           "b32f784d-ebd7-4898-9ed6-b34f4c652cfb": {
             "type": "html",
             "settings": {
-              "html_content": "<br><br>",
+              "html_content": "",
+              "hidden_mobile": false
+            }
+          },
+          "footer-6": {
+            "type": "bl_col",
+            "settings": {
+              "col_heading": "WEAVES",
+              "menu": "sarees",
+              "menu_style": "1",
+              "col_dk": "15",
+              "col_tb": "6",
+              "col_mb": "12",
+              "content_align": "t4s-text-md-start",
+              "padding_inner": "5px,0,0,0",
+              "col_heading_mobile": "",
+              "content_align_mb": "t4s-text-start",
+              "padding_inner_mb": ""
+            }
+          },
+          "693610ab-bb4c-4afe-9b01-d8f3c0724689": {
+            "type": "bl_col",
+            "settings": {
+              "col_heading": "EXCLUSIVES",
+              "menu": "header-special-collection",
+              "menu_style": "1",
+              "col_dk": "15",
+              "col_tb": "6",
+              "col_mb": "12",
+              "content_align": "t4s-text-md-start",
+              "padding_inner": "",
+              "col_heading_mobile": "",
+              "content_align_mb": "t4s-text-start",
+              "padding_inner_mb": ""
+            }
+          },
+          "50d5a5c4-d608-4e34-aefc-33f716332a55": {
+            "type": "html",
+            "settings": {
+              "html_content": "<br>",
+              "hidden_mobile": false
+            }
+          },
+          "4df4c62b-5d13-4861-a8ce-744d1669e6b1": {
+            "type": "custom_text",
+            "settings": {
+              "text": "COLOR",
+              "remove_br_tag": false,
+              "tag": "p",
+              "fontf": "inherit",
+              "text_cl": "#ddd",
+              "text_fs": 16,
+              "text_lh": 0,
+              "text_fw": 400,
+              "text_ls": 0,
+              "font_italic": false,
+              "text_shadow": false,
+              "text_mgb": 15,
+              "hidden_mobile": false,
+              "text_fs_mb": 16,
+              "text_lh_mb": 0,
+              "text_ls_mb": 0,
+              "text_mgb_mobile": 10
+            }
+          },
+          "5bdb9b4d-1133-45de-b05f-0ba8e188c04e": {
+            "type": "cus_menu",
+            "settings": {
+              "menu": "sarees-by-color",
+              "menu_style": "1"
+            }
+          },
+          "8e242746-03c6-45f1-9fc3-fbf3f5c64e14": {
+            "type": "html",
+            "settings": {
+              "html_content": "<br>",
+              "hidden_mobile": false
+            }
+          },
+          "aa78cbc6-3ad4-4aa0-a072-c61b4d6642f1": {
+            "type": "custom_text",
+            "settings": {
+              "text": "OCCASION",
+              "remove_br_tag": false,
+              "tag": "p",
+              "fontf": "inherit",
+              "text_cl": "#ddd",
+              "text_fs": 16,
+              "text_lh": 0,
+              "text_fw": 400,
+              "text_ls": 0,
+              "font_italic": false,
+              "text_shadow": false,
+              "text_mgb": 15,
+              "hidden_mobile": false,
+              "text_fs_mb": 16,
+              "text_lh_mb": 0,
+              "text_ls_mb": 0,
+              "text_mgb_mobile": 10
+            }
+          },
+          "7c7b8eb7-5c24-4e93-adef-a7f725e4b88c": {
+            "type": "cus_menu",
+            "settings": {
+              "menu": "sarees-by-occassion",
+              "menu_style": "1"
+            }
+          },
+          "9114b699-b551-43d2-a4a4-f127f3fb7ca6": {
+            "type": "bl_col",
+            "settings": {
+              "col_heading": "PRICE",
+              "menu": "sarees-by-price",
+              "menu_style": "1",
+              "col_dk": "15",
+              "col_tb": "12",
+              "col_mb": "12",
+              "content_align": "t4s-text-md-start",
+              "padding_inner": "",
+              "col_heading_mobile": "",
+              "content_align_mb": "t4s-text-start",
+              "padding_inner_mb": ""
+            }
+          },
+          "748e05bb-e7c1-44c9-b6d1-5a8a76f3c1f9": {
+            "type": "html",
+            "settings": {
+              "html_content": "<br>",
+              "hidden_mobile": false
+            }
+          },
+          "96a81592-4230-4bae-8b1e-946a486fc4e2": {
+            "type": "custom_text",
+            "settings": {
+              "text": "REGION",
+              "remove_br_tag": false,
+              "tag": "p",
+              "fontf": "inherit",
+              "text_cl": "#ddd",
+              "text_fs": 16,
+              "text_lh": 0,
+              "text_fw": 400,
+              "text_ls": 0,
+              "font_italic": false,
+              "text_shadow": false,
+              "text_mgb": 15,
+              "hidden_mobile": false,
+              "text_fs_mb": 16,
+              "text_lh_mb": 0,
+              "text_ls_mb": 0,
+              "text_mgb_mobile": 10
+            }
+          },
+          "01e1eed6-b365-4127-b94c-bc295a48692b": {
+            "type": "cus_menu",
+            "settings": {
+              "menu": "sarees-by-region",
+              "menu_style": "1"
+            }
+          },
+          "4a3191e5-5422-4346-b28a-76d21fc290a5": {
+            "type": "html",
+            "settings": {
+              "html_content": "<br>",
+              "hidden_mobile": false
+            }
+          },
+          "773468e0-0538-43ab-b055-3fa89f51a445": {
+            "type": "custom_text",
+            "settings": {
+              "text": "WORK",
+              "remove_br_tag": false,
+              "tag": "p",
+              "fontf": "inherit",
+              "text_cl": "#ddd",
+              "text_fs": 16,
+              "text_lh": 0,
+              "text_fw": 400,
+              "text_ls": 0,
+              "font_italic": false,
+              "text_shadow": false,
+              "text_mgb": 15,
+              "hidden_mobile": false,
+              "text_fs_mb": 16,
+              "text_lh_mb": 0,
+              "text_ls_mb": 0,
+              "text_mgb_mobile": 10
+            }
+          },
+          "575b6166-ba63-4559-93a2-497a9ba71254": {
+            "type": "cus_menu",
+            "settings": {
+              "menu": "sarees-by-work",
+              "menu_style": "1"
+            }
+          },
+          "footer-8": {
+            "type": "bl_col",
+            "settings": {
+              "col_heading": "ACCESSORY",
+              "menu": "accessories",
+              "menu_style": "1",
+              "col_dk": "15",
+              "col_tb": "6",
+              "col_mb": "12",
+              "content_align": "t4s-text-md-start",
+              "padding_inner": "5px,0,0,0",
+              "col_heading_mobile": "",
+              "content_align_mb": "t4s-text-start",
+              "padding_inner_mb": ""
+            }
+          },
+          "87216a1a-d6d7-4d87-9b6c-4ffafe429bb3": {
+            "type": "html",
+            "settings": {
+              "html_content": "<br>",
               "hidden_mobile": false
             }
           },
@@ -251,85 +466,17 @@
               "mgb": 0
             }
           },
-          "footer-6": {
+          "f849752e-9936-4f3d-a18f-d1810b220162": {
             "type": "bl_col",
             "settings": {
-              "col_heading": "WEAVES",
-              "menu": "sarees",
+              "col_heading": "",
+              "menu": "",
               "menu_style": "1",
-              "col_dk": "15",
-              "col_tb": "6",
-              "col_mb": "12",
-              "content_align": "t4s-text-md-start",
-              "padding_inner": "5px,0,0,0",
-              "col_heading_mobile": "",
-              "content_align_mb": "t4s-text-start",
-              "padding_inner_mb": ""
-            }
-          },
-          "693610ab-bb4c-4afe-9b01-d8f3c0724689": {
-            "type": "bl_col",
-            "settings": {
-              "col_heading": "EXCLUSIVES",
-              "menu": "header-special-collection",
-              "menu_style": "1",
-              "col_dk": "3",
+              "col_dk": "12",
               "col_tb": "6",
               "col_mb": "12",
               "content_align": "t4s-text-md-start",
               "padding_inner": "",
-              "col_heading_mobile": "",
-              "content_align_mb": "t4s-text-start",
-              "padding_inner_mb": ""
-            }
-          },
-          "50d5a5c4-d608-4e34-aefc-33f716332a55": {
-            "type": "html",
-            "settings": {
-              "html_content": "<br><br>",
-              "hidden_mobile": false
-            }
-          },
-          "4df4c62b-5d13-4861-a8ce-744d1669e6b1": {
-            "type": "custom_text",
-            "settings": {
-              "text": "COLOR",
-              "remove_br_tag": false,
-              "tag": "p",
-              "fontf": "inherit",
-              "text_cl": "#ddd",
-              "text_fs": 16,
-              "text_lh": 0,
-              "text_fw": 400,
-              "text_ls": 0,
-              "font_italic": false,
-              "text_shadow": false,
-              "text_mgb": 15,
-              "hidden_mobile": false,
-              "text_fs_mb": 16,
-              "text_lh_mb": 0,
-              "text_ls_mb": 0,
-              "text_mgb_mobile": 10
-            }
-          },
-          "5bdb9b4d-1133-45de-b05f-0ba8e188c04e": {
-            "type": "cus_menu",
-            "settings": {
-              "menu": "sarees-by-color",
-              "menu_style": "1"
-            }
-          },
-          "footer-8": {
-            "type": "bl_col",
-            "settings": {
-              "col_heading": "ACCESSORY",
-              "menu": "accessories",
-              "menu_style": "1",
-              "col_dk": "3",
-              "col_tb": "6",
-              "col_mb": "12",
-              "content_align": "t4s-text-md-start",
-              "padding_inner": "5px,0,0,0",
               "col_heading_mobile": "",
               "content_align_mb": "t4s-text-start",
               "padding_inner_mb": ""
@@ -344,22 +491,6 @@
               "hidden_mobile": false,
               "mgb": 20,
               "mgb_mb": 10
-            }
-          },
-          "9114b699-b551-43d2-a4a4-f127f3fb7ca6": {
-            "type": "bl_col",
-            "settings": {
-              "col_heading": "",
-              "menu": "",
-              "menu_style": "1",
-              "col_dk": "12",
-              "col_tb": "12",
-              "col_mb": "12",
-              "content_align": "t4s-text-md-start",
-              "padding_inner": "",
-              "col_heading_mobile": "",
-              "content_align_mb": "t4s-text-start",
-              "padding_inner_mb": ""
             }
           },
           "35a79b40-9993-46cc-85ac-087a1cbfdc98": {
@@ -383,31 +514,34 @@
               "text_ls_mb": 0,
               "text_mgb_mobile": 10
             }
-          },
-          "7e032566-e1df-4544-be8d-e31cce0d1437": {
-            "type": "cus_menu",
-            "settings": {
-              "menu": "",
-              "menu_style": "1"
-            }
           }
         },
         "block_order": [
           "footer-4",
           "b32f784d-ebd7-4898-9ed6-b34f4c652cfb",
-          "9546ff1a-645d-4f4b-b9f4-e1dbdbb52f7d",
-          "footer-2",
-          "footer-3",
           "footer-6",
           "693610ab-bb4c-4afe-9b01-d8f3c0724689",
           "50d5a5c4-d608-4e34-aefc-33f716332a55",
           "4df4c62b-5d13-4861-a8ce-744d1669e6b1",
           "5bdb9b4d-1133-45de-b05f-0ba8e188c04e",
-          "footer-8",
-          "33eb929e-a001-4d96-82a0-5aab1aaabaea",
+          "8e242746-03c6-45f1-9fc3-fbf3f5c64e14",
+          "aa78cbc6-3ad4-4aa0-a072-c61b4d6642f1",
+          "7c7b8eb7-5c24-4e93-adef-a7f725e4b88c",
           "9114b699-b551-43d2-a4a4-f127f3fb7ca6",
-          "35a79b40-9993-46cc-85ac-087a1cbfdc98",
-          "7e032566-e1df-4544-be8d-e31cce0d1437"
+          "748e05bb-e7c1-44c9-b6d1-5a8a76f3c1f9",
+          "96a81592-4230-4bae-8b1e-946a486fc4e2",
+          "01e1eed6-b365-4127-b94c-bc295a48692b",
+          "4a3191e5-5422-4346-b28a-76d21fc290a5",
+          "773468e0-0538-43ab-b055-3fa89f51a445",
+          "575b6166-ba63-4559-93a2-497a9ba71254",
+          "footer-8",
+          "87216a1a-d6d7-4d87-9b6c-4ffafe429bb3",
+          "9546ff1a-645d-4f4b-b9f4-e1dbdbb52f7d",
+          "footer-2",
+          "footer-3",
+          "f849752e-9936-4f3d-a18f-d1810b220162",
+          "33eb929e-a001-4d96-82a0-5aab1aaabaea",
+          "35a79b40-9993-46cc-85ac-087a1cbfdc98"
         ],
         "settings": {
           "sticky": false,
