@@ -21,7 +21,7 @@
     "enable_compe": true,
     "app_review": "2",
     "badge_shape": "3",
-    "label_sale_style": "2",
+    "label_sale_style": "1",
     "use_new_badge": false,
     "price_varies_style": "2",
     "type_qv": "2",
@@ -251,7 +251,7 @@
               "remove_br_tag": false,
               "tag": "p",
               "fontf": "inherit",
-              "text_cl": "#ddd",
+              "text_cl": "#dddddd",
               "text_fs": 16,
               "text_lh": 0,
               "text_fw": 400,
@@ -287,7 +287,7 @@
               "remove_br_tag": false,
               "tag": "p",
               "fontf": "inherit",
-              "text_cl": "#ddd",
+              "text_cl": "#dddddd",
               "text_fs": 16,
               "text_lh": 0,
               "text_fw": 400,
@@ -339,7 +339,7 @@
               "remove_br_tag": false,
               "tag": "p",
               "fontf": "inherit",
-              "text_cl": "#ddd",
+              "text_cl": "#dddddd",
               "text_fs": 16,
               "text_lh": 0,
               "text_fw": 400,
@@ -375,7 +375,7 @@
               "remove_br_tag": false,
               "tag": "p",
               "fontf": "inherit",
-              "text_cl": "#ddd",
+              "text_cl": "#dddddd",
               "text_fs": 16,
               "text_lh": 0,
               "text_fw": 400,
@@ -427,7 +427,7 @@
               "remove_br_tag": false,
               "tag": "p",
               "fontf": "inherit",
-              "text_cl": "#fff",
+              "text_cl": "#ffffff",
               "text_fs": 16,
               "text_lh": 0,
               "text_fw": 400,
@@ -562,9 +562,9 @@
           "mgb_mb": 20,
           "text_fs": 14,
           "text_fw": 400,
-          "heading_cl": "#ddd",
-          "text_cl": "#fff",
-          "link_cl": "#fff",
+          "heading_cl": "#dddddd",
+          "text_cl": "#ffffff",
+          "link_cl": "#ffffff",
           "link_hover_cl": "#56cfe1",
           "border_cl": "#e6e6e6",
           "layout": "t4s-container-wrap",
@@ -1273,7 +1273,7 @@
               "item_rd": 0,
               "img_effect": "zoom",
               "b_effect": "none",
-              "image_ratio": "rationt",
+              "image_ratio": "ratio2_1",
               "image_size": "cover",
               "image_position": "8",
               "collection_link": "",
@@ -1300,7 +1300,7 @@
               "item_rd": 0,
               "img_effect": "none",
               "b_effect": "none",
-              "image_ratio": "rationt",
+              "image_ratio": "ratio2_1",
               "image_size": "cover",
               "image_position": "8",
               "collection_link": "",
@@ -2303,15 +2303,153 @@
           "06eaa184-e59c-4525-ac5d-eac6fc91f3e8": {
             "type": "bg_color",
             "settings": {
-              "title": "",
+              "title": "Off White",
               "color": "",
               "cl_gradient": "",
+              "color_img": true,
+              "color_jpg": "shopify:\/\/shop_images\/Off_White.jpg"
+            }
+          },
+          "edd9aeb8-39c0-4f2f-bf6d-b0992b49741a": {
+            "type": "bg_color",
+            "settings": {
+              "title": "Golden",
+              "color": "#ffd700",
+              "cl_gradient": "",
               "color_img": false
+            }
+          },
+          "3fb22705-aade-4379-85e9-3416d903e354": {
+            "type": "bg_color",
+            "settings": {
+              "title": "Multi",
+              "color": "",
+              "cl_gradient": "",
+              "color_img": true,
+              "color_jpg": "shopify:\/\/shop_images\/Multi.png"
+            }
+          },
+          "f2a9b2ab-56fb-4c1e-aac3-aaef83565793": {
+            "type": "bg_color",
+            "settings": {
+              "title": "Cream",
+              "color": "",
+              "cl_gradient": "",
+              "color_img": true,
+              "color_jpg": "shopify:\/\/shop_images\/Cream.png"
+            }
+          },
+          "6c57e866-3960-40a1-bc06-f4fb4f9619f9": {
+            "type": "bg_color",
+            "settings": {
+              "title": "Black-White",
+              "color": "",
+              "cl_gradient": "",
+              "color_img": true,
+              "color_jpg": "shopify:\/\/shop_images\/BlackNWhite.png"
+            }
+          },
+          "79dafdc3-9604-45db-bad5-069589f6e67b": {
+            "type": "bg_color",
+            "settings": {
+              "title": "White-Red",
+              "color": "",
+              "cl_gradient": "",
+              "color_img": true,
+              "color_jpg": "shopify:\/\/shop_images\/White-Red.png"
+            }
+          },
+          "69da7942-1c86-4b8a-ab5a-f1636649791b": {
+            "type": "bg_color",
+            "settings": {
+              "title": "peach",
+              "color": "",
+              "cl_gradient": "",
+              "color_img": true,
+              "color_jpg": "shopify:\/\/shop_images\/peach_col.png"
+            }
+          },
+          "aac0964e-6e98-49fc-b544-2cb224db123e": {
+            "type": "bg_color",
+            "settings": {
+              "title": "wine",
+              "color": "",
+              "cl_gradient": "",
+              "color_img": true,
+              "color_jpg": "shopify:\/\/shop_images\/Crisp-Red-Color.png"
+            }
+          },
+          "c161f1d6-bcfb-48b6-a81e-df722fc8ad9f": {
+            "type": "bg_color",
+            "settings": {
+              "title": "Sandal",
+              "color": "",
+              "cl_gradient": "",
+              "color_img": true,
+              "color_jpg": "shopify:\/\/shop_images\/Sandal.png"
+            }
+          },
+          "cf82856f-a673-4a8b-8368-1a972a01f157": {
+            "type": "bg_color",
+            "settings": {
+              "title": "Silver",
+              "color": "#c0c0c0",
+              "cl_gradient": "",
+              "color_img": false
+            }
+          },
+          "9dad941f-b712-472c-9e5c-e6f018bcfafe": {
+            "type": "nt_label",
+            "settings": {
+              "title": "Silk Mark Certified",
+              "color": "#b7499b",
+              "cl_gradient": "",
+              "color_txt": "#ffffff"
+            }
+          },
+          "30da99be-8891-4593-91d3-e386adf1b7a8": {
+            "type": "nt_label",
+            "settings": {
+              "title": "FREE SHIPPING",
+              "color": "#ffff00",
+              "cl_gradient": "",
+              "color_txt": "#222222"
+            }
+          },
+          "7fb184e5-0ea2-4f2d-9382-81d3ffd290f9": {
+            "type": "nt_label",
+            "settings": {
+              "title": "Hand Embroidery",
+              "color": "#ec0101",
+              "cl_gradient": "",
+              "color_txt": "#ffffff"
+            }
+          },
+          "238fa7e5-0377-43d8-91b3-2c50fc6fbedd": {
+            "type": "nt_label",
+            "settings": {
+              "title": "FREE BLOUSE STITCHING",
+              "color": "#222222",
+              "cl_gradient": "",
+              "color_txt": "#ffffff"
             }
           }
         },
         "block_order": [
-          "06eaa184-e59c-4525-ac5d-eac6fc91f3e8"
+          "06eaa184-e59c-4525-ac5d-eac6fc91f3e8",
+          "edd9aeb8-39c0-4f2f-bf6d-b0992b49741a",
+          "3fb22705-aade-4379-85e9-3416d903e354",
+          "f2a9b2ab-56fb-4c1e-aac3-aaef83565793",
+          "6c57e866-3960-40a1-bc06-f4fb4f9619f9",
+          "79dafdc3-9604-45db-bad5-069589f6e67b",
+          "69da7942-1c86-4b8a-ab5a-f1636649791b",
+          "aac0964e-6e98-49fc-b544-2cb224db123e",
+          "c161f1d6-bcfb-48b6-a81e-df722fc8ad9f",
+          "cf82856f-a673-4a8b-8368-1a972a01f157",
+          "9dad941f-b712-472c-9e5c-e6f018bcfafe",
+          "30da99be-8891-4593-91d3-e386adf1b7a8",
+          "7fb184e5-0ea2-4f2d-9382-81d3ffd290f9",
+          "238fa7e5-0377-43d8-91b3-2c50fc6fbedd"
         ],
         "settings": {
         }
@@ -2460,7 +2598,6 @@
   },
   "platform_customizations": {
     "custom_css": [
-      ".t4s-footer a,.t4s-footer-menu ul li a {color: #808080;}",
       "iframe[id^=\"iFrameResizer\"] {width: 460px !important;}",
       ".t4s-pagination-wrapper {margin-bottom: 20px;}",
       ".t4s-product .t4s-price-from {color: var(--product-price-color); display: none;}",
