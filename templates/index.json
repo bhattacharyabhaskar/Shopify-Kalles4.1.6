@@ -1555,12 +1555,20 @@
             "padding_inner_mb": "",
             "bg_cl": "#d2a2a2"
           }
+        },
+        "02f8da76-c992-4fbc-ac5c-fdc59197cb94": {
+          "type": "html",
+          "settings": {
+            "html_content": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #fff;color: #fff;\">T<div data-token=\"nZzUPUOoZxCSQFHu5HJk4wfRmy730EdD2FGDjMBy9rzNzBIuo9\" class=\"romw-badge\"><\/div>\n<script src=\"https:\/\/reviewsonmywebsite.com\/js\/embedLoader.js?id=03d30ab029f3709eb7ee597570569e34\" type=\"text\/javascript\"><\/script>\n<\/div>",
+            "hidden_mobile": false
+          }
         }
       },
       "block_order": [
         "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-0",
         "28b8fd05-435d-460a-9d5d-fc7c3fe4d25e",
-        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-3"
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-3",
+        "02f8da76-c992-4fbc-ac5c-fdc59197cb94"
       ],
       "settings": {
         "space_h_item": "30",
