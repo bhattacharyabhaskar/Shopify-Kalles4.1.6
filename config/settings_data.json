@@ -2456,5 +2456,17 @@
         }
       }
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".t4s-footer a,.t4s-footer-menu ul li a {color: #808080;}",
+      "iframe[id^=\"iFrameResizer\"] {width: 460px !important;}",
+      ".t4s-pagination-wrapper {margin-bottom: 20px;}",
+      ".t4s-product .t4s-price-from {color: var(--product-price-color); display: none;}",
+      ".t4s-pr-style6 .t4s-product-badge {align-items: flex-end;}",
+      ".t4s-pr-style6 .t4s-product-btns2 {display: none;}",
+      ".type_mn_link .t4s-sub-column li a:not(:hover) {color: #003300;}",
+      ".shopify-payment-button__more-options {margin: 1.6rem 0 1rem; letter-spacing: 0.05rem; text-decoration: underline; text-underline-offset: 0.3rem;}"
+    ]
   }
 }
