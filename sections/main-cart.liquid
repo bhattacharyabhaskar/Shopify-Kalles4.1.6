@@ -60,7 +60,7 @@
 </svg>
 <div class="t4s-container">
   <div class="t4s-cookie-message t4s-dn">{{ 'cart.general.cookies_required' | t }}</div>
-  <form data-cart-content data-cart-wrapper action="{{ routes.cart_url }}" method="post" novalidate class="t4s-cartPage__form t4s-pr t4s-oh">
+  <form data-cart-wrapper action="{{ routes.cart_url }}" method="post" novalidate class="limoniapps-discountninja-cart-root t4s-cartPage__form t4s-pr t4s-oh">
     <input type="hidden" data-cart-attr-rm name="attributes[collection_items_per_row]" value="">
     <div class="t4s-cartPage__header">
       <div class="t4s-row t4s-align-items-center">
@@ -229,10 +229,9 @@
                                 </ul>
                             {%- endif -%}
                         </div>
-                        <div class="t4s-cart-total">
-                            <div class="t4s-row t4s-gx-30 t4s-gy-0 t4s-d-inline-flex t4s-align-items-center t4s-justify-content-between">
+                     <div class="t4s-cart-total t4s-row t4s-gx-30 t4s-gy-0 t4s-d-inline-flex t4s-align-items-center t4s-justify-content-between limoniapps-discountninja-cart-subtotal">
                                 <div class="t4s-col-auto t4s-col-item"><strong>{{ 'cart.cart_page.subtotal' | t }}</strong></div>
-                                <div data-cart-prices class="t4s-col-auto t4s-col-item t4s-text-right t4s-cart__ttprice">
+                        <div data-cart-prices class="t4s-col-auto t4s-col-item t4s-text-right t4s-cart__ttprice limoniapps-discountninja-cart-subtotal-price">
                                     {%- if cart.total_discount > 0 -%}
                                         <div class="t4s-cart__originalPrice">{{ cart.original_total_price | money }}</div>
                                         <div class="t4s-cart__discountPrice"> - {{ cart.total_discount | money }}</div>
@@ -243,9 +242,9 @@
                                     <div class="t4s-cart__totalPrice">{{ total_price | money }}</div>
                                 </div>
                             </div>
-                        </div>
-
-                  {%- when 'tax' -%}
+                          <div class="limoniapps-discountninja-cart-promotionsummary"></div>
+                          <div class="limoniapps-discountninja-cartdiscountfield-placeholder"></div>                  
+                 {%- when 'tax' -%}
                      {%- capture taxes_shipping_checkout -%}{%- assign page_url = pages[settings.link_ship].url -%}
                         {%- if se_stts.show_discount -%}
                             {%- if cart.taxes_included and page_url != blank -%}
