@@ -207,7 +207,7 @@
         "tabs_design_mb": "accordion",
         "tabs_position": "external",
         "enable_first_tab": true,
-        "tabs_layout_fix": "full",
+        "tabs_layout_fix": "default",
         "bg": "#f6f6f8",
         "bg_mb": "#ffffff",
         "product_list": [
