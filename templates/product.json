@@ -203,7 +203,7 @@
         "dots_round": true,
         "dots_space": 10,
         "dots_hidden_mobile": false,
-        "tabs_design": "accordion",
+        "tabs_design": "tab",
         "tabs_design_mb": "accordion",
         "tabs_position": "inner",
         "enable_first_tab": true,
