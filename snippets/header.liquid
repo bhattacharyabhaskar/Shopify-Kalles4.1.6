@@ -1,0 +1,37 @@
+{%- comment -%}
+header-inline - design 3( logo left ) , 5( logo center ), 9( logo left,search form ), 2 (header menu split)
+header-sidebar - design 1( button opend menu left ), design 6( button opend menu right - social ), design 10( search form )
+header With categories menu - design 8
+header Menu in bottom  - design 4 - social
+header vertical  - design 7 - social
+{%- endcomment -%}
+{%- liquid
+if template.suffix != 'config' and request.design_mode == false
+  section 'title_config'
+  section 'pr_item_config'
+  section 'btn_config'
+endif -%}
+
+{%- if t_name == 'index' -%}<h1 class="site-header__logo t4s-d-none">{{- shop.name -}}</h1>{%- endif -%}
+{%- liquid
+  assign admin_sp = request.design_mode
+  section 'announcement-bar'
+  section 'top-bar'
+  case settings.header_design 
+   when 'inline' 
+     section 'header-inline'
+   when 'sidebar' 
+     section 'header-sidebar'
+   when 'bottom' 
+     section 'header-bottom'
+   when 'categories'  
+      section 'header-categories-menu'
+      if admin_sp 
+      section 'header-categories' 
+      endif
+   when 'vertical' 
+     section 'header-vertical'
+  endcase
+  if admin_sp and settings.header_design != 'sidebar'
+  section 'mega-menu'
+  endif -%}

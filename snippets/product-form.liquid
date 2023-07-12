@@ -1,0 +1,234 @@
+{%- assign product_form_id = 'product-form-' | append: pr_se_id -%}
+{%- liquid 
+assign pr_variants = product.variants
+assign PR_buy_pr = false
+if bk_stts.show_dynamic_checkout and isExternal == false and isProductAvailable
+  assign PR_buy_pr = true 
+endif
+assign choose_an_option = 'products.product.choose_an_option' | t
+assign date_in = settings.date_in
+assign class_frm = 't4s-form__product has--form__swatch'
+if isProductDefault
+  assign class_frm = 't4s-form__product'
+endif
+if arr_properties.size > 0 and isProductAvailable
+    assign class_frm =  class_frm | append: ' has--properties'
+endif
+if settings.sticky_atc and type == 'main'
+  assign class_frm =  class_frm | append: ' is--main-sticky'
+else if settings.sticky_atc and type == 'main_sticky'
+  assign class_frm =  class_frm | append: ' is--atc-sticky'
+endif
+
+assign color_swatch    = 'disabled-'
+assign color_mode      = bk_stts.color_mode
+assign selector_mode   = bk_stts.selector_mode
+assign stt_color_ck    = settings.color_ck | default: ';'
+assign color_ck        = stt_color_ck | append: ',color,colors,couleur,colour' | remove: ';,'
+assign get_color       = color_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+assign color_mode_list = 'color, color is-sw-cl__round, variant_image, variant_image is-sw-cl__round' | split: ', '
+if color_mode_list contains color_mode
+  assign color_swatch  = 'is-sw__color '
+endif
+assign current_variant_available = current_variant.available
+assign use_incoming_mess = settings.use_incoming_mess
+assign current_variant_incoming = false
+assign current_inventory_quantity = current_variant.inventory_quantity
+if current_inventory_quantity <= 0 and current_variant.inventory_management == 'shopify' and current_variant.incoming
+assign current_variant_incoming = true
+endif
+if pos_sizeg == '1'
+    assign html_sizeg = ''
+endif
+if current_variant.inventory_management != null and current_inventory_quantity > 0 and current_variant.inventory_policy != 'continue'
+    assign max_qty = current_inventory_quantity
+else
+    assign max_qty = 9999
+endif
+if color_mode contains 'color' or color_mode contains 'variant'
+assign show_tooltip = ''
+else
+assign show_tooltip = '-off'
+endif -%}
+
+{%- if color_mode == 'dropdown' or selector_mode == 'dropdown' %}<link rel="stylesheet" href="{{ 'base_drop.min.css' | asset_url }}" media="all">{% endif -%}
+
+<div class="t4s-product-form__variants is-no-pick__{{ PR_no_pick }}{% if PR_buy_pr %} is-payment-btn-true t4s-payment-button t4s-btn-color-{{ bk_stts.button_color_payment }}{% endif %}  is-remove-soldout-{{ remove_soldout }} is-btn-full-width__{{ bk_stts.btn_atc_full }} is-btn-atc-txt-{{ bk_stts.btn_txt }} is-btn-ck-txt-{{ bk_stts.btn_txt2 }} is--fist-ratio-{{ is_fit_ratio_img }}" style="{% if is_fit_ratio_img %};--fit-ratio-img:{{ first_ratio_img }};{% endif %} --wishlist-color: {{ bk_stts.wishlist_color }};--wishlist-hover-color: {{ bk_stts.wishlist_color_hover }};--wishlist-active-color: {{ bk_stts.wishlist_color_active }};--compare-color: {{ bk_stts.compare_color }};--compare-hover-color: {{ bk_stts.compare_color_hover }};--compare-active-color: {{ bk_stts.compare_color_active }};" {{ shopify_attributes }}>
+  <div data-callBackVariant id="t4s-callBackVariant{{ product_form_id }}">
+    {%- form 'product', product, id: product_form_id, data-productid: product.id, class: class_frm, novalidate: 'novalidate', data-type: 'add-to-cart-form', data-disable-swatch: isProductDefault -%}
+        
+        {{- form | payment_terms -}}
+
+        {%- if isProductDefault -%}
+          <input name="id" value="{{ pr_variants.first.id }}" type="hidden">
+          {%- if advance_pr_type != blank %}{% render 'choose_style', advance_pr_type: advance_pr_type, title: advance_label, pid: product.id %}{% endif -%}
+
+        {%- else -%}
+
+           {{ 'swatch.css' | asset_url | stylesheet_tag }}
+           <select name="id" id="product-select-{{ pr_se_id }}" class="t4s-product__select t4s-d-none">
+              {%- for variant in pr_variants -%}
+                  {%- if variant.available -%}
+                    <option value="{{ variant.id }}" data-mdid="{{ variant.featured_media.id | json }}" data-incoming="{{ variant.incoming }}" data-inventoryQuantity="{{ variant.inventory_quantity | json }}" data-inventoryPolicy={{ variant.inventory_policy | json }} data-nextIncomingDate="{{ variant.next_incoming_date | date: date_in }}"{% if variant.id == current_variant.id %} selected="selected"{% endif %}>{{ variant.title | escape }}</option>
+                  {%- else -%}
+                    <option value="{{ variant.id }}" data-mdid="{{ variant.featured_media.id | json }}" data-incoming="{{ variant.incoming }}" data-inventoryQuantity="{{ variant.inventory_quantity | json }}" data-inventoryPolicy={{ variant.inventory_policy | json }} data-nextIncomingDate="{{ variant.next_incoming_date | date: date_in }}"{% if remove_soldout %} disabled="disabled"{% endif %} class="is--sold-out">{{ variant.title | escape }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+           </select>
+
+          <div class="t4s-swatch t4s-color-mode__{{ color_mode }} t4s-color-size__{{ bk_stts.color_size }} t4s-selector-mode__{{ selector_mode }}">
+            
+            {%- if advance_pr_type != blank %}{% render 'choose_style', advance_pr_type: advance_pr_type, title: advance_label, pid: product.id %}{% endif -%}
+              
+            {%- for option in product.options_with_values -%}
+
+              {%- liquid
+                if option.values.size == 1
+                  assign selected_value = option.values.first
+                else
+                  assign option_index   = 'option' | append: forloop.index
+                  assign selected_value = current_variant[option_index]
+                endif
+                assign option_name    = option.name
+                assign name_downcase  = option_name | downcase
+             -%}
+              
+              {%- if get_color contains name_downcase -%}
+                
+                <div data-swatch-option data-id="{{ forloop.index0 }}" class="t4s-swatch__option is-t4s-style__color is-t4s-name__{{ option_name | handle }} {% cycle 'is--first-color', '', '' %}">
+                  <h4 class="t4s-swatch__title"><span>{{ option_name }}: <span data-current-value class="t4s-dib t4s-swatch__current">{{ selected_value | default: choose_an_option }}</span></span>{% if name_sizeg == name_downcase %}{{ html_sizeg }}{% endif %}</h4>
+                  <div data-swatch-list class="t4s-swatch__list">
+                    {%- if color_mode != 'dropdown' -%}
+                      {%- for value in option.values -%}
+                      <div data-swatch-item data-tooltip{{ show_tooltip }}="top" title="{{ value | escape }}" class="t4s-swatch__item {{ color_swatch }}bg_color_{{ value | handle }} lazyloadt4s{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value }}</div>
+                      {%- endfor -%}
+
+                    {%- else -%}
+                      <button type="button" data-dropdown-open data-position="bottom-end" data-id="t4s_nt_{{ pr_se_id }}{{ forloop.index }}"><span  data-current-value>{{ selected_value | default: choose_an_option }}</span><svg class="t4s-icon-select-arrow" role="presentation" viewBox="0 0 19 12"><use xlink:href="#t4s-select-arrow"></use></svg></button>
+                      <div data-dropdown-wrapper class="t4s-dropdown__wrapper t4s-current-scrollbar" id="t4s_nt_{{ pr_se_id }}{{ forloop.index }}">
+                        <div class="t4s-drop-arrow"></div>
+                        <div class="t4s-dropdown__header">
+                           <span data-current-value class="t4s-dropdown__title">{{ selected_value | default: choose_an_option }}</span>
+                           <button data-dropdown-close aria-label="{{ 'general.aria.close' | t }}"><svg role="presentation" class="t4s-iconsvg-close" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+                        </div>
+                        <div class="t4s-dropdown__content">
+                           {%- for value in option.values -%}
+                           <div data-swatch-item data-dropdown-off class="t4s-swatch__item t4s-truncate {{ color_swatch }}bg_color_{{ value | handle }} lazyloadt4s{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value }}</div>
+                           {%- endfor -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+              {%- else -%}
+
+                <div data-swatch-option data-id="{{ forloop.index0 }}" class="t4s-swatch__option is-t4s-name__{{ option_name | handle }}">
+                  <h4 class="t4s-swatch__title"><span>{{ option_name }}: <span data-current-value class="t4s-dib t4s-swatch__current">{{ selected_value | default: choose_an_option }}</span></span>{% if name_sizeg == name_downcase %}{{ html_sizeg }}{% endif %}</h4>
+                  <div class="t4s-swatch__list">
+                    {%- if selector_mode != 'dropdown' -%}
+                      {%- for value in option.values -%}
+                      <div data-swatch-item class="t4s-swatch__item{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value }}</div>
+                      {%- endfor -%}
+
+                    {%- else -%}
+                      <button type="button" data-dropdown-open data-position="bottom-end" data-id="t4s_nt_{{ pr_se_id }}{{ forloop.index }}"><span data-current-value>{{ selected_value | default: choose_an_option }}</span><svg class="t4s-icon-select-arrow" role="presentation" viewBox="0 0 19 12"><use xlink:href="#t4s-select-arrow"></use></svg></button>
+                      <div data-dropdown-wrapper class="t4s-dropdown__wrapper t4s-current-scrollbar" id="t4s_nt_{{ pr_se_id }}{{ forloop.index }}">
+                        <div class="t4s-drop-arrow"></div>
+                        <div class="t4s-dropdown__header">
+                           <span data-current-value class="t4s-dropdown__title">{{ selected_value | default: choose_an_option }}</span>
+                           <button data-dropdown-close aria-label="{{ 'general.aria.close' | t }}"><svg role="presentation" class="t4s-iconsvg-close" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+                        </div>
+                        <div class="t4s-dropdown__content">
+                           {%- for value in option.values -%}
+                           <div data-swatch-item data-dropdown-off class="t4s-swatch__item t4s-truncate{% if selected_value == value %} is--selected{% endif %}" data-value="{{ value | escape }}">{{ value }}</div>
+                           {%- endfor -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+              {%- endif -%}
+
+            {%- endfor -%}
+          </div>
+
+        {%- endif -%}
+
+        {%- liquid 
+        if arr_properties.size > 0 and isProductAvailable
+        render 'frm_properties', arr_properties: arr_properties, product: product
+        endif -%}
+
+        {%- if use_incoming_mess and current_variant_incoming and pr_variants.size == 1 and current_variant.next_incoming_date != blank -%}
+            {%- assign format_date = current_variant.next_incoming_date | date: date_in -%}
+            <div class="t4s-incoming__mess">{% if current_variant_available %}{{ 'products.product_single.will_not_ship_until_html' | t: date: format_date }}{% else %}{{ 'products.product_single.will_be_in_stock_after_html' | t: date: format_date }}{% endif %}</div>
+        {%- elsif use_incoming_mess and pr_variants.size > 1 -%}
+            {%- liquid
+            assign format_date = current_variant.next_incoming_date | date: date_in
+            unless format_date 
+              assign format_date = '19041994'
+            endunless -%}
+            <div data-incoming__mess class="t4s-incoming__mess"{% unless current_variant_incoming %} hidden{% endunless %}><span data-incoming-available{% if current_variant_available == false or current_variant == blank %} style="display:none"{% endif %}>{{ 'products.product_single.will_not_ship_until_html' | t: date: format_date }}</span><span data-incoming-soldout{% if current_variant_available or current_variant == blank %} style="display: none"{% endif %}>{{ 'products.product_single.will_be_in_stock_after_html' | t: date: format_date }}</span></div>
+        {%- endif -%}
+        {{ 'button-style.css' | asset_url | stylesheet_tag }}
+        <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+        
+        {{- html_price -}}
+    
+        <div class="t4s-product-form__buttons" style="--pr-btn-round:{{ bk_stts.pr_btn_round }}px;"> 
+          <div class="t4s-d-flex t4s-flex-wrap">
+             {%- if isExternal -%}
+
+                <a href="{{ external_link }}" rel="nofollow" target="_blank" class="t4s-product-form__submit t4s-truncate is--btn-external t4s-btn t4s-btn-base t4s-btn-style-{{ bk_stts.button_style }} t4s-btn-color-{{ bk_stts.button_color }} t4s-w-100 t4s-justify-content-center{% if bk_stts.button_style == 'default' or bk_stts.button_style == 'outline' %} t4s-btn-effect-{{ bk_stts.button_effect }}{% endif %} t4s-btn-loading__svg">
+                    {%- if bk_stts.btn_icon -%}<svg class="t4s-btn-icon" viewBox="0 0 24 24"><use xlink:href="#t4s-icon-atc"></use></svg>{%- endif -%}<span class="t4s-btn-atc_text">{{ external_title }}</span>
+                    <span class="t4s-loading__spinner" hidden>
+                        <svg width="16" height="16" hidden class="t4s-svg-spinner" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+                    </span>
+                </a>
+                {%- if bk_stts.enable_wishlist or bk_stts.enable_compare -%}
+                <!-- render t4s_wis_cp.liquid -->
+                {%- render 't4s_wis_cp', product: product, bk_stts: bk_stts -%}
+                {%- endif -%}
+
+             {%- else -%}
+
+                {%- if bk_stts.show_qty and isProductAvailable -%}
+                <div data-quantity-wrapper class="t4s-quantity-wrapper t4s-product-form__qty"> 
+                  <button data-quantity-selector data-decrease-qty type="button" class="t4s-quantity-selector is--minus"><svg focusable="false" class="icon icon--minus" viewBox="0 0 10 2" role="presentation"><path d="M10 0v2H0V0z" fill="currentColor"></path></svg></button>
+                  <input data-quantity-value type="number" class="t4s-quantity-input" step="1" min="{{ cus_qty }}" max="{{ max_qty }}" name="quantity" value="{{ cus_qty }}" size="4" pattern="[0-9]*" inputmode="numeric">
+                  <button data-quantity-selector data-increase-qty type="button" class="t4s-quantity-selector is--plus"><svg focusable="false" class="icon icon--plus" viewBox="0 0 10 10" role="presentation"><path d="M6 4h4v2H6v4H4V6H0V4h4V0h2v4z" fill="currentColor" fill-rule="evenodd"></path></svg></button>
+                </div>
+                {%- else -%}
+                <input type="hidden" name="quantity" value="1"> 
+                {%- endif -%}
+
+                {%- if bk_stts.enable_wishlist or bk_stts.enable_compare -%}
+                <!-- render t4s_wis_cp.liquid -->
+                {%- render 't4s_wis_cp', product: product, bk_stts: bk_stts -%}
+                {%- endif -%}
+
+                <button data-animation-atc='{ "ani":"{{ bk_stts.ani }}","time":{{ bk_stts.time }}000 }' type="submit" name="add" data-atc-form class="t4s-product-form__submit t4s-btn t4s-btn-base t4s-btn-style-{{ bk_stts.button_style }} t4s-btn-color-{{ bk_stts.button_color }} t4s-w-100 t4s-justify-content-center {% if bk_stts.button_style == 'default' or bk_stts.button_style == 'outline' %} t4s-btn-effect-{{ bk_stts.button_effect }}{% endif %} t4s-btn-loading__svg"{% unless current_variant_available %} aria-disabled="true"{% endunless %}{% unless isProductAvailable %} disabled="disabled"{% endunless %}>{%- if bk_stts.btn_icon -%}<svg class="t4s-btn-icon" viewBox="0 0 24 24"><use xlink:href="#t4s-icon-atc"></use></svg>{%- endif -%}<span class="t4s-btn-atc_text">{% if current_variant_available == false or isProductAvailable == false %}{{ 'products.product.sold_out' | t }}{% elsif isPreoder %}{{ 'products.product.pre_order' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span>
+                    <span class="t4s-loading__spinner" hidden>
+                        <svg width="16" height="16" hidden class="t4s-svg-spinner" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+                    </span>
+                </button>
+
+            {%- endif -%}
+          </div>
+          {%- if PR_buy_pr and type != 'main_sticky' %}{{- form | payment_button -}}{% endif -%}
+          {%- if settings.use_notify_me -%}<button data-class="t4s-mfp-btn-close-inline" data-id="t4s-pr-popup__notify-stock" data-storageid="notify-stock{{ current_variant.id }}" data-mfp-src data-open-mfp-ajax class="t4s-pr__notify-stock" type="button" data-notify-stock-btn data-variant-id="{{ current_variant.id }}" data-root-url="{{ routes.root_url }}"{% if current_variant_available or current_variant == blank %} style="display: none"{% endif %}>{{ 'products.notify_stock.trigger' | t }}</button>{%- endif -%}
+        </div>
+    {%- endform -%}
+
+    {%- unless isProductDefault or type == 'main_sticky' -%}
+    <script type="application/json" class="pr_variants_json">{{ product.variants | json }}</script>
+    <script type="application/json" class="pr_options_json">{{ product.options_with_values | json }}</script>
+    {%- endunless -%}
+
+    {%- if bk_stts.ani != 'none' -%}<link href="{{ 'ani-atc.min.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">{%- endif -%}
+    
+  </div>
+ </div>
+{%- if PR_buy_pr and current_variant_available != true and type != 'main_sticky' -%}<style> #t4s-callBackVariant{{ product_form_id }} .shopify-payment-button { display: none;} </style>{% endif -%}

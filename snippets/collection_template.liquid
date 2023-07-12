@@ -1,0 +1,42 @@
+{%- liquid
+  assign collection = collections[bk_stts.collection]
+  assign block_title = bk_stts.title | default: collection.title
+  assign image = bk_stts.image | default: collection.image
+  assign title = bk_stts.collection_title | default: collection.title
+  assign collection_link = bk_stts.collection_link | default: collection.url
+  assign html = cur_html | split: ','
+ -%}
+
+{{ html[0] }}
+<div class="t4s-col-item t4s-collection-item t4s-coll-style-{{ collection_des }} coll-item-{{ stt }} t4s-col-lg-{{ html[1] }} t4s-col-md-{{ html[2] }} t4s-col-{{ html[3] }}" id="b_{{ block.id }}">      
+  <div class="t4s-cat-content t4s-source-{{ source }} t4s-eff t4s-eff-{{ b_effect }} t4s-eff-img-{{ img_effect }} t4s-text-center t4s-pr t4s-oh">
+    <div class="t4s-coll-img t4s-pr" data-cacl-slide>
+    {% if collection_des == "11" %}
+      <span class="t4s-count">{{ collection.all_products_count | default: 0 }}</span>  
+    {% endif %}
+    <a class="t4s_cat_item_link t4s-img-wrap t4s-d-block" href="{{ collection_link }}" target="{{ open_link }}">
+    	<div class="t4s_ratio t4s_ratio_hasmb t4s-bg-11" style="{%- if image != blank -%} background: url({{ image | image_url: width: 1 }});{%- endif -%} --aspect-ratioapt: {{ html[4] }}/{{ html[5] }};--aspect-ratioapttb: {{ html[6] }}/{{ html[7] }};--aspect-ratioaptmb: {{ html[8] }}/{{ html[9] }};" data-cacl-slide>
+        {%- if image != blank -%}
+          <img {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image.presentation.focal_point }}"{% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+        {%- else -%}
+          {%- assign txt = html[4] | append: 'x' | append: html[5] -%}
+          {%- render 'svg_holder', txt: txt, fs: "40px" | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' -%}
+        {%- endif -%}
+	    </div>
+    </a>
+    </div>
+    {%- if title != blank -%}
+      <div class="t4s-cate-wrapper">
+          <a class="t4s-cat-title" href="{{ collection_link }}" target="{{ open_link }}">
+            <span class="t4s-text">{{ title }}</span> {% if collection_des == "12" %} <span class="t4s-count">{{ collection.all_products_count | default: 0 }}</span> {% endif %}
+          </a>
+        {%- if subtitle != blank -%}
+          <a class="t4s-cat-subtitle" href="{{ collection_link }}" target="{{ open_link }}">
+            <span class="t4s-count">{{ collection.all_products_count | default: 0 }}</span> <span class="t4s-text">{{ subtitle }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+{{ html[10] }}

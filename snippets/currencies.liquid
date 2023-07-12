@@ -1,0 +1,110 @@
+{%- liquid 
+if settings.flag_currency
+ assign fl = 'flagst4'
+endif
+assign sz = settings.size_currency
+assign cart_iso_code = cart.currency.iso_code
+ -%}
+
+{%- if settings.flag_currency %}{{ 'currencies.min.css' | asset_url | stylesheet_tag }}{% endif -%}
+{%- if shop.enabled_currencies.size > 1 and settings.currency_type == '1' -%}
+  
+  {%- unless is_fixed -%}
+
+    {%- if linklists.currency-the4.links.size > 0 -%}
+      {%- assign ck_iso_code = '#' | append: cart_iso_code -%}{%- assign links_cur = linklists.currency-the4.links | where: "url", ck_iso_code -%}
+      <div data-currency-wrap class="t4s-top-bar__currencies t4s-d-inline-block">
+        <button data-dropdown-open data-position="bottom-end" data-id="dropdown_currencies{{ sid }}"><span data-flagst4="{{ sz }}" data-current class="t4s-d-inline-block {{ fl }} lazyloadt4s flagst4-{{ cart_iso_code }}">{{ links_cur.first.title| default: cart_iso_code }}</span><svg class="t4s-ion-select-arrow " role="presentation" viewBox="0 0 19 12"><polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline></svg></button>
+        <div data-dropdown-wrapper class="t4s-dropdown__wrapper t4s-current-scrollbar {{ class_mb }}" id="dropdown_currencies{{ sid }}">
+           <div class="t4s-drop-arrow"></div>
+           <div class="t4s-dropdown__list">
+           {%- for link_cur in linklists.currency-the4.links -%}{%- assign iso_code = link_cur.url | remove: '#' | remove: ' ' -%}
+           <button type="button" data-flagst4="{{ sz }}" data-currency-item data-dropdown-off class="ct4s-urrency-item {{ fl }} lazyloadt4s flagst4-{{ iso_code }}{% if iso_code == cart_iso_code %} is--selected{% endif %}" data-iso="{{ iso_code }}">{{ link_cur.title }}</button>
+           {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      <div data-currency-wrap class="t4s-top-bar__currencies t4s-d-inline-block">
+        <button data-dropdown-open data-position="bottom-end" data-id="dropdown_currencies{{ sid }}"><span data-flagst4="{{ sz }}" data-current class="t4s-d-inline-block {{ fl }} lazyloadt4s flagst4-{{ cart_iso_code }}">{{ cart_iso_code }}</span><svg class="t4s-ion-select-arrow " role="presentation" viewBox="0 0 19 12"><polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline></svg></button>
+        <div data-dropdown-wrapper class="t4s-dropdown__wrapper t4s-current-scrollbar {{ class_mb }}" id="dropdown_currencies{{ sid }}">
+           <div class="t4s-drop-arrow"></div>
+           <div class="t4s-dropdown__list">
+             {%- for currency in shop.enabled_currencies -%}{%- assign iso_code = currency.iso_code -%}
+             <button type="button" data-flagst4="{{ sz }}" data-currency-item data-dropdown-off class="t4s-currency-item {{ fl }} lazyloadt4s flagst4-{{ iso_code }}{% if iso_code == cart_iso_code %} is--selected{% endif %}" data-iso="{{ iso_code }}">{{ iso_code }}</button>
+             {%- endfor -%}
+           </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+  {%- else -%}
+    
+    {{ 't4s-currency-lang_drawer.css' | asset_url | stylesheet_tag }}
+    <div data-currency-wrap data-currency-pos="{{ settings.currency_pos }}">
+      <button data-drawer-options='{ "id":"#drawer-currency-t4s-fixed" }' class="t4s-btn-currencies-sidebar"><span data-flagst4="{{ sz }}" data-current class="t4s-d-inline-block {{ fl }} lazyloadt4s flagst4-{{ cart_iso_code }}">{{ cart_iso_code }}</span><svg class="t4s-ion-select-arrow " role="presentation" viewBox="0 0 19 12"><polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline></svg></button>
+      <div id="drawer-currency-t4s-fixed" class="t4s-drawer t4s-drawer__right" aria-hidden="true">
+        <div class="t4s-drawer__header">
+          <span>{{ 'general.sidebar.currency' | t }}</span>
+          <button class="t4s-drawer__close" data-drawer-close aria-label="{{ 'general.sidebar.close' | t }}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+        </div>
+        <div class="t4s-drawer__content">
+           <div class="t4s-drawer__main t4s-current-scrollbar">
+             {%- for currency in shop.enabled_currencies -%}{%- assign iso_code = currency.iso_code -%}
+             <button type="button" data-flagst4="{{ sz }}" data-drawer-close data-currency-item class="t4s-currency-item {{ fl }} lazyloadt4s flagst4-{{ iso_code }}{% if iso_code == cart_iso_code %} is--selected{% endif %}" data-iso="{{ iso_code }}">{{ iso_code }}</button>
+             {%- endfor -%}
+           </div>
+        </div>
+      </div>
+    </div>
+
+  {%- endunless -%}
+
+{%- elsif settings.currency_type == '2' -%}
+  {%- assign supported_codes = settings.supported_currencies | split: '|' -%}
+
+  {%- unless is_fixed -%}
+
+    <div data-currency-wrap class="t4s-top-bar__currencies t4s-d-inline-block">
+      <button data-dropdown-open data-position="bottom-end" data-id="dropdown_currencies{{ sid }}"><span data-flagst4="{{ sz }}" data-current class="t4s-d-inline-block {{ fl }} lazyloadt4s flagst4-{{ cart_iso_code }}">{{ cart_iso_code }}</span><svg class="t4s-ion-select-arrow " role="presentation" viewBox="0 0 19 12"><polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline></svg></button>
+      <div data-dropdown-wrapper class="t4s-dropdown__wrapper t4s-current-scrollbar {{ class_mb }}" id="dropdown_currencies{{ sid }}">
+      	 <div class="t4s-drop-arrow"></div>
+         <div class="t4s-dropdown__list">
+           <button type="button" data-flagst4="{{ sz }}" data-currency-item data-dropdown-off class="t4s-currency-item {{ fl }} lazyloadt4s t4s-d-none" data-currency-temp></button>
+           {%- for code in supported_codes -%}
+            {%- assign array_money = code | split: '-' -%}
+            {%- assign data_currency = array_money | first | upcase | strip | remove: ' ' -%}
+            {%- assign name_money = array_money | last | strip -%}
+           <button type="button" data-flagst4="{{ sz }}" data-currency-item data-dropdown-off class="t4s-currency-item {{ fl }} lazyloadt4s flagst4-{{ data_currency }}{% if data_currency == cart_iso_code %} is--selected{% endif %}" data-currency="{{ data_currency }}">{{ name_money }}</button>
+           {%- endfor -%}
+         </div>
+      </div>
+    </div>
+
+  {%- else -%}
+  
+    {{ 't4s-currency-lang_drawer.css' | asset_url | stylesheet_tag }}
+    <div data-currency-wrap data-currency-pos="{{ settings.currency_pos }}">
+      <button data-drawer-options='{ "id":"#drawer-currency-t4s-fixed" }' class="t4s-btn-currencies-sidebar"><span data-flagst4="{{ sz }}" data-current class="t4s-d-inline-block {{ fl }} lazyloadt4s flagst4-{{ cart_iso_code }}">{{ cart_iso_code }}</span><svg class="t4s-ion-select-arrow " role="presentation" viewBox="0 0 19 12"><polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline></svg></button>
+      <div id="drawer-currency-t4s-fixed" class="t4s-drawer t4s-drawer__right" aria-hidden="true">
+        <div class="t4s-drawer__header">
+          <span>{{ 'general.sidebar.currency' | t }}</span>
+          <button class="t4s-drawer__close" data-drawer-close aria-label="{{ 'general.sidebar.close' | t }}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+        </div>
+        <div class="t4s-drawer__content">
+           <div class="t4s-drawer__main t4s-current-scrollbar">
+               <button type="button" data-flagst4="{{ sz }}" data-drawer-close data-currency-item class="t4s-currency-item {{ fl }} lazyloadt4s t4s-d-none" data-currency-temp></button>
+               {%- for code in supported_codes -%}
+                {%- assign array_money = code | split: '-' -%}
+                {%- assign data_currency = array_money | first | upcase | strip | remove: ' ' -%}
+                {%- assign name_money = array_money | last | strip -%}
+               <button type="button" data-flagst4="{{ sz }}" data-drawer-close data-currency-item class="t4s-currency-item {{ fl }} lazyloadt4s flagst4-{{ data_currency }}{% if data_currency == cart_iso_code %} is--selected{% endif %}" data-currency="{{ data_currency }}">{{ name_money }}</button>
+               {%- endfor -%}
+           </div>
+        </div>
+      </div>
+    </div>
+
+  {%- endunless -%}
+
+{%- endif -%}

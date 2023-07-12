@@ -1,0 +1,28 @@
+{%- if se_bks.size > 0 -%}
+<div class="page-head t4s-pr t4s-oh page_bg_img {{ se_stts.content_align }}">
+   <div class="t4s-container t4s-pr t4s-z-100">
+      {%- for block in se_bks -%}
+      	{%- assign bk_stts = block.settings -%}
+        {%- case block.type -%}
+            {%- when '1' -%}
+            {%- assign general_block = true -%}
+                <h1 data-lh="{{ bk_stts.text_lh_mb }}" data-lh-md="{{ bk_stts.text_lh }}" data-lh-lg="{{ bk_stts.text_lh }}" class="title-head t4s-bl-item t4s-animation-none t4s-text-bl t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }} t4s-uppercase-{{ bk_stts.font_uppercase }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }} t4s-br-mb-{{ bk_stts.remove_br_tag }} t4s-text-shadow-{{ bk_stts.text_shadow }}" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'custom_text', bk_stts: bk_stts, ani_delay: ani_delay -%}>{{ blog.title }}</h1>
+            {%- when '2' -%}
+                {% if block.settings.content == blank %}{% continue %}{% endif %}{%- assign general_block = true -%}<div data-lh="{{ bk_stts.text_lh_mb }}" data-lh-md="{{ bk_stts.text_lh }}" data-lh-lg="{{ bk_stts.text_lh }}" class="desc-head t4s-bl-item t4s-animation-none t4s-text-bl t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }} t4s-uppercase-{{ bk_stts.font_uppercase }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }} t4s-br-mb-{{ bk_stts.remove_br_tag }} t4s-text-shadow-{{ bk_stts.text_shadow }}" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'custom_text', bk_stts: bk_stts, ani_delay: ani_delay -%}>{{ block.settings.content }}</div>
+            {%- when '3' -%}
+           	<nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs" style="--brc-cl:{{ bk_stts.breadcrumb_color }};--brc_mgb:{{ bk_stts.brc_mgb }}px;">
+      				<ul class="breadcrumbs__list">
+      		           <li class="breadcrumbs__item">
+      			          	<a href="{{ routes.root_url }}" class="t4s-dib">{{ 'general.breadcrumb.home' | t }}</a> <svg class="t4s-icon-arrow" viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg> 
+      			        </li>
+      			        <li class="breadcrumbs__item">{{ blog.title }}</li>
+      			    </ul>
+      			</nav> 
+      		{%- endcase -%} 
+      {%- endfor -%}
+   </div>
+</div>
+{%- endif -%} 
+{%- if general_block -%}
+    {{ 'general-block.css' | asset_url | stylesheet_tag }}
+{%- endif -%}

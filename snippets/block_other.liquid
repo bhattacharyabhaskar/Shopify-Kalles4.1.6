@@ -1,0 +1,56 @@
+{%- liquid
+assign key = ''
+assign key_2 = ''
+assign key_3 = ''
+assign bk_stts = block.settings
+if bk_stts.use_auto_filter_tag
+  assign stt_key = bk_stts.key | default: 'nt_the4' | strip
+  assign key = stt_key | append: '_' | downcase
+  assign key_2 = stt_key | append: '-' | downcase
+  assign key_3 = stt_key | append: ' ' | downcase
+  assign group_tags = tags_dow_arr | where: key
+  assign group_tags_2 = tags_dow_arr | where: key_2
+  assign group_tags_3 = tags_dow_arr | where: key_3
+  assign tag_block_org = group_tags | concat: group_tags_2 | concat: group_tags_3 | uniq
+  assign tag_block = tag_block_org | join: ',' | replace: '  ', ' ' | split: ',' | uniq
+  assign current_tags = current_tags | join: ';;' | replace: '  ', ' ' | split: ';;' 
+else
+   assign tag_push = ''
+   assign tag_stt_arr = bk_stts.arra_enter | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq 
+   assign tag_stt_arr_dow = tag_stt_arr | join: ',' | downcase | split: ',' 
+   for tag in tag_stt_arr_dow
+      if tags_dow_arr contains tag
+        assign tag_push = tag_push | append: tag_stt_arr[forloop.index0] | append: ','
+      endif
+   endfor
+   assign tag_block = tag_push | split: ',' 
+endif -%}
+{%- capture icon_ck -%}
+>{% if bk_stts.style == 'checkbox' %}<div class="t4s-checkbox-wrapper t4s-pr t4s-oh"><svg focusable="false" viewBox="0 0 24 24" width="14" height="14" role="presentation"><path fill="currentColor" d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg></div>{% endif -%}
+{%- endcapture -%}
+
+{%- if tag_block.size > 0 -%}
+<div id="{{ block.id }}" class="t4s-col-item t4s-col-12 t4s-col-md-{{ col_class }} t4s-facet is--blockid{{ bk_stts.title | handle }}" {{ block.shopify_attributes }}>
+     <h5 class="t4s-facet-title">{{ bk_stts.title | escape }}</h5>
+     <div class="t4s-facet-content">
+        <ul class="t4s-filter__values is--style-{{ bk_stts.style }} t4s-current-scrollbar">
+         
+           {%- for tag in tag_block -%}
+
+                {%- liquid
+                  assign tag_dow = tag | downcase
+                  assign tag_key = tag | remove: key_3 | remove: key_2 | remove: key | strip -%}
+
+                {%- if  has_current_tag and current_tags contains tag_dow -%}
+                       <li class="is--selected">{{ tag_key | link_to_remove_tag: tag_dow | replace: 'title=', 'aria-label=' | replace_first: '>', icon_ck }}</li>
+                {%- else -%}
+                      <li{% unless tags_dow_arr2 contains tag_dow or has_current_tag == false %} class="is--disabled"{% endunless %}>{{ tag_key | link_to_add_tag: tag_dow | replace: 'title=', 'aria-label=' | replace_first: '>', icon_ck }}</li>
+                {%- endif -%}
+
+           {%- endfor -%}
+
+        </ul>
+     </div>
+<style>button.t4s-btn-filter {opacity: 1 !important; pointer-events: auto !important; }.t4s-toolbart-filter.t4s-toolbar-item{ display: block !important;}</style>
+</div>
+{%- endif -%}

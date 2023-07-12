@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="{{ 't4s-submenu.css' | asset_url }}" media="all">
+{%- assign llists = linklists[handle_menu].links -%} 
+{%- for link in llists -%}
+   {%- if link.links != blank -%}
+      <div class="t4s-menu-item has--children{% if link.active %} is--current{% endif %}">
+         <a href="{{ link.url }}"><span>{%- render 'title_menu2', title: link.title -%}</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" width="7" fill="currentColor"><path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"></path></svg></a>
+         <ul class="t4s-sub-menu t4s-sub-menu-2 pa op__0">
+         	{%- for child_link in link.links -%}
+            	{%- if child_link.links != blank -%}
+	               <li class="t4s-menu-item has--children{% if child_link.active %} is--current{% endif %}">
+	                  <a href="{{ child_link.url }}"><span>{%- render 'title_menu2',title:child_link.title -%}</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" width="7" fill="currentColor"><path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"></path></svg></a>
+	                  <ul class="t4s-sub-menu t4s-sub-menu-3 pa op__0">
+	                  	{%- for grandchild_link in child_link.links -%}
+	                        <li class="t4s-menu-item{% if menu.active %} is--current{% endif %}"><a href="{{ grandchild_link.url }}">{%- render 'title_menu2',title:grandchild_link.title -%}</a></li>
+	                     {%- endfor -%}
+	                  </ul>
+	               </li>
+               {%- else -%}
+                  <li class="t4s-menu-item{% if child_link.active %} is--current{% endif %}"><a href="{{ child_link.url }}">{%- render 'title_menu2',title:child_link.title -%}</a></li>
+               {%- endif -%}
+            {%- endfor -%}
+         </ul>
+      </div>
+   {%- else -%}
+      <div class="t4s-menu-item{% if link.active %} is--current{% endif %}"><a href="{{ link.url }}">{%- render 'title_menu2', title: link.title -%}</a></div>
+   {%- endif -%}
+{%- endfor -%}

@@ -1,0 +1,19 @@
+{%- liquid
+    assign pr_url = product.url
+    assign placeholder_img = settings.placeholder_img
+	assign image = product.featured_media | default: placeholder_img
+ -%}
+<div class="t4s-row t4s-space-item-inner t4s-widget__pr">
+	<div class="t4s-col-item t4s-col t4s-widget_img_pr">
+		{%- if image != blank -%}
+			<a class="t4s-d-block t4s-pr t4s-oh t4s_ratio t4s-bg-11" href="{{ pr_url }}" style="background: url({{ image | image_url: width: 1 }});{{ imgatt }}--aspect-ratioapt: {{ image.aspect_ratio | default: 1 }}">
+				<img class="lazyloadt4s" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+			</a>
+		{%- endif -%}
+	</div>
+	<div class="t4s-col-item t4s-col t4s-widget_if_pr">
+		<a href="{{ pr_url }}" class="t4s-d-block t4s-widget__pr-title">{{ product.title }}</a>
+		{%- render 'product-price',class_price: 't4s-widget__pr-price',product: product,price_varies_style:price_varies_style, type: 'card',isGrouped:false -%}
+	</div>
+</div>
+ 

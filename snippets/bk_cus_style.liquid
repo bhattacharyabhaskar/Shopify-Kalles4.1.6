@@ -1,0 +1,25 @@
+style="
+{%- case type -%}
+ {%- when 'custom_text' -%} 
+ --animation:{{ bk_stts.animation }} ;--delay-animation:{{ ani_delay }}s;--text-cl:{{ bk_stts.text_cl }};--text-fs:{{ bk_stts.text_fs }}px;--text-fw:{{ bk_stts.text_fw }};--text-lh:{{ bk_stts.text_lh }}px;--text-ls:{{ bk_stts.text_ls }}px;--text-mgb:{{ bk_stts.text_mgb }}px;--text-fs-mb:{{ bk_stts.text_fs_mb }}px;--text-lh-mb:{{ bk_stts.text_lh_mb }}px;--text-ls-mb:{{ bk_stts.text_ls_mb }}px;--text-mgb-mb:{{ bk_stts.text_mgb_mobile }}px;
+
+ {%- when 'space_html' -%}
+ --animation:{{ bk_stts.animation }} ;--delay-animation:{{ ani_delay }}s;--color:{{ bk_stts.color }};--width:{{ bk_stts.width }}px;--height:{{ bk_stts.height }}px;--mgb:{{ bk_stts.mgb }}px;--width-mb:{{ bk_stts.width_mb }}px;--height-mb:{{ bk_stts.height_mb }}px;--mgb-mb:{{ bk_stts.mgb_mb }}px;--width-tl:{{ bk_stts.width_tl }}px;--height-tl:{{ bk_stts.height_tl }}px;--mgb-tl:{{ bk_stts.mgb_tl }}px;
+ 
+{%- when 'html' -%}
+ --animation:{{ bk_stts.animation }} ;--delay-animation:{{ ani_delay }}s;
+
+ {%- when 'image' -%}
+--animation:{{ bk_stts.animation }} ;--delay-animation:{{ ani_delay }}s;--max-width: {{ bk_stts.image_child.width }}px;--width:{{ bk_stts.img_width }}px;--width-mb:{{ bk_stts.img_width_mb }}px;--mgb: {{ bk_stts.mgb }}px;--mgb-mb: {{ bk_stts.mgb_mb }}px;
+
+{%- when 'countdown' -%}
+--animation:{{ bk_stts.animation }} ;--delay-animation:{{ ani_delay }}s;--number-cl:{{ bk_stts.number_cl }};--text-cl:{{ bk_stts.text_cl }};--border-cl:{{ bk_stts.border_cl }};--bg-cl:{{ bk_stts.bg_cl }}; --bd-width:{{ bk_stts.bd_width }}px; --bdr:{{ bk_stts.box_bdr }}%;--mgb:{{ bk_stts.mgb }}px;--mgb-mb:{{ bk_stts.mgb_mb }}px;--space-item:{{ bk_stts.space_item }}px;--space-item-mb:{{ bk_stts.space_item_mb }}px;
+
+{%- when 'custom_button' -%}
+--animation:{{ bk_stts.animation }} ;--delay-animation:{{ ani_delay }}s;--button-icon-w:{{ bk_stts.button_icon_w }}px;--button-icon-w-mb:{{ bk_stts.button_icon_w_mb }}px;--pri-cl:{{ bk_stts.pri_cl }};--second-cl:{{ bk_stts.second_cl }};--pri-cl-hover:{{ bk_stts.pri_cl_hover }};--second-cl-hover:{{ bk_stts.second_cl_hover }};--button-fs:{{ bk_stts.fsbutton }}px;--button-fw:{{ bk_stts.fwbutton }}; --button-pd-lr:{{ bk_stts.button_pd_lr }}px;--button-bdr:{{ bk_stts.button_bdr }}px;--button-ls:{{ bk_stts.button_ls }}px;--button-mh:{{ bk_stts.button_mh }}px;--button-mgb:{{ bk_stts.button_mgb }}px;--button-mgb-mb:{{ bk_stts.button_mgb_mb }}px;--button-fs-mb:{{ bk_stts.fsbutton_mb }}px;--button-mh-mb:{{ bk_stts.button_mh_mb }}px;--button-pd-lr-mb:{{ bk_stts.button_pd_lr_mb }}px;--button-ls-mb:{{ bk_stts.button_ls_mb }}px;
+
+{%- when 'newsletter' -%}
+--animation:{{ bk_stts.animation }} ;--delay-animation:{{ ani_delay }}s;--input-cl: {{ bk_stts.input_cl }};--border-cl: {{ bk_stts.border_cl }};--btn-cl: {{ bk_stts.btn_cl }};--btn-bg-cl: {{ bk_stts.btn_bg_cl }};--btn-hover-cl: {{ bk_stts.btn_hover_cl }};--btn-hover-bg-cl: {{ bk_stts.btn_hover_bg_cl }}; --mgb: {{ bk_stts.mgb }}px;--mgb-mb: {{ bk_stts.mgb_mb }}px;--form-width:{{ bk_stts.form_width }}px;--form-width-mb:{{ bk_stts.form_width_mb }}px;
+
+{%- endcase -%}
+"

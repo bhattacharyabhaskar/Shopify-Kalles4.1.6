@@ -1,0 +1,62 @@
+{%- liquid
+  assign shop_name = shop.name
+  assign shop_name_escape = shop_name | escape
+  assign shop_domain = shop.domain
+  assign og_title = page_title | default: shop_name
+  assign og_url = canonical_url | default: request.origin
+  assign og_type = 'website'
+  assign og_description = page_description | default: shop.description | default: shop_name
+  assign page_image = page_image | default: settings.share_image | default: settings.logo
+  
+ if t_name == 'product'
+    assign og_type = 'product'
+  elsif t_name == 'article'
+    assign og_type = 'article'
+  elsif t_name == 'password'
+    assign og_url = request.origin
+  endif
+ -%}
+
+{%- case t_name -%}
+  {%- when 'index' -%}
+      {%- if settings.home_keywords != blank -%}<meta name="keywords" content="{{ settings.home_keywords }}"/>{%- else -%}<meta name="keywords" content="{{ shop_name_escape }}, {{ shop_domain }}"/>{%- endif -%}
+    {%- when 'product' -%}
+      <meta name="keywords" content="{{ product.title | escape }}, {{ shop_name_escape }}, {{ shop_domain }}"/>
+    {%- when 'collection' -%}
+      <meta name="keywords" content="{{ collection.title | escape }}, {{ shop_name_escape }}, {{ shop_domain }}"/>
+    {%- when 'blog' -%}
+      <meta name="keywords" content="{{ blog.title | escape }}, {{ shop_name_escape }}, {{ shop_domain }}"/>
+    {%- when 'article' -%}
+      <meta name="keywords" content="{{ article.title | escape }}, {{ blog.title | escape }}, {{ shop_name_escape }}, {{ shop_domain }}"/>
+    {%- when 'search' -%}{%- assign search_name = 'search ' | append:shop_name -%}
+      {%- if template == 'search.wish' %}{% assign og_title = 'wishlist_page.meta' | t %}{%- elsif template == 'search.compe' %}{% assign og_title = 'compare_page.meta' | t %}{%- endif -%}
+      <meta name="keywords" content="{{ title_term | default: search.terms | default: search_name| escape }}, {{ shop_name_escape }}, {{ shop_domain }}"/>  
+    {%- else -%}
+      <meta name="keywords" content="{{ page_title | escape }}, {{ shop_name_escape }}, {{ shop_domain }}"/>
+{%- endcase -%}
+<meta name="author" content="{{ settings.shop_author | default: 'The4' | escape }}">
+
+<meta property="og:site_name" content="{{ shop_name_escape }}">
+<meta property="og:url" content="{{ og_url }}">
+<meta property="og:title" content="{{ og_title | escape }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:description" content="{{ og_description | escape }}">
+
+{%- if page_image -%}
+  <meta property="og:image" content="http:{{ page_image | image_url }}">
+  <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
+  <meta property="og:image:width" content="{{ page_image.width }}">
+  <meta property="og:image:height" content="{{ page_image.height }}">
+{%- endif -%}
+
+{%- if t_name == 'product' -%}
+  <meta property="og:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency | strip_html }}">
+  <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+{%- endif -%}
+
+{%- if settings.social_twitter_link != blank -%}
+  <meta name="twitter:site" content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}">
+{%- endif -%}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ og_title | escape }}">
+<meta name="twitter:description" content="{{ og_description | escape }}">

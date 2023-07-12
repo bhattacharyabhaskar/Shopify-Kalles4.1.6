@@ -1,0 +1,148 @@
+{%- liquid
+  assign assign bk_stts = block.settings  
+  assign layout_des = bk_stts.layout_des
+
+
+  assign show_img = settings.show_img
+  assign isGrowaveWishlist = false
+  if settings.wishlist_mode == "3" and shop.customer_accounts_enabled
+    assign isGrowaveWishlist = true
+  endif
+  assign enable_pr_size = settings.enable_pr_size
+  assign pr_size_pos = settings.pr_size_pos
+  assign show_size_type = settings.show_size_type
+  assign size_ck = settings.size_ck | append: ',size,sizes,Größe' 
+  assign get_size = size_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+  assign enable_pr_color = settings.enable_pr_color
+  assign show_cl_type = settings.show_color_type
+  assign color_ck = settings.color_ck | append: ',color,colors,couleur,colour'
+  assign get_color = color_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+  assign price_varies_style = settings.price_varies_style
+  
+  assign use_countdown = bk_stts.use_cdt
+  
+  assign use_pagination = bk_stts.use_pagination
+  assign sett_equal = bk_stts.use_eq_height
+  assign show_vendor = bk_stts.show_vendor
+  assign enable_rating = settings.enable_rating
+  assign app_review = settings.app_review
+  assign inc_pr = bk_stts.pr_des
+  assign limit = bk_stts.limit
+  assign product_des = bk_stts.product_des
+  if bk_stts.btn_owl == "outline"
+    assign arrow_icon = 1
+  else
+    assign arrow_icon = 2
+  endif
+
+   assign image_ratio = bk_stts.image_ratio
+  if image_ratio == "ratioadapt"
+    assign imgatt = ''
+   else 
+    assign imgatt = 'data-'
+  endif
+
+  assign txt_cd = 'products.grid_items.offer_end_in' | t 
+  assign txt_cd = 'products.grid_items.offer_end_in' | t
+  assign isLoadmore = false
+  if layout_des != "3"
+    if use_pagination == "load-more"
+      assign isLoadmore = true
+      assign typeAjax = 'LmDefault'
+    else
+      assign typeAjax = 'AjaxDefault'
+    endif
+  else
+     if use_pagination == "load-more"
+      assign isLoadmore = true
+      assign typeAjax = 'LmIsotope'
+    else
+      assign typeAjax = 'AjaxIsotope'
+    endif
+  endif
+  
+  
+  assign enable_bar_lm = bk_stts.enable_bar_lm 
+  assign results_count = collection.products_count 
+ -%}
+
+{%- if ck_q == false -%}[t4splitlz]{%- endif -%}
+{%- paginate collection.products by limit -%}
+<div data-not-main data-ntajax-options='{"id":"{{ sid }}","type":"{{ typeAjax }}","isProduct":true,"view":""}' class="tabs-content-wrap">
+ {%- if layout_des == "1" -%} 
+  {{ 'button-style.css' | asset_url | stylesheet_tag }}
+  <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+  <div data-collection-url="{{ collection.url }}" data-contentlm-replace class="t4s_box_pr_grid t4s-products t4s-text-{{ bk_stts.content_align }} t4s_{{ image_ratio }}  t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} t4s-row t4s-justify-content-center t4s-row-cols-lg-{{ bk_stts.col_dk }} t4s-row-cols-md-{{ bk_stts.col_tb }} t4s-row-cols-{{ bk_stts.col_mb }} t4s-gx-md-{{ bk_stts.space_h_item }} t4s-gy-md-{{ bk_stts.space_v_item }} t4s-gx-{{ bk_stts.space_h_item_mb }} t4s-gy-{{ bk_stts.space_v_item_mb }}">
+ {%- elsif layout_des == "2" -%} 
+  <div data-collection-url="{{ collection.url }}" data-t4s-resizeobserver class="t4s-flicky-slider t4s_box_pr_slider t4s-products t4s-text-{{ bk_stts.content_align }} t4s_{{ image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} {% if bk_stts.nav_btn %}  t4s-slider-btn-style-{{ bk_stts.btn_owl }} t4s-slider-btn-{{ bk_stts.btn_shape }} t4s-slider-btn-{{ bk_stts.btn_size }} t4s-slider-btn-cl-{{ bk_stts.btn_cl }} t4s-slider-btn-vi-{{ bk_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ bk_stts.btn_hidden_mobile }} {% endif %} {% if bk_stts.nav_dot %}   t4s-dots-style-{{ bk_stts.dot_owl }} t4s-dots-cl-{{ bk_stts.dots_cl }} t4s-dots-round-{{ bk_stts.dots_round }} t4s-dots-hidden-mobile-{{ bk_stts.dots_hidden_mobile }} {% endif %}  t4s-row t4s-row-cols-lg-{{ bk_stts.col_dk }} t4s-row-cols-md-{{ bk_stts.col_tb }} t4s-row-cols-{{ bk_stts.col_mb }} t4s-gx-md-{{ bk_stts.space_h_item }} t4s-gy-md-{{ bk_stts.space_v_item }} t4s-gx-{{ bk_stts.space_h_item_mb }} t4s-gy-{{ bk_stts.space_v_item_mb }}  flickityt4s" data-flickityt4s-js='{"setPrevNextButtons":true,"arrowIcon":"{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{ bk_stts.loop }},"prevNextButtons": {{ bk_stts.nav_btn }},"percentPosition": 1,"pageDots": {{ bk_stts.nav_dot }}, "autoPlay" : {{ bk_stts.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ bk_stts.au_hover }} }' style="--space-dots: {{ bk_stts.dots_space }}px;--flickity-btn-pos: {{ bk_stts.space_h_item }}px;--flickity-btn-pos-mb: {{ bk_stts.space_h_item_mb }}px;">
+ {%- else -%} 
+  {{ 'button-style.css' | asset_url | stylesheet_tag }}
+  <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+  <div data-collection-url="{{ collection.url }}" data-t4s-resizeobserver data-contentlm-replace class="isotopet4s t4s_box_pr_masonry t4s-text-{{ bk_stts.content_align }} t4s_{{ image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} t4s-row t4s-row-cols-lg-{{ bk_stts.col_dk }} t4s-row-cols-md-{{ bk_stts.col_tb }} t4s-row-cols-{{ bk_stts.col_mb }} t4s-gx-md-{{ bk_stts.space_h_item }} t4s-gy-md-{{ bk_stts.space_v_item }} t4s-gx-{{ bk_stts.space_h_item_mb }} t4s-gy-{{ bk_stts.space_v_item_mb }}" data-isotopet4s-js='{ "itemSelector": ".t4s-product", "layoutMode": "masonry" }'>
+ {%- endif -%}  
+  {%- if collection != blank -%}
+    {%- liquid 
+    case product_des
+      when '1'
+        render 'product-grid-item1' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false
+      when '2'
+        render 'product-grid-item2' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false
+      when '3'
+        render 'product-grid-item3' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false
+      when '4'
+        render 'product-grid-item4' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false
+      when '5'
+        render 'product-grid-item5' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false
+      when '6'
+        render 'product-grid-item6' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false
+      when '7'
+        render 'product-grid-item7' for collection.products as product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false
+    endcase -%}
+  {%- else -%}
+    {%- for i in (1..8) -%}
+      <div class="t4s-col-item t4s-product t4s-pr-grid t4s-pr-style{{ product_des }} t4s-pr-item t4s-pr-des-{{ product_des }}">
+        <div class="t4s-product-wrapper" data-cacl-slide >
+          <div class="t4s-product-inner">
+            <a class="t4s-d-block" data-cacl-slide href="/admin/products">{%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%} 
+            {{ 'product-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg' }}</a>
+          </div>
+          <div class="t4s-product-info">
+            <div class="t4s-product-info__inner">
+              <h3 class="t4s-product-title"><a href="/admin/products">{{ 'onboarding.product_title' | t }}</a></h3>
+              <span class="t4s-product-price"><del>$59.00</del><ins>$39.00</ins></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  {%- endif -%} 
+</div>
+  {%- if paginate.pages > 1 -%}
+    <div class="t4s-prs-footer t4s-has-btn-{{ use_pagination }} {{ bk_stts.btn_pos }}">
+      {%- if isLoadmore -%} 
+          {%- if paginate.next.is_link -%}
+            <div data-wrap-lm class="t4s-pagination-wrapper t4s-w-100">
+             {%- if enable_bar_lm -%}
+             <div data-wrap-lm-bar class="t4s-lm-bar t4s-btn-color-{{ se_stts.btns_cl }}">
+               {%- assign current_pr_size = collection.products.size | plus: paginate.current_offset -%}
+                <span class="t4s-lm-bar--txt">{{ 'collections.pagination.bar_with_count_html' | t: current_count: current_pr_size, total_count: results_count }}</span>
+                <div class="t4s-lm-bar--progress t4s-pr t4s-oh"><span class="t4s-lm-bar--current t4s-pa t4s-l-0 t4s-r-0 t4s-t-0 t4s-b-0" style="width: {{ current_pr_size | times: 100.0 | divided_by: results_count }}%"></span></div>
+             </div>
+             {%- endif -%}
+              <a  data-load-more {% if use_pagination == 'infinite' %} data-load-onscroll {% endif %} data-href="{{ paginate.next.url }}" href="{{ collection.url }}" class="t4s-pr t4s-loadmore-btn t4s-btn t4s-btn-base t4s-btn-style-{{ bk_stts.button_style }} t4s-btn-size-{{ bk_stts.btns_size }} t4s-btn-icon-{{ bk_stts.btn_icon }} t4s-btn-color-{{ bk_stts.btns_cl }} {% if bk_stts.button_style == 'default' or bk_stts.button_style == 'outline' %}t4s-btn-effect-{{ bk_stts.button_effect }}{% endif %}"><span>{{ 'collections.pagination.load_more' | t }}</span> 
+                {% if bk_stts.btn_icon %}
+                  <svg class="t4s-btn-icon" viewBox="0 0 32 32"><path d="M 15 4 L 15 24.0625 L 8.21875 17.28125 L 6.78125 18.71875 L 15.28125 27.21875 L 16 27.90625 L 16.71875 27.21875 L 25.21875 18.71875 L 23.78125 17.28125 L 17 24.0625 L 17 4 Z"/></svg>
+                {% endif %}
+                <svg class="t4s-loadmore-icon" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><g transform="translate(25 50)"><circle cx="0" cy="0" r="7" fill="#545a6a" transform="scale(0.267844 0.267844)"><animateTransform attributeName="transform" type="scale" begin="-0.3333333333333333s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform></circle></g><g transform="translate(50 50)"><circle cx="0" cy="0" r="7" fill="#d4d4db" transform="scale(0.00000184774 0.00000184774)"><animateTransform attributeName="transform" type="scale" begin="-0.16666666666666666s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform></circle></g><g transform="translate(75 50)"><circle cx="0" cy="0" r="7" fill="#545a6a" transform="scale(0.269893 0.269893)"><animateTransform attributeName="transform" type="scale" begin="0s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform></circle></g></svg></a>
+            </div>
+          {%- endif -%}
+      {%- else -%}
+        <a class="t4s-btn t4s-btn-base t4s-viewall-btn t4s-btn-style-{{ bk_stts.button_style }} t4s-btn-size-{{ bk_stts.btns_size }} t4s-btn-color-{{ bk_stts.btns_cl }} {% if bk_stts.button_style == 'default' or bk_stts.button_style == 'outline' %}t4s-btn-effect-{{ bk_stts.button_effect }}{% endif %}" href="{{ collection.url }}">{{ 'collections.pagination.view_all' | t }}{%- if bk_stts.btn_icon -%} <svg class="t4s-btn-icon" viewBox="0 0 14 10"><use xlink:href="#t4s-icon-btn"></use></svg>{%- endif -%}</a>
+       {%- endif -%} 
+    </div>
+  {%- endif -%} 
+</div>
+{%- endpaginate -%}
+{%- if ck_q == false -%}[t4splitlz]{%- endif -%}

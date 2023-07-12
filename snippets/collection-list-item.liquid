@@ -1,0 +1,64 @@
+{%- liquid
+  assign image_fix = image_nt | image_tag 
+  assign se_stts = section.settings
+  assign collection_des = se_stts.cat_design
+  assign b_effect = se_stts.b_effect
+  assign img_effect = se_stts.img_effect
+  assign title_cl_pri       = se_stts.title_cl | color_extract: 'lightness'
+  assign title_cl_hover_pri       = se_stts.title_cl_hover | color_extract: 'lightness'
+  assign subtitle_cl_pri       = se_stts.subtitle_cl | color_extract: 'lightness'
+  assign count_cl_pri       = se_stts.count_cl | color_extract: 'lightness'
+  assign title = bk_stts.collection_title | default: collection.title
+  if title_cl_pri < 85  
+    assign title_cl_sec = "#fff"
+  else 
+    assign title_cl_sec = "#222"
+  endif
+  if title_cl_hover_pri < 85  
+    assign title_cl_hover_sec = "#fff"
+  else 
+    assign title_cl_hover_sec = "#222"
+  endif
+  if subtitle_cl_pri < 85 
+    assign subtitle_cl_sec = "#fff"
+  else 
+    assign subtitle_cl_sec = "#222"
+  endif
+  if count_cl_pri < 85 
+    assign count_cl_sec = "#fff"
+  else 
+    assign count_cl_sec = "#222" 
+  endif
+ -%} 
+<div class="cat_grid_item t4s-collection-item t4s-cat-content t4s-col-item t4s-coll-style-{{ collection_des }} t4s-eff t4s-eff-{{ b_effect }} t4s-eff-img-{{ img_effect }} t4s-text-center t4s-pr t4s-oh" style="--title-cl-pri: {{ se_stts.title_cl }};--title-cl-pri-hover: {{ se_stts.title_cl_hover }};--title-cl-second: {{ title_cl_sec }};--title-cl-second-hover: {{ title_cl_hover_sec }};--subtitle-cl: {{ se_stts.subtitle_cl }};--subtitle-cl2: {{ subtitle_cl_sec }};--count-cl-pri: {{ se_stts.count_cl }};--count-cl-second: {{ count_cl_sec }};--border-cl: {{ se_stts.border_cl }};--item-rd: {{ se_stts.item_rd }}%;--item-pd: {{ se_stts.item_pd }}px;--space-bottom: {{ se_stts.space_bottom }}px;--space-bottom-mb: {{ se_stts.space_bottom_mb }}px;">
+  <div class="t4s-pr t4s-oh t4s-cat-content">
+      <div class="cat_grid_item__content t4s-pr t4s-oh t4s-coll-img">
+        {% if collection_des == "11" %}
+          <span class="t4s-count">{{ collection.all_products_count | default: 0 }}</span> 
+        {% endif %}
+        <a class="t4s_cat_item_link t4s-img-wrap t4s-d-block" href="{{ collection.url }}">
+            {%- if image != blank -%}
+            <div class="t4s_ratio" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1.2 }}" >
+              <img {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image.presentation.focal_point }}"{% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                  <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span>
+                </div>  
+            {%- else -%}
+              <div class="cat_grid_item__overlay nt_bg_lz bglz"></div>
+              {%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+              {{ 'collection-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}  
+            {%- endif -%} 
+        </a> 
+      </div>
+      {%- if title != blank -%}
+      <div class="t4s-cate-wrapper">
+          <a class="t4s-cat-title" href="{{ collection.url }}">{{ title }}{% if collection_des == "12" %} <span class="t4s-count">{{ collection.all_products_count | default: 0 }}</span> {% endif %}</a> 
+          {%- if subtitle != blank -%}
+          <a class="t4s-cat-subtitle" href="{{ collection.url }}">
+            <span class="t4s-count">{{ collection.all_products_count | default: 0 }} </span> <span class="t4s-text"> {{ subtitle }}</span>
+          </a>
+         {%- endif -%}
+        <div class="t4s-cat-subtitle"><span class="t4s-count">{{ collection.all_products_count | default: 0 }} </span> <span class="t4s-text"> {{ pr_txt }}</span></div>  
+      </div>
+      {%- endif -%}
+  </div>
+</div>

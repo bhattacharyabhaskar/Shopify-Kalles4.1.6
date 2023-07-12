@@ -1,0 +1,65 @@
+{%- liquid
+  assign se_bks = section.blocks
+  assign page_type = request.page_type 
+  assign results_count = search.results_count 
+  assign only_search_prs = settings.only_search_prs
+   
+   assign search_terms = search.terms
+   if search_terms contains 'product_type: '
+     assign arr_terms = search_terms | remove: 'product_type: ' | replace_first: ' AND',' AND ' | replace_first: '  ', ' ' | split: ' AND '
+     assign product_type = arr_terms[0] | strip
+     assign search_terms = arr_terms[1] | strip
+     if search_terms == blank
+   	   assign search_terms = product_type
+     endif
+   endif
+ -%}
+
+{%- if se_bks.size > 0 -%}
+<div class="page-head t4s-pr t4s-oh page_bg_img {{ se_stts.content_align }}"> 
+   <div class="t4s-container t4s-pr t4s-z-100"> 
+      {%- for block in se_bks -%} 
+      {%- assign bk_stts = block.settings -%}
+      	{%- capture heading_content -%}
+          {% if block.settings.heading == blank %} 
+            {% if template == 'search.wishlist' %}
+               {{ 'wishlist_page.title' | t }}
+            {% elsif template == 'search.compare' %}
+               {{ 'compare_page.title' | t }}
+            {% else %}
+              {% if search_terms == blank and search.performed == false -%}
+                  {{ 'search.general.title' | t }}
+              {% elsif only_search_prs or product_type != '*' and product_type != blank %}
+                {{ 'search.results_with_count_and_term' | t: terms: search_terms, count: results_count }}
+              {% elsif search.performed %}
+                {{ 'search.results_with_term' | t: terms: search_terms, count: results_count }} 
+              {% endif %}
+            {%- endif -%}
+          {% else %} 
+            {{ block.settings.heading }}
+          {% endif %}
+  		  {%- endcapture -%}
+        {%- case block.type -%}
+            {%- when '1' -%}
+            {%- assign general_block = true -%}
+            <h1 data-lh="{{ bk_stts.text_lh_mb }}" data-lh-md="{{ bk_stts.text_lh }}" data-lh-lg="{{ bk_stts.text_lh }}" class="title-head t4s-bl-item t4s-animation-none t4s-text-bl t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }} t4s-uppercase-{{ bk_stts.font_uppercase }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }} t4s-br-mb-{{ bk_stts.remove_br_tag }} t4s-text-shadow-{{ bk_stts.text_shadow }}" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'custom_text', bk_stts: bk_stts, ani_delay: ani_delay -%}>{{ heading_content }} </h1> 
+            {%- when '2' -%}
+            {% if block.settings.content == blank %}{% continue %}{% endif %}{%- assign general_block = true -%}<div data-lh="{{ bk_stts.text_lh_mb }}" data-lh-md="{{ bk_stts.text_lh }}" data-lh-lg="{{ bk_stts.text_lh }}" class="desc-head t4s-bl-item t4s-animation-none t4s-text-bl t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }} t4s-uppercase-{{ bk_stts.font_uppercase }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }} t4s-br-mb-{{ bk_stts.remove_br_tag }} t4s-text-shadow-{{ bk_stts.text_shadow }}" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'custom_text', bk_stts: bk_stts, ani_delay: ani_delay -%}>{{ block.settings.content }}</div> 
+            {%- when '3' -%}
+           	<nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs" style="--brc-cl:{{ bk_stts.breadcrumb_color }};--brc_mgb:{{ bk_stts.brc_mgb }}px;">
+    				    <ul class="breadcrumbs__list">
+    		           <li class="breadcrumbs__item">
+    			          	<a href="{{ routes.root_url }}" class="t4s-dib">{{ 'general.breadcrumb.home' | t }}</a>  <svg class="t4s-icon-arrow" viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg>
+    			        </li>
+    			        <li class="breadcrumbs__item">{%- if template == 'search.wishlist' -%} {{ 'wishlist_page.title' | t }} {%- elsif template == 'search.compare' -%} {{ 'compare_page.title' | t }} {%- else -%} {{ 'search.general.title' | t }} {%- endif -%}
+                </li> 
+    			    </ul>
+    			</nav> 
+    		{%- endcase -%} 
+      {%- endfor -%}
+   </div>
+</div>
+{%- endif -%} 
+{%- if general_block -%}
+    {{ 'general-block.css' | asset_url | stylesheet_tag }}
+{%- endif -%}

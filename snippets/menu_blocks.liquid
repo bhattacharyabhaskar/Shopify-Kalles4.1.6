@@ -1,0 +1,59 @@
+{%- comment -%}
+menu_blocks
+menu_splits
+bk_stts.lazy_mn and admin_sp == false
+{%- endcomment -%}
+
+{%- liquid
+  assign root_url = routes.root_url
+  assign showArrow = se_stts.arrow
+  assign request_path = request.path -%}
+
+<nav class="t4s-navigation t4s-text-{{ se_stts.align }} t4s-nav__{{ se_stts.hover }} t4s-nav-arrow__{{ se_stts.arrow }}"><ul data-menu-nav id="t4s-nav-ul" class="t4s-nav__ul t4s-d-inline-flex t4s-flex-wrap t4s-align-items-center">
+{%- for block in se_blocks -%}
+   {%- liquid 
+      assign bk_stts = block.settings
+      assign blockID = block.id
+      assign bk_link = bk_stts.url
+      assign bk_link_split = bk_link | split: '?' | first
+      if request_path == bk_link_split and bk_link != blank
+      	assign class_active = 'is--nav__active'
+      else
+      	assign class_active = ''
+      endif
+      if bk_link == '/' or bk_link == blank
+         assign bk_link = root_url
+      endif -%}
+
+   {%- case block.type -%}
+		{%- when 'mega' -%}
+	      <li id="item_{{ blockID }}" data-placement="{{ bk_stts.pos_sub | default: placement }}" class="t4s-type__{{ block.type }} menu-width__{{ bk_stts.wid }} t4s-menu-item has--children menu-has__offsets {{ class_active }}" {{ block.shopify_attributes }}>
+	         <a class="t4s-lh-1 t4s-d-flex t4s-align-items-center t4s-pr" href="{{ bk_link }}" target="{{ bk_stts.open_link }}"{% if bk_stts.cus_cl %} style="color:{{ bk_stts.cl }}"{% endif %}>{%- render 'title_menu', bk_stts: bk_stts, showArrow: showArrow -%}</a>
+	         <div id="content_{{ blockID }}" class="t4s-sub-menu t4s-pa t4s-op-0 t4s-pe-none t4s-current-scrollbar">
+	         	<div class="t4s-container"{% if bk_stts.wid != 'full nav_t4cnt' %} style="width:{{ bk_stts.cus_wid }}px"{% endif %}>
+	             <div class="t4s-row t4s-gx-{{ bk_stts.r_s_h_item }} t4s-gy-{{ bk_stts.r_s_v_item }} t4s-lazy_menu{% if bk_stts.enable_packery %} isotopet4s isotopet4s-later{% endif %}" data-id="{{ bk_stts.id }}" data-isotopet4s-js='{ "itemSelector": ".t4s-sub-column-item", "layoutMode": "packery","gutter": 0 }'><div class="t4s-loading--bg"></div></div>
+	          </div>
+	         </div>
+	      </li>
+
+		{%- when 'drop' -%}
+	      <li id="item_{{ blockID }}" data-placement="{{ bk_stts.pos_sub | default: placement }}" class="t4s-type__{{ block.type }} t4s-menu-item has--children menu-has__offsets menu-pos__{{ bk_stts.pos }} {{ class_active }}" {{ block.shopify_attributes }}>
+	         <a class="t4s-lh-1 t4s-d-flex t4s-align-items-center t4s-pr" href="{{ bk_link }}" target="{{ bk_stts.open_link }}"{% if bk_stts.cus_cl %} style="color:{{ bk_stts.cl }}"{% endif %}>{%- render 'title_menu', bk_stts: bk_stts, showArrow: showArrow -%}</a>
+	         {%- if linklists[bk_stts.menu].links.size > 0 -%}
+	         <div id="content_{{ blockID }}" class="t4s-sub-menu t4s-pa t4s-op-0 t4s-pe-none">
+	            {%- if admin_sp == false -%}
+	               <div class="t4s-lazy_menu" data-handle="{{ bk_stts.menu }}"><div class="t4s-loading--bg"></div></div>
+	            {%- else -%}
+	               <div class="t4s-lazy_menu">{%- render 'menu_dropdown', handle_menu: bk_stts.menu -%}</div>
+	            {%- endif -%}
+	         </div>
+	        {%- endif -%}
+	      </li>
+
+		{%- else -%}
+		  <li id="item_{{ blockID }}" class="t4s-type__simple t4s-menu-item {{ class_active }}" {{ block.shopify_attributes }}><a class="t4s-lh-1 t4s-d-flex t4s-align-items-center t4s-pr" href="{{ bk_link }} " target="{{ bk_stts.open_link }}"{% if bk_stts.cus_cl %} style="color:{{ bk_stts.cl }}"{% endif %}>{%- render 'title_menu', bk_stts: bk_stts, showArrow: false -%}</a></li>
+
+	{%- endcase -%}
+
+{%- endfor -%}
+</ul></nav>

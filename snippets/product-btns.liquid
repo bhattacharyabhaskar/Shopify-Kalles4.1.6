@@ -1,0 +1,35 @@
+{%- liquid
+assign isShowBtns     = false
+assign images_alt     = product.images | map: 'alt'
+assign first_3d_model = product.media | where: "media_type", "model" | first -%}
+
+{%- capture html_btns -%}
+  <div data-t4s-group-btns="{{ section.id }}" class="t4s-pr-group-btns t4s-pa t4s-op-0">
+
+
+     {%- if first_3d_model %}{% assign isShowBtns = true -%}
+      <button type="button" class="t4s-pr__view-in-space t4s-d-inline-flex" aria-label="{{ 'products.product_single.view_in_space_label' | t }}" class="t4s-pr__view-in-space"
+        data-shopify-xr data-shopify-model3d-id="{{ first_3d_model.id }}" data-shopify-title="{{ product.title | escape }}" data-shopify-xr-hidden>
+        <span class="t4s-pr__icon-btn"><svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 18 21"  width="14"><path d="M7.67998 20.629L1.28002 16.723C0.886205 16.4784 0.561675 16.1368 0.337572 15.731C0.113468 15.3251 -0.00274623 14.8686 -1.39464e-05 14.405V6.59497C-0.00238367 6.13167 0.113819 5.6755 0.33751 5.26978C0.561202 4.86405 0.884959 4.52227 1.278 4.27698L7.67796 0.377014C8.07524 0.131403 8.53292 0.000877102 8.99999 9.73346e-08C9.46678 -0.000129605 9.92446 0.129369 10.322 0.374024V0.374024L16.722 4.27399C17.1163 4.51985 17.4409 4.86287 17.6647 5.27014C17.8885 5.67742 18.0039 6.13529 18 6.59998V14.409C18.0026 14.8725 17.8864 15.3289 17.6625 15.7347C17.4386 16.1405 17.1145 16.4821 16.721 16.727L10.321 20.633C9.92264 20.8742 9.46565 21.0012 8.99999 21C8.53428 20.9998 8.07761 20.8714 7.67998 20.629V20.629ZM8.72398 2.078L2.32396 5.97803C2.22303 6.04453 2.14066 6.13551 2.08452 6.24255C2.02838 6.34959 2.00031 6.46919 2.00298 6.59003V14.4C2.00026 14.5205 2.02818 14.6396 2.08415 14.7463C2.14013 14.853 2.22233 14.9438 2.32298 15.01L7.99999 18.48V10.919C8.00113 10.5997 8.08851 10.2867 8.25292 10.0129C8.41732 9.73922 8.65267 9.51501 8.93401 9.36401L15.446 5.841L9.28001 2.08002C9.19614 2.02738 9.09901 1.99962 8.99999 2C8.90251 1.99972 8.8069 2.02674 8.72398 2.078V2.078Z"></path></svg></span>
+        <span class='t4s-pr__text-btn product-single__view-in-space-text'>{{ 'products.product_single.view_in_space' | t }}</span>
+      </button>
+     {%- endif -%}  
+
+     {%- if images_alt contains 'break--360' and false %}{% assign isShowBtns = true -%}
+         <button type="button" class="t4s-pr__360-btn t4s-d-inline-flex" data-id="#pr_360{{ section.id }}" class="t4s-op-0">
+            <span class="t4s-pr__icon-btn"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 640 512" width="14"><path d="M496 64c-44.12 0-79.1 35.89-79.1 80v224c0 44.11 35.88 80 79.1 80s79.1-35.89 79.1-80v-224C576 99.89 540.1 64 496 64zM544 368c0 26.47-21.53 48-47.1 48c-26.47 0-47.1-21.53-47.1-48v-224c0-26.47 21.53-48 47.1-48c26.47 0 47.1 21.53 47.1 48V368zM304 192C285.9 192 269.4 198.3 256 208.4V204.6c0-46.78 29.53-89.05 73.44-105.2l12.06-4.422c8.312-3.031 12.56-12.22 9.531-20.52c-3.031-8.312-12.31-12.56-20.53-9.516L318.4 69.41C261.9 90.11 224 144.4 224 204.6L224 368c0 44.11 35.88 80 79.1 80s79.1-35.89 79.1-80l.0001-96C384 227.9 348.1 192 304 192zM352 368c0 26.47-21.53 48-47.1 48c-26.47 0-47.1-21.53-47.1-48v-96c0-26.47 21.53-48 47.1-48c26.47 0 48 21.53 48 48V368zM608 0c-17.67 0-31.1 14.33-31.1 32c0 17.67 14.33 32 31.1 32C625.7 64 640 49.67 640 32C640 14.33 625.7 0 608 0zM81.44 208l95.03-117.1C180.3 85.23 181.1 78.66 178.4 73.09C175.8 67.53 170.2 64 164 64H16C7.161 64 .0047 71.16 .0047 80S7.161 96 16 96h114.6L35.54 213.1c-3.844 4.797-4.625 11.38-1.969 16.94S41.85 240 48 240h32.72c43.72 0 79.28 35.56 79.28 79.28v17.44C160 380.4 124.4 416 80.72 416c-21.53 0-41.47-10.64-50.81-27.11c-4.375-7.703-14.16-10.38-21.81-6.016c-7.687 4.375-10.37 14.14-5.1 21.83C17.25 431.4 47.38 448 80.72 448c61.37 0 111.3-49.92 111.3-111.3V319.3C192 258.2 142.5 208.4 81.44 208z"/></span>
+            <span class="t4s-pr__text-btn">{{ 'products.product_single.view_360' | t }}</span>
+         </button>
+     {%- endif -%}
+
+     {%- if se_stts.enable_zoom_icon and product.images.size > 0 %}{% assign isShowBtns = true -%}
+         <button type="button" class="t4s-pr__pswp-btn t4s-d-inline-flex" data-pswp-btn-triger data-pr-trigger-pswp>
+            <span class="t4s-pr__icon-btn"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 448 512" width="14"><path d="M416 176V86.63L246.6 256L416 425.4V336c0-8.844 7.156-16 16-16s16 7.156 16 16v128c0 8.844-7.156 16-16 16h-128c-8.844 0-16-7.156-16-16s7.156-16 16-16h89.38L224 278.6L54.63 448H144C152.8 448 160 455.2 160 464S152.8 480 144 480h-128C7.156 480 0 472.8 0 464v-128C0 327.2 7.156 320 16 320S32 327.2 32 336v89.38L201.4 256L32 86.63V176C32 184.8 24.84 192 16 192S0 184.8 0 176v-128C0 39.16 7.156 32 16 32h128C152.8 32 160 39.16 160 48S152.8 64 144 64H54.63L224 233.4L393.4 64H304C295.2 64 288 56.84 288 48S295.2 32 304 32h128C440.8 32 448 39.16 448 48v128C448 184.8 440.8 192 432 192S416 184.8 416 176z"/></svg></span>
+            <span class="t4s-pr__text-btn">{{ 'products.product_single.click_zoom' | t }}</span>
+         </button>
+     {%- endif -%}
+
+  </div>
+{%- endcapture -%}
+
+{%- if isShowBtns %}{{ html_btns }}{% endif -%}

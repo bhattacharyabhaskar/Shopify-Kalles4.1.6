@@ -1,0 +1,38 @@
+{%- comment -%}
+{%- render 'product-atc', pr_available:product.available, pr_url:pr_url, isDefault:isDefault, isPreoder:isPreoder,
+      isExternal:isExternal, external_title:external_title, external_link:external_link, isGrouped:isGrouped, current_variant:current_variant, cus_qty: cus_qty -%}
+{%- endcomment -%}
+
+{%- if isExternal -%}
+   <a href="{{ external_link }}" class="t4s-pr-item-btn t4s-pr-addtocart" rel="nofollow" target="_blank"><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-external"></use></svg></span><span class="t4s-text-pr">{{ external_title }}</span></a>
+
+{%- elsif pr_available == false -%}
+   <a href="{{ pr_url }}" class="t4s-pr-item-btn t4s-pr-addtocart" rel="nofollow"><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-link"></use></svg></span><span class="t4s-text-pr">{{ 'products.product_card.read_more' | t }}</span></a>
+
+{%- elsif isGrouped -%}
+   <a href="{{ pr_url }}" class="t4s-pr-item-btn t4s-pr-addtocart" rel="nofollow"><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-atc"></use></svg></span><span class="t4s-text-pr">{{ 'products.product_card.view' | t }}</span></a>
+
+{%- elsif isDefault -%}
+   {%- capture capture_btn_atc -%}
+     <a href="{{ pr_url }}"class="t4s-pr-item-btn t4s-pr-addtocart" data-variant-id="{{ current_variant.id }}" data-action-atc rel="nofollow"><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-atc"></use></svg></span><span class="t4s-text-pr">{% if isPreoder %}{{ 'products.product.pre_order' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}</span></a>
+   {%- endcapture -%}
+   
+   {%- if settings.show_qty -%}
+      <div class="t4s-product-atc-qty"><div data-quantity-wrapper class="t4s-quantity-wrapper t4s-quantity-pr-item"> 
+           <button data-quantity-selector data-decrease-qty type="button" class="t4s-quantity-selector is--minus"><svg focusable="false" class="icon icon--minus" viewBox="0 0 10 2" role="presentation"><path d="M10 0v2H0V0z" fill="currentColor"></path></svg></button>
+           <input data-quantity-value type="number" class="t4s-quantity-input" step="1" min="{{ cus_qty }}" max="{{ cur_qty }}" name="quantity" value="{{ cus_qty }}" size="4" pattern="[0-9]*" inputmode="numeric">
+           <button data-quantity-selector data-increase-qty type="button" class="t4s-quantity-selector is--plus"><svg focusable="false" class="icon icon--plus" viewBox="0 0 10 10" role="presentation"><path d="M6 4h4v2H6v4H4V6H0V4h4V0h2v4z" fill="currentColor" fill-rule="evenodd"></path></svg></button>
+         </div>
+         {{ capture_btn_atc }}</div>
+   {%- else -%}
+      {{ capture_btn_atc }}
+   {%- endif -%}
+   
+
+{%- elsif settings.enable_quickshop -%}
+   <a href="{{ pr_url }}"class="t4s-pr-item-btn t4s-pr-addtocart" rel="nofollow" data-action-quickshop data-id="{{ pid }}"><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-atc"></use></svg></span><span class="t4s-text-pr">{{ 'products.product_card.quick_shop' | t }}</span></a>
+
+{%- else -%}
+   <a href="{{ pr_url }}"class="t4s-pr-item-btn t4s-pr-addtocart" rel="nofollow"><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-atc"></use></svg></span><span class="t4s-text-pr">{{ 'products.product_card.select_option' | t }}</span></a>
+
+{%- endif -%}

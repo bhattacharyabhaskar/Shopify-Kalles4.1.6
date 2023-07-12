@@ -1,0 +1,30 @@
+{%- liquid
+   if section.id == 'main-qv'
+      assign col_style = '3'
+   else
+      assign col_style = '15'
+   endif -%}
+
+<style>.t4s-pr-choose__wrap{overflow:hidden;overflow-x:auto;-webkit-overflow-scrolling:touch}.t4s-pr-choose__title{font-size:14px;text-transform:uppercase;font-weight:500}.t4s-pr-choose__img .lz_op_ef{background-repeat:no-repeat;background-size:cover;background-position:center center}.t4s-row.t4s-pr-choose__wrap{margin:10px 0 25px}.t4s-pr-choose__style~.nt_cart_form .swatch{margin-bottom:15px}.t4s-pr-choose__wrap>.t4s-pr-choose__item{padding:5px;border:1px solid #ddd;margin-right:10px;border-radius:4px}.rtl_true .t4s-pr-choose__wrap>.t4s-pr-choose__item{margin-right:0;margin-left:10px}.t4s-pr-choose__wrap>.t4s-pr-choose__item:last-child{margin:0}.t4s-pr-choose__info{color: var(--secondary-color);font-size:12px;font-weight:500;margin-top:5px}.t4s-pr-choose__img-hover{opacity:0!important;-webkit-transition:opacity .5s,-webkit-transform 2s cubic-bezier(0, 0, .44, 1.18);transition:opacity .5s,transform 2s cubic-bezier(0, 0, .44, 1.18),-webkit-transform 2s cubic-bezier(0, 0, .44, 1.18)}.t4s-pr-choose__item:hover .t4s-pr-choose__img-hover{opacity:1!important;transform:scale(1.09)}.t4s-pr-choose__wrap>.t4s-pr-choose__item.is--chosen{border:2px solid var(--accent-color);background-color:rgba(var(--accent-color-rgb),.06)}</style>
+<div class="t4s-pr-choose__style">
+    {%- capture choose__html -%}
+      {%- for pr in advance_pr_type %}{% assign pr_imgs = pr.images -%}
+         {%- assign title_chosen_pr = pr.metafields.theme.advance_pr_title | default: pr.title -%}
+         <div class="t4s-col-4 t4s-col-md-{{ col_style }} t4s-col-item t4s-pr-choose__item t4s-text-center{% if pid == pr.id %}{% assign title_chosen = ': ' | append: title_chosen_pr %} is--chosen{% endif %}">
+            <a href="{{ pr.url }}" class="t4s-d-block" data-tooltip="top" title="{{ pr.title | escape }}">
+               {%- if pr_imgs.size > 0 %}{% assign image = pr_imgs[0] -%}{% unless image0 %}{% assign image0_ratio = image.aspect_ratio %}{% endunless -%}
+               <div class="t4s-pr-choose__img t4s_ratio t4s-pr t4s-oh">
+                  <img class="t4s-pr-choose__img-main lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[102,204]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                  {%- if pr_imgs.size > 1 %}{% assign image = pr_imgs[1] -%}
+                  <img class="t4s-pr-choose__img-hover t4s-pe-none t4s-pa t4s-t-0 t4s-t-0 t4s-t-0 t4s-t-0 t4s-op-0 lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[102,204]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                  {%- endif -%}
+               </div>
+               {%- endif -%}
+               <div class="t4s-pr-choose__info t4s-truncate">{{ pr.metafields.theme.advance_pr_title | default: pr.title }}</div>      
+            </a>
+         </div>
+      {%- endfor -%}
+    {%- endcapture -%}
+    <h4 class="t4s-pr-choose__title t4s-truncate">{{ title | escape }}{{ title_chosen }}</h4>
+    <div class="t4s-row t4s-g-0 t4s-flex-nowrap t4s-pr-choose__wrap t4s_ratioadapt t4s-current-scrollbar-" style="--aspect-ratioapt:{{ image0_ratio }}">{{ choose__html }}</div>
+</div>

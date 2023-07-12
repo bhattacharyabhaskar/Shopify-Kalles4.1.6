@@ -1,0 +1,228 @@
+{%- comment -%}
+    Renders a list of product's price (regular, sale, unit)
+    Accompanies product listings (collection page, search result) and not updated dynamically
+    Accepts:
+    - product    : {Object} product Liquid object
+    - se_stts    : section settings
+    - seBlocks   : Array blocks section
+    - idTabDes   : ID tab des
+    - idTabReview: ID tab review
+    - isProductDefault: {Boolean}
+    Usage:  tab_des, tab_buy, tab_add, tab_rivui, tab_html, tab_liquid
+    {%- render 'product_tabs',product: product, tabs_layout:tabs_layout, seBlocks: seBlocks, idTabDes: idTabDes, idTabReview: idTabReview, isProductDefault: isProductDefault -%}
+{%- endcomment -%}
+
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+{{ 'product-tabs.css' | asset_url | stylesheet_tag }}
+
+{%- style -%} 
+.t4s-product-tabs-wrapper-{{ section.id }} {
+  --bg-tabs: {{ se_stts.bg }};
+  --bg-tabs-mb: {{ se_stts.bg_mb }};
+}
+{%- endstyle -%}
+
+{%- liquid
+assign pid              = product.id
+assign typeBlocks       = seBlocks | map: 'type'
+assign tabBlocks        = typeBlocks | where: 'tab_'
+assign tabs_design      = se_stts.tabs_design
+assign tabs_design_mb   = se_stts.tabs_design_mb
+assign enable_first_tab = se_stts.enable_first_tab
+
+assign listTyCurent = ''
+assign listTyCurent1 = '' 
+assign listTyCurent2 = '' -%}
+ 
+{%- for i in (1..1) -%}
+{%- if tabBlocks.size == 0 %}{% break %}{% endif -%}
+
+<div class="t4s-product-tabs-wrapper t4s-product-tabs-wrapper-{{ section.id }} is--tab-design__{{ tabs_design }} is--tab-design-mb__{{ tabs_design_mb }} is--tab-layout__{{ se_stts.tabs_layout_fix }} is--tab-position__{{ se_stts.tabs_position }}">
+  <div class="t4s-container">
+
+    {%- if request.design_mode -%}
+    <div class="t4s-dev-tab-adm">{%- for type in tabBlocks -%}
+      {%- liquid 
+      assign arrTyCurent  = listTyCurent1 | split: ',' | compact | where: type
+      assign arrblock     = seBlocks | where: "type", type
+      assign block        = arrblock[arrTyCurent.size]
+      assign listTyCurent1 = listTyCurent1 | append: ',' | append: type -%}
+      <div {{ block.shopify_attributes }}>{{ block.id }}</div>
+    {%- endfor %}</div>
+    <style>
+    .t4s-product-tabs-wrapper-{{ section.id }} {
+        position: relative;
+    }
+    .t4s-dev-tab-adm {
+        position: absolute;opacity: 0;pointer-events: none;top: -10px;
+    }
+    </style>
+    {%- endif -%}
+    
+    <div class="t4s-tabs t4s-type-tabs t4s-accordion-mb-{% if tabs_design_mb == 'accordion' %}true{% else %}false{% endif %}" data-t4s-tabs data-t4s-accordion-pr>
+        
+        {%- if tabs_design == 'tab' %}{% assign forloop_first = true -%}
+        <ul class="t4s-tabs-ul t4s-tabs-pr-ul t4s-flicky-slider t4s-slider-btn-style-simple t4s-slider-btn-none t4s-slider-btn-small t4s-slider-btn-vi-always flickityt4s" data-t4s-tab-ul data-flickityt4s-js='{"isSimple": true,"freeScroll": true, "setPrevNextButtons":true, "arrowIcon":"1", "imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign":"center", "wrapAround": false,"prevNextButtons": true,"percentPosition": 0,"pageDots": false, "pauseAutoPlayOnHover" : true }'>
+          {%- for type in tabBlocks -%}
+
+            {%- liquid 
+            assign arrTyCurent  = listTyCurent | split: ',' | compact | where: type
+            assign arrblock     = seBlocks | where: "type", type
+            assign block        = arrblock[arrTyCurent.size]
+            assign listTyCurent = listTyCurent | append: ',' | append: type
+            assign bk_stts = block.settings 
+            assign bk_id   = block.id 
+            assign tab_id  = 't4s_tab_' | append: bk_id
+            
+            case block.type
+              when 'tab_des'
+                assign tab_id = idTabDes
+              when 'tab_rivui'
+                assign tab_id = idTabReview 
+              when 'tab_add'
+                if isProductDefault 
+                  continue
+                endif
+              when 'tab_buy'
+                if nav_up_size == 0
+                  continue
+                endif
+              when 'tab_html'
+                assign bk_title =  bk_stts.title | default: bk_stts.page.title 
+                if bk_title == blank or bk_stts.page.content == blank and bk_stts.content == blank
+                  continue
+                endif
+              when 'tab_liquid'
+                if bk_stts.title == blank or bk_stts.custom_liquid == blank
+                  continue
+                endif
+              else
+                if bk_stts.title == blank or bk_stts.text == blank
+                  continue
+                endif
+            endcase
+           -%}
+
+          <li class="t4s-d-inline-flex"><a id="b_{{ bk_id }}"{% if forloop_first %} class="t4s-active"{% endif %} href="#{{ tab_id }}" rel="nofollow" data-t4s-tab-item data-no-instant>{{ bk_stts.title | escape }}</a></li>
+          
+          {%- assign forloop_first = false -%}
+          {%- endfor -%}
+        </ul>
+        {%- endif -%}
+        
+        {%- liquid 
+        if enable_first_tab 
+          assign forloop_first = true
+          assign class_first_tab = ' t4s-active'
+        else
+          assign forloop_first = false
+        endif
+        assign isEmty = true
+       -%}
+
+        {%- for type in tabBlocks -%}
+
+          {%- liquid 
+          assign arrTyCurent   = listTyCurent2 | split: ',' | compact | where: type
+          assign arrblock      = seBlocks | where: "type", type
+          assign block         = arrblock[arrTyCurent.size]
+          assign listTyCurent2 = listTyCurent2 | append: ',' | append: type
+          assign bk_stts = block.settings 
+          assign bk_id   = block.id
+          assign tab_id  = 't4s_tab_' | append: bk_id
+          unless forloop_first
+            assign class_first_tab = ''
+          endunless -%}
+
+          {%- case block.type -%}
+            {%- when 'tab_des' %}
+              <div class="t4s-tab-wrapper{{ class_first_tab }}" data-t4s-tab-wrapper>
+                <a id="t44_{{ bk_id }}" href="#{{ idTabDes }}" rel="nofollow" class="t4s-tab__title t4s-fwm t4s-ch" data-t4s-tab-item data-no-instant><span class="t4s-tab__text">{{ bk_stts.title | escape }}</span><span class="t4s-tab__icon"></span></a>
+                <div id="{{ idTabDes }}" class="t4s-rte t4s-tab-content{{ class_first_tab }}" data-t4s-tab-content>{{- product.description -}}</div>
+             </div>
+             {%- assign forloop_first = false %}{% assign isEmty = false -%}
+
+            {%- when 'tab_rivui' %}
+              <div class="t4s-tab-wrapper{{ class_first_tab }}" data-t4s-tab-wrapper>
+                <a id="t44_{{ bk_id }}" href="#{{ idTabReview }}" rel="nofollow" class="t4s-tab__title t4s-fwm t4s-ch" data-t4s-tab-item data-no-instant><span class="t4s-tab__text">{{ bk_stts.title | escape }}</span><span class="t4s-tab__icon"></span></a>
+                <div id="{{ idTabReview }}" class="t4s-tab-content{{ class_first_tab }}" data-t4s-tab-content>
+                    {%- case settings.app_review -%}                        
+                        {%- when '1' -%}
+                           <div id="shopify-product-reviews" data-id="{{ pid }}">{{ product.metafields.spr.reviews }}</div>
+                        {%- when '2' -%}
+                           <div class="lt-block-reviews"><ryviu-widget handle="{{ product.handle }}" title_product="{{ product.title }}" total_meta="{{ product.metafields.ryviu.r_count }}" image_product="{{ product.featured_image.src | image_url: width: 800 }}"></ryviu-widget></div>
+                        {%- when '3' -%}
+                           <div id="shopify-ali-review" product-id="{{ pid }}">{{ shop.metafields.review_collector.review_code }}</div>
+                        {%- when '4' -%}
+                          <div id="looxReviews" data-product-id="{{ pid }}" class="loox-reviews-default">{{ product.metafields.loox.reviews }}</div>
+                        {%- when '5' -%}
+                          {%- capture the_snippet_reviews %}{% render 'socialshopwave-widget-recommends' with 1 %}{% endcapture -%}
+                          {%- unless the_snippet_reviews contains 'Liquid error' %}{{ the_snippet_reviews }}{% endunless -%}
+                        {%- when '7' -%}{%- render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: false, product: product -%}
+                        {%- when '8' -%}
+                            {%- render "reviews-importer", product : product -%}
+                            <div class="scm-container custom" style="display: none;"><div id="scm-reviews-importer" class="scm-reviews-importer"><iframe id="scm-reviews-importer-iframe" width="100%"></iframe></div></div>
+                        {%- else -%}
+                          <div class="star-rating review_widget_other">{{ bk_setts.review_liquid }}</div>
+                    {%- endcase -%}
+                </div>
+             </div>
+             {%- assign forloop_first = false %}{% assign isEmty = false -%}
+            
+            {%- when 'tab_add' %}{% if isProductDefault %}{% continue %}{% endif -%}
+              <div class="t4s-tab-wrapper{{ class_first_tab }}" data-t4s-tab-wrapper>
+                <a id="t44_{{ bk_id }}" href="#{{ tab_id }}" rel="nofollow" class="t4s-tab__title t4s-fwm t4s-ch" data-t4s-tab-item data-no-instant><span class="t4s-tab__text">{{ bk_stts.title | escape }}</span><span class="t4s-tab__icon"></span></a>
+                <div id="{{ tab_id }}" class="t4s-tab-content{{ class_first_tab }}" data-t4s-tab-content>
+                  <table class="t4s-pr_attrs">
+                    <tbody>
+                      {%- for product_option in product.options_with_values -%}
+                      <tr class="t4s-attr_pa_{{ product_option.name | handle }}">
+                        <th class="t4s-attr__label">{{ product_option.name }}</th>
+                        <td class="t4s-attr__value">
+                          <p>{% for value in product_option.values %}{{ value }}{% unless forloop.last == true %}, {% endunless %}{% endfor %}</p>
+                        </td>
+                      </tr>
+                      {%- endfor -%}
+                    </tbody>
+                  </table>
+                </div>
+             </div>
+             {%- assign forloop_first = false %}{% assign isEmty = false -%}
+            
+            {%- when 'tab_buy' %}{% if nav_up_size == 0 %}{% continue %}{% endif -%}
+              <div class="t4s-tab-wrapper{{ class_first_tab }}" data-t4s-tab-wrapper>
+                <a id="t44_{{ bk_id }}" href="#{{ tab_id }}" rel="nofollow" class="t4s-tab__title t4s-fwm t4s-ch" data-t4s-tab-item data-no-instant><span class="t4s-tab__text">{{ bk_stts.title | escape }}</span><span class="t4s-tab__icon"></span></a>
+                <div id="{{ tab_id }}" class="t4s-tab-content{{ class_first_tab }}" data-t4s-tab-content>{%- render 't4s-pr-FBT', product: product, nav_up_size: nav_up_size, class: 'is--tab-product' -%}</div>
+             </div>
+             {%- assign forloop_first = false %}{% assign isEmty = false -%}
+
+            {%- when 'tab_html' %}{% assign bk_title =  bk_stts.title | default: bk_stts.page.title %}{%- if bk_title == blank or bk_stts.page.content == blank and bk_stts.content == blank %}{% continue %}{% endif -%}
+              <div class="t4s-tab-wrapper{{ class_first_tab }}" data-t4s-tab-wrapper>
+                <a id="t44_{{ bk_id }}" href="#{{ tab_id }}" rel="nofollow" class="t4s-tab__title t4s-fwm t4s-ch" data-t4s-tab-item data-no-instant><span class="t4s-tab__text">{{ bk_title | escape }}</span><span class="t4s-tab__icon"></span></a>
+                <div id="{{ tab_id }}" class="t4s-rte t4s-tab-content{{ class_first_tab }}" data-t4s-tab-content>
+                  {{ bk_stts.content }}
+                  {{ bk_stts.page.content }}
+                </div>
+             </div>
+             {%- assign forloop_first = false %}{% assign isEmty = false -%}
+
+            {%- when 'tab_liquid' %}{% if bk_stts.title == blank or bk_stts.custom_liquid == blank %}{% continue %}{% endif -%}
+              <div class="t4s-tab-wrapper{{ class_first_tab }}" data-t4s-tab-wrapper>
+                <a id="t44_{{ bk_id }}" href="#{{ tab_id }}" rel="nofollow" class="t4s-tab__title t4s-fwm t4s-ch" data-t4s-tab-item data-no-instant><span class="t4s-tab__text">{{ bk_stts.title | escape }}</span><span class="t4s-tab__icon"></span></a>
+                <div id="{{ tab_id }}" class="t4s-tab-content{{ class_first_tab }}" data-t4s-tab-content>{{ bk_stts.custom_liquid }}</div>
+             </div>
+             {%- assign forloop_first = false %}{% assign isEmty = false -%}
+
+            {%- else %}{% if bk_stts.title == blank or bk_stts.text == blank %}{% continue %}{% endif -%}
+
+          {%- endcase -%}
+
+       {%- endfor -%}
+
+      </div>
+  </div>
+</div>
+
+{%- if isEmty %}<style>.t4s-product-tabs-wrapper-{{ section.id }} {display: none !important;}</style>{% endif -%}
+
+{%- endfor -%}

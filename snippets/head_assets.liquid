@@ -1,0 +1,299 @@
+{%- liquid
+    assign font_source = settings.font_source 
+    assign cl_lazyload = '#ffffff'
+    assign cHVyY2hh    = 'cHVyY2hhc2VfY29kZQ==' | base64_url_safe_decode
+    assign pr_overlay  = settings.pr_overlay | divided_by: 100.0
+    assign accent_lightness     = settings.accent_color | color_extract: 'lightness'
+ -%}
+
+  {%- if font_source == '2' -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    {%- liquid 
+    assign fm_gg1 = settings.fnt_fm_gg1
+    assign fm_gg2 = settings.fnt_fm_gg2 | default: fm_gg1
+    assign fm_gg3 = settings.fnt_fm_gg3 | default: fm_gg1 -%}
+
+    {%- capture font_var -%}
+      {{ fm_gg1 | strip | replace: ' ', '+' }}:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i
+      {%- if fm_gg1 != fm_gg2 -%}|{{ fm_gg2 | strip | replace: ' ', '+' }}:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i{%- endif -%}
+      {%- if fm_gg3 != fm_gg1 and fm_gg3 != fm_gg2 -%}|{{ fm_gg3 | strip | replace: ' ', '+' }}:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i{%- endif -%}
+    {%- endcapture -%}
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={{ font_var }}&display=swap" media="print" onload="this.media='all'">
+
+  {%- else -%}
+    
+    {%- assign font_1 = settings.fnt_fm_sp1 -%}
+    {%- assign font_2 = settings.fnt_fm_sp2 | default: font_1 -%}
+    {%- assign font_3 = settings.fnt_fm_sp3 | default: font_1 -%}
+    {%- unless font_1.system? -%}
+      <link rel="preload" as="font" href="{{ font_1 | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+    {%- unless font_2.system? -%}
+      <link rel="preload" as="font" href="{{ font_1 | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+    {%- unless font_3.system? -%}
+      <link rel="preload" as="font" href="{{ font_1 | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+  {%- endif -%}
+
+  {{- 'base.css' | asset_url | stylesheet_tag: preload: true -}}
+  {%- if isRTL %}{{- 'theme_rtl.css' | asset_url | stylesheet_tag: preload: true -}}{% endif -%}
+  {%- if settings.bootstrap_css %}{{- 'bootstrap.min.css' | asset_url | stylesheet_tag -}}{% endif -%}
+
+  {%- style -%}
+
+    {%- if font_source == '1' -%}
+
+      {%- assign cl_flz = 'h1, h2, h3, h4, h5, h6, .f__mont, .f_heading, .h3, ' -%}
+      {%- assign fm_sp1 = font_1.family -%}
+      {%- assign fm_sp2 = font_2.family -%}
+      {%- assign fm_sp3 = font_3.family -%}
+     
+      {%- capture t4s_font_fm1 -%}{{ fm_sp1 }}, {{ font_1.fallback_families }};{%- endcapture -%}
+      {%- assign t4s_font_fm2 = t4s_font_fm1 -%}{%- assign t4s_font_fm3 = t4s_font_fm1 -%}
+
+      {%- for variant in font_1.variants -%}{{ variant | font_face: font_display: 'swap' }}{%- endfor -%}
+
+      {%- if fm_sp2 != fm_sp1 -%}
+        {%- capture t4s_font_fm2 -%}{{ fm_sp2 }}, {{ font_2.fallback_families }};{%- endcapture -%}
+        {%- for variant in font_2.variants -%}{{ variant | font_face: font_display: 'swap' }}{%- endfor -%}
+      {%- endif -%}
+
+      {%- if fm_sp3 != fm_sp1 -%}
+        {%- capture t4s_font_fm3 -%}{{ fm_sp3 }}, {{ font_3.fallback_families }};{%- endcapture -%}
+        {{- font_3 | font_face: font_display: 'swap' -}}
+      {%- endif -%}
+
+    {%- else -%}
+    
+      {%- assign cl_flz = '' -%}
+      {%- assign t4s_font_fm1 = fm_gg1 -%}
+      {%- assign t4s_font_fm2 = fm_gg2 -%}
+      {%- assign t4s_font_fm3 = fm_gg3 -%}
+
+    {%- endif -%}
+
+    :root {
+        
+         /* CSS Variables */
+        --wrapper-mw      : {{ settings.cus_w_bd }}px;
+        --font-family-1   : {{ t4s_font_fm1 }};
+        --font-family-2   : {{ t4s_font_fm2 }};
+        --font-family-3   : {{ t4s_font_fm3 }};
+        --font-body-family   : {% if settings.bd_ffamily == '1' %}{{ t4s_font_fm1 }}{% elsif settings.bd_ffamily == '2' %}{{ t4s_font_fm2 }}{% else %}{{ t4s_font_fm3 }}{% endif %};
+        --font-heading-family: {% if settings.hd_ffamily == '1' %}{{ t4s_font_fm1 }}{% elsif settings.hd_ffamily == '2' %}{{ t4s_font_fm2 }}{% else %}{{ t4s_font_fm3 }}{% endif %};
+       {% comment %} --font-button-family : {% if settings.fnt_fm_button == '1' %}{{ t4s_font_fm1 }}{% elsif settings.fnt_fm_button == '2' %}{{ t4s_font_fm2 }}{% else %}{{ t4s_font_fm3 }}{% endif %};{% endcomment %}
+        
+        --t4s-success-color       : #428445;
+        --t4s-success-color-rgb   : {{ '#428445' | color_to_rgb | remove: 'rgba(' | remove: 'rgb(' | remove: ')' }};
+        --t4s-warning-color       : #e0b252;
+        --t4s-warning-color-rgb   : {{ '#e0b252' | color_to_rgb | remove: 'rgba(' | remove: 'rgb(' | remove: ')' }};
+        --t4s-error-color         : #EB001B;
+        --t4s-error-color-rgb     : {{ '#EB001B' | color_to_rgb | remove: 'rgba(' | remove: 'rgb(' | remove: ')' }};
+        --t4s-light-color         : #ffffff;
+        --t4s-dark-color          : #222222;
+        --t4s-highlight-color     : #ec0101;
+        --t4s-tooltip-background  : {{ settings.bg_tooltip }};
+        --t4s-tooltip-color       : {{ settings.cl_tooltip }};
+        {%- comment %}--loading-bar-color       : {{ settings.loading_bar_color }};{% endcomment %}
+        --primary-sw-color        : {{ settings.sw_primary }};
+        --primary-sw-color-rgb    : {{ settings.sw_primary | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+        --border-sw-color         : {{ settings.sw_border }};
+        --secondary-sw-color      : {{ settings.sw_secondary }};
+        --primary-price-color     : {{ settings.price_primary }};
+        --secondary-price-color   : {{ settings.price_secondary }};
+        
+        --t4s-body-background     : {% if settings.body_bg != 'rgba(0,0,0,0)' %}{{ settings.body_bg }}{% else %}#fff{% endif %};
+        --text-color              : {{ settings.text_color }};
+        --text-color-rgb          : {{ settings.text_color | color_to_rgb | remove: 'rgba(' | remove: 'rgb(' | remove: ')' }};
+        --heading-color           : {{ settings.heading_color }};
+        --accent-color            : {{ settings.accent_color }};
+        --accent-color-rgb        : {{ settings.accent_color | color_to_rgb | remove: 'rgba(' | remove: 'rgb(' | remove: ')' }};
+        --accent-color-darken     : {{ settings.accent_color | color_darken: 15 }};
+        --accent-color-hover      : var(--accent-color-darken);
+        --secondary-color         : {{ settings.secondary_color }};
+        --secondary-color-rgb     : {{ settings.secondary_color | color_to_rgb | remove: 'rgba(' | remove: 'rgb(' | remove: ')' }};
+        --link-color              : {{ settings.link_color }};
+        --link-color-hover        : {{ settings.link_color_hover }};
+        --border-color            : {{ settings.border_color }};
+        --border-color-rgb        : {{ settings.border_color | color_to_rgb | remove: 'rgba(' | remove: 'rgb(' | remove: ')' }};
+        --border-primary-color    : {{ settings.border_primary_color }};
+        --button-background       : {{ settings.btn_bg }};
+        --button-color            : {{ settings.btn_color }};
+        --button-background-hover : {{ settings.accent_color }};
+        --button-color-hover      : {% if accent_lightness < 85 %}#fff{% else %}#222{% endif %};
+       
+       {%- liquid 
+       assign sale_badge_lightness     = settings.sale_badge_color | color_extract: 'lightness'
+       assign new_badge_lightness      = settings.new_badge_color | color_extract: 'lightness'
+       assign preorder_badge_lightness = settings.preorder_badge_color | color_extract: 'lightness'
+       assign soldout_badge_lightness  = settings.soldout_badge_color | color_extract: 'lightness'
+       assign custom_badge_lightness   = settings.custom_badge_color | color_extract: 'lightness' %}
+
+        --sale-badge-background    : {{ settings.sale_badge_color }};
+        --sale-badge-color         : {% if sale_badge_lightness < 85 %}#fff{% else %}#222{% endif %};
+        --new-badge-background     : {{ settings.new_badge_color }};
+        --new-badge-color          : {% if new_badge_lightness < 85 %}#fff{% else %}#222{% endif %};
+        --preorder-badge-background: {{ settings.preorder_badge_color }};
+        --preorder-badge-color     : {% if preorder_badge_lightness < 85 %}#fff{% else %}#222{% endif %};
+        --soldout-badge-background : {{ settings.soldout_badge_color }};
+        --soldout-badge-color      : {% if soldout_badge_lightness < 85 %}#fff{% else %}#222{% endif %};
+        --custom-badge-background  : {{ settings.custom_badge_color }};
+        --custom-badge-color       : {% if custom_badge_lightness < 85 %}#fff{% else %}#222{% endif %};
+
+        {%- if settings.c_1 != blank %}--aspect-ratiocus1: {{ settings.c_1.aspect_ratio }};{% endif -%}
+        {%- if settings.c_2 != blank %}--aspect-ratiocus2: {{ settings.c_2.aspect_ratio }};{% endif -%}
+        {%- if settings.c_3 != blank %}--aspect-ratiocus3: {{ settings.c_3.aspect_ratio }};{% endif -%}
+        {%- if settings.c_4 != blank %}--aspect-ratiocus4: {{ settings.c_4.aspect_ratio }};{% endif -%}
+         
+        /* Shopify related variables */
+        --payment-terms-background-color: {{ settings.background }};
+        
+        --lz-background: {{ settings.bg_lazyload }};
+        --lz-img: url("{{ 't4s_loader.svg' | asset_url }}");
+        {%- if settings.use_cus_lz and settings.cus_lz != blank -%}
+        {%- assign size_cus_lz = settings.size_cus_lz -%}
+        {%- assign size_cus_lz_2 = size_cus_lz | times: 1.8 -%}
+        --lz-img-cus: url("{{ settings.cus_lz | image_url: width: size_cus_lz_2 }}");
+        --lz-size-cus: {{ size_cus_lz }}px;
+        {%- endif -%}
+    }
+
+    html {
+      font-size: 62.5%;
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      font-size:{{ settings.bd_fsize }}px;
+      letter-spacing: {{ settings.bd_lspacing }}px;
+      color: var(--text-color);
+      font-family: var(--font-body-family);
+      line-height: {{ settings.bd_lheight }};
+      font-weight: {{ settings.bd_fweight }};
+      -webkit-font-smoothing: auto;
+      -moz-osx-font-smoothing: auto;
+    }
+    /*
+    @media screen and (min-width: 750px) {
+      body {
+        font-size: 1.6rem;
+      }
+    }
+    */
+
+    h1, h2, h3, h4, h5, h6, .t4s_as_title {
+      color: var(--heading-color);
+      font-family: var(--font-heading-family);
+      line-height: {{ settings.hd_lheight }};
+      font-weight: {{ settings.hd_fweight }};
+      letter-spacing: {{ settings.hd_lspacing }}px;
+    }
+    h1 { font-size: {{ settings.fs_h1 }}px }
+    h2 { font-size: {{ settings.fs_h2 }}px }
+    h3 { font-size: {{ settings.fs_h3 }}px }
+    h4 { font-size: {{ settings.fs_h4 }}px }
+    h5 { font-size: {{ settings.fs_h5 }}px }
+    h6 { font-size: {{ settings.fs_h6 }}px }
+    a,.t4s_as_link {
+      /* font-family: var(--font-link-family); */
+      color: var(--link-color);
+    }
+    a:hover,.t4s_as_link:hover {
+      color: var(--link-color-hover);
+    }
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      border-color: var(--border-color);
+    }
+    .t4s_as_button,
+    button,
+    input[type="button"]:not(.t4s-btn),
+    input[type="reset"],
+    input[type="submit"]:not(.t4s-btn) {
+      font-family: var(--font-button-family);
+      color: var(--button-color);
+      background-color: var(--button-background);
+      border-color: var(--button-background);
+    }
+    .t4s_as_button:hover,
+    button:hover,
+    input[type="button"]:not(.t4s-btn):hover, 
+    input[type="reset"]:hover,
+    input[type="submit"]:not(.t4s-btn):hover  {
+      color: var(--button-color-hover);
+      background-color: var(--button-background-hover);
+      border-color: var(--button-background-hover);
+    }
+    
+    .t4s-cp,.t4s-color-accent { color : var(--accent-color) } {%- comment -%}color accent, primary{%- endcomment -%}
+    .t4s-ct,.t4s-color-text { color : var(--text-color) } {%- comment -%}color body text{%- endcomment -%}
+    .t4s-ch,.t4ss-color-heading { color : var(--heading-color) } {%- comment -%}color heading{%- endcomment -%}
+    .t4s-csecondary { color : var(--secondary-color) }
+    
+    .t4s-fnt-fm-1 {
+      font-family: var(--font-family-1) !important;
+    }
+    .t4s-fnt-fm-2 {
+      font-family: var(--font-family-2) !important;
+    }
+    .t4s-fnt-fm-3 {
+      font-family: var(--font-family-3) !important;
+    }
+    .t4s-cr {
+        color: var(--t4s-highlight-color);
+    }
+    .t4s-price__sale { color: var(--primary-price-color); }
+    {%- if settings.body_bg_image != blank and settings.general_layout == 'boxed' -%}
+    body {
+      background-repeat: {{ settings.body_bg_repeat }};background-size: {{ settings.body_bg_size }};background-attachment: {{ settings.body_bg_attachment }};background-position: {{ settings.body_bg_position }}
+    }
+    {%- endif -%}
+    .t4s-fix-overflow.t4s-row { max-width: 100vw;margin-left: auto;margin-right: auto;}.lazyloadt4s-opt {opacity: 1 !important;transition: opacity 0s, transform 1s !important;}.t4s-d-block {display: block;}.t4s-d-none {display: none;}@media (min-width: 768px) {.t4s-d-md-block {display: block;}.t4s-d-md-none {display: none; }}@media (min-width: 1025px) {.t4s-d-lg-block {display: block;}.t4s-d-lg-none {display: none; }}
+    {%- if settings.show_size_type == '2' -%}
+      .t4s-product .t4s-product-sizes > span.t4s-product-sizes--sold-out,     
+      .t4s-product .t4s-product-sizes[data-size="1"] > span:after{
+        display: none;
+      }
+    {%- endif -%}
+    {%- if settings.show_color_type == '2' -%}
+      .t4s-pr-color__item.t4s-pr-color--sold-out {
+        display: none;
+      }
+    {%- endif -%}
+  {%- endstyle -%}
+
+ <script>
+ const t4sXMLHttpRequest = window.XMLHttpRequest, documentElementT4s = document.documentElement; documentElementT4s.className = documentElementT4s.className.replace('no-js', 'js');function loadImageT4s(_this) { _this.classList.add('lazyloadt4sed')};
+  {%- comment -%}// We do a quick detection of some features (we could use Modernizr but for so little...){%- endcomment -%}
+  (function() { const matchMediaHoverT4s = (window.matchMedia('(-moz-touch-enabled: 1), (hover: none)')).matches; documentElementT4s.className += ((window.CSS && window.CSS.supports('(position: sticky) or (position: -webkit-sticky)')) ? ' t4sp-sticky' : ' t4sp-no-sticky'); documentElementT4s.className += matchMediaHoverT4s ? ' t4sp-no-hover' : ' t4sp-hover'; {% comment -%} This code is done to force reload the page when the back button is hit (which allows to fix stale data on cart, for instance){% endcomment %}window.onpageshow = function() { if (performance.navigation.type === 2) {document.dispatchEvent(new CustomEvent('cart:refresh'))} }; if (!matchMediaHoverT4s && window.width > 1024) { document.addEventListener('mousemove', function(evt) { documentElementT4s.classList.replace('t4sp-no-hover','t4sp-hover'); document.dispatchEvent(new CustomEvent('theme:hover')); }, {once : true} ); } }());{%- if request.design_mode -%}var VGhlbWVOYW1lVDQ = 'a2FsbGVz', cHVyY2hh = {{ settings[cHVyY2hh] | default: '' | base64_encode | json }}, U2hvcE1lb1Q0 = {{ shop.email | default: 'no_email' | base64_encode | json }};{%- endif -%}
+</script>
+
+{%- if settings.wishlist_mode == "3" -%}
+<style>
+.t4s-product-form__btn .faves-count {
+    position: absolute;
+}
+
+.t4s-site-nav__icon a.ssw-link-fave-menu {
+    position: relative;
+}
+.t4s-site-nav__icons i.ssw-icon-heart-o, 
+.t4s-site-nav__icons i.ssw-icon-heart {
+    font-size: 20px;
+}
+
+.t4s-site-nav__icon .ssw-counter-fave-menu {
+    position: absolute;
+    opacity: 0;
+}
+</style>
+{%- endif -%}

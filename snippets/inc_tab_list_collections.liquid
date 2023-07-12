@@ -1,0 +1,108 @@
+{%- liquid
+  assign bk_stts = block.settings
+  assign layout_des = bk_stts.layout_des
+  assign image_ratio = bk_stts.image_ratio
+  if image_ratio == "ratioadapt"
+    assign imgatt = ''
+   else 
+    assign imgatt = 'data-'
+  endif
+  assign source = bk_stts.source
+  assign b_effect = bk_stts.b_effect
+  assign img_effect = bk_stts.img_effect
+  assign open_link = bk_stts.open_link
+  assign subtitle = bk_stts.collection_subtitle
+  if bk_stts.btn_owl == "outline"
+    assign arrow_icon = 1
+  else
+    assign arrow_icon = 2
+  endif
+
+
+  assign collection_des = bk_stts.collection_des
+  assign title_cl_pri       = bk_stts.title_cl | color_extract: 'lightness'
+  assign title_cl_hover_pri       = bk_stts.title_cl_hover | color_extract: 'lightness'
+  assign subtitle_cl_pri       = bk_stts.subtitle_cl | color_extract: 'lightness'
+  assign count_cl_pri       = bk_stts.count_cl | color_extract: 'lightness'
+
+  if title_cl_pri < 85  
+    assign title_cl_sec = "#fff"
+  else 
+    assign title_cl_sec = "#222"
+  endif
+  if title_cl_hover_pri < 85 
+    assign title_cl_hover_sec = "#fff"
+  else 
+    assign title_cl_hover_sec = "#222"
+  endif
+  if subtitle_cl_pri < 85 
+    assign subtitle_cl_sec = "#fff"
+  else 
+    assign subtitle_cl_sec = "#222"
+  endif
+  if count_cl_pri < 85 
+    assign count_cl_sec = "#fff"
+  else 
+    assign count_cl_sec = "#222"
+  endif
+  
+ -%} 
+
+{%- if ck_q == false -%}[t4splitlz]{%- endif -%}
+    {%- if layout_des == "1" -%}
+      <div class="t4s-list-collections t4s-collection-border-{{ bk_stts.border }} t4s_{{ image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} t4s-row  t4s-justify-content-center t4s-row-cols-lg-{{ bk_stts.col_dk }} t4s-row-cols-md-{{ bk_stts.col_tb }} t4s-row-cols-{{ bk_stts.col_mb }} t4s-gx-md-{{ bk_stts.space_h_item }} t4s-gy-md-{{ bk_stts.space_v_item }} t4s-gx-{{ bk_stts.space_h_item_mb }} t4s-gy-{{ bk_stts.space_v_item_mb }}" style="--title-cl-pri: {{ bk_stts.title_cl }};--title-cl-pri-hover: {{ bk_stts.title_cl_hover }};--title-cl-second: {{ title_cl_sec }};--title-cl-second-hover: {{ title_cl_hover_sec }};--subtitle-cl: {{ bk_stts.subtitle_cl }};--subtitle-cl2: {{ subtitle_cl_sec }};--count-cl-pri: {{ bk_stts.count_cl }};--count-cl-second: {{ count_cl_sec }};--border-cl: {{ bk_stts.border_cl }};--item-rd: {{ bk_stts.item_rd }}%;--item-pd: {{ bk_stts.item_pd }}px;--space-bottom: {{ bk_stts.space_bottom }}px;--space-bottom-mb: {{ bk_stts.space_bottom_mb }}px;">
+    {%- else -%}
+      <div class="t4s-list-collections t4s-collection-border-{{ bk_stts.border }} t4s_{{ image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} t4s-flicky-slider t4s-gx-md-{{ bk_stts.space_h_item }} t4s-gy-md-{{ bk_stts.space_v_item }} t4s-gx-{{ bk_stts.space_h_item_mb }} t4s-gy-{{ bk_stts.space_v_item_mb }} {% if bk_stts.nav_btn %} t4s-slider-btn-style-{{ bk_stts.btn_owl }} t4s-slider-btn-{{ bk_stts.btn_shape }} t4s-slider-btn-{{ bk_stts.btn_size }} t4s-slider-btn-cl-{{ bk_stts.btn_cl }} t4s-slider-btn-vi-{{ bk_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ bk_stts.btn_hidden_mobile }} {% endif %} {% if bk_stts.nav_dot == true %} t4s-dots-style-{{ bk_stts.dot_owl }} t4s-dots-cl-{{ bk_stts.dots_cl }} t4s-dots-round-{{ bk_stts.dots_round }} t4s-dots-hidden-mobile-{{ bk_stts.dots_hidden_mobile }} {%- endif -%} t4s-row t4s-row-cols-lg-{{ bk_stts.col_dk }} t4s-row-cols-md-{{ bk_stts.col_tb }} t4s-row-cols-{{ bk_stts.col_mb }}  flickityt4s" data-flickityt4s-js='{"setPrevNextButtons":true, "arrowIcon":"{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{ bk_stts.loop }},"prevNextButtons": {{ bk_stts.nav_btn }},"percentPosition": 1,"pageDots": {{ bk_stts.nav_dot }}, "autoPlay" : {{ bk_stts.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ bk_stts.au_hover }} }' style="--title-cl-pri: {{ bk_stts.title_cl }};--title-cl-pri-hover: {{ bk_stts.title_cl_hover }}; --title-cl-second: {{ title_cl_sec }};--title-cl-second-hover: {{ title_cl_hover_sec }};--subtitle-cl: {{ bk_stts.subtitle_cl }};--subtitle-cl2: {{ subtitle_cl_sec }};--count-cl-pri: {{ bk_stts.count_cl }};--count-cl-second: {{ count_cl_sec }};--border-cl: {{ bk_stts.border_cl }};--item-rd: {{ bk_stts.item_rd }}%;--item-pd: {{ bk_stts.item_pd }}px;--space-bottom: {{ bk_stts.space_bottom }}px;--space-bottom-mb: {{ bk_stts.space_bottom_mb }}px;--space-dots: {{ bk_stts.dots_space }}px;--flickity-btn-pos: {{ bk_stts.space_h_item }}px;--flickity-btn-pos-mb: {{ bk_stts.space_h_item_mb }}px;">
+    {%- endif -%}
+      {%- if collection_list.count > 0 -%}
+        {%- for collection in collection_list -%}
+          {%- assign bk_stts = collection.settings -%}
+          {%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+          <div class="t4s-col-item t4s-collection-item t4s-coll-style-{{ collection_des }}" id="b_{{ block.id }}" data-select-flickity {{ block.shopify_attributes }}>
+              {%- liquid
+                assign block_title = bk_stts.title | default: collection.title
+                assign image = collection.image
+                assign title = collection.collection_title | default: collection.title
+                assign collection_link = collection.collection_link | default: collection.url
+             -%}
+              <div class="t4s-cat-content t4s-source-{{ source }} t4s-eff t4s-eff-{{ b_effect }} t4s-eff-img-{{ img_effect }} t4s-text-center t4s-pr t4s-oh">
+                <div class="t4s-coll-img t4s-pr" data-cacl-slide>
+                  {% if collection_des == "11" %}
+                    <span class="t4s-count">{{ collection.all_products_count | default: 0 }}</span> 
+                  {% endif %}
+                  <a class="t4s_cat_item_link t4s-img-wrap t4s-d-block" href="{{ collection_link }}" target="{{ open_link }}">
+                    {% if source == "image" %}
+                      <div class="t4s_ratio" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1.2 }}" >
+                        {% if image != blank %}
+                          <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                          <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span>   
+                        {% else %}
+                          {{ 'collection-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}  
+                        {% endif %}
+                      </div>
+                    {% else %}
+                      <div class="t4s-coll-icon"><i class="{{ icon }} t4s-obj-eff"></i></div>
+                    {% endif %}
+                  </a>
+                </div>
+                {%- if title != blank -%}
+                  <div class="t4s-cate-wrapper">
+                    <a class="t4s-cat-title" href="{{ collection_link }}" target="{{ open_link }}">
+                      <span class="t4s-text">{{ title }}</span>
+                        {% if collection_des == "12" %} <span class="t4s-count">{{ collection.all_products_count | default: 0 }}</span> {% endif %}
+                        {% if collection_des == "14" %} <span class="t4s-count">
+                          ({% if collection.all_products_count < 10 %}0{% endif %}{{ collection.all_products_count | default: 0 }})</span> {% endif %}
+                    </a>
+                    {%- if subtitle != blank -%}
+                      <a class="t4s-cat-subtitle" href="{{ collection_link }}" target="{{ open_link }}">
+                        <span class="t4s-count">{{ collection.all_products_count | default: 0 }}</span> <span class="t4s-text">{{ subtitle }}</span>
+                      </a>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+{%- if ck_q == false -%}[t4splitlz]{%- endif -%}

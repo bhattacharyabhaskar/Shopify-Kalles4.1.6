@@ -1,0 +1,172 @@
+{%- liquid 
+  assign item_id  = item.id
+  assign item_key = item.key
+  assign item_url = item.url
+  assign image    = item.image
+  assign item_qty = item.quantity
+  assign item_variant = item.variant
+  assign item_pr = item.product
+  assign min_qty = item_pr.metafields.theme.cus_qty | default: min_qty
+  if item_variant.inventory_management != null and item_variant.inventory_management != blank and item_variant.inventory_quantity > 0 and item_variant.inventory_policy != 'continue'
+  assign max_qty = item_variant.inventory_quantity
+  else
+  assign max_qty = 9999
+  endif -%}  
+
+ <div data-cart-item class="t4s-page_cart__item{% if gift_pr_id == item.product_id %} is--gift{% endif %}">
+    <div class="t4s-row t4s-gx-md-30 t4s-gx-15 t4s-align-items-center">
+      <div class="t4s-col-12 t4s-col-md-12 t4s-col-lg-5 t4s-col-item">
+          <div class="t4s-page_cart__infos t4s-d-flex t4s-align-items-center">
+              <a href="{{ item_url }}" class="t4s-page_cart__img t4s-pr t4s-oh t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt:{{ image.aspect_ratio | default: 1 }}">
+                {%- if image != blank -%}
+                	<img class="lazyloadt4s" width="120" height="{{ 120 | divided_by: image.aspect_ratio | ceil }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image | image_url: width: 1 }}" data-widths="[120, 240]" data-sizes="auto" alt="{{ image.alt | escape }}">
+                {%- endif -%}
+                <div class="t4s-cart-ld__bar t4s-pe-none t4s-dn" hidden><span>
+                  <svg width="16" height="16" hidden class="t4s-cart-spinner" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                  <svg class="t4s-cart-check" viewBox="0 0 448 512" width="16" height="16" hidden><use href="#icon-cart-check"/></svg>
+                </span></div>
+              </a>
+              <div class="t4s-page_cart__info">
+                 <a href="{{ item_url }}" class="t4s-page_cart__title">{{ item_pr.title }}</a>
+                 <div class="t4s-page_cart__meta">
+                    {%- assign qv_key = item_pr.id -%}
+                    {%- unless item_pr.has_only_default_variant or item_variant.title contains 'mczr_price_' -%}{%- assign qv_key = item_id -%}{%- for option in item.options_with_values -%}<p class="t4s-cart_meta_variant">{{ option.name }}: <strong>{{ option.value }}</strong></p>{%- endfor -%}{%- endunless -%}                    
+                    SKU: {{item.sku }}<br /> 
+                    {% if item.sku contains "B" %}
+                      <p></p><p></p><strong><i><FONT COLOR="RED">Note: After you place the order, the Order Confirmation E-Mail will have the link to the Blouse Mesurement Form</FONT></i></strong></p></p>
+                    {% endif %}
+                    
+                    {%- if item.selling_plan_allocation != blank %}<p class="t4s-cart_selling_plan">{{ item.selling_plan_allocation.selling_plan.name }}</p>{% endif -%}
+                    {%- assign property_size = item.properties | size -%}
+                    {%- if property_size > 0 -%}
+                    <ul class="t4s-cart_meta_propertyList">
+                      {%- for p in item.properties -%}
+
+                        {%- liquid
+                          assign p_first = p.first
+                          assign p_last  = p.last
+                          assign first_character_in_key = p_first | slice: 0
+                          if p_first contains '_bundle_' or p_first contains '_mczr_' or first_character_in_key == '_' or p_last == blank
+                              continue
+                          endif
+                          if p_first == 'shipping_interval_frequency'
+                              assign frequency = p_last
+                              assign recurringchecked = true
+                              continue 
+                          elsif p_first == 'shipping_interval_unit_type'
+                              if frequency == '1'
+                                  if p_last == 'Days'
+                                      assign frequency_unit = 'Day'
+                                  elsif p_last == 'Months'
+                                      assign frequency_unit = 'Month'
+                                  elsif p_last == 'Weeks'
+                                      assign frequency_unit = 'Week'
+                                  endif
+                              else
+                                  assign frequency_unit = p_last
+                              endif
+                              continue
+                          endif -%}
+                          
+                          <li class="product-details__item product-details__item--property">
+                            <span class="product-details__item-label"><strong>{{ p_first }}:</strong> </span>
+                            <span>
+                              {%- if p_last contains '/uploads/' -%}
+                                <a href="{{ p_last }}">{{ p_last | split: '/' | last }}</a>
+                              {%- else -%}
+                                {{ p_last }}
+                              {%- endif -%}
+                            </span>
+                          </li>
+
+                      {%- endfor -%}
+                    </ul>
+                    {%- endif -%}
+                    {%- if recurringchecked %}<span class="product-details__item-recurring cb">{{ 'cart.general.recurring_mess' | t: frequency: frequency, frequency_unit: frequency_unit }}</span>{% endif -%}
+                 </div>
+                 <div class="t4s-page_cart__tools">
+                    {%- if item_pr.has_only_default_variant == false and atc_ajax_enable -%}
+                    <a href="{{ item_url }}" rel="nofollow" class="t4s-page_cart__edit" data-action-quickshop data-edit="{{ edit_item }}" data-id="{{ qv_key }}" data-key="{{ item_key }}" data-no-instant data-id="{{ qv_key }}" data-tooltip="top-start" data-t4s-tooltip='{{ 'cart.general.edit_item' | t | escape }}'><svg viewBox="0 0 24 24" width="20" height="20"><use href="#icon-cart-edit"/></svg></a>
+                    {%- endif -%}
+                    <a href="{{ cart_change_url }}?quantity=0&amp;id={{ item_key }}" rel="nofollow" class="t4s-page_cart__remove" data-no-instant data-cart-remove data-id="{{ item_key }}" data-tooltip="top-start" data-t4s-tooltip='{{ 'cart.general.remove_item' | t | escape }}'><svg viewBox="0 0 24 24" width="17"><use href="#icon-cart-remove"/></svg></a>
+                 </div>
+              </div>
+          </div>
+      </div>
+      <div class="t4s-col-12 t4s-col-md-4 t4s-col-lg-3 t4s-col-item t4s-text-lg-center t4s-text-md-center t4s-text-start t4s-cart_meta_prices_wrap">
+         <div class="t4s-cart_meta_prices">
+             <div class="t4s-cart_price">  
+                {%- liquid
+                 assign original_price     = item.original_price
+                 assign final_price        = item.final_price
+                 assign v_compare_at_price = item_variant.compare_at_price 
+                 assign item_compare_price = v_compare_at_price | default: original_price | times: item_qty
+                 assign compare_tt_price   = compare_tt_price | plus: item_compare_price
+                 if cur_code_enabled
+                   assign money_original_price = original_price | money_with_currency
+                   assign money_final_price    = final_price | money_with_currency
+                 else
+                   assign money_original_price = original_price | money
+                   assign money_final_price    = final_price | money
+                 endif -%}        
+
+               {%- if original_price != item.final_price -%}
+                  <del>{{ money_original_price }}</del><ins>{{ money_final_price }}</ins>
+               {%- elsif v_compare_at_price > original_price -%}
+                  <del>{% if cur_code_enabled %}{{ v_compare_at_price | money_with_currency }}{% else %}{{ v_compare_at_price | money }}{% endif %}</del><ins>{{ money_final_price }}</ins>
+               {%- else -%}
+                  {{ money_original_price }}
+               {%- endif -%}
+             </div>
+             {%- if item.unit_price_measurement -%}
+                {%- capture unit_price_base_unit -%}
+                  {%- if item.unit_price_measurement.reference_value != 1 -%}
+                    {{- item.unit_price_measurement.reference_value -}}
+                  {%- endif -%}
+                  {{ item.unit_price_measurement.reference_unit }}
+                {%- endcapture -%}
+                <div class="t4s-cart_unit_price">{{ item.unit_price | money }}<span>/</span>{{- unit_price_base_unit -}}</div>
+             {%- endif -%}
+             {%- if item.line_level_discount_allocations != blank -%}
+                <ul class="t4s-cart_discount_price">
+                   {%- for discount_allocation in item.line_level_discount_allocations -%}
+                     <li class="t4s-order-discount__item"><svg viewBox="0 0 24 24" width="20"><use href="#icon-cart-tag"/></svg> {{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})</li>
+                   {%- endfor -%}
+                </ul>
+             {%- endif -%}
+         </div>
+      </div>
+      <div class="t4s-col-12 t4s-col-md-4 t4s-col-lg-2 t4s-col-item t4s-text-center t4s-page_cart__actions">
+          <div data-quantity-wrapper class="t4s-quantity-wrapper t4s-quantity-cart-item"> 
+            <button data-quantity-selector data-decrease-qty type="button" class="t4s-quantity-selector is--minus">{% if item_qty > 1 or min_qty == 1 %}<svg focusable="false" class="icon icon--minus" viewBox="0 0 10 2" role="presentation"><path d="M10 0v2H0V0z" fill="currentColor"></path></svg>{% else %}<svg viewBox="0 0 24 24" width="17"><use href="#icon-cart-remove"/></svg>{% endif %}</button>
+            <input data-action-change data-quantity-value type="number" id="miniupdates_{{ item_key }}" data-id="{{ item_key }}" class="t4s-quantity-input" step="1" min="{{ min_qty }}" max="{{ max_qty }}" name="updates[]" data-current-qty="{{ item_qty }}" value="{{ item_qty }}" size="4" pattern="[0-9]*" inputmode="numeric">
+            <button data-quantity-selector data-increase-qty type="button" class="t4s-quantity-selector is--plus"><svg focusable="false" class="icon icon--plus" viewBox="0 0 10 10" role="presentation"><path d="M6 4h4v2H6v4H4V6H0V4h4V0h2v4z" fill="currentColor" fill-rule="evenodd"></path></svg></button>
+          </div>
+      </div>
+      <div class="t4s-col-12 t4s-col-md-4 t4s-col-lg-2 t4s-col-item t4s-text-lg-end t4s-text-md-center t4s-text-start">
+
+        <span class="t4s-cart-item-price">  
+                {%- liquid
+                 if cur_code_enabled
+                   assign money_original_line_price = item.original_line_price | money_with_currency
+                   assign money_final_line_price    = item.final_line_price | money_with_currency
+                 else
+                   assign money_original_line_price = item.original_line_price | money
+                   assign money_final_line_price    = item.final_line_price | money
+                 endif -%}
+                {%- if item.original_line_price != item.final_line_price -%}
+                  <dl>
+                    <dd>
+                      <s>{{ money_original_line_price }}</s>
+                    </dd>
+                      <span class="t4s-order-discount">{{ money_final_line_price }}</span>
+                  </dl>
+                {%- else -%}
+                  {{ money_original_line_price }}
+                {%- endif -%}
+         </span>
+      </div>
+    </div>
+ </div>

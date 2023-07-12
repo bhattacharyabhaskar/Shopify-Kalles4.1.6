@@ -1,0 +1,40 @@
+{%- if form.posted_successfully? -%}
+    <p class="t4s-form-message t4s-form-message--success" tabindex="-1" data-form-status>
+        {{ success_message | default: 'templates.contact.form.post_success' | t }}
+    </p>
+{%- endif -%}
+{% assign error_order = "author, email, body, password, form" | split: ", " %}
+{%- if form.errors -%}
+    {%- if form.errors.translated_fields.size == 1 and form.errors.first == 'form' -%}
+        <p class="t4s-form-message" tabindex="-1" data-form-status>{{ form.errors.messages['form'] }}</p>
+    {%- else -%}
+        <div class="t4s-form-message t4s-form-message--error">
+            <h2 class="t4s-form-message__title " tabindex="-1" data-form-status>{{ 'templates.contact.form.error_heading' | t }}</h2>
+            <ul>
+                {% for error in error_order %}
+                    {% for field in form.errors %}
+                        {% if error == field %}
+                            {% capture field_label %}
+                                {% case field %}
+                                    {% when 'author' %}
+                                        {{ 'templates.contact.form.name' | t }}
+                                    {% when 'body' %}
+                                        {{ 'templates.contact.form.message' | t }}
+                                    {% else %}
+                                        {{ form.errors.translated_fields[field] }}
+                                {% endcase %}
+                            {% endcapture %}
+                            <li>
+                                {%- if field == 'form' -%}
+                                    {{ form.errors.messages[field] }}
+                                {%- else -%}
+                                    <a href="#{{ form_id }}-{{ field }}" class="t4s-form-message__link">{{ field_label | strip | capitalize }} {{ form.errors.messages[field] }}</a>
+                                {%- endif -%}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {%- endif -%}
+{%- endif -%}

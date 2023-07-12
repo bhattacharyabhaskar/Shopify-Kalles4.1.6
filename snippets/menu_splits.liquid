@@ -1,0 +1,63 @@
+{%- comment -%}
+menu_blocks
+menu_splits
+
+assign se_blocks_size_half = se_blocks_size | divided_by: 2
+{%- endcomment -%}
+
+{%- liquid
+  assign root_url = routes.root_url
+  assign showArrow = se_stts.arrow
+
+  assign se_blocks_size = se_blocks.size
+  assign se_blocks_size_half = se_blocks_size | divided_by: 2.0 | ceil
+  if isSplit1
+     assign _id = 1
+     assign _text = 'end'
+     assign _limit = se_blocks_size_half
+     assign _offset = 0
+  else 
+     assign _id = 2
+     assign _text = 'start'
+     assign _limit = se_blocks_size
+     assign _offset = se_blocks_size_half
+  endif -%}
+
+
+<nav class="t4s-navigation t4s-text-{{ _text }} t4s-nav__{{ se_stts.hover }} t4s-nav-arrow__{{ se_stts.arrow }}"><ul data-menu-nav id="t4s-nav-ul{{ _id }}" class="t4s-nav__ul t4s-d-inline-flex t4s-flex-wrap t4s-align-items-center">
+{%- for block in se_blocks offset:_offset limit:_limit -%}
+   {%- assign bk_stts = block.settings -%}
+   {%- assign blockID = block.id -%}
+
+   {%- case block.type -%}
+		{%- when 'mega' -%}
+	      <li id="item_{{ blockID }}" data-placement="{{ placement }}" class="t4s-type__{{ block.type }} menu-width__{{ bk_stts.wid }} t4s-menu-item has--children menu-has__offsets" {{ block.shopify_attributes }}>
+	         <a class="t4s-lh-1 t4s-d-flex t4s-align-items-center t4s-pr" href="{{ bk_stts.url | default: root_url }}" target="{{ bk_stts.open_link }}"{% if bk_stts.cus_cl %} style="color:{{ bk_stts.cl }}"{% endif %}>{%- render 'title_menu', bk_stts: bk_stts, showArrow: showArrow -%}</a>
+	         <div id="content_{{ blockID }}" class="t4s-sub-menu t4s-pa t4s-op-0 t4s-pe-none">
+	         	<div class="t4s-container"{% if  bk_stts.wid != 'full nav_t4cnt' %} style="width:{{ bk_stts.cus_wid }}px"{% endif %}>
+	             <div class="t4s-row t4s-gx-{{ bk_stts.r_s_h_item }} t4s-gy-{{ bk_stts.r_s_v_item }} t4s-lazy_menu{% if bk_stts.enable_packery %} isotopet4s isotopet4s-later{% endif %}" data-id="{{ bk_stts.id }}" data-isotopet4s-js='{ "itemSelector": ".t4s-sub-column-item", "layoutMode": "packery","gutter": 0 }'><div class="t4s-loading--bg"></div></div>
+	            </div>
+	         </div>
+	      </li>
+
+		{%- when 'drop' -%}
+	      <li id="item_{{ blockID }}" data-placement="{{ placement }}" class="t4s-type__{{ block.type }} t4s-menu-item has--children menu-has__offsets menu-pos__{{ bk_stts.pos }}" {{ block.shopify_attributes }}>
+	         <a class="t4s-lh-1 t4s-d-flex t4s-align-items-center t4s-pr" href="{{ bk_stts.url | default: root_url }}" target="{{ bk_stts.open_link }}"{% if bk_stts.cus_cl %} style="color:{{ bk_stts.cl }}"{% endif %}>{%- render 'title_menu', bk_stts: bk_stts, showArrow: showArrow -%}</a>
+	         {%- if linklists[bk_stts.menu].links.size > 0 -%}
+	         <div id="content_{{ blockID }}" class="t4s-sub-menu t4s-pa t4s-op-0 t4s-pe-none">
+	            {%- if admin_sp == false -%}
+	               <div class="t4s-lazy_menu" data-handle="{{ bk_stts.menu }}"><div class="t4s-loading--bg"></div></div>
+	            {%- else -%}
+	               <div class="t4s-lazy_menu">{%- render 'menu_dropdown', handle_menu: bk_stts.menu -%}</div>
+	            {%- endif -%}
+	         </div>
+	        {%- endif -%}
+	      </li>
+
+		{%- else -%}
+		  <li id="item_{{ blockID }}" class="t4s-type__simple t4s-menu-item" {{ block.shopify_attributes }}><a class="t4s-lh-1 t4s-d-flex t4s-align-items-center t4s-pr" href="{% if bk_stts.url contains '#homet4' %}{{ root_url }}{% else %}{{ bk_stts.url }}{% endif %}" target="{{ bk_stts.open_link }}"{% if bk_stts.cus_cl %} style="color:{{ bk_stts.cl }}"{% endif %}>{%- render 'title_menu', bk_stts: bk_stts, showArrow: false -%}</a></li>
+
+	{%- endcase -%}
+
+{%- endfor -%}
+</ul></nav>

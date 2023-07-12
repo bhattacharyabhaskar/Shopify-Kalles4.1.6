@@ -1,0 +1,133 @@
+{%- comment -%} theme.grouped {%- endcomment -%}
+{%- liquid
+assign form_id = 't4s-grouped__frm' | append: pr_se_id
+assign txt_qv = 'products.product_card.quick_view' | t -%}
+
+{%- liquid
+assign pid = product.id
+assign current_variant = product.selected_or_first_available_variant
+assign current_variant_id = current_variant.id
+assign totalPrice = 0
+assign totalComparePrice = 0
+assign qty = bk_stts.qty_val
+assign min = 0
+assign show_product_current = bk_stts.show_product_current -%}
+
+{{ 'grouped.css' | asset_url | stylesheet_tag }}
+
+<div class="t4s-product-form__variants t4s-grouped-product is-btn-full-width__{{ bk_stts.btn_atc_full }} is-btn-atc-txt-{{ bk_stts.btn_txt }}" style="--wishlist-color: {{ bk_stts.wishlist_color }};--wishlist-hover-color: {{ bk_stts.wishlist_color_hover }};--wishlist-active-color: {{ bk_stts.wishlist_color_active }};--compare-color: {{ bk_stts.compare_color }};--compare-hover-color: {{ bk_stts.compare_color_hover }};--compare-active-color: {{ bk_stts.compare_color_active }};" {{ shopify_attributes }}>
+{%- form 'product', product, id: form_id, class: 't4s-grouped__frm', novalidate: 'novalidate', data-groups-pr-form: '' , data-type: 'add-to-cart-form' -%}
+	<table class="t4s-grouped-product-list">
+	   <tbody>
+         
+         {%- if show_product_current -%}
+	      {%- liquid
+	      assign available_v = product.variants | where: "available"
+         assign cu_pr = current_variant.price
+         assign cp_pr = current_variant.compare_at_price | default: cu_pr
+         assign totalPrice = totalPrice | plus: cu_pr
+         assign totalComparePrice = totalComparePrice | plus: cp_pr
+         assign image = current_variant.featured_image | default: product.featured_image
+         assign img_url = image | image_url: width: 1
+	      assign featured_image = product.featured_image
+	     -%}
+
+	      <tr data-groups-pr-item class="t4s-grouped-pr-item" data-index="{% increment indexData %}">
+	         <td class="t4s-grouped-pr__img t4s-pr" data-groups-img="{% increment indexData2 %}">
+	            <a href="{{ item.url }}" class="t4s-d-inline-block t4s-grouped-pr__img-wrap t4s-pr">
+	              <img class="lazyloadt4s t4s-lz--fadeIn" data-orginal="{{ img_url }}" data-src="{{ img_url }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+	              <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ img_url }})"></span>
+	            </a>
+	         </td>
+	         <td class="t4s-grouped-pr__info t4s-text-center">
+	            <a class="t4s-grouped-pr__link t4s-d-inline-block" href="{{ product.url }}">{{ product.title }}{% if available_v.size < 2 and product.has_only_default_variant == false %} - {{ current_variant.title }}{% endif %}</a>
+	            {%- if available_v.size < 2 -%}
+	               <input data-groups-pr-sl name="items[][id]" data-cpprice="{{ cp_pr }}" data-price="{{ cu_pr }}" value="{{ current_variant.id }}" type="hidden">
+	            {%- else -%}
+	               <select data-groups-pr-sl name="items[][id]" autocomplete="off" data-cpprice="{{ cp_pr }}" data-price="{{ cu_pr }}">
+	                {%- for variant in available_v -%}
+	                   <option data-img="{{ variant.image | default: featured_image | image_url: width: 1 }}" data-cpprice="{{ variant.compare_at_price | default: variant.price }}" data-price="{{ variant.price }}" data-max="{% if variant.inventory_management == blank or variant.inventory_policy == 'continue' %}9999{% else %}{{ variant.inventory_quantity | default: 9999 }}{% endif %}" value="{{ variant.id }}"{% if variant.id == current_variant_id %} selected="selected"{% endif %}>{{ variant.title | escape }}</option>
+	                {%- endfor -%}
+	               </select>
+	            {%- endif -%}
+	            <div class="t4s-grouped-pr__price" data-groups-item-price>{% if current_variant.compare_at_price > current_variant.price %}<del>{{ current_variant.compare_at_price | money }}</del> <ins>{{ current_variant.price | money }}</ins>{% else %}{{ current_variant.price | money }}{% endif %}</div>
+	         </td>
+	         <td class="t4s-grouped-pr__qty">
+	            <div data-quantity-wrapper class="t4s-quantity-wrapper"> 
+	               <button data-quantity-selector data-decrease-qty type="button" class="t4s-quantity-selector is--minus"><svg focusable="false" class="icon icon--minus" viewBox="0 0 10 2" role="presentation"><path d="M10 0v2H0V0z" fill="currentColor"></path></svg></button>
+	               <input data-groups-qty-value data-quantity-value type="number" class="t4s-quantity-input" step="1" min="{{ min }}" max="{% if current_variant.inventory_management == blank or current_variant.inventory_policy == 'continue' %}9999{% else %}{{ current_variant.inventory_quantity | default: 9999 }}{% endif %}" name="items[][quantity]" value="1" size="4" pattern="[0-9]*" inputmode="numeric">
+	               <button data-quantity-selector data-increase-qty type="button" class="t4s-quantity-selector is--plus"><svg focusable="false" class="icon icon--plus" viewBox="0 0 10 10" role="presentation"><path d="M6 4h4v2H6v4H4V6H0V4h4V0h2v4z" fill="currentColor" fill-rule="evenodd"></path></svg></button>
+	            </div>
+	         </td>
+	      </tr>
+	      {%- endif -%}
+
+
+	      {%- for item in product_list -%}
+	      {%- liquid
+	      if pid == item.id or item.available == false 
+	      continue 
+	      endif 
+	      assign available_v = item.variants | where: "available"
+	      assign available_v_1 = available_v.first
+         assign cu_pr = available_v_1.price
+         assign cp_pr = available_v_1.compare_at_price | default: cu_pr
+         assign totalPrice = totalPrice | plus: cu_pr
+         assign totalComparePrice = totalComparePrice | plus: cp_pr
+         assign image = available_v_1.featured_image | default: item.featured_image
+         assign img_url = image | image_url: width: 1
+	      assign featured_image = item.featured_image
+	     -%}
+	      <tr data-groups-pr-item class="t4s-grouped-pr-item">
+	         <td class="t4s-grouped-pr__img t4s-pr" data-groups-img="{% increment indexData %}">
+	            <a href="{{ item.url }}" class="t4s-d-inline-block t4s-grouped-pr__img-wrap">
+	              <img class="lazyloadt4s t4s-lz--fadeIn" data-orginal="{{ img_url }}" data-src="{{ img_url }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+	              <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ img_url }})"></span>
+	            </a>
+	         </td>
+	         <td class="t4s-grouped-pr__info t4s-text-center">
+	            <a class="t4s-grouped-pr__link t4s-d-inline-block" href="{{ item.url }}">{{ item.title }}{% if available_v.size < 2 and item.has_only_default_variant == false %} - {{ available_v_1.title }}{% endif %}</a>
+	            {%- if available_v.size < 2 -%}
+	               <input data-groups-pr-sl name="items[][id]" data-cpprice="{{ cp_pr }}" data-price="{{ cu_pr }}" value="{{ available_v_1.id }}" type="hidden">
+	            {%- else -%}
+	               <select data-groups-pr-sl name="items[][id]" autocomplete="off" data-cpprice="{{ cp_pr }}" data-price="{{ cu_pr }}">
+	                {%- for variant in available_v -%}
+	                   <option data-img="{{ variant.image | default: featured_image | image_url: width: 1 }}" data-cpprice="{{ variant.compare_at_price | default: variant.price }}" data-price="{{ variant.price }}" data-max="{% if variant.inventory_management == blank or variant.inventory_policy == 'continue' %}9999{% else %}{{ variant.inventory_quantity | default: 9999 }}{% endif %}" value="{{ variant.id }}"{% if variant.id == current_variant_id %} selected="selected"{% endif %}>{{ variant.title | escape }}</option>
+	                {%- endfor -%}
+	               </select>
+	            {%- endif -%}
+	            <div class="t4s-grouped-pr__price" data-groups-item-price>{% if available_v_1.compare_at_price > available_v_1.price %}<del>{{ available_v_1.compare_at_price | money }}</del> <ins>{{ available_v_1.price | money }}</ins>{% else %}{{ available_v_1.price | money }}{% endif %}</div>
+	         </td>
+	         <td class="t4s-grouped-pr__qty">
+	            <div data-quantity-wrapper class="t4s-quantity-wrapper"> 
+	               <button data-quantity-selector data-decrease-qty type="button" class="t4s-quantity-selector is--minus"><svg focusable="false" class="icon icon--minus" viewBox="0 0 10 2" role="presentation"><path d="M10 0v2H0V0z" fill="currentColor"></path></svg></button>
+	               <input data-groups-qty-value data-quantity-value type="number" class="t4s-quantity-input" step="1" min="{{ min }}" max="{% if available_v_1.inventory_management == blank or available_v_1.inventory_policy == 'continue' %}9999{% else %}{{ available_v_1.inventory_quantity | default: 9999 }}{% endif %}" name="items[][quantity]" value="{{ qty }}" size="4" pattern="[0-9]*" inputmode="numeric">
+	               <button data-quantity-selector data-increase-qty type="button" class="t4s-quantity-selector is--plus"><svg focusable="false" class="icon icon--plus" viewBox="0 0 10 10" role="presentation"><path d="M6 4h4v2H6v4H4V6H0V4h4V0h2v4z" fill="currentColor" fill-rule="evenodd"></path></svg></button>
+	            </div>
+	         </td>
+	      </tr>
+	      {%- endfor -%}
+
+	  </tbody>
+	</table>
+	<div class="t4s-product-form__buttons" style="--pr-btn-round:{{ bk_stts.pr_btn_round }}px;">
+      <div class="t4s-grouped__text-total-price">
+           <span class="t4s-grouped__total-text" >{{ 'products.grouped.tt_price' | t }} </span><span class="t4s-grouped__total-price" data-groups-total-price>{% if totalComparePrice > totalPrice %}<del>{{ totalComparePrice | money }}</del> <ins>{{ totalPrice | money }}</ins>{% else %}{{ totalPrice | money }}{% endif %}</span>
+      </div>
+	   <div class="t4s-d-flex t4s-flex-wrap">
+		   {%- if show_product_current and bk_stts.enable_wishlist or bk_stts.enable_compare -%}
+		   <!-- render t4s_wis_cp.liquid -->
+		   {%- render 't4s_wis_cp', product: product, bk_stts: bk_stts -%}
+		   {%- endif -%}
+
+		   <button data-animation-atc='{ "ani":"{{ bk_stts.ani }}","time":{{ bk_stts.time }}000 }' type="submit" name="add" data-atc-form class="t4s-product-form__submit t4s-btn t4s-btn-base t4s-btn-style-{{ bk_stts.button_style }} t4s-btn-color-{{ bk_stts.button_color }} t4s-w-100 t4s-justify-content-center {% if bk_stts.button_style == 'default' or bk_stts.button_style == 'outline' %} t4s-btn-effect-{{ bk_stts.button_effect }} {% endif %} t4s-btn-loading__svg">
+		      <span class="t4s-btn-atc_text">{{ 'products.product.add_to_cart' | t }}</span>{%- if bk_stts.btn_icon -%}<svg class="t4s-btn-icon" viewBox="0 0 14 10"><use xlink:href="#t4s-icon-btn"></use></svg>{%- endif -%}
+		      <span class="t4s-loading__spinner" hidden>
+		        <svg width="16" height="16" hidden class="t4s-svg-spinner" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+		      </span>
+		   </button>
+	    </div>
+	</div>
+{%- endform -%}
+{%- if bk_stts.ani != 'none' -%}<link href="{{ 'ani-atc.min.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">{%- endif -%}
+</div>

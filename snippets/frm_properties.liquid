@@ -1,0 +1,162 @@
+{%- liquid 
+assign show_script = true
+assign show_script2 = true
+assign pr_title = product.title
+assign pr_type = product.type
+assign pr_tag = product.tags
+assign pr_collection_title = product.collections | map: 'title'
+ -%}
+{{ 'frm_properties.css' | asset_url | stylesheet_tag }}
+
+{%- for field in arr_properties -%}
+
+   {%- liquid 
+    assign bk_stts_field = field.settings
+    assign type_field    = bk_stts_field.type
+    assign name_field    = bk_stts_field.heading | escape
+    assign id_field      = field.id
+    if bk_stts_field.show_at_checkout
+      assign show_at_checkout = ''
+    else
+      assign show_at_checkout = '_'
+    endif
+    assign name_field_checkout = show_at_checkout | append:name_field
+    if bk_stts_field.required
+      assign required = 'required data-field-required class="t4s-required"'
+    else
+      assign required = ''
+    endif
+    assign arr_options = bk_stts_field.options | remove: '  ' | replace: ', ', ',' | replace: ' ,', ',' | split: ','
+    assign visibility = bk_stts_field.visibility
+    if visibility == 'all'
+    elsif visibility == 'collection'
+      if collection_based_title.size == 0
+      continue
+      endif
+      assign collection_based_title = bk_stts_field.collection_based | map: 'title'
+      assign pr_title_and_collections = pr_collection_title | concat: collection_based_title
+      assign pr_title_and_collections_uniq = pr_title_and_collections | uniq
+      if pr_title_and_collections_uniq.size == pr_title_and_collections.size
+      continue
+      endif
+    elsif visibility == 'type'
+      if pr_type == blank
+      continue
+      endif
+      assign type_based = bk_stts_field.type_based | remove: '  ' | replace: ', ', ',' | replace: ' ,', ',' | split: ','
+      unless type_based contains pr_type
+      continue
+      endunless
+    elsif visibility == 'tag'
+      if pr_tag.size == 0
+      continue
+      endif
+      assign tag_based = bk_stts_field.tag_based | remove: '  ' | replace: ', ', ',' | replace: ' ,', ',' | split: ','
+      assign pr_tag_and_tags = pr_tag | concat: tag_based
+      assign pr_tag_and_tags_uniq = pr_tag_and_tags | uniq
+      if pr_tag_and_tags_uniq.size == pr_tag_and_tags.size
+      continue
+      endif
+    elsif visibility == 'product'
+      assign product_based_title = bk_stts_field.product_based | map: 'title'
+      unless product_based_title contains pr_title
+      continue
+      endunless
+    elsif visibility == 'metafield'
+      unless product.metafields.theme.visibility_customizable
+      continue
+      endunless
+    endif -%}
+
+   <div data-item-property-field class="t4s-line-item-property__field is--type-{{ type_field }}" id="b_{{ id_field }}">
+      {%- case type_field -%}
+         
+        {%- when 'short' or 'long' -%}
+        <label class="t4s-line-item-property__label t4s_as_title" for="name_{{ id_field }}">{{ name_field }}</label><br>
+        {%- if type_field == 'short' -%}
+        <input {{ required }} id="name_{{ id_field }}" type="text" name="properties[{{ name_field_checkout }}]">
+        {%- else -%}
+        <textarea {{ required }} id="name_{{ id_field }}" name="properties[{{ name_field_checkout }}]"></textarea>
+        {%- endif -%}
+
+        {%- when 'checkbox' -%}
+        <input type="hidden" name="properties[{{ name_field_checkout }}]" value="No">
+        <input id="name_{{ id_field }}" {{ required }} type="checkbox" name="properties[{{ name_field_checkout }}]" value="Yes">
+        <label class="t4s-line-item-property__label t4s_as_title_" for="name_{{ id_field }}">{{ name_field }}</label><svg id="t4s-line-item-property__icon_selected" viewBox="0 0 24 24"><path d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg>
+
+        {%- when 'radio' -%}
+        <label class="t4s-line-item-property__label t4s_as_title">{{ name_field }}</label><br>
+        {%- if arr_options.size > 0 -%}
+         {%- for option in arr_options %}<div class="t4s-line-item-property__field-ck"><input {{ required }} id="value{{ id_field }}__{{ forloop.index }}" type="radio" name="properties[{{ name_field_checkout }}]" value="{{ option | strip | escape }}"> <label for="value{{ id_field }}__{{ forloop.index }}">{{ option | escape }}</label></div>{% endfor -%}
+        {%- endif -%}
+
+        {%- when 'select' -%}
+        <label class="t4s-line-item-property__label t4s_as_title">{{ name_field }}</label><br>
+        {%- if arr_options.size > 0 -%}
+        <select {{ required }} id="name_{{ id_field }}" name="properties[{{ name_field_checkout }}]">
+          {%- for option in arr_options %}<option value="{{ option | strip | escape }}">{{ option | escape }}</option>{% endfor -%}
+        </select>
+        {%- endif -%}
+        
+        {%- when 'checkbox_group' -%}
+        
+        {%- if show_script -%}
+        {%- assign show_script = false -%}
+        <script>
+          function fillHiddenT4s(hiddenname) {
+            var checkboxes = document.querySelectorAll('[hidden-data="'+hiddenname+'"]');
+            var hiddenfield = document.getElementById(hiddenname);
+            hiddenfield.value = ""
+            var i;
+            for (i = 0; i < checkboxes.length; i++) {
+              var x = checkboxes[i];
+              if(x.checked){
+                if(hiddenfield.value == ""){
+                  hiddenfield.value = x.value;
+                  }else{
+                  hiddenfield.value = hiddenfield.value + ", " + x.value; 
+                  } 
+                }
+                hiddenfield.dispatchEvent( new Event('change', { bubbles: true, cancelable: true }) );
+              }
+          }
+        </script>
+        {%- endif -%}
+        <label class="t4s-line-item-property__label t4s_as_title">{{ name_field }}</label><br>
+        {%- if arr_options.size > 0 -%}
+        {%- for option in arr_options -%}
+        <div class="t4s-line-item-property__field-ck"><input type="checkbox" id="value{{ id_field }}__{{ forloop.index }}" hidden-data="name_{{ id_field }}" onchange="fillHiddenT4s('name_{{ id_field }}')" value="{{ option | escape }}"><label for="value{{ id_field }}__{{ forloop.index }}">{{ option | escape }}</label><svg id="t4s-line-item-property__icon_selected" viewBox="0 0 24 24"><path d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg></div>
+        {%- endfor -%}
+        {%- endif -%}
+        <input type="hidden" {{ required }} id="name_{{ id_field }}" name="properties[{{ name_field_checkout }}]">
+
+        {%- else -%}
+        {%- if show_script2 -%}
+        {%- assign show_script2 = false -%}
+        <script>
+            function extractFilenameT4s(path) {
+              if (path.substr(0, 12) == "C:\\fakepath\\")
+                return path.substr(12); // modern browser
+              var x;
+              x = path.lastIndexOf('/');
+              if (x >= 0) // Unix-based path
+                return path.substr(x+1);
+              x = path.lastIndexOf('\\');
+              if (x >= 0) // Windows-based path
+                return path.substr(x+1);
+              return path; // just the filename
+            }
+            function updateFilenameT4s(path, id) {
+               var name = extractFilenameT4s(path);
+               if (name) document.getElementById(id).textContent = extractFilenameT4s(path);
+            }
+        </script>
+        {%- endif -%}
+        <label class="t4s-line-item-property__label t4s_as_title" id="label_{{ id_field }}" for="name_{{ id_field }}">{{ name_field }}</label><br>
+        <input {{ required }} id="name_{{ id_field }}" type="file" onchange="updateFilenameT4s(this.value,'label_{{ id_field }}')" data-accept="image/jpg,image/jpeg,image/gif,image/png" autocorrect="off" autocapitalize="off" name="properties[{{ name_field_checkout }}]">
+      
+      {%- endcase -%}
+   </div>
+
+{%- endfor -%}
+<div class="t4s-line-item-property__space t4s-clearfix"></div>

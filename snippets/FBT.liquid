@@ -1,0 +1,139 @@
+{%- comment -%} theme.fbt {%- endcomment -%}
+{%- liquid
+assign se_id = section.id
+assign form_id = 't4s-fbt__frm' | append: se_id
+assign se_stts = section.settings 
+assign product_list = se_stts.product_list
+assign txt_qv = 'products.product_card.quick_view' | t -%}
+
+{%- for i in (1..1) -%}
+
+{%- liquid
+if product_list == blank or product.available == false
+   break
+endif 
+assign pid = product.id
+assign current_variant = product.selected_or_first_available_variant 
+assign current_variant_id = current_variant.id -%}
+
+{{ 'fbt.css' | asset_url | stylesheet_tag }}
+
+<div class="t4s-fbt__wrap t4s-container">
+   <h3 class="t4s-fbt__title">{{ 'products.fbt.title' | t }}</h3>
+   <div class="t4s-fbt__products">
+   {%- form 'product', product, id: form_id, class: 't4s-fbt__frm', novalidate: 'novalidate', data-groups-pr-form: '' , data-type: 'add-to-cart-form' -%}
+      <div class="t4s-row t4s-align-items-center">
+         <div class="t4s-col-auto t4s-col-item is--col-fbt-img">
+            <ul class="t4s-d-flex t4s-flex-wrap t4s-align-items-center t4s-fbt__list-img">
+
+               {%- liquid
+               assign price = current_variant.price  
+               assign compare_pr = current_variant.compare_at_price | default: price 
+               assign image = current_variant.featured_image | default: product.featured_image
+               assign img_url = image | image_url: width: 1
+               -%}
+
+               <li class="t4s-fbt__img t4s-fbt_img-0 t4s-pr" data-groups-img="{% increment indexData %}">
+                  <img class="lazyloadt4s t4s-lz--fadeIn" data-orginal="{{ img_url }}" data-src="{{ img_url }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                  <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ img_url }})"></span>
+               </li>
+
+               {%- for item in product_list -%}
+                  {%- liquid
+                  if pid == item.id or item.available == false 
+                  continue
+                  endif
+                  assign current_variant_item = item.selected_or_first_available_variant
+                  assign cu_pr = current_variant_item.price
+                  assign cp_pr = current_variant_item.compare_at_price | default: cu_pr
+                  assign price = price | plus: cu_pr
+                  assign compare_pr = compare_pr | plus: cp_pr 
+                  assign image = current_variant_item.featured_image | default: item.featured_image
+                  assign img_url = image | image_url: width: 1
+                  -%}
+
+                  <li class="t4s-fbt__img t4s-fbt_img{% decrement index %} t4s-pr" data-groups-img="{% increment indexData %}">
+                     <svg focusable="false" class="t4s-svg t4s-svg--plus" viewBox="0 0 10 10" role="presentation"><path d="M6 4h4v2H6v4H4V6H0V4h4V0h2v4z" fill="currentColor" fill-rule="evenodd"></path></svg>
+                     <a class="t4s-fbt__qv t4s-d-inline-block t4s-pa" href="{{ pr.url }}" data-action-quickview data-tooltip="top" data-id="{{ item.id }}" rel="nofollow"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-qv"></use></svg><span class="t4s-d-none">{{ txt_qv }}</span></a>
+                     <a href="{{ item.url }}" class="t4s-d-inline-block t4s-pr t4s-fbt__img-wrap">
+                       <img class="lazyloadt4s t4s-lz--fadeIn" data-orginal="{{ img_url }}" data-src="{{ img_url }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                       <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ img_url }})"></span>
+                     </a>
+                  </li>
+
+               {%- endfor -%}
+
+            </ul>
+         </div>
+         <div class="t4s-col-auto t4s-col-item is--col-fbt-total-price">
+             <div class="t4s-fbt__text-total-price">
+                 <span class="t4s-fbt__total-text" >{{ 'products.fbt.tt_price' | t }}</span><span class="t4s-fbt__total-price" data-groups-total-price>{% if compare_pr > price %}<del>{{ compare_pr | money }}</del> <ins>{{ price | money }}</ins>{% else %}{{ price | money }}{% endif %}</span>
+             </div>
+             <button class="t4s-fbt__submit t4s-btn-loading__svg" type="submit" name="add" data-atc-form>
+               <span class="t4s-btn-atc_text">{{ 'products.fbt.add_tc' | t }}</span>
+               <span class="t4s-loading__spinner" hidden>
+                    <svg width="16" height="16" hidden class="t4s-svg-spinner" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+               </span>
+            </button>
+         </div>
+      </div>
+      <ul class="t4s-fbt__swatches">
+
+         {%- liquid
+         assign available_v = product.variants | where: "available"
+         assign available_v_1 = available_v.first
+         assign featured_image = product.featured_image
+        -%}
+         <li data-groups-pr-item class="t4s-fbt__item t4s-fbt_item-0 is--checked">
+
+            <input data-groups-pr-ck autocomplete="off" type="checkbox" checked="checked" id="t4s-fbt__ck_0{{ se_id }}"><label for="t4s-fbt__ck_0{{ se_id }}" class="t4s-pr t4s-pe-none t4s-d-inline-block"><svg class="t4s-dn t4s-icon_checked" viewBox="0 0 24 24"><path d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg></label>
+            <span><strong>{{ 'products.fbt.this_item' | t }}</strong> {{ product.title | truncatewords: 12 }}{% if available_v.size < 2 and product.has_only_default_variant == false %} - {{ available_v_1.title }}{% endif %}</span>
+           
+            {%- if available_v.size < 2 -%}
+               <input data-groups-pr-sl name="items[][id]" data-cpprice="{{ available_v_1.compare_at_price | default: available_v_1.price }}" data-price="{{ available_v_1.price }}" value="{{ available_v_1.id }}" type="hidden">
+            {%- else -%}
+               <select data-groups-pr-sl name="items[][id]" autocomplete="off" data-cpprice="{{ available_v_1.compare_at_price | default: available_v_1.price }}" data-price="{{ available_v_1.price }}" >
+                {%- for variant in available_v -%}
+                   <option data-img="{{ variant.image | default: featured_image | image_url: width: 1 }}" data-cpprice="{{ variant.compare_at_price | default: variant.price }}" data-price="{{ variant.price }}" data-max="{% if variant.inventory_management == blank or variant.inventory_policy == 'continue' %}9999{% else %}{{ variant.inventory_quantity | default: 9999 }}{% endif %}" value="{{ variant.id }}"{% if variant.id == current_variant_id %} selected="selected"{% endif %}>{{ variant.title | escape }}</option>
+                {%- endfor -%}
+               </select>
+            {%- endif -%}
+            <input data-groups-qty-value value="1" type="number" name="items[][quantity]" class="t4s-d-none">
+            <span class="t4s-fbt__price" data-groups-item-price>{% if available_v_1.compare_at_price > available_v_1.price %}<del>{{ available_v_1.compare_at_price | money }}</del> <ins>{{ available_v_1.price | money }}</ins>{% else %}{{ available_v_1.price | money }}{% endif %}</span>
+         </li>
+          
+         {%- assign index = 0 -%}
+         {%- for item in product_list -%}
+         {%- liquid
+         if pid == item.id or item.available == false 
+         continue 
+         endif 
+         assign index = index | plus: 1
+         assign available_v = item.variants | where: "available"
+         assign available_v_1 = available_v.first
+         assign featured_image = item.featured_image
+        -%}
+         <li data-groups-pr-item class="t4s-fbt__item t4s-fbt_item-{{ index }} is--checked">
+
+            <input data-groups-pr-ck autocomplete="off" type="checkbox" checked="checked" id="t4s-fbt__ck_{{ index }}{{ se_id }}"><label for="t4s-fbt__ck_{{ index }}{{ se_id }}" class="t4s-pr t4s-d-inline-block"><svg class="t4s-dn t4s-icon_checked" viewBox="0 0 24 24"><path d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg></label>
+            <a class="t4s-fbt__link" href="{{ item.url }}">{{ item.title | truncatewords: 12 }}{% if available_v.size < 2 and item.has_only_default_variant == false %} - {{ available_v_1.title }}{% endif %}</a>
+           
+            {%- if available_v.size < 2 -%}
+               <input data-groups-pr-sl name="items[][id]" data-cpprice="{{ available_v_1.compare_at_price | default: available_v_1.price }}" data-price="{{ available_v_1.price }}" value="{{ available_v_1.id }}" type="hidden">
+            {%- else -%}
+               <select data-groups-pr-sl name="items[][id]" autocomplete="off" data-cpprice="{{ available_v_1.compare_at_price | default: available_v_1.price }}" data-price="{{ available_v_1.price }}">
+                {%- for variant in available_v -%}
+                   <option data-img="{{ variant.image | default: featured_image | image_url: width: 1 }}" data-cpprice="{{ variant.compare_at_price | default: variant.price }}" data-price="{{ variant.price }}" data-max="{% if variant.inventory_management == blank or variant.inventory_policy == 'continue' %}9999{% else %}{{ variant.inventory_quantity | default: 9999 }}{% endif %}" value="{{ variant.id }}"{% if variant.id == current_variant_id %} selected="selected"{% endif %}>{{ variant.title | escape }}</option>
+                {%- endfor -%}
+               </select>
+            {%- endif -%}
+            <input data-groups-qty-value value="1" type="number" name="items[][quantity]" class="t4s-d-none">
+            <span class="t4s-fbt__price" data-groups-item-price>{% if available_v_1.compare_at_price > available_v_1.price %}<del>{{ available_v_1.compare_at_price | money }}</del> <ins>{{ available_v_1.price | money }}</ins>{% else %}{{ available_v_1.price | money }}{% endif %}</span>
+         </li>
+         {%- endfor -%}
+
+      </ul>
+   {%- endform -%}
+   </div>
+</div>
+{%- endfor -%}

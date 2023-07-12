@@ -1,0 +1,85 @@
+
+{%- case block.type -%}
+{%- when 'custom_text' -%}
+  <{{ bk_stts.tag }} data-lh="{{ bk_stts.text_lh_mb }}" data-lh-md="{{ bk_stts.text_lh }}" data-lh-lg="{{ bk_stts.text_lh }}" class="t4s-text-bl t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }} t4s-br-mb-{{ bk_stts.remove_br_tag }} t4s-text-shadow-{{ bk_stts.text_shadow }}" {%- render 'bk_cus_style', type: 'custom_text', bk_stts: bk_stts -%}>{{ bk_stts.text }}</{{ bk_stts.tag }}>
+{%- when 'space_html' -%}
+  <div class="t4s-space-html" {%- render 'bk_cus_style', type: 'space_html', bk_stts: bk_stts -%}></div>
+{%- when 'html' -%}
+  <div class="t4s-footer-raw-html t4s-rte t4s-hidden-mobile-{{ bk_stts.hidden_mobile }}" {%- render 'bk_cus_style', type: 'html', bk_stts: bk_stts -%}>{{ bk_stts.html_content }}</div>
+{%- when 'image' -%}
+  {%- assign image = bk_stts.image_child -%}
+  {%- if image -%}
+    <a href="{{ bk_stts.link_img | default: routes.root_url }}" class="t4s-d-block">
+      <div class="t4s-img-child t4s-pr t4s-hidden-mobile-{{ bk_stts.hidden_mobile }}" {%- render 'bk_cus_style', type: 'image', bk_stts: bk_stts -%}>
+        <img data-maxw="{{ bk_stts.img_width_mb }}" data-maxw-md="{{ bk_stts.img_width }}" data-maxw-lg="{{ bk_stts.img_width }}" class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{%- render 'img_svg', w: image.width, h: image.height -%}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+        <span class="lazyloadt4s-loader"></span>
+      </div>
+    </a>
+  {%- endif -%}
+{%- when 'payments' -%} 
+  {%- assign arr = bk_stts.svg | remove: ' ' | split: "," -%}
+  <div class="t4s-payment-footer-svg t4s-pr t4s-hidden-mobile-{{ bk_stts.hidden_mobile }}" style="--height:{{ bk_stts.height }}px;--mgb:{{ bk_stts.mgb }}px;--mgb-mb:{{ mgb.mgb_mb }}px;">
+    {%- for img in arr -%}
+        {%- if img contains 'cust4__' -%}
+            {%- assign getIMG = img | remove_first: "cust4__" -%}
+            {%- assign image = images[getIMG] -%}
+            {%- if image == blank %}{% continue %}{% endif -%}
+            <img class="lazyloadt4s" src="https://cdn.shopify.com/s/assets/payment_icons/generic-dfdcaf09b6731ca14dd7441354c0ad8bc934184eb15ae1fda6a6b9e307675485.svg" data-src="{{ image | image_url: width: 100 }}" alt="{{ image.alt | escape }}" />
+        {%- else -%}
+            <img class="lazyloadt4s" src="https://cdn.shopify.com/s/assets/payment_icons/generic-dfdcaf09b6731ca14dd7441354c0ad8bc934184eb15ae1fda6a6b9e307675485.svg" data-src="{{ img | payment_type_img_url }}" alt="{{ img | replace: '_', ' ' }}" />
+        {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- when "countdown_timer" -%}
+  {%- if bk_stts.date != blank -%}
+  {%- assign countdown = true -%}
+    <div class="t4s-countdown sepr_coun_dt_wrap t4s-countdown-des-{{ bk_stts.cdt_des }} t4s-countdown-size-{{ bk_stts.cdt_size }}  t4s-hidden-mobile-{{ bk_stts.hidden_mobile }}" {%- render 'bk_cus_style', type: 'countdown', bk_stts: bk_stts -%}>
+      <div class="time" data-countdown-t4s data-date='{{ bk_stts.date }}' data-keyid='#slideshow-countdown'></div>
+    </div>
+   {%- endif -%} 
+{%- when 'custom_button' -%}
+{{ 'button-style.css' | asset_url | stylesheet_tag }}
+<link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+  {%- if bk_stts.button_link != blank and bk_stts.button_text != blank -%}
+    {%- assign  button_style = bk_stts.button_style -%}
+    <a href="{{ bk_stts.button_link }}" target="{{ bk_stts.target_link }}" class="t4s-btn t4s-btn-custom t4s-pe-auto t4s-fnt-fm-{{ bk_stts.fontf }}  t4s-hidden-mobile-{{ bk_stts.hidden_mobile }} t4s-btn-style-{{ button_style }}  {%- if button_style == 'default' or button_style == 'outline' %}t4s-btn-effect-{{ bk_stts.button_effect }} {%- endif -%} " {%- render 'bk_cus_style', type: 'custom_button', bk_stts: bk_stts -%}>{{ bk_stts.button_text }} {%- if bk_stts.button_icon_w > 0 -%}<svg class="t4s-btn-icon"><use xlink:href="#t4s-icon-btn"></use></svg>{%- endif -%}</a>
+  {%- endif -%}
+{%- when 'newsletter' -%}
+  {%- assign newsletter = true -%}
+  {%- assign custom_button = true -%}
+  <div class="t4s-newsletter-parent t4s_newsletter_se t4s-newsl-des-{{ bk_stts.newl_des }} t4s-newsl-{{ bk_stts.newl_size }} t4s-text-{{ bk_stts.news_align }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }}" {%- render 'bk_cus_style', type: 'newsletter', bk_stts: bk_stts -%}>
+    {%- render 'newsletter', form_id: block.id, buttonIcon: bk_stts.btn_icon, bk_stts: bk_stts -%}
+  </div>
+{%- when 'cus_socials' -%}
+  
+  <div class="t4s-socials-block t4s-setts-color-{{ bk_stts.use_color_set }} social-{{ block.id }}" style="--cl:{{ bk_stts.icon_cl }};--bg-cl:{{ bk_stts.bg_cl }};--mgb: {{ bk_stts.mgb }}px;--mgb-mb: {{ bk_stts.mgb_mb }}px; --bd-radius:{{ bk_stts.bd_radius }}px;">
+     {% if bk_stts.title != blank %}
+        <h3 class="t4s-socials-title t4s-footer-title">{{ bk_stts.title }}</h3>
+     {% endif %}
+     <div class="t4s-list-socials">
+       {%- if bk_stts.social_mode == '1' -%} 
+         {%- assign follow_social = true -%} 
+       {%- else -%} 
+         {%- assign share_image = settings.share_image | default: page_image | default: settings.logo -%} 
+       {%- endif -%} 
+        {%- render 'social_sharing', style: bk_stts.social_style, use_color_set: bk_stts.use_color_set, size: bk_stts.social_size, space_h_item: bk_stts.space_h_item, space_h_item_mb: bk_stts.space_h_item_mb, space_v_item: bk_stts.space_v_item, space_v_item_mb: bk_stts.space_v_item_mb, share_permalink: shop.url, share_title: shop.name, share_image: share_image, follow_social: follow_social -%} 
+    </div>
+  </div>
+{%- when 'cus_menu' -%} 
+  <div class="t4s-footer-menu t4s-footer-menu-style{{ bk_stts.menu_style | default: "2" }}" style="--mgb: {{ bk_stts.mgb }}px;--mgb-mb: {{ bk_stts.mgb_mb }}px;"> 
+    <ul class="t4s-footer-linklist">
+      {%- for link in bk_stts.menu.links -%}
+        <li>
+          <a href="{{ link.url }}" class="t4s-footer-link {% if link.current %}t4s-footer-link-active{% endif %}" {% if link.current%}  aria-current="page" {% endif %}>
+            {{ link.title | escape }}
+          </a>
+        </li>
+      {%- endfor -%} 
+    </ul>
+  </div>
+{%- when 'copyR' -%}
+  {%- assign now_y = 'now' | date: '%Y' -%}
+  <div class="t4s-coppy-right" style="--mgb: {{ bk_stts.mgb }}px;--mgb-mb: {{ bk_stts.mgb_mb }}px;">
+      {{- bk_stts.text | replace: "[year]", now_y -}}
+  </div>
+{%- endcase -%}

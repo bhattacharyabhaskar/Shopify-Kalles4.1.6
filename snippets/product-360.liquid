@@ -1,0 +1,48 @@
+{%- comment -%}
+framerate: Framerate for the spin animation Default:60
+autoplayDirection: Control the direction of the spin depending on your assets. You can use 1 or -1 Default:1
+navigation: Set false if you don't want default navigation controls. Default:true
+dragging: Set false if you want to disable mouse and touch events on the slider.  Default:true
+disableSpin: Will disable the initial spin on load. Default:false
+{%- endcomment -%}
+
+{%- liquid 
+assign array_view_360 = product.images | where: 'alt','break--360'
+assign image = array_view_360 | first
+ -%}
+      {%- capture _array_view_360 -%}
+         {%- for image in product.images -%}
+             {%- if check_360 -%}
+               {{ image | image_url }}{%- if forloop.last == false -%},{%- endif -%}
+            {%- elsif image.alt contains 'break--360' -%}
+               {%- assign image_first = image -%}
+               {{ image | image_url }}{%- if forloop.last == false -%},{%- endif -%}
+               {%- assign check_360 = true -%}
+            {%- endif -%}
+         {%- endfor -%}
+      {%- endcapture -%}
+      {%- assign array_view_360 = _array_view_360 | replace: ' ,', ',' | replace: ', ', ',' | split: ',' -%}
+
+<div data-product-single-media-wrapper data-main-slide data-max="2" class="{{ class_col }}t4s-col-12 t4s-col-item t4s-product__media-item" data-media-id="360" data-nt-media-id="{{ se_id }}-360" data-media-type="360">
+    {{ 'product-360.css' | asset_url | stylesheet_tag }}
+	<div class="t4s_ratio t4s-product__media" style="--aspect-ratioapt:{{ image.aspect_ratio }};--mw-media:{{ image.width }}px">
+		<img data-master="{{ image | image_url }}" class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ img_alt }}">
+	   <div class="t4s-threesixty t4s-pr"><div class="t4s-threesixty-spinner"><span>0%</span></div><ul class="t4s-threesixty_imgs"></ul></div>
+	</div>
+	  <script type="application/json" id="Json360-{{ se_id }}">
+	    {
+	     "currentFrame": 1,
+	     "imgArray": {{ array_view_360 | json }},
+	     "framerate": 50,
+	     "autoplayDirection": 1,
+	     "totalFrames": {{ array_view_360.size | json }},
+	     "endFrame": {{ array_view_360.size | json }},
+	     "height": {{ image.width }},
+	     "width": {{ image.height }},
+	     "imgList": ".t4s-threesixty_imgs",
+	     "progress": ".t4s-threesixty-spinner",
+         "responsive": true,
+         "navigation": true
+	    }
+	  </script>
+</div>
