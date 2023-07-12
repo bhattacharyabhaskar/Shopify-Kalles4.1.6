@@ -408,6 +408,107 @@
         "code_cus_css": ".SectionID {\nbackground-color:red\n}"
       }
     },
+    "64c9b235-9d18-46e5-ac3c-840dabd513f9": {
+      "type": "logo_list",
+      "blocks": {
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-0": {
+          "type": "logo_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Shipping-HOME.webp",
+            "url": ""
+          }
+        },
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-1": {
+          "type": "logo_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Secured_7b150ab3-4d78-4acb-a42a-7e2d902be95d.webp",
+            "url": ""
+          }
+        },
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-2": {
+          "type": "logo_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Silk-Mark-New-min_2d9904a7-4dbe-44e5-b1b8-83a999ac7b1e.webp",
+            "url": ""
+          }
+        },
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-3": {
+          "type": "logo_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/hand_woven.webp",
+            "url": ""
+          }
+        },
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-4": {
+          "type": "logo_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Stitching_08660442-1331-48af-978c-9b8fe7e889dd.webp",
+            "url": ""
+          }
+        },
+        "70e7a8e4-0f52-4131-839c-37088bb5a0bf": {
+          "type": "logo_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Service_db38927a-f7c4-49b9-ac55-90af6410ff85.webp",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-0",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-1",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-2",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-3",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-4",
+        "70e7a8e4-0f52-4131-839c-37088bb5a0bf"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "Why IndyVogue",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "img_effect": "none",
+        "b_effect": "none",
+        "open_link": "_self",
+        "layout_des": "2",
+        "click_image": "data-goto",
+        "nav_thumbs": true,
+        "col_dk": "6",
+        "col_tb": "2",
+        "col_mb": "2",
+        "space_item": "30",
+        "space_item_mb": "30",
+        "loop": true,
+        "au_time": 2.5,
+        "au_hover": true,
+        "nav_btn": false,
+        "btn_vi": "hover",
+        "btn_owl": "default",
+        "btn_shape": "none",
+        "btn_cl": "dark",
+        "btn_size": "small",
+        "btn_hidden_mobile": true,
+        "nav_dot": false,
+        "dot_owl": "default",
+        "dots_cl": "dark",
+        "dots_round": true,
+        "dots_space": 10,
+        "dots_hidden_mobile": false,
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "5191a6f7-87be-4d47-a428-dc5caaf00eec": {
       "type": "collections-list-packery",
       "blocks": {
@@ -756,7 +857,7 @@
         "dots_round": false,
         "dots_space": 9,
         "dots_hidden_mobile": false,
-        "use_pagination": "load-more",
+        "use_pagination": "none",
         "enable_bar_lm": false,
         "btn_icon": false,
         "button_style": "outline",
@@ -1354,111 +1455,11 @@
         "mg_mb": "",
         "pd_mb": ""
       }
-    },
-    "64c9b235-9d18-46e5-ac3c-840dabd513f9": {
-      "type": "logo_list",
-      "blocks": {
-        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-0": {
-          "type": "logo_item",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/Shipping-HOME.webp",
-            "url": ""
-          }
-        },
-        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-1": {
-          "type": "logo_item",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/Secured_7b150ab3-4d78-4acb-a42a-7e2d902be95d.webp",
-            "url": ""
-          }
-        },
-        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-2": {
-          "type": "logo_item",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/Silk-Mark-New-min_2d9904a7-4dbe-44e5-b1b8-83a999ac7b1e.webp",
-            "url": ""
-          }
-        },
-        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-3": {
-          "type": "logo_item",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/hand_woven.webp",
-            "url": ""
-          }
-        },
-        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-4": {
-          "type": "logo_item",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/Stitching_08660442-1331-48af-978c-9b8fe7e889dd.webp",
-            "url": ""
-          }
-        },
-        "70e7a8e4-0f52-4131-839c-37088bb5a0bf": {
-          "type": "logo_item",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/Service_db38927a-f7c4-49b9-ac55-90af6410ff85.webp",
-            "url": ""
-          }
-        }
-      },
-      "block_order": [
-        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-0",
-        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-1",
-        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-2",
-        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-3",
-        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-4",
-        "70e7a8e4-0f52-4131-839c-37088bb5a0bf"
-      ],
-      "settings": {
-        "design_heading": "1",
-        "heading_align": "t4s-text-center",
-        "top_heading": "Why IndyVogue",
-        "icon_heading": "las la-gem",
-        "top_subheading": "",
-        "tophead_mb": 30,
-        "img_effect": "none",
-        "b_effect": "none",
-        "open_link": "_self",
-        "layout_des": "2",
-        "click_image": "data-goto",
-        "nav_thumbs": true,
-        "col_dk": "6",
-        "col_tb": "2",
-        "col_mb": "2",
-        "space_item": "30",
-        "space_item_mb": "30",
-        "loop": true,
-        "au_time": 2.5,
-        "au_hover": true,
-        "nav_btn": false,
-        "btn_vi": "hover",
-        "btn_owl": "default",
-        "btn_shape": "none",
-        "btn_cl": "dark",
-        "btn_size": "small",
-        "btn_hidden_mobile": true,
-        "nav_dot": false,
-        "dot_owl": "default",
-        "dots_cl": "dark",
-        "dots_round": true,
-        "dots_space": 10,
-        "dots_hidden_mobile": false,
-        "layout": "t4s-container-wrap",
-        "cl_bg": "",
-        "cl_bg_gradient": "",
-        "mg": ",,50px,",
-        "pd": "",
-        "mg_tb": "",
-        "pd_tb": "",
-        "mg_mb": ",,30px,",
-        "pd_mb": "",
-        "use_cus_css": false,
-        "code_cus_css": ""
-      }
     }
   },
   "order": [
     "1646028739ae283905",
+    "64c9b235-9d18-46e5-ac3c-840dabd513f9",
     "5191a6f7-87be-4d47-a428-dc5caaf00eec",
     "16891370800f9466c8",
     "f6a88b53-9e01-4022-8e9c-59b339b7418a",
@@ -1466,7 +1467,6 @@
     "16460362229768af39",
     "164603686708691778",
     "16460368750174c54a",
-    "1646209857bf69e76a",
-    "64c9b235-9d18-46e5-ac3c-840dabd513f9"
+    "1646209857bf69e76a"
   ]
 }
