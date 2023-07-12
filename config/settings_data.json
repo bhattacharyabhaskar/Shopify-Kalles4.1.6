@@ -281,7 +281,7 @@
           "footer-10": {
             "type": "bl_col",
             "settings": {
-              "col_heading": "Newsletter Signup",
+              "col_heading": "EMAIL SIGNUP",
               "menu": "",
               "menu_style": "1",
               "col_dk": "3",
