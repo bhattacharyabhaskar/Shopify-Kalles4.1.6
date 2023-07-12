@@ -1,0 +1,92 @@
+@media(max-width: 1024px){
+  .t4s-toolbar-mobile{
+      height: 55px;
+  }
+  .t4s-sticky-atc {
+      bottom: 55px;
+      border-bottom: 1px solid var(--border-color);
+      -webkit-transform: translate3d(0,calc( 105% + 55px),0) !important;
+      transform: translate3d(0,calc( 105% + 55px),0) !important;
+  }
+    #shopify-section-back_top #t4s-backToTop {
+        bottom: 60px;
+    }
+    .sticky-is--active #shopify-section-back_top #t4s-backToTop {
+        bottom: calc( 60px + var(--stickyATC-height, 0px) );
+    }
+    .sticky-is--active .t4s-popup__sales {
+        bottom: calc( 60px + var(--stickyATC-height, 0px) ) !important;
+    }
+}
+@media(max-width: 767px) { 
+    .t4s-sticky-atc .t4s-dropdown__wrapper {
+        bottom: -56px;
+    }
+}
+@media (min-width: 1025px){.t4s-toolbar { display: none!important; }}
+.t4s-toolbar-label-true .t4s-toolbar-item >a {
+    position: relative;
+    padding-bottom: 15px;
+}
+.t4s-toolbar-icon{position: relative;}
+.t4s-toolbar-icon svg{width: 20px;height: 20px;}
+.t4s-toolbar{
+    background-color:var(--bg-color);
+    z-index: 190;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 5px;
+    height: 55px;
+    box-shadow: 0 0 9px rgb(0 0 0 / 12%);
+    transform: translate3d(0,104%,0);
+    -webkit-transform: translate3d(0,104%,0);
+    transition: transform .25s;
+}
+.t4s-toolbar {
+    transform: none;
+    -webkit-transform: none;
+}
+.t4s-toolbar .t4s-toolbar-item {
+    -ms-flex: 1 0 20%;
+    flex: 1 0 20%;
+    position: relative;
+}
+.t4s-toolbar-item>a {
+    padding-right: 10px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row; 
+    justify-content: center;
+    height: 45px;
+    font-weight: 400;
+    line-height: 1;
+}
+.t4s-toolbar-icon{color: var(--icon-color);}
+.t4s-toolbar-label {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    left: 10px;
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--label-color);
+}
+.t4s-toolbar .t4s-count-box{ 
+    color: var(--count-text-color);
+    background-color: var(--count-bg-color);
+}
+
+.t4s-toolbar-item>a:hover{
+    color: var(--accent-color);
+}
+.t4s-toolbar-item img {
+    max-height: 22px;
+}

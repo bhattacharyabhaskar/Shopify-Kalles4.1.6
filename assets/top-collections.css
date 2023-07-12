@@ -1,0 +1,77 @@
+.t4s-top-collections {
+	border-top: solid 1px var(--border-color);
+	border-bottom: solid 1px var(--border-color);
+	/*min-height: var(--height);*/
+}
+.t4s-top-collections.t4s-text-center {
+	justify-content: center;
+}
+.t4s-top-collections.t4s-text-end {
+	justify-content: flex-end;
+}
+.t4s-top-collections.t4s-border-none {
+	border: none;
+}
+.t4s-top-collections.t4s-border-top {
+	border-bottom: none;
+}
+.t4s-top-collections.t4s-border-bottom {
+	border-top: none;
+}
+.t4s-top-list-collections {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	align-items: center;
+}
+.t4s-top-list-collections .t4s-cat-item a {
+	font-size: var(--text-fs);
+	font-weight: var(--text-fw);
+	color: var(--text-cl);
+	line-height: var(--text-lh);
+	letter-spacing: var(--text-ls);
+	display: block;
+	padding: 0 calc(var(--space-item)/2);
+}
+.t4s-top-list-collections .t4s-cat-item:first-child a {
+	padding-left: 0;
+}
+.t4s-top-list-collections .t4s-cat-item:last-child a {
+	padding-right: 0;
+}
+.t4s-top-list-collections .t4s-cat-item a:hover,
+.t4s-top-list-collections .t4s-cat-item.t4s-current-cat a {
+	color: var(--text-cl-hover);
+}
+.t4s-font-italic-true {
+    font-style: italic !important;
+}
+.t4s-top-list-collections.flickityt4s_prev_enable,
+.t4s-top-list-collections.flickityt4s_next_enable {
+	padding: 0 35px;
+}
+.t4s-top-collections .t4s-top-list-collections .flickityt4s-prev-next-button.next {
+	right: 0;
+}
+.t4s-top-collections .t4s-top-list-collections .flickityt4s-prev-next-button.previous {
+	left: 0;
+}
+.t4s-top-list-collections.t4s-flicky-slider .flickityt4s-button {
+	color: var(--text-cl);
+	width: 34px;
+}
+.t4s-top-collections .t4s-top-list-collections .flickityt4s-prev-next-button.previous,
+.t4s-top-collections .t4s-top-list-collections .flickityt4s-prev-next-button.next,
+.t4s-top-collections .t4s-top-list-collections.t4s-flicky-slider:not(:hover) .flickityt4s-prev-next-button.previous,
+.t4s-top-collections .t4s-top-list-collections.t4s-flicky-slider:not(:hover) .flickityt4s-prev-next-button.next,
+.t4s-top-list-collections.t4s-flicky-slider:not(:hover) .flickityt4s-button {
+    transform: translate(0) translateY(-50%);
+}
+.t4s-top-list-collections.t4s-flicky-slider .flickityt4s-button:hover {
+	color: var(--text-cl-hover);
+}
+@media(max-width: 767px) {
+	.t4s-hidden-mobile-true {
+		display: none;
+	}
+}
