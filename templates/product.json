@@ -205,7 +205,7 @@
         "dots_hidden_mobile": false,
         "tabs_design": "tab",
         "tabs_design_mb": "accordion",
-        "tabs_position": "inner",
+        "tabs_position": "external",
         "enable_first_tab": true,
         "tabs_layout_fix": "full",
         "bg": "#f6f6f8",
