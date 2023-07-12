@@ -308,6 +308,23 @@
         "sidebar_pd": 10
       }
     },
+    "aa9c88a6-8567-4fa6-a48d-c5ae3146568a": {
+      "type": "custom-html",
+      "settings": {
+        "code": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #fff;color: #fff;\">\n<div data-romw-token=\"1YgsvR6Xq5Nj26FIOzPfzobpHwDAgE0r0gmqomf6bPQ9JAmARK\"><\/div>\n<\/div>",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "product-recommendations": {
       "type": "product-recommendations",
       "settings": {
@@ -422,6 +439,7 @@
     "breadcrumb",
     "main",
     "sidebar",
+    "aa9c88a6-8567-4fa6-a48d-c5ae3146568a",
     "product-recommendations",
     "recently-viewed-products"
   ]
