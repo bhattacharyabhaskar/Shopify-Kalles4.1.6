@@ -1,0 +1,138 @@
+{% layout none %}
+<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+{% paginate collection.products by 1000 %}
+{% assign CountryCode = 'US' %}
+{% if shop.currency == 'CAD' %}{% assign CountryCode = 'CA' %}{% endif %}
+<channel>
+<title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}</link>
+<description>{{ collection.description | strip_html }}</description>
+{% for product in collection.products %} 
+  {% if product.type == 'Saree' %}
+  	{% assign GoogleProductCategory = "8248" %}
+  {% endif %}
+  {% if product.type == 'Jewelry' %}
+  	{% assign GoogleProductCategory = "6463" %}
+  {% endif %}
+  
+  {% if product.type == 'Blouse' %}
+  	{% assign GoogleProductCategory = "8248" %}
+  {% endif %}
+  {% assign Gender = "female" %}
+  {% assign AgeGroup = "adult" %}
+  {% assign Color = "multi" %}
+  {% assign Size = "universal" %}
+  {% assign Style = "Exclusive" %}
+  {% assign Date = "2000-11-01T12:00-0300/2099-12-01T00:00-0300" %}
+
+  {% if product.metafields.mm-google-shopping.custom_label_0 != null %}
+    {% assign ff_label_0 = product.metafields.mm-google-shopping.custom_label_0 %}
+  {% endif %}
+  
+  {% if product.metafields.mm-google-shopping.custom_label_1 != null %}
+  	{% assign ff_label_1 = product.metafields.mm-google-shopping.custom_label_1 %}
+  {% endif %}
+
+  {% if product.metafields.mm-google-shopping.custom_label_2 != null %}
+  	{% assign ff_label_2 = product.metafields.mm-google-shopping.custom_label_2 %}
+  {% endif %}
+
+  {% if product.metafields.mm-google-shopping.custom_label_3 != null %}
+  	{% assign ff_label_3 = product.metafields.mm-google-shopping.custom_label_3 %}
+  {% endif %}
+
+  {% if shop.metafields.facebook.custom_label_4 != null %}
+  	{% assign ff_label_4 = shop.metafields.facebook.custom_label_4 %}
+  {% endif %}
+
+    
+  {% if product.variants.size > 0 %}
+  {% for variant in product.variants %}
+  	{% if variant.sku contains "B" or variant.sku contains "C" %}
+      {% for option in product.options %}
+        {% if option == 'Color' %}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}
+        {% elsif option == 'Size' %}{% capture Size %}{{ variant.options[forloop.index0] }}{% endcapture %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+    <item>
+    <g:id>{{ variant.id }}</g:id>
+    {% assign prodTitle = product.title | strip_html | downcase | capitalize | strip_newlines | replace: '&', 'and' %}
+    <g:title>{{ prodTitle | truncate: 64}}</g:title>
+    <g:description>{{ product.description | replace: '</', ' </' | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:description>
+    <g:gender>{{ Gender }}</g:gender>
+    <g:product_type >{{ product.type }}</g:product_type >
+    <g:link>{{ shop.url }}{{ variant.url }}</g:link>
+    <g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
+    {% for image in product.images %}
+        <g:additional_image_link >
+          http:{% if image.src %}{{ image.src | product_img_url: 'grande' }}{% endif %}
+        </g:additional_image_link>   
+    {% endfor %}
+     
+    <g:brand>{{ product.vendor }}</g:brand>    
+    <g:condition>new</g:condition>
+    <g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
+	<g:price>{{ variant.price | money_without_currency }} {{ shop.currency }}</g:price>
+    <g:mpn>{{ variant.sku }}</g:mpn>
+    <additional_variant_attribute>
+         <label>Style</label>
+         <value>{{Style}}</value>
+    </additional_variant_attribute>
+      
+	<g:shipping_weight>{{variant.weight | weight_with_unit }}</g:shipping_weight>
+    <g:shipping>
+		<g:country>US</g:country>
+  		<g:price>0.00 USD</g:price>
+	</g:shipping>
+    <g:shipping>
+		<g:country>CA</g:country>
+  		<g:price>0.00 CAD</g:price>
+	</g:shipping>
+    <g:shipping>
+		<g:country>AU</g:country>
+  		<g:price>0.00 AUD</g:price>
+	</g:shipping>
+    <g:shipping>
+		<g:country>GB</g:country>
+  		<g:price>0.00 GBP</g:price>
+	</g:shipping>
+    <g:shipping>
+		<g:country>IN</g:country>
+  		<g:price>0.00 INR</g:price>
+	</g:shipping>
+    <g:item_group_id>{{ product.id }}</g:item_group_id>
+    <g:age_group>{{ AgeGroup }}</g:age_group>
+    <g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
+    
+
+    <g:gtin>{{ variant.barcode }}</g:gtin>
+    <g:color>{{ Color | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:color>
+    <g:size>{{ Size | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:size><g:size_system>US</g:size_system>
+  
+
+      {% if product.metafields.mm-google-shopping.custom_label_0 != null %}
+        <g:custom_label_0>{{ product.metafields.mm-google-shopping.custom_label_0 }}</g:custom_label_0>
+      {% endif %}
+      {% if product.metafields.mm-google-shopping.custom_label_1 != null %}
+        <g:custom_label_1>{{ product.metafields.mm-google-shopping.custom_label_1 }}</g:custom_label_1>
+      {% endif %}
+      {% if product.metafields.mm-google-shopping.custom_label_2 != null %}
+        <g:custom_label_2>{{ product.metafields.mm-google-shopping.custom_label_2 }}</g:custom_label_2>  
+      {% endif %}
+      {% if product.metafields.mm-google-shopping.custom_label_3 != null %}
+      <g:custom_label_3>{{ product.metafields.mm-google-shopping.custom_label_3 }}</g:custom_label_3>  
+      {% endif %}
+      {% if product.metafields.facebook.custom_label_4 != null %}
+      <g:custom_label_4>{{ product.metafields.facebook.custom_label_4 }}</g:custom_label_4>  
+      {% endif %}
+    </item>
+     {% endif %}
+  {% endfor %}
+  {% else %}
+  {% endif %}
+{% endfor %}
+</channel>
+</rss>
+{% endpaginate %}

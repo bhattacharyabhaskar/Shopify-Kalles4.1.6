@@ -729,6 +729,97 @@
         "code_cus_css": ""
       }
     },
+    "26382323-7252-4034-b118-7cb122427896": {
+      "type": "custom-section",
+      "blocks": {
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-0": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_tb": "6",
+            "col_mb": "12",
+            "align_vertical": false,
+            "content_align": "center",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "30px,,30px",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_cl": "#fff"
+          }
+        },
+        "28b8fd05-435d-460a-9d5d-fc7c3fe4d25e": {
+          "type": "html",
+          "settings": {
+            "html_content": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #fff;color: #fff;\">T<div data-token=\"nZzUPUOoZxCSQFHu5HJk4wfRmy730EdD2FGDjMBy9rzNzBIuo9\" class=\"romw-badge\"><\/div>\n<script src=\"https:\/\/reviewsonmywebsite.com\/js\/embedLoader.js?id=03d30ab029f3709eb7ee597570569e34\" type=\"text\/javascript\"><\/script>\n<\/div>",
+            "hidden_mobile": false
+          }
+        },
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-3": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_tb": "6",
+            "col_mb": "12",
+            "align_vertical": false,
+            "content_align": "center",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "30px,,30px",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_cl": "#fff"
+          }
+        },
+        "02f8da76-c992-4fbc-ac5c-fdc59197cb94": {
+          "type": "html",
+          "settings": {
+            "html_content": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #fff;color: #fff;\">\n<div data-token=\"sXZPCnvuPtabW9VinfGst4GUPd4ll7mJ5dWPLdQXpHwFZT8W8o\" class=\"romw-badge\"><\/div>\n<script src=\"https:\/\/reviewsonmywebsite.com\/js\/embedLoader.js?id=03d30ab029f3709eb7ee597570569e34\" type=\"text\/javascript\"><\/script>\n<\/div>",
+            "hidden_mobile": false
+          }
+        }
+      },
+      "block_order": [
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-0",
+        "28b8fd05-435d-460a-9d5d-fc7c3fe4d25e",
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-3",
+        "02f8da76-c992-4fbc-ac5c-fdc59197cb94"
+      ],
+      "settings": {
+        "space_h_item": "30",
+        "space_v_item": "30",
+        "space_h_item_mb": "10",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": ",,50px,",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
+    "8dd3e86e-0721-4d8e-b449-6936c3b0e0ab": {
+      "type": "custom-html",
+      "settings": {
+        "code": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #fff;color: #fff;\">\n<div data-romw-token=\"SuXYREMYz4nTRed4TUFHciHAwv1qXhpiEuFE4aGRGxvvhK3AdI\"><\/div>\n<\/div>",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "f6a88b53-9e01-4022-8e9c-59b339b7418a": {
       "type": "collections-list-packery",
       "blocks": {
@@ -871,7 +962,7 @@
         "image_ratio": "rationt",
         "image_size": "cover",
         "image_position": "8",
-        "content_align": "default",
+        "content_align": "center",
         "limit": 8,
         "col_dk": "4",
         "col_tb": "3",
@@ -1496,6 +1587,58 @@
         "mg_mb": "",
         "pd_mb": ""
       }
+    },
+    "16891733191dfe92fe": {
+      "type": "apps",
+      "blocks": {
+        "199a191d-03f8-4543-b439-90e80c21a434": {
+          "type": "shopify:\/\/apps\/seguno-email-marketing\/blocks\/newsletter_form\/db65571f-fa4d-473d-baa2-283a96dc76bc",
+          "settings": {
+            "heading": "Subscribe & Save",
+            "subheading": "<p>Subscribe to our NewsLetter and get <strong>$10 USD Off*<\/strong> your purchase. Get the latest & greatest update on New Arrivals, Promotions and lots more.<\/p><p><em>*Cannot be combined with other promotions. <\/em><a href=\"\/pages\/current-offers-and-promotions\" title=\"Current Offers and Promotions\"><em>Click here for details<\/em><\/a><em>.<\/em><\/p>",
+            "show_first_name": false,
+            "show_last_name": false,
+            "show_permission_checkbox": true,
+            "tags": "newsletter",
+            "return_to": "shopify:\/\/collections\/buy-silk-mark-certified-saree",
+            "label_first_name": "First name",
+            "placeholder_first_name": "",
+            "label_last_name": "Last name",
+            "placeholder_last_name": "",
+            "label_email": "Email",
+            "placeholder_email": "email@email.com",
+            "label_permission": "<p>I agree to receive marketing emails from IndyVogue.<\/p>",
+            "label_subscribe": "Subscribe",
+            "success_message": "Thanks for subscribing",
+            "background_color": "#ffffff",
+            "text_color": "#1a1b18",
+            "button_background_color": "#b7499b",
+            "button_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "199a191d-03f8-4543-b439-90e80c21a434"
+      ],
+      "settings": {
+      }
+    },
+    "8e174364-8bd9-46c8-97a5-1aa59551e56e": {
+      "type": "custom-html",
+      "settings": {
+        "code": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #000;color: #fff;\">This is an advanced section. Knowledge of web design languages such as HTML, CSS is required.<\/div>",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
     }
   },
   "order": [
@@ -1504,11 +1647,15 @@
     "5191a6f7-87be-4d47-a428-dc5caaf00eec",
     "16891370800f9466c8",
     "a4e2486e-e568-49b0-9746-ba905b89c43a",
+    "26382323-7252-4034-b118-7cb122427896",
+    "8dd3e86e-0721-4d8e-b449-6936c3b0e0ab",
     "f6a88b53-9e01-4022-8e9c-59b339b7418a",
     "1646035317ea8b6928",
     "16460362229768af39",
     "164603686708691778",
     "16460368750174c54a",
-    "1646209857bf69e76a"
+    "1646209857bf69e76a",
+    "16891733191dfe92fe",
+    "8e174364-8bd9-46c8-97a5-1aa59551e56e"
   ]
 }
