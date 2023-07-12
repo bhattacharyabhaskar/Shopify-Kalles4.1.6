@@ -206,7 +206,7 @@
         "tabs_design": "accordion",
         "tabs_design_mb": "accordion",
         "tabs_position": "inner",
-        "enable_first_tab": false,
+        "enable_first_tab": true,
         "tabs_layout_fix": "full",
         "bg": "#f6f6f8",
         "bg_mb": "#ffffff",
