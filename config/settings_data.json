@@ -380,7 +380,7 @@
               "remove_br_tag": false,
               "tag": "p",
               "fontf": "inherit",
-              "text_cl": "#ddd",
+              "text_cl": "#dddddd",
               "text_fs": 16,
               "text_lh": 0,
               "text_fw": 400,
@@ -430,7 +430,7 @@
           "mgb_mb": 20,
           "text_fs": 14,
           "text_fw": 400,
-          "heading_cl": "#fff",
+          "heading_cl": "#ffffff",
           "text_cl": "#878787",
           "link_cl": "#878787",
           "link_hover_cl": "#56cfe1",
@@ -2303,6 +2303,25 @@
           "use-variant": "false",
           "primary-font": "sans-serif",
           "color-secondary": "#343434"
+        }
+      },
+      "6468128024931565999": {
+        "type": "shopify:\/\/apps\/seguno-popups\/blocks\/popup-app-embed\/f53bd66f-9a20-4ce2-ae2e-ccbd0148bd4b",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "7456567658179156570": {
+        "type": "shopify:\/\/apps\/adroll-advertising-marketing\/blocks\/adroll-pixel\/c60853ed-1adb-4359-83ae-4ed43ed0b559",
+        "disabled": false,
+        "settings": {
+          "enable_email_capture": true
+        }
+      },
+      "6143736321357441667": {
+        "type": "shopify:\/\/apps\/tidio-live-chat-chatbots\/blocks\/app-embed\/1002274d-fb18-4939-98f6-5f05a8deeadc",
+        "disabled": false,
+        "settings": {
         }
       }
     }
