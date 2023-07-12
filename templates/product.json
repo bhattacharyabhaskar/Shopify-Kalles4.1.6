@@ -30,19 +30,6 @@
             "custom_liquid": "<div data-romw-token=\"z3J4XYe2bw8ecUBKzL0nc4CrpLmXeP9yvhYDZtcs4ToXaQEY0t\"><\/div>"
           }
         },
-        "meta": {
-          "type": "meta",
-          "settings": {
-            "show_options": false,
-            "show_vendor": false,
-            "show_type": false,
-            "show_sku": true,
-            "show_barcode": false,
-            "show_available": true,
-            "show_category": false,
-            "show_tags": false
-          }
-        },
         "price_review": {
           "type": "price_review",
           "settings": {
@@ -55,6 +42,19 @@
             "fw_price_pr": 400,
             "price_color": "#696969",
             "price_sale_color": "#ec0101"
+          }
+        },
+        "meta": {
+          "type": "meta",
+          "settings": {
+            "show_options": false,
+            "show_vendor": false,
+            "show_type": false,
+            "show_sku": true,
+            "show_barcode": false,
+            "show_available": true,
+            "show_category": false,
+            "show_tags": false
           }
         },
         "form": {
@@ -161,8 +161,8 @@
       "block_order": [
         "title",
         "3d510fb3-d237-4c85-a593-2baa34875186",
-        "meta",
         "price_review",
+        "meta",
         "form",
         "23551ebc-3be1-40d6-81b2-30f03478cccb",
         "33ac43b4-4e60-4c85-a131-cff713232f38",
