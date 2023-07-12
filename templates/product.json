@@ -150,11 +150,18 @@
             "page": "wash-care"
           }
         },
+        "d0c4d15b-a718-4479-a94d-bdb4bc9c750d": {
+          "type": "tab_liquid",
+          "settings": {
+            "title": "FREQUENTLY ASKED QUESTIONS",
+            "custom_liquid": "{%- if product.type == 'Saree'-%}\n<ul style=\"list-style-type: square; margin-bottom: auto;\" data-mce-style=\"list-style-type: square; margin-bottom: auto;\">\n    <li>\n        <strong>I want to get a saree and stitch the blouse as well. How can I send you the measurements? <\/strong>\n        <p>\n            <strong>A:&nbsp;<\/strong>Once you place the order with the <em>Stitched Designer Blouse<\/em> option, you will receive an order confirmation email that will contain the link to the <em>Blouse Measurement Form<\/em>\n            <strong><em>.&nbsp;<\/em><\/strong>You can fill in the measurement there.\n        <\/p>\n    <\/li>\n<\/ul>\n<ul style=\"list-style-type: square; margin-bottom: auto;\" data-mce-style=\"list-style-type: square; margin-bottom: auto;\">\n    <li>\n        <strong>Can I send my own Blouse design? <\/strong>\n        <p>\n            <strong>A:&nbsp;<\/strong> We have a variety of designs for front and back necks. But in case you want your own design, just let us know after you have placed the order and we will take care of that.\n        <\/p>\n    <\/li>\n<\/ul>\n<ul style=\"list-style-type: square; margin-bottom: auto;\" data-mce-style=\"list-style-type: square; margin-bottom: auto;\">\n    <li>\n        <strong>I have some blouse pieces with me. Can I just stitch the blouse with you?<\/strong>\n        <p><strong>A:&nbsp;<\/strong>Unfortunately you only stitch the blouse with IndyVogue if you have ordered the Saree from us as well.&nbsp;<\/p>\n    <\/li>\n<\/ul>\n<ul style=\"list-style-type: square; margin-bottom: auto;\" data-mce-style=\"list-style-type: square; margin-bottom: auto;\">\n    <li>\n        <strong>Where do you ship your items from? <\/strong>\n        <p><strong>A:&nbsp;<\/strong>Most of our items get shipped from Kolkata, India through DHL priority shipment.<\/p>\n    <\/li>\n<\/ul>\n<ul style=\"list-style-type: square; margin-bottom: auto;\" data-mce-style=\"list-style-type: square; margin-bottom: auto;\">\n    <li>\n        <strong>How long will it take for me to receive the Saree that I just ordered? <\/strong>\n        <p>\n            <strong>A:&nbsp;<\/strong>If you have placed an order for Saree, we will ship it within 1 - 2 business days and it should take you another 4 - 5 business days to reach you. If you ordered the Saree with the&nbsp;\n            <meta charset=\"utf-8\" \/><em data-mce-fragment=\"1\">Stitched Designer Blouse<\/em>\n            <span data-mce-fragment=\"1\">&nbsp;option, it will take another 4 - 5 business days to stitch the Blouse after you have submitted the&nbsp;<meta charset=\"utf-8\" \/><em data-mce-fragment=\"1\">Blouse Measurement Form.<\/em><\/span>\n        <\/p>\n    <\/li>\n<\/ul>\n<ul style=\"list-style-type: square; margin-bottom: auto;\" data-mce-style=\"list-style-type: square; margin-bottom: auto;\">\n    <li>\n        <strong>I do not want to make online payment. Is there a different way of paying?<\/strong>\n        <p><strong>A:&nbsp;<\/strong>You can Venmo, Zelle, Wise or even send a paper check to make the payment. Please call us at +1 913-579-2118 OR email us at sumanab@indyvogue.com OR chat with us online.<\/p>\n    <\/li>\n<\/ul>\n<ul style=\"list-style-type: square; margin-bottom: auto;\" data-mce-style=\"list-style-type: square; margin-bottom: auto;\">\n    <li>\n        <strong>How do I know the status of my order?<\/strong>\n        <p>\n            <strong>A:&nbsp;<\/strong>At every step in you ordering process, we will keep you informed. When you place an order, you will receive an \"<em>Order Confirmation Email\"<\/em>, when an order is Shipped, you will receive a \"\n            <em>Shipment Confirmation Email\"<\/em>, when an order is Out for Delivery you will receive a <em>text message<\/em> and finally when the Order is Delivered, you will receive a \"<em>Delivery Confirmation Email\"<\/em> and a\n            <em>text message<\/em>.\n        <\/p>\n    <\/li>\n<\/ul>\n{%-endif-%}"
+          }
+        },
         "56e67368-7424-4d73-8f14-dacdda4c59be": {
           "type": "tab_rivui",
           "settings": {
-            "title": "Reviews",
-            "review_liquid": ""
+            "title": "REVIEWS",
+            "review_liquid": "<div data-romw-token=\"1YgsvR6Xq5Nj26FIOzPfzobpHwDAgE0r0gmqomf6bPQ9JAmARK\"><\/div>"
           }
         },
         "1e8c05dd-a0a8-4e7e-b9b1-6e3572ad24e3": {
@@ -176,6 +183,7 @@
         "95783727-67c5-4a5a-9efd-108dff27e1d1",
         "aa546a88-d357-4671-9e96-be2c5f92a8c3",
         "754ad4a0-7308-4a3e-b325-e2f2c0b85d4c",
+        "d0c4d15b-a718-4479-a94d-bdb4bc9c750d",
         "56e67368-7424-4d73-8f14-dacdda4c59be",
         "1e8c05dd-a0a8-4e7e-b9b1-6e3572ad24e3"
       ],
