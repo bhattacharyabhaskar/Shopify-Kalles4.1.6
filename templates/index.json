@@ -1515,13 +1515,13 @@
             "label_last_name": "Last name",
             "placeholder_last_name": "",
             "label_email": "Email",
-            "placeholder_email": "",
+            "placeholder_email": "email@email.com",
             "label_permission": "<p>I agree to receive marketing emails from IndyVogue.<\/p>",
             "label_subscribe": "Subscribe",
             "success_message": "Thanks for subscribing",
             "background_color": "#ffffff",
             "text_color": "#1a1b18",
-            "button_background_color": "#445958",
+            "button_background_color": "#b7499b",
             "button_text_color": "#ffffff"
           }
         }
