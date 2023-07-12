@@ -538,7 +538,7 @@
             "type": "mega",
             "settings": {
               "title": "Exclusives",
-              "url": "shopify:\/\/pages\/accessory",
+              "url": "",
               "open_link": "_self",
               "icon": "",
               "cus_cl": false,
