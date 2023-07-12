@@ -1514,6 +1514,139 @@
         "pd_mb": ""
       }
     },
+    "26382323-7252-4034-b118-7cb122427896": {
+      "type": "custom-section",
+      "blocks": {
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-0": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_tb": "6",
+            "col_mb": "12",
+            "align_vertical": false,
+            "content_align": "center",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "30px,,30px",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_cl": "#d2a2a2"
+          }
+        },
+        "28b8fd05-435d-460a-9d5d-fc7c3fe4d25e": {
+          "type": "html",
+          "settings": {
+            "html_content": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #fff;color: #fff;\">T<div data-token=\"nZzUPUOoZxCSQFHu5HJk4wfRmy730EdD2FGDjMBy9rzNzBIuo9\" class=\"romw-badge\"><\/div>\n<script src=\"https:\/\/reviewsonmywebsite.com\/js\/embedLoader.js?id=03d30ab029f3709eb7ee597570569e34\" type=\"text\/javascript\"><\/script>\n<\/div>",
+            "hidden_mobile": false
+          }
+        },
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-1": {
+          "type": "custom_text",
+          "settings": {
+            "text": "LOOKBOOK 2023",
+            "remove_br_tag": false,
+            "tag": "p",
+            "fontf": "inherit",
+            "text_cl": "#000000",
+            "text_fs": 24,
+            "text_lh": 0,
+            "text_fw": 500,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 5,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        },
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-2": {
+          "type": "custom_text",
+          "settings": {
+            "text": "MAKE LOVE THIS LOOK",
+            "remove_br_tag": false,
+            "tag": "p",
+            "fontf": "inherit",
+            "text_cl": "#000000",
+            "text_fs": 14,
+            "text_lh": 24,
+            "text_fw": 400,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 0,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        },
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-3": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_tb": "6",
+            "col_mb": "12",
+            "align_vertical": false,
+            "content_align": "center",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "30px,,30px",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_cl": "#d2a2a2"
+          }
+        },
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-4": {
+          "type": "newsletter",
+          "settings": {
+            "form_width": 0,
+            "form_width_mb": 0,
+            "newl_des": "1",
+            "news_align": "center",
+            "newl_size": "small",
+            "btn_icon": false,
+            "input_cl": "#878787",
+            "border_cl": "#000",
+            "btn_cl": "#ffffff",
+            "btn_bg_cl": "#222222",
+            "btn_hover_cl": "#ffffff",
+            "btn_hover_bg_cl": "#56CFE1",
+            "hidden_mobile": false,
+            "mgb": 15,
+            "mgb_mb": 10
+          }
+        }
+      },
+      "block_order": [
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-0",
+        "28b8fd05-435d-460a-9d5d-fc7c3fe4d25e",
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-1",
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-2",
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-3",
+        "template--16798341333225__26382323-7252-4034-b118-7cb122427896-16891779525a42c671-4"
+      ],
+      "settings": {
+        "space_h_item": "30",
+        "space_v_item": "30",
+        "space_h_item_mb": "10",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": ",,50px,",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "16891733191dfe92fe": {
       "type": "apps",
       "blocks": {
@@ -1548,6 +1681,23 @@
       ],
       "settings": {
       }
+    },
+    "8e174364-8bd9-46c8-97a5-1aa59551e56e": {
+      "type": "custom-html",
+      "settings": {
+        "code": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #000;color: #fff;\">This is an advanced section. Knowledge of web design languages such as HTML, CSS is required.<\/div>",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
     }
   },
   "order": [
@@ -1563,6 +1713,8 @@
     "164603686708691778",
     "16460368750174c54a",
     "1646209857bf69e76a",
-    "16891733191dfe92fe"
+    "26382323-7252-4034-b118-7cb122427896",
+    "16891733191dfe92fe",
+    "8e174364-8bd9-46c8-97a5-1aa59551e56e"
   ]
 }
