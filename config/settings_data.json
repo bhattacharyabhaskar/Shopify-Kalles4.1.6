@@ -1020,12 +1020,6 @@
               "link": "buy-silk-mark-certified-saree"
             }
           },
-          "toolbar_mobile-1": {
-            "type": "wish",
-            "settings": {
-              "title": "Wishlist"
-            }
-          },
           "toolbar_mobile-2": {
             "type": "cart",
             "settings": {
@@ -1047,7 +1041,6 @@
         },
         "block_order": [
           "toolbar_mobile-0",
-          "toolbar_mobile-1",
           "toolbar_mobile-2",
           "toolbar_mobile-3",
           "toolbar_mobile-4"
