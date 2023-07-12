@@ -27,6 +27,8 @@
     </a>
     <div class="t4s-mini_cart__info">
        <a href="{{ item_url }}" class="t4s-mini_cart__title t4s-truncate">{{ item_pr.title }}</a>
+       <div class="limoniapps-discountninja-cart-item-product-comment" data-limoniapps-discountninja-cart-key="{{item.key}}"></div>
+
        <div class="t4s-mini_cart__meta">
           {%- assign qv_key = item_pr.id -%}
           {%- unless item_pr.has_only_default_variant or item_variant.title contains 'mczr_price_' -%}{%- assign qv_key = item_id -%}<p class="t4s-cart_meta_variant">{{ item_variant.title }}</p>{%- endunless -%}
@@ -77,7 +79,8 @@
           </ul>
           {%- endif -%}
           {%- if recurringchecked %}<span class="t4s-product-details__item-recurring t4s-ch">{{ 'cart.general.recurring_mess' | t: frequency: frequency, frequency_unit: frequency_unit }}</span>{% endif -%}
-          <div class="t4s-cart_meta_price">
+
+         <div class="t4s-cart_meta_price limoniapps-discountninja-cart-item-product-price" data-limoniapps-discountninja-cart-key="{{item.key}}">
               <div class="t4s-cart_price">
                 {%- unless cart_ajax_enable %}{{ item_qty }} × {% endunless -%}
                 {%- liquid
@@ -122,7 +125,7 @@
        </div>
        <div class="t4s-mini_cart__actions">
           {%- if cart_ajax_enable -%}
-          <div data-quantity-wrapper class="t4s-quantity-wrapper t4s-quantity-cart-item"> 
+          <div data-quantity-wrapper class="t4s-quantity-wrapper t4s-quantity-cart-item limoniapps-discountninja-cart-item-quantity" data-limoniapps-discountninja-cart-key="{{item.key}}"> 
             <button data-quantity-selector data-decrease-qty type="button" class="t4s-quantity-selector is--minus">{% if item_qty > 1 or min_qty == 1 %}<svg focusable="false" class="icon icon--minus" viewBox="0 0 10 2" role="presentation"><path d="M10 0v2H0V0z" fill="currentColor"></path></svg>{% else %}<svg viewBox="0 0 24 24" width="17"><use href="#icon-cart-remove"/></svg>{% endif %}</button>
             <input data-action-change data-quantity-value type="number" id="miniupdates_{{ item_key }}" data-id="{{ item_key }}" class="t4s-quantity-input" step="1" min="{{ min_qty }}" max="{{ max_qty }}" name="updates[]" data-current-qty="{{ item_qty }}" value="{{ item_qty }}" size="4" pattern="[0-9]*" inputmode="numeric">
             <button data-quantity-selector data-increase-qty type="button" class="t4s-quantity-selector is--plus"><svg focusable="false" class="icon icon--plus" viewBox="0 0 10 10" role="presentation"><path d="M6 4h4v2H6v4H4V6H0V4h4V0h2v4z" fill="currentColor" fill-rule="evenodd"></path></svg></button>
