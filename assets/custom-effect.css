@@ -1,0 +1,416 @@
+/* --- Item effect ---*/
+.t4s-eff {
+ position: relative;
+ z-index: 3;
+ display: block;
+ vertical-align: top;
+ overflow: hidden;
+}
+.t4s-eff::before,
+.t4s-eff::after {
+ content: '';
+ z-index: 1;
+ pointer-events: none;
+}
+.t4s-eff-border-run::before,
+.t4s-eff-border-run::after {    
+  position: absolute;
+  content: '';
+  opacity: 0;
+  width: 0;
+  height: 0;
+  transition: all 0.8s ease;
+}
+.t4s-eff-border-run::before {
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  top: 15px;
+  left:15px;
+}
+.t4s-eff-border-run::after {    
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  right: 15px;
+  bottom: 15px;
+}
+.t4s-eff-pervasive-circle::before {
+  position: absolute;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  top: 50%;
+  left: 50%;
+  background-color: rgba(255,255,255,.3);
+  content: "";
+  z-index: 2;
+}
+.t4s-eff-plus-zoom-overlay::before,
+.t4s-eff-plus-zoom-overlay::after {
+   content: '';
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   margin: auto;
+   transition: all 0.5s ease;
+   z-index: 2;
+   background-color: rgba(255, 255, 255, 0.15);
+   pointer-events: none;
+}
+.t4s-eff-plus-zoom-overlay::before, 
+.t4s-eff-plus-zoom-overlay::after {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+.t4s-eff-dark-overlay::before {
+   position: absolute;
+   content: '';
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background-color: #000;
+   opacity: 0;
+   transition: opacity .2s ease;
+   z-index: 2;
+   pointer-events: none;
+}
+.t4s-eff-light-overlay::before {
+   position: absolute;
+   content: '';
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background-color: #fff;
+   opacity: 0;
+   transition: opacity .2s ease;
+   z-index: 2;
+   pointer-events: none;
+}
+
+/* --- Image effect ---*/
+.t4s-eff-img-zoom .t4s-obj-eff {
+  transition: all 1s;
+}
+.t4s-eff-img-rotate .t4s-obj-eff {
+  transition: .6s ease-in-out;
+}
+.t4s-eff-img-translateToTop .t4s-obj-eff,
+.t4s-eff-img-translateToRight .t4s-obj-eff,
+.t4s-eff-img-translateToLeft .t4s-obj-eff,
+.t4s-eff-img-translateToBottom .t4s-obj-eff {
+  transition: .6s ease-in-out;
+  transform: scale(1.15);
+}
+.t4s-eff-img-translateToTop .t4s-obj-eff {
+  transform-origin: top;
+}
+.t4s-eff-img-translateToRight .t4s-obj-eff {
+  transform-origin: right;
+}
+.t4s-eff-img-translateToLeft .t4s-obj-eff {
+  transform-origin: left;
+}
+.t4s-eff-img-translateToBottom .t4s-obj-eff {
+  transform-origin: bottom;
+}
+.t4s-eff-img-filter .t4s-obj-eff{
+  opacity: .5;
+  filter: grayscale(100%);
+  transition: filter .3s,opacity .3s,-webkit-filter .3s;
+}
+.t4s-eff-img-filter-unset .t4s-obj-eff{
+  transition: filter .3s,opacity .3s,-webkit-filter .3s;
+}
+
+.flicker .t4s-obj-eff {
+  animation: 1s infinite flicker;
+}
+
+/* --- Button effect ---*/
+.t4s-btn::before {
+  content: '';
+   position: absolute;
+   z-index: -1;
+   border-radius: inherit;
+   opacity: 0;
+   visibility: hidden;
+}
+.t4s-btn:not(.t4s-btn-effect-default):not(.t4s-btn-effect-overlay-run)::before {
+   transition: 0.3s ease-in-out;
+}
+.t4s-btn::before {
+  background-color: var(--btn-background);
+  border-color: var(--btn-background);
+}
+.t4s-btn-effect-default::before {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--btn-background);
+  border-color: var(--btn-background);
+}
+.t4s-btn-effect-rectangle-out::before{
+  top: 50%;
+  left: 50%;
+  width: 0px;
+  height: 0px;
+  border-radius: 50%;
+}
+
+
+.t4s-btn-effect-sweep-to-left:before,
+.t4s-btn-effect-sweep-to-right:before,
+.t4s-btn-effect-sweep-to-top:before,
+.t4s-btn-effect-sweep-to-bottom:before {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 1;
+    visibility: visible;
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    transition-duration: .5s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+}
+.t4s-btn-effect-sweep-to-bottom:before,
+.t4s-btn-effect-sweep-to-top:before {
+    transform: scaleX(1) scaleY(0);
+}
+.t4s-btn-effect-sweep-to-left:before,
+.t4s-btn-effect-sweep-to-top:before {
+    transform-origin: 100% 100%;
+}
+
+.t4s-btn-effect-shutter-out-horizontal{
+   transform: perspective(1px) translateZ(0);
+}
+.t4s-btn-effect-shutter-out-horizontal::before {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: scaleX(0);
+  transform-origin: 50%;
+  transition-property: transform;
+  opacity: 1;
+   visibility: visible;
+}
+.t4s-btn-effect-outline{
+   overflow: unset !important;
+   transition: all 0.4s ease-in-out;
+}
+.t4s-btn-effect-outline::before{
+   content: "";
+   position: absolute;
+   left: 8px;
+   top: 8px;
+   width: 100%;
+   height: 100%;
+   background-color: transparent;
+   border-bottom: 2px solid var(--btn-border);
+   border-right: 2px solid var(--btn-border);
+   border-radius: inherit;
+   transition: all 0.3s ease-in-out;
+   opacity: 1;
+   visibility: visible;
+}
+
+.t4s-btn-effect-shadow {
+   transition: all 0.4s ease-in-out;
+   box-shadow: 8px 8px 10px gray;
+}
+
+@keyframes ani_shine {
+    to {
+        left: -200%
+    }
+}
+.t4s-btn-style-default.t4s-btn-effect-overlay-run.t4s-btn-color-light,
+.t4s-btn-style-default.t4s-btn-effect-overlay-run.t4s-btn-color-dark,
+.t4s-btn-style-default.t4s-btn-effect-overlay-run.t4s-btn-color-primary,
+.t4s-btn-style-default.t4s-btn-effect-overlay-run.t4s-btn-color-custom1,
+.t4s-btn-style-default.t4s-btn-effect-overlay-run.t4s-btn-color-custom2 {
+  --btn-color-hover     : var(--btn-color);
+  --btn-background-hover: var(--btn-background);
+}
+.t4s-btn-style-default.t4s-btn-effect-overlay-run::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 150%;
+  width: 200%;
+  height: 100%;
+  transform: skew(-20deg);
+  background-image: linear-gradient(90deg,transparent,hsla(0,0%,100%,.25),transparent);
+}
+.t4s-btn-style-default.t4s-btn-effect-overlay-run.t4s-btn-color-light::after {
+  background-color: rgba(0,0,0,0.4);
+}
+
+.t4s-bl-item:not(.t4s-animation-none){
+   opacity: 0;
+}
+.t4s_animated .t4s-bl-item,
+.is-selected .t4s-bl-item {
+  animation: var(--animation);
+  animation-duration: var(--time-animation);
+  animation-delay: var(--delay-animation);
+  animation-fill-mode: forwards;
+}
+@media (-moz-touch-enabled: 0), (hover: hover) {
+  .t4s-eff-border-run:hover::before,
+  .t4s-eff-border-run:hover::after {    
+    opacity: 1;
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+  }
+  .t4s-eff-pervasive-circle:hover::before  {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: .6s;
+  }
+  .t4s-eff-plus-zoom-overlay:not(:hover)::before {
+    width: 0;
+    opacity: 1;
+    visibility: visible;
+  }
+  .t4s-eff-plus-zoom-overlay:not(:hover)::after {
+    height: 0;
+    opacity: 1;
+    visibility: visible;
+  }
+  .t4s-eff-dark-overlay:hover::before {
+    opacity: 0.3;
+  }
+  .t4s-eff-light-overlay:hover::before {
+    opacity: 0.3;
+  }
+  .t4s-eff-img-zoom:hover .t4s-obj-eff {
+    transform: scale(1.1);
+  }
+  .t4s-eff-img-rotate:hover .t4s-obj-eff {
+    transform: rotate(15deg) scale(1.4);
+  }
+  .t4s-eff-img-translateToTop:hover .t4s-obj-eff {
+    transform: scale(1.15) translateY(-25px);
+  }
+  .t4s-eff-img-translateToRight:hover .t4s-obj-eff {
+    transform: scale(1.15) translateX(25px);
+  }
+  .t4s-eff-img-translateToLeft:hover .t4s-obj-eff {
+    transform: scale(1.15) translateX(-25px);
+  }
+  .t4s-eff-img-translateToBottom:hover .t4s-obj-eff {
+    transform: scale(1.15) translateY(25px);
+  }
+  .t4s-eff-img-filter:hover .t4s-obj-eff{
+    opacity: 1;
+    filter: grayscale(0);
+  }
+  .t4s-eff-img-filter-unset:hover .t4s-obj-eff{
+    opacity: .5;
+    filter: grayscale(100%);
+  }
+  .t4s-eff-img-bounceIn:hover .t4s-obj-eff{
+    animation: bounceIn forwards;
+    animation-duration: 1s;
+    animation-delay: 0;
+  }
+  .t4s-btn:hover::before {
+    background-color: var(--btn-background-hover);
+    border-color: var(--btn-background-hover);
+    opacity: 1;
+    visibility: visible;
+  }
+  .t4s-btn-effect-default:hover {
+    opacity: 0.8 !important;
+  }
+  .t4s-btn-effect-default:hover::before {
+    opacity: 1;
+    visibility: visible;
+    background-color: var(--btn-background-hover);
+    border-color: var(--btn-background-hover);
+  }
+  .t4s-btn-effect-fade:hover::before{
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     opacity: 1;
+     visibility: visible;
+  }
+  .t4s-btn-effect-rectangle-out:hover::before{
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     width:100%;
+     height: 100%;
+     border-radius: 0;
+     opacity: 1;
+     visibility: visible;
+  }
+  .t4s-btn-effect-sweep-to-left:hover:before,
+  .t4s-btn-effect-sweep-to-right:hover:before,
+  .t4s-btn-effect-sweep-to-top:hover:before,
+  .t4s-btn-effect-sweep-to-bottom:hover:before,
+  .t4s-btn-effect-sweep-to-bottom:hover:before {
+      transform: scale(1);
+  }
+  .t4s-btn-effect-shutter-out-horizontal:hover::before{
+    transform: scaleX(1);
+  }
+  .t4s-btn-effect-outline:not(:hover)::before {
+    background-color: transparent;
+  }
+  .t4s-btn-effect-outline:hover:before {
+     left:0;
+     transform: translateX(0px) translateY(-8px);
+     border-color: var(--btn-background-hover);
+     z-index: -1;
+     opacity: 0;
+     transition: 0.2s ease;
+  }
+  .t4s-btn-effect-outline:hover{
+     background-color: var(--btn-background-hover);
+     transform: translateX(4px) translateY(5px);
+  }
+  .t4s-btn-effect-shadow:hover{
+    background-color: var(--btn-background-hover);
+    transform: translateX(4px) translateY(5px);
+    box-shadow: none;
+  }
+  .t4s-btn-style-default.t4s-btn-effect-overlay-run:hover {
+    background-color: var(--btn-background-hover);
+    color: var(--btn-color-hover);
+  }
+  .t4s-btn-style-default.t4s-btn-effect-overlay-run:hover::after {
+    animation: .75s cubic-bezier(.01,.56,1,1) ani_shine;
+  }
+  .t4s-btn-style-outline.t4s-btn-effect-overlay-run:hover:before {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    opacity: 1;
+    visibility: visible;
+  }
+}

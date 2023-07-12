@@ -1,0 +1,76 @@
+.t4s-list-collections-simple {
+    display: flex;
+}
+.t4s-collection-item-simple a {
+    color: var(--title-cl-pri);
+    padding: 5px calc(var(--space-item-dk)/2);
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-block;
+    white-space: nowrap;
+}
+.t4s-collection-item-simple a:hover {
+    color: var(--title-cl-pri-hover);
+}
+.t4s-collection-item-simple::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    bottom: 20%;
+    right: 0;
+    width: 1px;
+    background: rgba(255,255,255,0.5);
+}
+.rtl_true .t4s-collection-item-simple:first-child:after,
+.rtl_false .t4s-collection-item-simple:last-child::after {
+    display: none;
+}
+.rtl_false .t4s-list-collections-simple .t4s-collection-item-simple:first-child a,
+.rtl_true .t4s-list-collections-simple .t4s-collection-item-simple:first-child a {
+    padding-left: 0;
+}
+.rtl_false .t4s-list-collections-simple .t4s-collection-item-simple:last-child a,
+.rtl_true .t4s-list-collections-simple .t4s-collection-item-simple:last-child a {
+    padding-right: 0;
+}
+/* .t4s-list-collections-simple.flickityt4s_next_enable .t4s-collection-item-simple:first-child a,
+.t4s-list-collections-simple.flickityt4s_prev_enable .t4s-collection-item-simple:first-child a {
+    padding-left: 0;
+}
+.t4s-list-collections-simple.flickityt4s_next_enable .t4s-collection-item-simple:last-child a,
+.t4s-list-collections-simple.flickityt4s_prev_enable .t4s-collection-item-simple:last-child a {
+    padding-right: 0;
+} */
+/* .t4s-list-collections-simple.flickityt4s_next_enable,
+.t4s-list-collections-simple.flickityt4s_prev_enable {
+    padding: 0 35px;
+} */
+/* .t4s-list-collections-simple .flickityt4s-prev-next-button,
+.t4s-list-collections-simple .flickityt4s-prev-next-button {
+    display: none;
+} */
+/* .t4s-list-collections-simple.flickityt4s_next_enable .flickityt4s-prev-next-button,
+.t4s-list-collections-simple.flickityt4s_prev_enable .flickityt4s-prev-next-button {
+    display: flex;
+} */
+.t4s-collections-list-simple .t4s-flicky-slider .flickityt4s-prev-next-button.previous {
+    left: 0;
+}
+.t4s-collections-list-simple .t4s-flicky-slider .flickityt4s-prev-next-button.next {
+    right: 0;
+}
+.t4s-collections-list-simple .flickityt4s-prev-next-button {
+    transform: translateY(-50%) !important;
+    width: 35px;
+    height: 35px;
+}
+@media screen and (max-width: 1023px) {
+    .t4s-collection-item-simple a {
+        padding: 5px calc(var(--space-item-tb)/2);
+    }
+}
+@media screen and (max-width: 767px) {
+    .t4s-collection-item-simple a {
+        padding: 5px calc(var(--space-item-mb)/2);
+    }
+}

@@ -1,0 +1,37 @@
+nav.t4s-pr-breadcrumb {
+    font-size: 13px;
+    line-height: 1;
+}
+.t4s-pr-breadcrumb svg { 
+    width: 10px;
+    margin: 0 5px;
+    position: relative;
+    top: 4px;
+}
+.breadcrumb_pr_wrap {
+    background: var(--cl_bg);
+    margin-bottom: 30px;
+    padding: 18px 0;
+    line-height: 18px;
+}
+.breadcrumb_pr_wrap .t4s-text-pr{
+	display: none;
+}
+a.t4s-nav-pr {
+    display: inline-block;
+    width: 20px;
+    text-align: center; 
+} 
+.t4s-nav-pr svg {
+    width: 18px;
+} 
+.breadcrumb_pr_wrap a:not(:hover),.t4s-pr-breadcrumb svg,.t4s-pr-breadcrumb > span {
+    color: var(--cl_link);
+}
+a.t4s-nav-back {
+    margin: 0 6px;
+    display: inline-block;
+}
+.t4s-pr-breadcrumb > span {
+    opacity: 0.6;
+}

@@ -1,0 +1,183 @@
+.t4s-categories__wrapper {
+      top: 100%;
+      right: 0;
+      left: 0;
+      z-index: 9;
+      visibility: hidden;
+      transition: all .2s ease;
+      -webkit-transform: translateY(15px) translateZ(0);
+      transform: translateY(15px) translateZ(0);
+      pointer-events: none;
+      padding: 15px 0;
+      padding: 0;
+      background-color: #fff;
+      box-shadow: 0 5px 15px 0 rgb(0 0 0 / 15%);
+}
+.t4s-categories__wrapper .t4s-svg-spinner {
+      width: 2rem;
+      height: 2rem;
+      line-height: 0;
+      --color-foreground: 18, 18, 18;
+      margin: 20px auto;
+      display: block;
+}
+.t4s-categories__wrapper .t4s-svg-spinner:not([hidden]) .t4s-path {
+    stroke: var(--secondary-color);
+}
+.t4s-h-cat.is-action__hover .t4s-categories__wrapper,
+.t4s-h-cat:hover .t4s-categories__wrapper {
+      visibility: visible;
+      opacity: 1;
+      -webkit-transform: none; 
+      transform: none;
+      pointer-events: auto;
+}
+#t4s-nav-categories >li>a {
+    font-size: 12px;
+    padding: 8px 15px;
+    color: var(--text-color);
+    position: relative;
+    min-height: 38px;
+    transition: all .3s;
+}
+#t4s-nav-categories >li>a:hover,
+#t4s-nav-categories .t4s-sub-menu a {
+    color:  var(--text-color) !important;
+}
+#t4s-nav-categories .type_mn_link>a {
+    color: var(--text-color) !important;
+}
+#t4s-nav-categories .t4s-sub-menu a:hover {
+    color: var(--accent-color) !important;
+}
+#t4s-nav-categories >li>a:hover {
+    background-color: rgba(var(--text-color-rgb),0.08);
+}
+#t4s-nav-categories >li:not(:last-child)>a:before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+    z-index: 22;
+    display: block;
+/*     left: 15px;
+    right: 15px;
+    width: calc(100% - 30px);
+    width: -webkit-calc(100% - 30px); */
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: rgba(var(--text-color-rgb),0.15);
+}
+#t4s-nav-categories {
+    padding: 0;
+    margin: 0;
+}
+#t4s-nav-categories svg.t4s-icon-select-arrow {
+    transform: rotate(270deg);
+}
+#t4s-nav-categories >li {
+    position: relative;
+}
+#t4s-nav-categories>li>a i {
+    font-size: 22px;
+    margin-right: 4px;
+}
+#t4s-nav-categories .t4s_lb_nav {
+    position: relative;
+    right: auto;
+    margin-top: 0;
+    margin-left: 3px;
+    display: inline-block;
+    line-height: 14px;
+    min-width: 30px;
+}
+#t4s-nav-categories li .t4s-sub-menu{
+  padding: 15px 0;
+}
+#t4s-nav-categories li.t4s-type__lv0_mega .t4s-sub-menu {
+    padding: 20px;
+}
+#t4s-nav-categories li.t4s-type__lv0_mega .t4s-sub-menu li.t4s-menu-item {
+    padding-left: 0;
+    padding-right: 0;
+}
+#t4s-nav-categories .type_mn_link .t4s-heading {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+#t4s-nav-categories .t4s-sub-menu .t4s-menu-item {
+    position: relative;
+    padding: 5px 20px;
+}
+#t4s-nav-categories .t4s-sub-menu .type_mn_link .t4s-menu-item, { 
+    padding: 5px 0;
+}
+#t4s-nav-categories .t4s-sub-menu .type_mn_link2 a {
+    padding: 10px 0;
+}
+#t4s-nav-categories .t4s-sub-menu .type_mn_link2 a:first-child{
+  padding-top: 0;
+}
+#t4s-nav-categories .t4s-sub-menu .type_mn_link2 a:last-child{
+  padding-bottom: 0;
+}
+#t4s-nav-categories>li>.t4s-sub-menu .t4s-sub-menu {
+    position: absolute;
+    left: 100%;
+    min-width: 270px;
+    padding: 15px 0;
+    top: 0;
+    background-color: #fff;
+    box-shadow: 0 5px 15px #00000026;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .2s ease;
+    -webkit-transform: translateY(15px) translateZ(0);
+    transform: translateY(15px) translateZ(0);
+    pointer-events: none;
+}
+#t4s-nav-categories .t4s-sub-menu .has--children > a {
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    padding: 0;
+}
+#t4s-nav-categories .t4s-sub-menu .has--children > a svg {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: 7px;
+}
+#t4s-nav-categories>li>.t4s-sub-menu .t4s-menu-item:hover > .t4s-sub-menu {
+    visibility: visible;
+    -webkit-transform: translateY(0) translateZ(0);
+    transform: translateY(0) translateZ(0);
+    pointer-events: auto;
+    opacity: 1;
+}
+#t4s-nav-categories .t4s_lb_nav {
+    position: relative;
+    right: auto;
+    margin-top: 0;
+    margin-left: 3px;
+    display: inline-block;
+    line-height: 14px;
+    min-width: 30px;
+    left: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

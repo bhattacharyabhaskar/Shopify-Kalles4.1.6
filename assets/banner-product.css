@@ -1,0 +1,90 @@
+.t4s-img-banner .t4s--product {
+    display: inline-block;
+    max-width: 320px;
+    text-align: left;
+    position: absolute;
+    bottom: 30px;
+    box-shadow: 0 0 10px #0000001a;
+    right: 30px;
+    background: #fff;
+    padding: 10px;
+    width: calc(100% - 30px);
+}
+.t4s-img-banner .t4s--product .t4s-product-wrapper {
+    align-items: center;
+}
+.t4s-img-banner .t4s--product .t4s-product-img {
+    order: 2;
+    padding: 0 15px 0 0;
+    max-width: 85px;
+}
+.t4s-img-banner .t4s--product .t4s-product-info {
+    padding-left: 25px;
+    padding-right: 10px;
+    padding-top: 0;
+}
+.t4s-img-banner div.t4s--product h3.t4s-widget__pr-title {
+    font-size: 17px;
+    font-weight: 300;
+}
+.t4s-img-banner div.t4s--product .t4s-widget__pr-price {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--secondary-color);
+  display: inline-block;
+}
+.t4s-img-banner .t4s--product  .t4s-widget__pr-title a:hover {
+  color: var(--product-title-color-hover);
+}
+.t4s-img-banner .t4s--product  .t4s-widget__pr-title a {
+  color: var(--product-title-color);
+}
+.t4s-img-banner {
+  margin-bottom: var(--mgb);
+}
+.t4s-banner--product.t4s-btn-loading__svg.is--loading>.t4s-loading__spinner {
+    background: var(--t4s-light-color);
+    color: var(--t4s-dark-color);
+    width: 32px;
+    height: 32px;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: opacity .2s ease-in-out,transform .2s ease-in-out,visibility .2s ease-in-out;
+}
+.t4s-banner--product.t4s-child-lazyloaded {
+    background-image: none!important; 
+}
+.t4s-banner--product:not(.is--loading)>.t4s-loading__spinner {
+    transform: scale(.4);
+    opacity: 0;
+    visibility: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.t4s-img-banner .t4s--product .t4s-product-img img {
+    transform: scale(1);
+    transition: 0.3s;
+}
+.t4s-img-banner .t4s--product .t4s-product-img:hover img {
+    transform: scale(1.2);
+}
+@media(max-width:767px){
+  .t4s-img-banner {
+    margin-bottom: var(--mgb-mb);
+  }
+  div.t4s-img-banner .t4s--product {
+    bottom: 15px;
+    right: 15px;
+  }
+  .rtl_true div.t4s-img-banner .t4s--product {
+    right: auto;
+    left: 15px;
+  }
+}
+
+
+

@@ -1,0 +1,101 @@
+/*.t4s-banner .t4s-container-fluid {
+	overflow-x: hidden;
+}*/
+.t4s-banner-item .t4s-banner-inner {
+	position: relative;
+	overflow: hidden;
+}
+.t4s-banner-content .img-child {
+	margin-bottom: var(--img-mgb);
+}
+.banner-bg {
+	background-position: var(--bg-ps);
+	display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+.t4s-banner-content.t4s-auto {
+	z-index: 10;
+	width: fit-content;
+}
+.t4s-banner-content.t4s-container {
+	left: 0 !important;
+    right: 0 !important;
+    margin: auto;
+    transform: translateY(var(--p-vy));
+    width: 100%;
+}
+.t4s-collection-banner .t4s-banner-item,
+.t4s-collection-banner .t4s-banner-item .t4s-banner-inner {
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.coll-left {
+	flex-direction: row-reverse;
+}
+.t4s-banner-item .t4s-banner-inner::after {
+	content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-color: var(--bg-overlay);
+}
+.t4s-banner-parallax-overlay {
+	position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background-color: var(--bg-overlay)
+}
+.t4s-collection-banner2 .t4s-col-banner.t4s-col-lg-12 {
+	height: var(--height-dk);
+}
+@media(min-width: 1025px) {
+	.t4s-col-lg-23 {
+		flex: 0 0 auto;
+    	width: 20%;
+	}
+	.t4s-collection-banner2 .t4s-col-banner.t4s-col-lg-9 ~ .t4s-col-item {
+		max-width: 25%;
+	}
+}
+@media(max-width: 1024px) and (min-width: 768px) {
+	.t4s-collection-banner2 .t4s-col-banner.t4s-col-md-9 ~ .t4s-col-item {
+		max-width: 25%;
+	}
+}
+@media(min-width: 768px) {
+	.t4s-equal-height-true .t4s-banner-item,
+	.t4s-equal-height-true .t4s-banner-item .t4s-banner-inner,
+	.t4s-equal-height-true .t4s-banner-item .t4s_ratio  {
+		height: 100%;
+	}
+	.t4s-collection-banner2 .t4s-col-banner.t4s-col-lg-12 {
+		height: var(--height-dk);
+	}
+}
+@media(max-width: 767px) {
+	.t4s-banner-item {
+		margin: var(--mg-mb);
+	}
+	.coll-left {
+		flex-direction: column-reverse;
+	}
+	.t4s-collection-banner .t4s-banner-item .t4s-banner-inner {
+		height: var(--height);
+	}
+	.t4s-collection-banner2 .t4s-col-banner.t4s-col-9 ~ .t4s-col-item {
+		max-width: 25%;
+	}
+}

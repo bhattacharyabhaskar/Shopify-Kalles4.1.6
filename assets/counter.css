@@ -1,0 +1,97 @@
+.t4s-counter-item .t4s-counter-inner {
+	background-color: var(--bg-cl);
+	padding: 15px;
+}
+.t4s-counter-border-true .t4s-counter-inner {
+	border: solid 1px;
+	border-color: var(--bd-cl);
+}
+.t4s-counter-item .t4s-counter-title{
+	color: var(--heading-cl);
+	font-size: 16px;
+	line-height: 24px;
+	margin-bottom: 15px;
+}
+.t4s-counter-item .t4s-counter-number{
+	color: var(--number-cl);
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 30px;
+	margin-bottom: 10px;
+}
+.t4s-counter-item .t4s-counter-des{
+	color: var(--des-cl);
+	font-size: 14px;
+	line-height: 20px;
+	margin-bottom: 0;
+}
+.t4s-counter-icon{margin-bottom: 10px;}
+.t4s-counter-icon__image{
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.t4s-text-center .t4s-counter-icon__theme{justify-content: center;}
+.t4s-text-center .t4s-counter-icon__image{margin:0 auto;}
+.t4s-text-end .t4s-counter-icon__theme{justify-content: end;}
+.t4s-text-end .t4s-counter-icon__image{ margin-inline-start: auto;}
+.t4s-counter-icon__awesome,
+.t4s-counter-icon__theme{color: var(--icon-cl);}
+.t4s-counter-icon__theme svg{
+	display: inline-block;
+    vertical-align: top;
+    fill: currentColor;
+}
+.t4s-counter-small .t4s-counter-icon__theme svg{
+	width: 36px;
+	height: 36px;
+}
+.t4s-counter-small .t4s-counter-icon__image{
+	width: 40px;
+	height: 40px;
+}
+.t4s-counter-small .t4s-counter-icon__awesome {font-size: 36px;}
+
+.t4s-counter-medium .t4s-counter-title {
+	font-size: 18px;
+	line-height: 24px;
+}
+.t4s-counter-medium .t4s-counter-number {
+	font-size: 30px;
+	line-height: 36px;
+}
+.t4s-counter-medium .t4s-counter-des {
+	font-size: 16px;
+	line-height: 24px;
+}
+.t4s-counter-medium .t4s-counter-icon__theme svg{
+	width: 40px;
+	height: 40px;
+}
+.t4s-counter-medium .t4s-counter-icon__image{
+	width: 50px;
+	height: 50px;
+}
+.t4s-counter-medium .t4s-counter-icon__awesome {font-size: 40px;}
+
+.t4s-counter-large .t4s-counter-title {
+	font-size: 22px;
+	line-height: 24px;
+}
+.t4s-counter-large .t4s-counter-number {
+	font-size: 36px;
+	line-height: 40px;
+}
+.t4s-counter-large .t4s-counter-des {
+	font-size: 18px;
+	line-height: 24px;
+}
+.t4s-counter-large .t4s-counter-icon__theme svg{
+	width: 48px;
+	height: 48px;
+}
+.t4s-counter-large .t4s-counter-icon__awesome {font-size: 48px;}
+.t4s-counter-large .t4s-counter-icon__image{
+	width: 60px;
+	height: 60px;
+}

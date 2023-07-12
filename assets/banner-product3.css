@@ -1,0 +1,86 @@
+.t4s-banner-product__wrapper{
+    position: absolute;
+    top: auto;
+    right: 3%;
+    bottom: 80px;
+    left: auto;
+    width: fit-content;
+    z-index: 3;
+}
+.t4s-banner-product__item{
+    padding: 5px;
+    background-color: var(--t4s-light-color);
+    margin-left: 20px;
+    position: relative;
+    vertical-align: bottom;
+    transition: .5s all;
+}
+
+.t4s-banner-product__item:first-child{margin-left: 0;}
+.t4s-banner-product__placeholder,
+.t4s-banner-product__item img{
+    min-width: 86px;
+    max-width: 86px;
+}
+.t4s-banner-product__item:hover{
+    transform: translateY(-5px);
+}
+.t4s-banner-product__item.t4s-btn-loading__svg.is--loading>.t4s-loading__spinner {
+    background: var(--t4s-light-color);
+    color: var(--t4s-dark-color);
+    width: 32px;
+    height: 32px;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: opacity .2s ease-in-out,transform .2s ease-in-out,visibility .2s ease-in-out;
+}
+.t4s-banner-product__item.t4s-child-lazyloaded {
+    background-image: none!important;
+}
+.t4s-banner-product__item:not(.is--loading)>.t4s-loading__spinner {
+    transform: scale(.4);
+    opacity: 0;
+    visibility: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media(max-width:1024px){
+    .t4s-banner-product__wrapper{
+        position: relative;
+        bottom: 20px;
+        right: auto;
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+    }
+    .t4s-banner-product__placeholder,
+    .t4s-banner-product__item img {
+        min-width: 60px;
+        max-width: 60px;
+    }
+}
+@media(max-width:767px)
+{
+    .t4s-banner-product__item{
+        margin-left:10px;
+        padding: 3px;
+    }
+    .t4s-banner-product__placeholder,
+    .t4s-banner-product__item img {
+        min-width: 50px;
+        max-width: 50px;
+    }
+    .t4s-banner-product__wrapper{bottom:10px}
+}
+@media (max-width: 320px)
+{
+    .t4s-banner-product__item img {
+        min-width: 40px;
+        max-width: 40px;
+    }
+}
