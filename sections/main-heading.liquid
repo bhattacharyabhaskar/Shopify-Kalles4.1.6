@@ -1,0 +1,569 @@
+<!-- sections/heading-template.liquid -->
+{%- liquid 
+    assign se_stts   = section.settings
+    assign se_blocks = section.blocks
+    assign image     = se_stts.image
+    assign page_type = request.page_type
+    if page_type contains 'customers'
+      assign page_type = 'customers' 
+    endif 
+   -%}
+  {%- if se_stts.useParallax -%} {{ 'parallax.min.css' | asset_url | stylesheet_tag }} {%- endif -%}
+  
+  <div class="t4s-heading-template t4s-pr">
+    {%- if image -%}
+    <div data-parallax-t4s{{ se_stts.useParallax }} class="lazyloadt4s t4s-parallax t4s-parallax-bg t4s-heading-template-bg" data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2" data-speed="0.7"></div>
+    {%- endif -%}
+    <div class="t4s-container {{ se_stts.content_align }}">
+      {%- for block in se_blocks -%}
+        {%- assign bk_stts = block.settings -%}
+        {%- if block.type == 'title' -%}
+          <h1 data-lh="{{ bk_stts.text_lh_mb }}" data-lh-md="{{ bk_stts.text_lh }}" data-lh-lg="{{ bk_stts.text_lh }}" class="t4s-heading-template-text t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }} t4s-text-shadow-{{ bk_stts.text_shadow }}" style="--color: {{ bk_stts.color }}; --fs: {{ bk_stts.fs }}px; --text-lh: {{ bk_stts.text_lh }}px; --text-ls: {{ bk_stts.text_ls }}px; --fw: {{ bk_stts.fw }}; --text-mgb: {{ bk_stts.text_mgb }}px; --fs-mb: {{ bk_stts.fs_mb }}px; --text-lh-mb: {{ bk_stts.text_lh_mb }}px; --text-ls-mb: {{ bk_stts.text_ls_mb }}px; --text-mgb-mb: {{ bk_stts.text_mgb_mb }}px">
+
+            {%- case request.page_type -%}
+              {%- when 'cart' -%}
+              {%- when 'customers/login' -%}{{ 'customer.login.title' | t }}
+              {%- when 'customers/register' -%}{{ 'customer.register.title' | t }}
+              {%- when 'customers/activate_account' -%}{{ 'customer.activate_account.title' | t }}
+              {%- when 'customers/reset_password' -%}{{ 'customer.reset_password.title' | t }}
+              {%- else -%}{{ 'customer.account.title' | t }} 
+            {%- endcase -%}
+
+          </h1>
+        {%- else -%}
+          <div data-lh="{{ bk_stts.text_lh_mb }}" data-lh-md="{{ bk_stts.text_lh }}" data-lh-lg="{{ bk_stts.text_lh }}" class="t4s-heading-template-text t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }} t4s-text-shadow-{{ bk_stts.text_shadow }} t4s-rte" style="--color: {{ bk_stts.color }}; --fs: {{ bk_stts.fs }}px; --text-lh: {{ bk_stts.text_lh }}px; --text-ls: {{ bk_stts.text_ls }}px; --fw: {{ bk_stts.fw }}; --text-mgb: {{ bk_stts.text_mgb }}px; --fs-mb: {{ bk_stts.fs_mb }}px; --text-lh-mb: {{ bk_stts.text_lh_mb }}px; --text-ls-mb: {{ bk_stts.text_ls_mb }}px; --text-mgb-mb: {{ bk_stts.text_mgb_mb }}px">{{ bk_stts.des }}</div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  {%- assign bg_overlay = se_stts.bg_overlay | divided_by: 100.00 -%}
+  {%- style -%}
+    .t4s-heading-template {
+      padding-top: {{ se_stts.padding }}px;
+      padding-bottom: {{ se_stts.padding }}px;
+    }
+    .t4s-heading-template-text {
+      color: var(--color);
+      font-size: var(--fs);
+      font-weight: var(--fw);
+      line-height: var(--text-lh);
+      letter-spacing: var(--text-ls);
+      margin-bottom: var(--text-mgb);
+    }
+    .t4s-heading-template::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      background: {{ se_stts.bg_color | color_modify: 'alpha', bg_overlay }};
+    }
+    .t4s-heading-template-bg {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      z-index: -2;
+    }
+    .t4s-heading-template-bg {
+      background-size: {{ se_stts.bg_size }};
+      background-repeat: {{ se_stts.bg_repeat }};
+      background-position: {{ se_stts.bg_img_pos }};
+      background-attachment: {{ se_stts.bg_img_attachment }};
+    }
+    .t4s-heading-template-bg.t4s-parallax-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    .t4s-font-italic-true {
+      font-style: italic !important;
+    }
+    .t4s-text-shadow-true {
+      text-shadow: 0 0 4px rgba(0,0,0,0.4);
+    }
+    @media screen and (max-width: 768px) {
+      .t4s-heading-template {
+        padding-top: {{ se_stts.padding_mb }}px;
+        padding-bottom: {{ se_stts.padding_mb }}px;
+      }
+      .t4s-heading-template-text {
+        font-size: var(--fs-mb);
+        line-height: var(--text-lh-mb);
+        letter-spacing: var(--text-ls-mb);
+        margin-bottom: var(--text-mgb-mb);
+      }
+    }
+  {%- endstyle -%}
+  {%- schema -%}
+  {
+    "name": "Heading",
+    "tag": "section",
+    "class": "t4s-section t4s-section-heading t4s_tp_parallax",
+    "max_blocks": 2,
+    "settings": [
+      {
+        "type": "header",
+        "content": "== General options"
+      },
+      {
+        "type": "image_picker",
+        "label": "Background image",
+        "id": "image"
+      },
+      {
+        "type": "checkbox",
+        "label": "Use scroll parallax",
+        "id": "useParallax",
+        "default": true
+      },
+      {
+        "type": "color",
+        "label": "Background color",
+        "id": "bg_color",
+        "default": "#000"
+      },
+      {
+        "type": "range",
+        "label": "Background overlay",
+        "id": "bg_overlay",
+        "unit": "%",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 50
+      },
+      {
+        "type": "range",
+        "label": "Padding space (Desktop)",
+        "id": "padding",
+        "unit": "px",
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "default": 50
+      },
+      {
+        "type": "range",
+        "label": "Padding space (Mobile)",
+        "id": "padding_mb",
+        "unit": "px",
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "default": 50
+      },
+      {
+        "type": "select",
+        "label": "Content align",
+        "id": "content_align",
+        "options": [
+          {
+            "value": "t4s-text-start",
+            "label": "Left"
+          },
+          {
+            "value": "t4s-text-center",
+            "label": "Center"
+          },
+          {
+            "value": "t4s-text-end",
+            "label": "Right"
+          }
+        ],
+        "default": "t4s-text-center"
+      },
+      {
+        "type": "header",
+        "content": "== Background image config:"
+      },
+      {
+        "type": "paragraph",
+        "content": "Not active when you enable scroll parallax"
+      },
+      {
+        "type": "select",
+        "label": "Background image position",
+        "id": "bg_img_pos",
+        "options": [
+          {
+            "value": "left top",
+            "label": "Left top"
+          },
+          {
+            "value": "left center",
+            "label": "Left center"
+          },
+          {
+            "value": "left bottom",
+            "label": "Left bottom"
+          },
+          {
+            "value": "center top",
+            "label": "Center top"
+          },
+          {
+            "value": "center center",
+            "label": "Center center"
+          },
+          {
+            "value": "center bottom",
+            "label": "Center bottom"
+          },
+          {
+            "value": "right top",
+            "label": "Right top"
+          },
+          {
+            "value": "right center",
+            "label": "Right center"
+          },
+          {
+            "value": "right bottom",
+            "label": "Right bottom"
+          }
+        ],
+        "default": "center center"
+      },
+      {
+        "type": "select",
+        "label": "Background size",
+        "id": "bg_size",
+        "options": [
+          {
+            "value": "auto",
+            "label": "Auto"
+          },
+          {
+            "value": "cover",
+            "label": "Cover"
+          },
+          {
+            "value": "contain",
+            "label": "Contain"
+          }
+        ],
+        "default": "cover"
+      },
+      {
+        "type": "select",
+        "label": "Background repeat",
+        "id": "bg_repeat",
+        "options": [
+          {
+            "value": "no-repeat",
+            "label": "No repeat"
+          },
+          {
+            "value": "repeat",
+            "label": "Repeat all"
+          },
+          {
+            "value": "repeat-x",
+            "label": "Repeat horizontally"
+          },
+          {
+            "value": "repeat-y",
+            "label": "Repeat vertically"
+          }
+        ],
+        "default": "no-repeat"
+      },
+      {
+        "type": "select",
+        "label": "Background attachment",
+        "id": "bg_img_attachment",
+        "options": [
+          {
+            "value": "fixed",
+            "label": "Fixed"
+          },
+          {
+            "value": "scroll",
+            "label": "Scroll"
+          }
+        ],
+        "default": "scroll"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "title",
+        "name": "Heading",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header",
+            "content": "+ Text options"
+          },
+          {
+            "type": "select",
+            "label": "Font family",
+            "id": "fontf",
+            "options": [
+              {
+                "value": "inherit",
+                "label": "Inherit"
+              },
+              {
+                "value": "1",
+                "label": "Font family #1"
+              },
+              {
+                "value": "2",
+                "label": "Font family #2"
+              },
+              {
+                "value": "3",
+                "label": "Font family #3"
+              }
+            ],
+            "default": "inherit"
+          },
+          {
+            "type": "color",
+            "label": "Color",
+            "id": "color",
+            "default": "#fff"
+          },
+          {
+            "type": "range",
+            "label": "Font size",
+            "id": "fs",
+            "unit": "px",
+            "min": 12,
+            "max": 50,
+            "step": 1,
+            "default": 28
+          },
+          {
+            "type": "range",
+            "label": "Line height",
+            "id": "text_lh",
+            "unit": "px",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 28,
+            "info": "Set is '0' use to default"
+          },
+          {
+            "type": "range",
+            "label": "Font weight",
+            "id": "fw",
+            "min": 300,
+            "max": 800,
+            "step": 100,
+            "default": 400
+          },
+          {
+            "type": "number",
+            "id": "text_ls",
+            "label": "Letter spacing (in pixel)",
+            "info": "set is '0' use to default",
+            "default": 0
+          },
+          {
+            "type": "checkbox",
+            "label": "Enable font style italic",
+            "id": "font_italic",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "label": "Enable text shadow",
+            "id": "text_shadow",
+            "default": false
+          },
+          {
+            "type": "number",
+            "label": "Margin bottom",
+            "id": "text_mgb",
+            "default": 15
+          },
+          {
+            "type": "header",
+            "content": "== Option mobile"
+          },
+          {
+            "type": "range",
+            "label": "Font size (Mobile)",
+            "id": "fs_mb",
+            "unit": "px",
+            "min": 12,
+            "max": 50,
+            "step": 1,
+            "default": 24
+          },
+          {
+            "type": "range",
+            "label": "Line height",
+            "id": "text_lh_mb",
+            "unit": "px",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 28,
+            "info": "Set is '0' use to default"
+          },
+          {
+            "type": "number",
+            "id": "text_ls_mb",
+            "label": "Letter spacing (in pixel)",
+            "info": "set is '0' use to default",
+            "default": 0
+          },
+          {
+            "type": "number",
+            "label": "Margin bottom",
+            "id": "text_mgb_mb",
+            "default": 10
+          }
+        ]
+      },
+      {
+        "type": "des",
+        "name": "Description",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "des",
+            "label": "Content",
+            "default": "<p>Enter description here...</p>"
+          },
+          {
+            "type": "header",
+            "content": "+ Text options"
+          },
+          {
+            "type": "select",
+            "label": "Font family",
+            "id": "fontf",
+            "options": [
+              {
+                "value": "inherit",
+                "label": "Inherit"
+              },
+              {
+                "value": "1",
+                "label": "Font family #1"
+              },
+              {
+                "value": "2",
+                "label": "Font family #2"
+              },
+              {
+                "value": "3",
+                "label": "Font family #3"
+              }
+            ],
+            "default": "inherit"
+          },
+          {
+            "type": "color",
+            "label": "Color",
+            "id": "color",
+            "default": "#fff"
+          },
+          {
+            "type": "range",
+            "label": "Font size",
+            "id": "fs",
+            "unit": "px",
+            "min": 12,
+            "max": 50,
+            "step": 1,
+            "default": 16
+          },
+          {
+            "type": "range",
+            "label": "Line height",
+            "id": "text_lh",
+            "unit": "px",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 16,
+            "info": "Set is '0' use to default"
+          },
+          {
+            "type": "range",
+            "label": "Font weight",
+            "id": "fw",
+            "min": 300,
+            "max": 800,
+            "step": 100,
+            "default": 400
+          },
+          {
+            "type": "number",
+            "id": "text_ls",
+            "label": "Letter spacing (in pixel)",
+            "info": "set is '0' use to default",
+            "default": 0
+          },
+          {
+            "type": "checkbox",
+            "label": "Enable font style italic",
+            "id": "font_italic",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "label": "Enable text shadow",
+            "id": "text_shadow",
+            "default": false
+          },
+          {
+            "type": "number",
+            "label": "Margin bottom",
+            "id": "text_mgb",
+            "default": 0
+          },
+          {
+            "type": "header",
+            "content": "== Option mobile"
+          },
+          {
+            "type": "range",
+            "label": "Font size (Mobile)",
+            "id": "fs_mb",
+            "unit": "px",
+            "min": 12,
+            "max": 50,
+            "step": 1,
+            "default": 14
+          },
+          {
+            "type": "range",
+            "label": "Line height",
+            "id": "text_lh_mb",
+            "unit": "px",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 28,
+            "info": "Set is '0' use to default"
+          },
+          {
+            "type": "number",
+            "id": "text_ls_mb",
+            "label": "Letter spacing (in pixel)",
+            "info": "set is '0' use to default",
+            "default": 0
+          },
+          {
+            "type": "number",
+            "label": "Margin bottom",
+            "id": "text_mgb_mb",
+            "default": 10
+          }
+        ]
+      }
+    ]
+  }
+ {% endschema %}

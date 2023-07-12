@@ -1,0 +1,277 @@
+<!-- sections/video_featured.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'hero.css' | asset_url | stylesheet_tag }}
+{%- liquid
+	assign sid = section.id
+    assign se_blocks = section.blocks
+    assign se_stts = section.settings
+    assign stt_layout = se_stts.layout
+    assign bg_opacity = se_stts.bg_opacity | divided_by: 100.0 
+    assign bg_overlay = se_stts.bg_overlay | color_modify: 'alpha', bg_opacity 
+    assign se_height = se_stts.se_height
+    assign video_url = se_stts.video_url 
+    assign autoplay = se_stts.au_video
+    assign loop = se_stts.loop_video
+
+    if stt_layout == 't4s-se-container' 
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif
+    assign t4s_se_class = 't4s_nt_se_' | append: sid
+    if se_stts.use_cus_css and se_stts.code_cus_css != blank
+        render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+    endif 
+ -%}
+{%- if se_height != "t4s_ratio_fh" -%}
+    {%- capture append_style -%}--aspect-ratio-cusdt : {{ se_stts.height_dk }}px;--aspect-ratio-custb : {{ se_stts.height_tb }}px;--aspect-ratio-cusmb :{{ se_stts.height_mb }}px;{%- endcapture -%}
+{%- endif -%}
+<div class="t4s-section-inner {{ t4s_se_class }} t4s_nt_se_{{ sid }}" {% render 'section_style', se_stts: se_stts, append_style: append_style -%}>
+    {{- html_layout[0] -}}
+        <div data-t4s-animate class="t4s-bg-video t4s-video t4s-row-cols-1 t4s-gx-0 {{ se_height }} t4scuspx1_{{ se_stts.custom_mb }} t4scuspx2_{{ se_stts.custom_tb }} t4scuspx3_{{ se_stts.custom_dk }}" style="--bg-overlay:{{ bg_overlay }};">
+            <div class="t4s-hero-inner t4s-col-item t4s-pr t4s-oh">
+                <div class="t4s_ratio">
+                    {%- if se_stts.source == '2' and se_stts.video != blank -%}
+                        <video controls playsinline="playsinline" preload="metadata" aria-label="{{ se_stts.video.alt }}" poster="{{ image | default: se_stts.video.preview_image.src | image_url: width: se_stts.video.preview_image.width }}" muted {% if autoplay %} autoplay{% endif %}{% if loop %} loop{% endif %}>
+                            {%- for media in se_stts.video.sources -%}
+                                <source src="{{ media.url }}" type="{{ media.mime_type }}">
+                            {%- endfor -%}
+                            <img src="{{ mb_image | default: se_stts.video.preview_image.src | image_url: width: 100 }}">
+                        </video>
+                    {%- elsif video_url.type == 'youtube' -%}
+                        <iframe class="lazyloadt4s" data-src="//www.youtube.com/embed/{{ video_url.id }}?controls=1{% if autoplay %}&autoplay=1{% endif %}{% if loop %}&playlist={{ video_url.id }}&loop=1{% endif %}&showinfo=0&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
+                    {%- elsif video_url.type == 'vimeo' -%}
+                        <iframe class="lazyloadt4s" data-src="//player.vimeo.com/video/{{ video_url.id }}?portrait=0{% if autoplay %}&autoplay=1{% endif %}{% if loop %}&loop=1{% endif %}&byline=0&color={{ settings.accent_color | remove_first: '#' }}" frameborder="0"></iframe>
+                    {%- endif -%}              
+                </div>
+            </div>
+        </div>
+    {{- html_layout[0] -}}
+</div>
+{%- schema -%}
+{
+    "name":"Video featured",
+    "tag": "section",
+    "class": "t4s-section t4s-section-all",
+    "settings":[
+        {
+            "type": "header",
+            "content": "1. General options"
+        },
+        {
+            "type": "select",
+            "id": "se_height",
+            "label": "Section height",
+            "default": "t4s_ratio16_9",
+            "options": [
+                {
+                    "value":"t4s_ratio_po",
+                    "label":"Preserve original ratio"
+                },
+                {
+                    "value": "t4s_ratio_fh",
+                    "label": "Full screen height"
+                },
+                {
+                    "value": "t4s_ratio_cuspx",
+                    "label": "Custom height"
+                },
+                {
+                    "value": "t4s_ratio16_9",
+                    "label": "16:9"
+                },
+                {
+                    "value": "t4s_ratio4_3",
+                    "label": "4:3"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "custom_dk",
+            "label": "Use custom height (Desktop)",
+            "default": true
+        },
+        {
+            "type": "number",
+            "id": "height_dk",
+            "label": "Section height (Desktop)",
+            "default": 600
+        },
+        {
+            "type": "checkbox",
+            "id": "custom_tb",
+            "label": "Use custom height (Tablet)",
+            "default": true
+        },
+        {
+            "type": "number",
+            "id": "height_tb",
+            "label": "Section height (Tablet)",
+            "default": 400
+        },
+        {
+            "type": "checkbox",
+            "id": "custom_mb",
+            "label": "Use custom height (Mobile)",
+            "default": true
+        },
+        {
+            "type": "number",
+            "id": "height_mb",
+            "label": "Section height (Mobile)",
+            "default": 250
+        }, 
+        {
+            "type": "select",
+            "id": "source",
+            "label": "Source video",
+            "default": "2",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "Youtube"
+                },
+                {
+                    "value": "2",
+                    "label": "Upload file"
+                }
+            ]
+        },
+        {
+            "id": "video_url",
+            "type": "video_url",
+            "label": "1. Video url",
+            "accept": ["youtube","vimeo"],
+            "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "2. Upload file",
+          "info": "File video link from uploaded files. File size is smaller 4 mb recommended"
+        },
+        {
+            "type":"checkbox",
+            "id":"au_video",
+            "label":"Enable video autoplay",
+            "default":false
+        },
+        {
+            "type":"checkbox",
+            "id":"loop_video",
+            "label":"Enable video looping",
+            "default":true
+        },     
+        {
+            "type": "color",
+            "id": "bg_overlay",
+            "label": "Overlay",
+            "default": "#000"
+        },
+        {
+            "type": "range",
+            "id": "bg_opacity",
+            "label": "Overlay opacity",
+            "default": 0,
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%"
+        },
+        {
+            "type": "header",
+            "content": "2. Design options"
+        },
+        {
+            "type": "select","id": "layout","default": "t4s-container-fluid","label": "Layout",
+            "options": [
+                { "value": "t4s-se-container", "label": "Container"},
+                { "value": "t4s-container-fluid", "label": "Full width"}
+            ]
+        },
+        {
+            "type": "color",
+            "id": "cl_bg",
+            "label": "Background"
+        },
+        {
+            "type": "color_background",
+            "id": "cl_bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+            "default": ",,50px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+            "placeholder": "50px,,50px,"
+        },
+        {
+          "type": "header",
+          "content": "+ Design Tablet Options"
+        },
+        {
+          "type": "text",
+          "id": "mg_tb",
+          "label": "Margin",
+          "placeholder": ",,50px,"
+        },
+        {
+          "type": "text",
+          "id": "pd_tb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+        },
+        {
+            "type": "header",
+            "content": "+ Design Mobile Options"
+        },
+        {
+            "type": "text",
+            "id": "mg_mb",
+            "label": "Margin",
+            "default":",,30px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd_mb",
+            "label": "Padding",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "header",
+            "content": "3. Custom css"
+        },
+        {
+            "id": "use_cus_css",
+            "type": "checkbox",
+            "label": "Use custom css",
+            "default":false,
+            "info": "If you want custom style for this section."
+        },
+        { 
+            "id": "code_cus_css",
+            "type": "textarea",
+            "label": "Code custom css",
+            "info": "Use selector .SectionID to style css"
+            
+        }
+    ],
+    "presets": [
+        {
+            "category": "homepage",
+            "name":"Video featured"
+        }
+    ]
+}
+{% endschema %}

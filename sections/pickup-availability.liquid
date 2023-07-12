@@ -1,0 +1,99 @@
+{%- liquid
+assign product                     = product_variant.product
+assign pick_up_availabilities      = product_variant.store_availabilities | where: 'pick_up_enabled', true
+assign pick_up_availabilities_size = pick_up_availabilities.size
+assign image                       = product_variant.featured_image | default: product.featured_image | default: settings.placeholder_img
+assign variant_options             = product_variant.options
+assign check_map                   = 'store_availability.general.check_map' | t
+ -%}
+
+{%- capture icon_in_stock -%}
+<svg aria-hidden="true" focusable="false" role="presentation" class="t4s-icon-svg t4s-icon-in-stock" viewBox="0 0 12 10"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.293 9.707l-3-3a.999.999 0 1 1 1.414-1.414l2.236 2.236 6.298-7.18a.999.999 0 1 1 1.518 1.3l-7 8a1 1 0 0 1-.72.35 1.017 1.017 0 0 1-.746-.292z" fill="#212B36"/></svg>
+{%- endcapture -%}
+
+{%- capture icon_out_of_stock -%}
+<svg aria-hidden="true" focusable="false" role="presentation" class="t4s-icon-svg t4s-icon-out-of-stock" viewBox="0 0 12 13"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.414 6.5l4.293-4.293A.999.999 0 1 0 10.293.793L6 5.086 1.707.793A.999.999 0 1 0 .293 2.207L4.586 6.5.293 10.793a.999.999 0 1 0 1.414 1.414L6 7.914l4.293 4.293a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L7.414 6.5z" fill="#212B36"/></svg>
+{%- endcapture -%}
+
+{%- capture icon_map -%}
+<svg aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" class="t4s-icon-svg t4s-icon-map" viewBox="0 0 384 512"><path d="M272 192C272 236.2 236.2 272 192 272C147.8 272 112 236.2 112 192C112 147.8 147.8 112 192 112C236.2 112 272 147.8 272 192zM192 160C174.3 160 160 174.3 160 192C160 209.7 174.3 224 192 224C209.7 224 224 209.7 224 192C224 174.3 209.7 160 192 160zM384 192C384 279.4 267 435 215.7 499.2C203.4 514.5 180.6 514.5 168.3 499.2C116.1 435 0 279.4 0 192C0 85.96 85.96 0 192 0C298 0 384 85.96 384 192H384zM192 48C112.5 48 48 112.5 48 192C48 204.4 52.49 223.6 63.3 249.2C73.78 274 88.66 301.4 105.8 329.1C134.2 375.3 167.2 419.1 192 451.7C216.8 419.1 249.8 375.3 278.2 329.1C295.3 301.4 310.2 274 320.7 249.2C331.5 223.6 336 204.4 336 192C336 112.5 271.5 48 192 48V48z"/></svg>
+{%- endcapture -%}
+
+<div class="t4s-pickup-availability-container">
+  {%- if pick_up_availabilities_size > 0 -%}{% assign closest_location = pick_up_availabilities.first -%}
+    <div class="t4s-pickup-availability-information t4s-d-flex">
+        {%- if closest_location.available -%} {{ icon_in_stock }} {%- else -%} {{ icon_out_of_stock }} {%- endif -%}
+        <div class="t4s-pickup-availability-information-container">
+          {%- if closest_location.available -%}
+            <p class="t4s-pickup-availability-information__title">
+              {{ 'store_availability.general.pick_up_available_at_html' | t: location_name: closest_location.location.name }}
+            </p>
+            <p class="t4s-pickup-availability-information__stock t4s-pickup-availability-small-text">
+              {{ closest_location.pick_up_time }}
+            </p>
+          {%- else -%}
+            <p class="t4s-pickup-availability-information__title">
+              {{ 'store_availability.general.pick_up_unavailable_at_html' | t: location_name: closest_location.location.name }}
+            </p>
+          {%- endif -%}
+          <button class="t4s-pickup-availability-information__button t4s-pickup-availability-small-text" data-pickup-availability-popup-open aria-haspopup="dialog">
+              {%- if pick_up_availabilities_size == 1 %}{{ 'store_availability.general.view_store_info' | t }}{% else %}{{ 'store_availability.general.check_other_stores' | t }}{% endif -%}
+          </button>
+        </div>
+    </div>
+    <div class="t4s-pickup-availability-popup t4s-mfp-btn-close-inline mfp-with-anim mfp-hide" id="pickupAvailabilityPopup" role="dialog" aria-modal="true" tabindex="-1">
+      <div class="t4s-product-pickup">
+         {%- if image != blank -%}
+         <div class="t4s-product-pickup__img t4s-bg-11" style="background: url({{ image | image_url: width: 1 }})">
+            <img class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[80,120,160,200]" data-optimumx="1.2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+         </div>
+         {%- endif -%}
+         <div class="t4s-product-pickup__infos">
+           <div class="t4s-product-pickup__title">{{ product.title | escape }}</div>
+           {%- unless product.has_only_default_variant -%}
+            <p class="t4s-product-pickup__variant">
+              {%- for product_option in product.options_with_values -%}
+                {{ product_option.name | escape }}:&nbsp;<span class="t4s-csecondary">{{ variant_options[forloop.index0] | escape }}</span>
+                {%- unless forloop.last -%},&nbsp;{%- endunless forloop.last -%}
+              {%- endfor -%}
+            </p>
+           {%- endunless -%}
+           <div class="t4s-product-pickup__price">{%- if product_variant.compare_at_price > product_variant.price -%} <del>{{ product_variant.compare_at_price | money }}</del> <ins>{{ product_variant.price | money }}</ins>{%- else -%}{{ product_variant.price | money }}{%- endif -%}</div>
+         </div>
+      </div>
+      <ul class="t4s-pickup-availability-list" role="list">
+        {%- for availability in pick_up_availabilities -%}
+          <li class="t4s-pickup-availability-list__item">
+            <h3 class="t4s-pickup-availability-list__location">
+              {{ availability.location.name }}
+            </h3>
+            <div class="t4s-pickup-availability-list__stock t4s-pickup-availability-small-text">
+              {%- if availability.available -%}
+                {{ icon_in_stock }} {{ 'store_availability.general.pick_up_available' | t }}, {{ availability.pick_up_time | downcase }}
+              {%- else -%}
+                {{ icon_out_of_stock }} {{ 'store_availability.general.pick_up_currently_unavailable' | t }}
+              {%- endif -%}
+            </div>
+            {%- assign address = availability.location.address -%}
+            <address class="t4s-pickup-availability-list__address">
+              {{ address | format_address }}
+            </address>
+            {%- if address.phone.size > 0 -%}
+              <p class="t4s-pickup-availability-list__phone t4s-pickup-availability-small-text">
+                {{ address.phone }}<br>
+              </p>
+            {%- endif -%}
+            <a href="https://maps.google.com?daddr={{ address.street | escape }} {{ address.province | escape }} {{ address.country | escape }}"class="t4s-pickup-availability-list__btn t4s-pickup-availability-small-text t4s-d-inline-block" target="_blank" rel="noopener" aria-describedby="a11y-new-window-external-message">{{ icon_map }} {{ check_map }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+  	</div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": {},
+  "settings": []
+}
+{% endschema %}

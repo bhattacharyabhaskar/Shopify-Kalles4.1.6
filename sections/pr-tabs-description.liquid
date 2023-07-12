@@ -1,0 +1,806 @@
+<!-- sections/pr-tabs-description.liquid -->
+{%- liquid
+  assign pid = product.id
+  assign sid = section.id
+  assign se_stts = section.settings
+  assign se_blocks = section.blocks
+  assign stt_layout = se_stts.layout
+  assign stt_image_bg = se_stts.image_bg
+  if stt_layout == 't4s-se-container' 
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+  assign search_url = routes.all_products_collection_url
+  if se_stts.btn_owl == "outline"
+    assign arrow_icon = 1
+  else
+    assign arrow_icon = 2
+  endif
+
+  assign t4s_se_class = 't4s_nt_se_' | append: sid
+  if se_stts.use_cus_css and se_stts.code_cus_css != blank
+    render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+  endif 
+  assign tabs_des = se_stts.tabs_des
+ -%}
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'tabs.css' | asset_url | stylesheet_tag }}
+{{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+<div class="t4s-section-inner t4s_nt_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+    {% if tabs_des != "accordion" %}
+      <div class="t4s-tabs-se tabs-layout-{{ tabs_des }} t4s-tabs-{{ tabs_des }} t4s-item-rounded-{{ se_stts.item_rounded }} t4s-border-{{ se_stts.tabs_border }}" style="--border:{{ se_stts.tabs_border }};--item-cl:{{ se_stts.item_cl }};--item-bg:{{ se_stts.item_bg }};--item-cl-active:{{ se_stts.item_cl_active }};--item-bg-active:{{ se_stts.item_bg_active }};--space-between:{{ se_stts.space_between }}px;--mgb:{{ se_stts.tabslist_mb }}px;">
+      
+        <div class="t4s-tabs t4s-type-tabs t4s-text-{{ se_stts.tabs_pos }} " data-t4s-tabs2>
+          {% if tabs_des == "inline" %}
+            <div class="t4s-head">
+              {%- if se_stts.top_heading != blank -%}<h3 class="t4s-section-title t4s-title"><span>{{ se_stts.top_heading }}</span></h3>{%- endif -%}
+          {% endif %}
+          <ul data-t4s-tab-ul2 class="t4s-tabs-ul {% if tabs_des != "accordion" or tabs_des != "inline" %} t4s-flicky-slider t4s-slider-btn-style-simple t4s-slider-btn-none t4s-slider-btn-small t4s-slider-btn-vi-always flickityt4s{% endif %}" {% if tabs_des != "accordion" or tabs_des != "inline" %}data-flickityt4s-js='{"isSimple": true,"freeScroll": true, "setPrevNextButtons":true, "arrowIcon":"1", "imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign":"center", "wrapAround": false,"prevNextButtons": true,"percentPosition": 0,"pageDots": false, "pauseAutoPlayOnHover" : true }' {% endif %}>
+            {%- for block in se_blocks -%}
+              {%- assign bk_stts = block.settings -%}
+              {%- assign blockid = block.id -%}
+              <li class="t4s-tab-item"><a id="b_{{ block.id }}" href="#t4s-{{ blockid }}" rel="nofollow" data-t4s-tab-item data-no-instant {{ block.shopify_attributes }} {% if forloop.first == true %} class="t4s-active" {% endif %}><span>{{ bk_stts.title }}</span></a></li>
+            {%- endfor -%}
+          </ul>
+          {% if tabs_des == "inline" %}
+            </div>
+          {% endif %}
+          <div class="t4s-pr t4s-oh t4s-tab-contents2 t4s-text-{{ se_stts.content_align }}">
+            {%- for block in se_blocks -%}
+              <div id="t4s-{{ block.id }}" class="t4s-tab-content2 {% if forloop.first == true %} t4s-active {% endif %}" data-t4s-tab-content data-render-lazy-component >
+                {%- case block.type -%}
+                  {%- when 'custom_liquid' -%}
+                  <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_pr_deskl"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                    <div class="sp-tab-content">{{ bk_setts.custom_liquid }}</div>
+                  </div>
+
+                  {%- when 'des' -%}
+                  <div class="t4s-panel t4s-entry-content" data-id-dest4s id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                    <div class="sp-tab-content t4s-rte">{{- product.description -}}</div>
+                  </div>
+
+                  {%- when 'buy' -%}{% if nav_up_size == 0 %}{% continue %}{% endif -%} 
+                  <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                    <div class="sp-tab-content kl_fbt_wrap js_wrap_group">
+                      
+                     {%- form 'product', product, id: "fbt_frm_id", class: 'fbt_frm', novalidate: 'novalidate' -%}
+                       <div class="row al_center">
+                         <div class="col-auto">
+                           <ul class="ul_none flex wrap al_center kl_fbt_ul">
+                               {%- assign price = currently_var.price -%}{%- assign compare_pr = currently_var.compare_at_price | default: price -%}{%- assign image = currently_var.featured_image | default: product.featured_image -%}
+                               {%- assign img_url = image | image_url: width: 1 -%}
+                               <li class="kl_fbt_img_0 kl_fbt_img"><img alt="{{ currently_var.title | escape }}" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20{{ image.width }}%20{{ image.height }}%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E" data-src="{{ img_url }}" data-widths="[115, 230]" data-sizes="auto" class="lazyloadt4s lz_op_ef"></li>
+
+                               {%- for link in nav_up %}{% assign pr = link.object -%}
+                                   {%- if pid == pr.id or pr.available == false %}{% continue %}{% endif -%}
+                                   {%- assign currently = pr.selected_or_first_available_variant -%}
+                                   {%- assign cu_pr = currently.price -%}
+                                   {%- assign cp_pr = currently.compare_at_price | default: cu_pr -%}
+                                   {%- assign price = price | plus:cu_pr -%}{%- assign compare_pr = compare_pr | plus:cp_pr -%}{%- assign image = currently.featured_image | default: pr.featured_image -%}
+                                    {%- assign img_url = image | image_url: width: 1 -%}
+                                    <li class="kl_fbt_img kl_fbt_img_{{ forloop.index }}"><a href="{{ pr.url }}" class="dib"><img alt="{{ pr.title | escape }}" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20{{ image.width }}%20{{ image.height }}%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E" data-src="{{ img_url }}" data-widths="[115, 230]" data-sizes="auto" class="lazyloadt4s lz_op_ef"></a></li>
+                               {%- endfor -%}
+
+                           </ul>
+                         </div>
+                         <div class="col-auto js_fpt_clbtn mt__10 mb__10">
+                           <div class="kl_fbt_total_price mb__10"><span class="mr__5">{{ 'products.fbt.tt_price' | t }}</span><span class="kl_fbt_tt_price" data-cppr='{{ compare_pr }}' data-pr='{{ price }}'>{% if compare_pr > price %}<del>{{ compare_pr| money }}</del> <ins>{{ price | money }}</ins>{% else %}{{ price | money }}{% endif %}</span></div>
+                           <button type="submit" name="add" class="kl_fbt_btn js_add_group single_add_to_cart_button button"><span>{{ 'products.fbt.add_tc' | t }}</span></button>
+                         </div>
+                       </div>
+
+                       <ul class="ul_none mt__30 mb__15">
+
+                         <li class="kl_fbt_li js_item_group kl_fbt_li_0 kl_fbt_checked" data-sl='.kl_fbt_img_0'>
+                           {%- assign available_v = product.variants | where: "available" -%}
+                           {%- assign available_v_1 = available_v.first -%}
+
+                           <input type="checkbox" checked="checked" class="js_fbt_ck" id="kl_fbt_ck_0"><label for="kl_fbt_ck_0" class="pr pe_none"><svg class="dn scl_selected"><use xlink:href="#scl_selected"></use></svg></label>
+                           <span><strong>{{ 'products.fbt.this_item' | t }}</strong> {{ product.title | truncatewords: 12 }}{% if available_v.size < 2 and product.has_only_default_variant == false %} - {{ available_v_1.title }}{% endif %}</span>
+                          
+                           {%- if available_v.size < 2 -%}
+                              <input name="items[][id]" class="js_fbt_input" data-ogprice="{{ available_v_1.compare_at_price | default: available_v_1.price }}" data-price="{{ available_v_1.price }}" value="{{ available_v_1.id }}" type="hidden">
+                           {%- else -%}
+                              <select name="items[][id]" class="js_fbt_sl">
+                               {%- for variant in available_v -%}
+                                  <option data-img="{{ variant.image | default: product.featured_image | image_url: width: 1 }}" data-ogprice="{{ variant.compare_at_price | default: variant.price }}" data-price="{{ variant.price }}" value="{{ variant.id }}"{% if variant.id == cur_var_id %} selected="selected"{% endif %}>{{ variant.title | escape }}</option>
+                               {%- endfor -%}
+                              </select>
+                           {%- endif -%}
+                           <input value="1" type="number" name="items[][quantity]" class="hide hidden js_grp_qty">
+                           <span class="kl_fbt_price">{% if available_v_1.compare_at_price > available_v_1.price %}<del>{{ available_v_1.compare_at_price | money }}</del> <ins>{{ available_v_1.price | money }}</ins>{% else %}{{ available_v_1.price | money }}{% endif %}</span>
+                         </li>
+
+                         {%- for link in nav_up %}{% assign pr = link.object -%}
+
+                            {%- if pid == pr.id or pr.available == false %}{% continue %}{% endif -%}{%- assign index = forloop.index -%}
+                            {%- assign available_v = pr.variants | where: "available" -%}
+                            {%- assign available_v_1 = available_v.first -%}
+                            <li class="kl_fbt_li js_item_group kl_fbt_li_{{ index }} kl_fbt_checked" data-sl='.kl_fbt_img_{{ index }}'>
+                              <input type="checkbox" checked="checked" class="js_fbt_ck" id="kl_fbt_ck_{{ index }}"><label for="kl_fbt_ck_{{ index }}" class="pr"><svg class="dn scl_selected"><use xlink:href="#scl_selected"></use></svg></label>
+                              <a class="kl_fbt_a" href="{{ pr.url }}">{{ pr.title | truncatewords: 12 }}{% if available_v.size < 2 and pr.has_only_default_variant == false %} - {{ available_v_1.title }}{% endif %}</a>
+                             
+                              {%- if available_v.size < 2 -%}
+                                 <input name="items[][id]" class="js_fbt_input" data-ogprice="{{ available_v_1.compare_at_price | default: available_v_1.price }}" data-price="{{ available_v_1.price }}" value="{{ available_v_1.id }}" type="hidden">
+                              {%- else -%}
+                                 <select name="items[][id]" class="js_fbt_sl">
+                                  {%- for variant in available_v -%}
+                                     <option data-img="{{ variant.image | default: pr.featured_image | image_url: width: 1 }}" data-ogprice="{{ variant.compare_at_price | default: variant.price }}" data-price="{{ variant.price }}" value="{{ variant.id }}">{{ variant.title | escape }}</option>
+                                  {%- endfor -%}
+                                 </select>
+                              {%- endif -%}
+                              <input value="1" type="number" name="items[][quantity]" class="hide hidden js_grp_qty">
+                              <span class="kl_fbt_price">{% if available_v_1.compare_at_price > available_v_1.price %}<del>{{ available_v_1.compare_at_price | money }}</del> <ins>{{ available_v_1.price | money }}</ins>{% else %}{{ available_v_1.price | money }}{% endif %}</span>
+                            </li>
+
+                         {%- endfor -%}
+                       </ul>
+
+                   {%- endform -%}
+                    </div>
+                  </div>
+                  <style>.kl_fbt_img:not(.kl_fbt_img_0):before{content:"+";font-size:20px}.kl_fbt_li select{width:auto;border-radius:5px;color:#222;height:36px;line-height:36px;margin-left:5px}.kl_fbt_tt_price{color:#ec0101;font-size:18px}.kl_fbt_price{color:#ec0101;font-size:15px;margin:0 5px}.kl_fbt_wrap del{color:#878787}.kl_fbt_wrap ins{text-decoration:none}.kl_fbt_li:not(:last-child){margin-bottom:10px}.js_fbt_ck,.kl_fbt_li .label{display:none}.kl_fbt_li label:before{position:relative;top:2px;content: '';display:inline-block;margin-right:4px;width:14px;height:14px;min-width:14px;border:1px solid #d4d6d8;background:#fff;box-shadow:none;background-size:0;background-repeat:no-repeat;background-position:50%;transition:all .2s ease-in-out;border-radius:2px;-webkit-appearance:none;transition:border-color .2s ease-in-out,box-shadow .2s ease-in-out,background .2s ease-in-out}.kl_fbt_li svg{display:block;width:10px;height:10px;fill:#fff;position:absolute;top:5px;left:2px;pointer-events:none;transform:scale(0);-webkit-transform:scale(0);-webkit-transition:all .25s ease-in-out;transition:all .25s ease-in-out}.js_fbt_ck:checked+label svg{transform:scale(1);-webkit-transform:scale(1)}.js_fbt_ck:not(:checked)~*{opacity:.2}.js_fbt_ck:not(:checked)+label{opacity:1}.kl_fbt_img img{width:100%;margin:5px 10px;max-width:115px}.kl_fbt_img_0.kl_fbt_img img{margin-left:0}@media (max-width:1024px){.kl_fbt_img img{margin:5px;max-width:70px}.des_style_1.des_mb_2.sp-tab .kl_fbt_img img,.des_style_2 .kl_fbt_img img{max-width:55px}.des_style_1.des_mb_2 .kl_fbt_img_0.kl_fbt_img img{margin-left:5px}.kl_fbt_img:not(.kl_fbt_img_0):before{font-size:16px}.kl_fbt_li label:before{width:24px;height:24px}.kl_fbt_li svg{width:16px;height:16px;top:-2px;left:3px }}</style> 
+                  
+                  {%- when 'add' %}{% if product.has_only_default_variant %}{% continue %}{% endif -%}
+                  <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                    <div class="sp-tab-content">
+                      <table class="pr_attrs">
+                        <tbody>
+                          {%- for product_option in product.options_with_values -%}
+                          <tr class="attr_pa_{{ product_option.name | handle }}">
+                            <th class="attr__label">{{ product_option.name }}</th>
+                            <td class="attr__value">
+                              <p>{% for value in product_option.values %}{{ value }}{% unless forloop.last == true %}, {% endunless %}{% endfor %}</p>
+                            </td>
+                          </tr>
+                          {%- endfor -%}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  
+                  {%- when 'rivui' -%}
+                  <div class="t4s-panel t4s-entry-content" data-id-reviewt4s id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                    <div class="sp-tab-content">
+                      {%- case settings.app_review -%}                        
+                          {%- when '1' -%}
+                             <div id="shopify-product-reviews" data-id="{{ pid }}">{{ product.metafields.spr.reviews }}</div>
+                          {%- when '2' -%}
+                             <div class="lt-block-reviews"><ryviu-widget handle="{{ product.handle }}" title_product="{{ product.title }}" total_meta="{{ product.metafields.ryviu.r_count }}" image_product="{{ product.featured_image.src | img_url: '800x' }}"></ryviu-widget></div>
+                          {%- when '3' -%}
+                             <div id="shopify-ali-review" product-id="{{ pid }}">{{ shop.metafields.review_collector.review_code }}</div>
+                          {%- when '4' -%}
+                            <div id="looxReviews" data-product-id="{{ pid }}" class="loox-reviews-default">{{ product.metafields.loox.reviews }}</div>
+                          {%- when '5' -%}
+                            {%- capture the_snippet_reviews %}{% render 'socialshopwave-widget-recommends' with 1 %}{% endcapture -%}
+                            {%- unless the_snippet_reviews contains 'Liquid error' %}{{ the_snippet_reviews }}{% endunless -%}
+                          {%- else -%}
+                            <div class="star-rating review_widget_other">{{ bk_setts.review_liquid }}</div>
+                      {%- endcase -%}
+                    </div>
+                  </div>
+                  
+                  {%- when 'html' -%}
+                  <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                    <div class="sp-tab-content t4s-rte">{{ pages[bk_setts.page].content }}</div>
+                  </div>
+                
+                  
+                  {%- when 'size_pr' %}
+                  {%- unless ck_page_sizet4 %}{% continue %}{% endunless -%}
+                  <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                    <div class="sp-tab-content">{{ page_sizet4.content }}</div>
+                  </div>
+
+                  {%- when 'text' or 'html2' -%}{%- if bk_setts.title == blank or bk_setts.text == blank %}{% continue %}{% endif -%}
+                  <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                    <div class="sp-tab-content">{{ bk_setts.text | html }}html</div>
+                  </div>
+                {%- endcase -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+      {% else %}
+        {{ 'accordion.css' | asset_url | stylesheet_tag }}
+        <div class="t4s-tabs t4s-type-accordion {{ se_stts.content_align }}" data-t4s-tabs style="--title-cl: {{ se_stts.item_cl }};--bg-title-cl: {{ se_stts.item_bg }};--title-active-cl: {{ se_stts.item_cl_active }};--bg-title-active-cl: {{ se_stts.item_bg_active }};">
+          {%- for block in se_blocks -%}
+            {%- assign bk_stts = block.settings -%} 
+            {%- assign blockid = block.id -%}
+            <div class="t4s-tab-wrapper {% if forloop.first == true %} t4s-active {% endif %} " data-t4s-tab-wrapper {{ block.shopify_attributes }}>
+              <a id="b_{{ block.id }}" class="t4s-accor-title" href="#t4s-{{ blockid }}" rel="nofollow" data-t4s-tab-item data-no-instant>
+                <span class="t4s-accor-text">
+                  {{ bk_stts.title }}
+                </span>
+                <span class="t4s-accor-item-nav"></span>
+              </a>
+                    {%- case block.type -%}
+                      {%- when 'custom_liquid' -%}
+                        <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                          <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_pr_deskl"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                          <div class="sp-tab-content">{{ bk_setts.custom_liquid }}</div>
+                        </div>
+                      {%- when 'des' -%}
+                      <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" data-id-dest4s {{ block.shopify_attributes }}>
+                        <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                        <div class="sp-tab-content  t4s-rte">{{- product.description -}}</div>
+                      </div>
+
+                      {%- when 'buy' -%}{% if nav_up_size == 0 %}{% continue %}{% endif -%} 
+                      <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                        <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                        <div class="sp-tab-content kl_fbt_wrap js_wrap_group">
+                          
+                         {%- form 'product', product, id: "fbt_frm_id", class: 'fbt_frm', novalidate: 'novalidate' -%}
+                           <div class="row al_center">
+                             <div class="col-auto">
+                               <ul class="ul_none flex wrap al_center kl_fbt_ul">
+                                   {%- assign price = currently_var.price -%}{%- assign compare_pr = currently_var.compare_at_price | default: price -%}{%- assign image = currently_var.featured_image | default: product.featured_image -%}
+                                   {%- assign img_url = image | image_url: width: 1 -%}
+                                   <li class="kl_fbt_img_0 kl_fbt_img"><img alt="{{ currently_var.title | escape }}" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20{{ image.width }}%20{{ image.height }}%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E" data-src="{{ img_url }}" data-widths="[115, 230]" data-sizes="auto" class="lazyloadt4s lz_op_ef"></li>
+
+                                   {%- for link in nav_up %}{% assign pr = link.object -%}
+                                       {%- if pid == pr.id or pr.available == false %}{% continue %}{% endif -%}
+                                       {%- assign currently = pr.selected_or_first_available_variant -%}
+                                       {%- assign cu_pr = currently.price -%}
+                                       {%- assign cp_pr = currently.compare_at_price | default: cu_pr -%}
+                                       {%- assign price = price | plus:cu_pr -%}{%- assign compare_pr = compare_pr | plus:cp_pr -%}{%- assign image = currently.featured_image | default: pr.featured_image -%}
+                                        {%- assign img_url = image | image_url: width: 1 -%}
+                                        <li class="kl_fbt_img kl_fbt_img_{{ forloop.index }}"><a href="{{ pr.url }}" class="dib"><img alt="{{ pr.title | escape }}" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20{{ image.width }}%20{{ image.height }}%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E" data-src="{{ img_url }}" data-widths="[115, 230]" data-sizes="auto" class="lazyloadt4s lz_op_ef"></a></li>
+                                   {%- endfor -%}
+
+                               </ul>
+                             </div>
+                             <div class="col-auto js_fpt_clbtn mt__10 mb__10">
+                               <div class="kl_fbt_total_price mb__10"><span class="mr__5">{{ 'products.fbt.tt_price' | t }}</span><span class="kl_fbt_tt_price" data-cppr='{{ compare_pr }}' data-pr='{{ price }}'>{% if compare_pr > price %}<del>{{ compare_pr| money }}</del> <ins>{{ price | money }}</ins>{% else %}{{ price | money }}{% endif %}</span></div>
+                               <button type="submit" name="add" class="kl_fbt_btn js_add_group single_add_to_cart_button button"><span>{{ 'products.fbt.add_tc' | t }}</span></button>
+                             </div>
+                           </div>
+
+                           <ul class="ul_none mt__30 mb__15">
+
+                             <li class="kl_fbt_li js_item_group kl_fbt_li_0 kl_fbt_checked" data-sl='.kl_fbt_img_0'>
+                               {%- assign available_v = product.variants | where: "available" -%}
+                               {%- assign available_v_1 = available_v.first -%}
+
+                               <input type="checkbox" checked="checked" class="js_fbt_ck" id="kl_fbt_ck_0"><label for="kl_fbt_ck_0" class="pr pe_none"><svg class="dn scl_selected"><use xlink:href="#scl_selected"></use></svg></label>
+                               <span><strong>{{ 'products.fbt.this_item' | t }}</strong> {{ product.title | truncatewords: 12 }}{% if available_v.size < 2 and product.has_only_default_variant == false %} - {{ available_v_1.title }}{% endif %}</span>
+                              
+                               {%- if available_v.size < 2 -%}
+                                  <input name="items[][id]" class="js_fbt_input" data-ogprice="{{ available_v_1.compare_at_price | default: available_v_1.price }}" data-price="{{ available_v_1.price }}" value="{{ available_v_1.id }}" type="hidden">
+                               {%- else -%}
+                                  <select name="items[][id]" class="js_fbt_sl">
+                                   {%- for variant in available_v -%}
+                                      <option data-img="{{ variant.image | default: product.featured_image | image_url: width: 1 }}" data-ogprice="{{ variant.compare_at_price | default: variant.price }}" data-price="{{ variant.price }}" value="{{ variant.id }}"{% if variant.id == cur_var_id %} selected="selected"{% endif %}>{{ variant.title | escape }}</option>
+                                   {%- endfor -%}
+                                  </select>
+                               {%- endif -%}
+                               <input value="1" type="number" name="items[][quantity]" class="hide hidden js_grp_qty">
+                               <span class="kl_fbt_price">{% if available_v_1.compare_at_price > available_v_1.price %}<del>{{ available_v_1.compare_at_price | money }}</del> <ins>{{ available_v_1.price | money }}</ins>{% else %}{{ available_v_1.price | money }}{% endif %}</span>
+                             </li>
+
+                             {%- for link in nav_up %}{% assign pr = link.object -%}
+
+                                {%- if pid == pr.id or pr.available == false %}{% continue %}{% endif -%}{%- assign index = forloop.index -%}
+                                {%- assign available_v = pr.variants | where: "available" -%}
+                                {%- assign available_v_1 = available_v.first -%}
+                                <li class="kl_fbt_li js_item_group kl_fbt_li_{{ index }} kl_fbt_checked" data-sl='.kl_fbt_img_{{ index }}'>
+                                  <input type="checkbox" checked="checked" class="js_fbt_ck" id="kl_fbt_ck_{{ index }}"><label for="kl_fbt_ck_{{ index }}" class="pr"><svg class="dn scl_selected"><use xlink:href="#scl_selected"></use></svg></label>
+                                  <a class="kl_fbt_a" href="{{ pr.url }}">{{ pr.title | truncatewords: 12 }}{% if available_v.size < 2 and pr.has_only_default_variant == false %} - {{ available_v_1.title }}{% endif %}</a>
+                                 
+                                  {%- if available_v.size < 2 -%}
+                                     <input name="items[][id]" class="js_fbt_input" data-ogprice="{{ available_v_1.compare_at_price | default: available_v_1.price }}" data-price="{{ available_v_1.price }}" value="{{ available_v_1.id }}" type="hidden">
+                                  {%- else -%}
+                                     <select name="items[][id]" class="js_fbt_sl">
+                                      {%- for variant in available_v -%}
+                                         <option data-img="{{ variant.image | default: pr.featured_image | image_url: width: 1 }}" data-ogprice="{{ variant.compare_at_price | default: variant.price }}" data-price="{{ variant.price }}" value="{{ variant.id }}">{{ variant.title | escape }}</option>
+                                      {%- endfor -%}
+                                     </select>
+                                  {%- endif -%}
+                                  <input value="1" type="number" name="items[][quantity]" class="hide hidden js_grp_qty">
+                                  <span class="kl_fbt_price">{% if available_v_1.compare_at_price > available_v_1.price %}<del>{{ available_v_1.compare_at_price | money }}</del> <ins>{{ available_v_1.price | money }}</ins>{% else %}{{ available_v_1.price | money }}{% endif %}</span>
+                                </li>
+
+                             {%- endfor -%}
+                           </ul>
+
+                       {%- endform -%}
+                        </div>
+                      </div>
+                      <style>.kl_fbt_img:not(.kl_fbt_img_0):before{content:"+";font-size:20px}.kl_fbt_li select{width:auto;border-radius:5px;color:#222;height:36px;line-height:36px;margin-left:5px}.kl_fbt_tt_price{color:#ec0101;font-size:18px}.kl_fbt_price{color:#ec0101;font-size:15px;margin:0 5px}.kl_fbt_wrap del{color:#878787}.kl_fbt_wrap ins{text-decoration:none}.kl_fbt_li:not(:last-child){margin-bottom:10px}.js_fbt_ck,.kl_fbt_li .label{display:none}.kl_fbt_li label:before{position:relative;top:2px;content: '';display:inline-block;margin-right:4px;width:14px;height:14px;min-width:14px;border:1px solid #d4d6d8;background:#fff;box-shadow:none;background-size:0;background-repeat:no-repeat;background-position:50%;transition:all .2s ease-in-out;border-radius:2px;-webkit-appearance:none;transition:border-color .2s ease-in-out,box-shadow .2s ease-in-out,background .2s ease-in-out}.kl_fbt_li svg{display:block;width:10px;height:10px;fill:#fff;position:absolute;top:5px;left:2px;pointer-events:none;transform:scale(0);-webkit-transform:scale(0);-webkit-transition:all .25s ease-in-out;transition:all .25s ease-in-out}.js_fbt_ck:checked+label svg{transform:scale(1);-webkit-transform:scale(1)}.js_fbt_ck:not(:checked)~*{opacity:.2}.js_fbt_ck:not(:checked)+label{opacity:1}.kl_fbt_img img{width:100%;margin:5px 10px;max-width:115px}.kl_fbt_img_0.kl_fbt_img img{margin-left:0}@media (max-width:1024px){.kl_fbt_img img{margin:5px;max-width:70px}.des_style_1.des_mb_2.sp-tab .kl_fbt_img img,.des_style_2 .kl_fbt_img img{max-width:55px}.des_style_1.des_mb_2 .kl_fbt_img_0.kl_fbt_img img{margin-left:5px}.kl_fbt_img:not(.kl_fbt_img_0):before{font-size:16px}.kl_fbt_li label:before{width:24px;height:24px}.kl_fbt_li svg{width:16px;height:16px;top:-2px;left:3px }}</style> 
+                      
+                      {%- when 'add' %}{% if product.has_only_default_variant %}{% continue %}{% endif -%}
+                      <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                        <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                        <div class="sp-tab-content">
+                          <table class="pr_attrs">
+                            <tbody>
+                              {%- for product_option in product.options_with_values -%}
+                              <tr class="attr_pa_{{ product_option.name | handle }}">
+                                <th class="attr__label">{{ product_option.name }}</th>
+                                <td class="attr__value">
+                                  <p>{% for value in product_option.values %}{{ value }}{% unless forloop.last == true %}, {% endunless %}{% endfor %}</p>
+                                </td>
+                              </tr>
+                              {%- endfor -%}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      
+                      {%- when 'rivui' -%}
+                      <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" data-id-reviewt4s {{ block.shopify_attributes }}>
+                        <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                        <div class="sp-tab-content">
+                          {%- case settings.app_review -%}                        
+                              {%- when '1' -%}
+                                 <div id="shopify-product-reviews" data-id="{{ pid }}">{{ product.metafields.spr.reviews }}</div>
+                              {%- when '2' -%}
+                                 <div class="lt-block-reviews"><ryviu-widget handle="{{ product.handle }}" title_product="{{ product.title }}" total_meta="{{ product.metafields.ryviu.r_count }}" image_product="{{ product.featured_image.src | img_url: '800x' }}"></ryviu-widget></div>
+                              {%- when '3' -%}
+                                 <div id="shopify-ali-review" product-id="{{ pid }}">{{ shop.metafields.review_collector.review_code }}</div>
+                              {%- when '4' -%}
+                                <div id="looxReviews" data-product-id="{{ pid }}" class="loox-reviews-default">{{ product.metafields.loox.reviews }}</div>
+                              {%- when '5' -%}
+                                {%- capture the_snippet_reviews %}{% render 'socialshopwave-widget-recommends' with 1 %}{% endcapture -%}
+                                {%- unless the_snippet_reviews contains 'Liquid error' %}{{ the_snippet_reviews }}{% endunless -%}
+                              {%- else -%}
+                                <div class="star-rating review_widget_other">{{ bk_setts.review_liquid }}</div>
+                          {%- endcase -%}
+                        </div>
+                      </div>
+                      
+                      {%- when 'html' -%}
+                      <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                        <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                        <div class="sp-tab-content t4s-rte">{{ pages[bk_setts.page].content }}</div>
+                      </div>
+                    
+                      
+                      {%- when 'size_pr' %}
+                      {%- unless ck_page_sizet4 %}{% continue %}{% endunless -%}
+                      <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                        <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                        <div class="sp-tab-content">{{ page_sizet4.content }}</div>
+                      </div>
+
+                      {%- when 'text' or 'html2' -%}{%- if bk_setts.title == blank or bk_setts.text == blank %}{% continue %}{% endif -%}
+                      <div class="t4s-panel t4s-entry-content t4s-tab-content" data-t4s-tab-content id="tab_{{ block.id }}" {{ block.shopify_attributes }}>
+                        <div class="js_ck_view"></div><div class="t4s-heading"><a class="t4s-tab-heading t4s-d-flex" href="#tab_{{ block.id }}"><span class="txt_h_tab">{{ bk_setts.title }}</span><span class="nav_link_icon"></span></a></div>
+                        <div class="sp-tab-content">{{ bk_setts.text | html }}html</div>
+                      </div>
+                    {%- endcase -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {% endif %}
+    {{- html_layout[1] -}}
+</div>
+{%- schema -%}
+  {
+    "name": "Product tabs description", 
+    "tag": "section",
+    "class": "t4s-section t4s_tp_cdt t4s-pr-tabs-des t4s_tp_tab t4s_bk_flickity",
+    "settings": [
+      {
+        "type": "header",
+        "content": "1. General options"
+      },
+      {
+        "type": "select",
+        "id": "tabs_des",
+        "options": [
+          {
+            "value": "base",
+            "label": "Base"
+          },
+          {
+            "value": "border",
+            "label": "Has border (when item active)"
+          },
+          {
+            "value": "border-bg",
+            "label": "Has border and background"
+          },
+          {
+            "value": "underline",
+            "label": "Has underline (when item active)"
+          },
+          {
+            "value": "divider",
+            "label": "Has underline (when item active) and divider"
+          },
+          {
+            "value": "inline",
+            "label": "Inline"
+          },
+          {
+            "value": "accordion",
+            "label": "Accordion"
+          }
+        ],
+        "label": "Tabs design",
+        "default": "base"
+      },
+      {
+        "type": "select",
+        "id": "tabs_border",
+        "label": "Tabs item border",
+        "info": "Only working with design has border and inline",
+        "default": "solid",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "solid",
+            "label": "Solid"
+          },
+          {
+            "value": "dashed",
+            "label": "Dashed"
+          },
+          {
+            "value": "dotted",
+            "label": "Dotted"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "item_rounded",
+        "label": "Tabs item rounded",
+        "info":"Only working with design has border and background",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "item_cl",
+        "label": "Color item",
+        "default": "#222222"
+      },
+      {
+        "type": "color",
+        "id": "item_bg",
+        "label": "Background/border item",
+        "info":"Only working with design has border and background"
+      },
+      {
+        "type": "color",
+        "id": "item_cl_active",
+        "label": "Color item active",
+        "default": "#56CFE1"
+      },
+      {
+        "type": "color",
+        "id": "item_bg_active",
+        "label": "Background/border item active",
+         "info":"Only working with design has border and background",
+        "default": "#56CFE1"
+      },
+      {
+        "type": "range",
+        "id": "space_between",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Space between items",
+        "default": 30
+      },
+      {
+        "type": "select",
+        "id": "tabs_pos",
+        "label": "Tabs List Position",
+        "default": "center",
+        "options": [
+          {
+            "value": "start",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "end",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "number",
+        "id": "tabslist_mb",
+        "label": "Tabs list margin bottom",
+        "default": 30
+      },
+      {
+        "type": "select",
+        "id": "content_align",
+        "label": "Product content align",
+        "default": "start",
+        "options": [
+          {
+            "label": "Default",
+            "value": "start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "2. Design options"
+      },
+      {
+        "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+        "options": [
+            { "value": "t4s-se-container", "label": "Container"},
+            { "value": "t4s-container-wrap", "label": "Wrapped container"},
+            { "value": "t4s-container-fluid", "label": "Full width"}
+        ]
+      },
+      {
+        "type": "color",
+        "id": "cl_bg",
+        "label": "Background"
+      },
+      {
+        "type": "color_background",
+        "id": "cl_bg_gradient",
+        "label": "Background gradient"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_bg",
+        "label": "Background image"
+      },
+      {
+          "type": "text",
+          "id": "mg",
+          "label": "Margin",
+          "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+          "default": ",,50px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd",
+          "label": "Padding",
+          "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+          "placeholder": "50px,,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design Tablet Options"
+      },
+      {
+        "type": "text",
+        "id": "mg_tb",
+        "label": "Margin",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "text",
+        "id": "pd_tb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design mobile options"
+      },
+      {
+          "type": "text",
+          "id": "mg_mb",
+          "label": "Margin",
+          "default": ",,30px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd_mb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+      },
+      {
+        "type": "header",
+        "content": "4. Custom css"
+      },
+      {
+        "id": "use_cus_css",
+        "type": "checkbox",
+        "label": "Use custom css",
+        "default":false,
+        "info": "If you want custom style for this section."
+      },
+      { 
+        "id": "code_cus_css",
+        "type": "textarea",
+        "label": "Code custom css",
+        "info": "Use selector .SectionID to style css"
+        
+      }
+    ],
+    "blocks": [
+      {
+        "type": "des",
+        "name": "Description",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Description"
+          }
+        ]
+      },
+      {
+        "type": "buy",
+        "name": "Bought Together",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Only active when enable Frequently Bought Together on inside description."
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Frequently Bought Together"
+          },
+          {
+            "type": "paragraph",
+            "content": "[Tutorials Doc](https://kalles-docs.the4.co/features/bundle#config-bundle-from-kalles-1-1)"
+          }
+        ]
+      },
+      {
+        "type": "add",
+        "name": "Additional information",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Additional Information"
+          }
+        ]
+      },
+      {
+        "type": "rivui",
+        "name": "Review",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Reviews"
+          },
+          { 
+            "type": "liquid",
+            "id": "review_liquid",
+            "label": "Add Snippets Liquid",
+            "info": "Add app snippets reviews to show a 'write reviews' on product page. Will working when you use 'Other app review'"
+          }
+        ]
+      },
+      {
+        "type": "html",
+        "name": "Custom HTML",
+        "settings": [
+         {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Custom tab"
+          },
+          {
+            "type": "page",
+            "id": "page",
+            "label": "Tab content",
+            "info": "This page content will appear in the extra tab."
+          }
+        ]
+      },
+      {
+        "type": "size_pr",
+        "limit": 1,
+        "name": "Product type - Size guide",
+        "settings": [
+         {
+            "type": "paragraph",
+            "content": "Only show this tab when page has title 'Size The4 Name'. Name: product type"
+          },
+         {
+            "type": "paragraph",
+            "content": "This page content will appear in the extra tab."
+          },
+         {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Size guide"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text",
+        "limit": 10,
+        "settings": [
+            {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Talk about your brand"
+            },
+            {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+            }
+         ]
+      },
+      {
+        "type": "html2",
+        "name": "HTML 12",
+        "limit": 10,
+        "settings": [
+            {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "HTML 12"
+            },
+            {
+            "type": "textarea",
+            "id": "text",
+            "label": "Text",
+            "default": "Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store."
+            }
+         ]
+      }
+    ],
+    "default": {
+      "blocks": [
+          { "type": "des",
+            "settings": {
+              "title": "Description"
+            }
+          },
+          { "type": "add",
+            "settings": {
+              "title": "Additional Information"
+            }
+          }
+        ]
+      }
+    }
+{%- endschema -%}
+
+{%- javascript -%}
+{%- endjavascript -%}

@@ -1,0 +1,36 @@
+{%- liquid 
+  assign show_img = settings.show_img
+  assign enable_rating = settings.enable_rating
+  assign isGrowaveWishlist = false
+  if settings.wishlist_mode == "3" and shop.customer_accounts_enabled
+    assign isGrowaveWishlist = true
+  endif
+  assign enable_pr_size = settings.enable_pr_size
+  assign pr_size_pos = settings.pr_size_pos
+  assign show_size_type = settings.show_size_type
+  assign size_ck = settings.size_ck | append: ',size,sizes,Größe' 
+  assign get_size = size_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+  assign enable_pr_color = settings.enable_pr_color
+  assign show_cl_type = settings.show_color_type
+  assign color_ck = settings.color_ck | append: ',color,colors,couleur,colour'
+  assign get_color = color_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+  assign price_varies_style = settings.price_varies_style
+  assign app_review = settings.app_review
+  assign use_countdown = false
+-%}
+[t4splitlz]
+<div data-pin-wrapper id="id_nt_t4s" class="t4s-lb__wrapper t4s-lb-pr-wrapper">
+  <div class="t4s-lb-arrow"></div>
+  <div class="t4s-lb__header">
+     <span class="t4s-lb__title">{{ 'sections.lookbook.title.product' | t }}</span>
+     <button data-pin-close aria-label="{{ 'general.aria.close' | t }}"><svg role="presentation" class="t4s-iconsvg-close" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+  </div>
+  <div class="t4s-lb__content">
+    <div class="t4s-pin__popup t4s-text-center t4s_position_8 t4s_cover t4s_ratioadapt">
+    {%- render 'product-grid-item6', product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: false, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, show_list_btns: false -%}	 
+    </div>
+  </div>
+</div>
+[t4splitlz] 

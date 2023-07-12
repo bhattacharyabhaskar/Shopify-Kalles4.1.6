@@ -1,0 +1,2836 @@
+<!-- sections/slideshow.liquid -->
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'slideshow.css' | asset_url | stylesheet_tag }}
+{{ 'content-position.css' | asset_url | stylesheet_tag }}
+{{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign image_fix = image_nt | image_tag
+    assign sid = section.id
+    assign se_blocks = section.blocks
+    assign se_stts = section.settings
+    assign stt_layout = se_stts.layout
+    assign se_height = se_stts.se_height
+    assign use_custom_h = se_stts.use_custom_h
+
+    assign index = 1
+    assign arr_blocks_img = se_blocks | where: "type", 'image_parent' 
+    assign slide_eff = se_stts.eff
+    if stt_layout == 't4s-container-wrap' 
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+        assign size_img = '(min-width: 1800px) 1800px, 100vw'
+    else
+        assign html_layout = '__' | split: '__'
+        assign size_img = '100vw'
+    endif
+    assign isRunLoop = true
+    assign SetBL = true
+    if se_height == 't4s_ratioadapt' or se_height == 't4s_ratio_cuspx'
+        assign attr_img = ''
+    elsif se_height == 't4s_ratioadapt_f'
+        assign attr_img = ''
+        assign SetBL = false
+    else 
+        assign attr_img = 'data-'
+    endif 
+    if se_stts.btn_owl == "outline"
+        assign arrow_icon = 1
+    else
+        assign arrow_icon = 2
+    endif
+
+    assign countdown = false
+    assign use_button = false
+    assign use_animation = false
+    assign general_block = false
+    assign t4s_se_class = 't4s_nt_se_' | append: sid
+    if se_stts.use_cus_css and se_stts.code_cus_css != blank
+        render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+    endif 
+ -%}
+{%- capture data_flickityt4s -%}
+{
+    "cellAlign": "center","freeScroll": 0, "contain" : 1,"dragThreshold" : 15,"percentPosition": 1,"imagesLoaded": 0,"lazyload": 0,
+    "arrowIcon":"{{ arrow_icon }}", "t4sid": "{{ sid }}", "prevNextButtons": {{ se_stts.nav_btn }},
+    "pageDots": {{ se_stts.nav_dot }},"pauseAutoPlayOnHover":{{ se_stts.au_hover }},"wrapAround": {{ se_stts.loop }},"autoPlay":{{ se_stts.au_time | times: 1000 }},
+    "adaptiveHeight":{% if se_height != 't4s_ratio_fh' or se_height != 't4s_ratioadapt_f' %}true{% else %}false{% endif %}
+}
+{%- endcapture -%}
+{%- if se_height != "t4s_ratio_fh" -%}
+    {%- capture append_style -%}--aspect-ratio-cusdt : {{ se_stts.height_dk }}px;--aspect-ratio-custb : {{ se_stts.height_tb }}px;--aspect-ratio-cusmb :{{ se_stts.height_mb }}px;{%- endcapture -%}
+{%- endif %}
+<div class="t4s-section-inner {{ t4s_se_class }} t4s_nt_se_{{ sid }}" {% render 'section_style', se_stts: se_stts, append_style: append_style -%}>       
+    {{- html_layout[0] -}}    
+    <div class="t4s-slideshow t4s-row t4s-row-cols-1 t4s-gx-0 t4s-flicky-slider t4s_position_8 t4s_cover {{ se_height }} t4s-slide-eff-{{ slide_eff }} t4scuspx1_{{ se_stts.custom_mb }} t4scuspx2_{{ se_stts.custom_tb }} t4scuspx3_{{ se_stts.custom_dk }}{% if se_stts.nav_btn == true %}  t4s-slider-btn-style-{{ se_stts.btn_owl }} t4s-slider-btn-{{ se_stts.btn_shape }} t4s-slider-btn-{{ se_stts.btn_size }} t4s-slider-btn-cl-{{ se_stts.btn_cl }} t4s-slider-btn-vi-{{ se_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ se_stts.btn_hidden_mobile }} {% endif %}{% if se_stts.nav_dot %} t4s-dots-style-{{ se_stts.dot_owl }} t4s-dots-cl-{{ se_stts.dots_cl }} t4s-dots-{{ se_stts.dots_position }} t4s-dots-round-{{ se_stts.dots_round }} t4s-dots-hidden-mobile-{{ se_stts.dots_hidden_mobile }} {% endif %} flickityt4s" data-flickityt4s-js='{{ data_flickityt4s }}'  style="--space-dots: {{ se_stts.dots_space }}px;--flickity-btn-pos: 30px;--flickity-btn-pos-mb: 30px;" >
+        {%- for block in arr_blocks_img -%}            
+            {%- liquid  
+            	assign bk_stts = block.settings
+                assign image_mb = bk_stts.image_mb
+                assign image = bk_stts.image | default: image_mb
+                assign mb_image = image_mb | default: image 
+                if isRunLoop
+                    assign ratio = image.aspect_ratio 
+                    assign ratiomb = mb_image.aspect_ratio 
+                    assign isRunLoop = SetBL
+                endif 
+                assign url = bk_stts.link_img1 
+                assign open_link = bk_stts.open_link
+                assign bg_content_op = bk_stts.bg_content_op | divided_by: 100.0 
+                assign bg_content = bk_stts.bg_content_cl | color_modify: 'alpha', bg_content_op 
+                assign bg_opacity = bk_stts.bg_opacity | divided_by: 100.0
+                assign bg_overlay = bk_stts.bg_overlay | color_modify: 'alpha', bg_opacity
+                assign br_opacity = bk_stts.br_opacity | divided_by: 100.0
+                assign br_bg = bk_stts.br_bg | color_modify: 'alpha', br_opacity  
+                assign ani_delay = 0   
+                assign percent_delay = bk_stts.animation_delay | divided_by: 100.0
+                assign time_ani_delay = bk_stts.time_animation | times: percent_delay
+                assign cl_img = bk_stts.cl_img
+                assign img_url_w  = image | image_url: width: 1904 | split: '1904'
+                assign img_url_w0 = img_url_w[0]
+                assign img_url_w1 = img_url_w[1]
+                assign img_url_w_mb  = mb_image | image_url: width: 1904 | split: '1904'
+                assign img_url_w_mb0 = img_url_w_mb[0]
+                assign img_url_w_mb1 = img_url_w_mb[1]
+                assign img_1 = img_url_w0 | append: 1 | append: img_url_w1
+                assign img_1_mb = img_url_w_mb0 | append: 1 | append: img_url_w_mb1
+                if cl_img != blank and cl_img != 'rgba(0,0,0,0)'
+                  assign url_img = cl_img
+                  assign url_img_mb = cl_img
+                else
+                  assign url_img = 'url(' | append: img_1 | append: ')'
+                  assign url_img_mb = 'url(' | append: img_1_mb | append: ')'
+                endif           
+           -%}
+            
+            <div class="t4s-slideshow-item t4s-col-item t4s-slide t4s_position_{{ bk_stts.image_position }}"{% if forloop.first %} style="background:{{ cl_img }}"{% endif %} id="b_{{ block.id }}" data-select-flickity {{ block.shopify_attributes }}>
+                <div class="t4s-slideshow-inner t4s-pr t4s-oh t4s_ratio t4s_ratio_hasmb" {{ attr_img }}style="--aspect-ratioapt:{{ ratio | default: 1.7777 }};--aspect-ratioaptmb:{{ ratiomb | default: 1.7777 }};">
+
+                        {%- if image -%}   
+                            {%- if forloop.first -%}
+                                  <img {% if mb_image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ mb_image.presentation.focal_point }}"{% endif %} class="t4s-img-as-bg t4s-d-md-none -t4s-lz--fadeIn t4s-slide-{{ bk_stts.animate_slide }}"
+                                  srcset="{{ img_url_w_mb0 }}375{{ img_url_w_mb1 }} 375w, {{ img_url_w_mb0 }}550{{ img_url_w_mb1 }} 550w, {{ img_url_w_mb0 }}750{{ img_url_w_mb1 }} 750w, {{ img_url_w_mb0 }}1100{{ img_url_w_mb1 }} 1100w, {{ img_url_w_mb0 }}1500{{ img_url_w_mb1 }} 1500w, {{ img_url_w_mb0 }}1780{{ img_url_w_mb1 }} 1780w, {{ img_url_w_mb0 }}2000{{ img_url_w_mb1 }} 2000w, {{ img_url_w_mb0 }}3000{{ img_url_w_mb1 }} 3000w,{{ img_url_w_mb0 }}3840{{ img_url_w_mb1 }} 3840w, {{ mb_image | image_url }} {{ mb_image.width }}w"
+                                  sizes="(min-width: 768px) 768px,100vw" src="{{ img_url_w_mb0 }}1500{{ img_url_w_mb1 }}"
+                                  loading="lazy" onload="loadImageT4s(this)" alt="{{ mb_image.alt | escape }}" width="{{ mb_image.width }}" height="{{ mb_image.height }}">
+                                  <span class="lazyloadt4s-loader is-bg-img t4s-d-md-none" style="background: {{ url_img_mb }}"></span>
+                                  <img {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image.presentation.focal_point }}"{% endif %} class="t4s-img-as-bg t4s-d-none t4s-d-md-block -t4s-lz--fadeIn t4s-slide-{{ bk_stts.animate_slide }}"
+                                  srcset="{{ img_url_w0 }}375{{ img_url_w1 }} 375w, {{ img_url_w0 }}550{{ img_url_w1 }} 550w, {{ img_url_w0 }}750{{ img_url_w1 }} 750w, {{ img_url_w0 }}1100{{ img_url_w1 }} 1100w, {{ img_url_w0 }}1500{{ img_url_w1 }} 1500w, {{ img_url_w0 }}1780{{ img_url_w1 }} 1780w, {{ img_url_w0 }}2000{{ img_url_w1 }} 2000w, {{ img_url_w0 }}3000{{ img_url_w1 }} 3000w,{{ img_url_w0 }}3840{{ img_url_w1 }} 3840w, {{ image | image_url }} {{ image.width }}w"
+                                  sizes="{{ size_img }}" src="{{ img_url_w0 }}1500{{ img_url_w1 }}"
+                                  loading="lazy" onload="loadImageT4s(this)" alt="{{ image.alt | escape }}" width="{{ image.width }}" height="{{ image.height }}">
+                                  <span class="lazyloadt4s-loader is-bg-img t4s-d-none t4s-d-md-block" style="background: {{ url_img }}"></span>
+                            {%- else -%}
+                                <img {% if mb_image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ mb_image.presentation.focal_point }}"{% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-img-as-bg t4s-d-md-none t4s-slide-{{ bk_stts.animate_slide }}" data-src="{{ img_1_mb }}" data-widths="[375, 575, 750]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ mb_image.width }}" height="{{ mb_image.height }}" alt="{{ mb_image.alt | escape }}">
+                                <span class="lazyloadt4s-loader is-bg-img t4s-d-md-none" style="background: {{ url_img_mb }}"></span>
+                                <img {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image.presentation.focal_point }}"{% endif %} class="lazyloadt4s t4s-lz--fadeIn t4s-img-as-bg t4s-d-none t4s-d-md-block t4s-slide-{{ bk_stts.animate_slide }}" data-src="{{ img_1 }}" data-widths="[800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2500, 3000, 3400, 3800, 4100]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                <span class="lazyloadt4s-loader is-bg-img t4s-d-none t4s-d-md-block" style="background: {{ url_img }}"></span>
+                            {%- endif -%}
+
+                        {%- else -%} 
+                        {%- capture current -%}{% cycle 1, 2 %}{%- endcapture -%}
+                            {{ 'lifestyle-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1' }}  
+                        {%- endif -%}
+
+                        {%- capture append_bg_content_style -%}--bg-content:{{ bg_content }};--content-pd:{{ bk_stts.content_pd_tb }}px {{ bk_stts.content_pd_lr }}px;--content-pd-tb:{{ bk_stts.content_pd_tb_tb }}px {{ bk_stts.content_pd_lr_tb }}px;--content-pd-mb:{{ bk_stts.content_pd_tb_mb }}px {{ bk_stts.content_pd_lr_mb }}px;{%- endcapture -%}
+                        {%- if bk_stts.border_bl -%}
+                            {%- capture append_bg_border_style -%}--br-color:{{ bk_stts.br_color }};--br-style:{{ bk_stts.br_style }};--br-pd:{{ bk_stts.br_pd }}px;--br-pd-mb:{{ bk_stts.br_pd_mb }}px;--border-bg:{{ br_bg }};{%- endcapture -%}
+                        {%- endif -%}
+                        <div class="t4s-content-wrap t4s-pe-none t4s-full-width-link t4s-z-100">
+                            <div class="t4s-content-position t4s-{{ bk_stts.content_width }} t4s-pa t4s-text-md-{{ bk_stts.text_align }} t4s-text-{{ bk_stts.text_align_mb }} t4s-bg-content-true t4s-box-content-square-{{ bk_stts.box_square }} t4s-br-content-{{ bk_stts.border_bl }} t4s-br-style-{{ bk_stts.br_style }}" style="--time-animation:{{ bk_stts.time_animation }}s;{%- render 'position_content', ch_pos: bk_stts.ch_pos, cv_pos: bk_stts.cv_pos, ch_pos_mb: bk_stts.ch_pos_mb, cv_pos_mb: bk_stts.cv_pos_mb, append_bg_content_style: append_bg_content_style, append_bg_border_style: append_bg_border_style -%}; --bg-content-radius: {{ bk_stts.content_radius }}%;">  
+                                {%- for block in se_blocks offset: index -%} 
+                                    {%- assign index = index | plus: 1 -%}
+                                    {%- assign bk_stts = block.settings -%}
+                                    {%- if block.type == 'image_parent' -%}{% break %}{%- endif -%}
+                                    {%- case block.type -%}
+                                        {%- when 'custom_text' -%}
+                                            {%- assign general_block = true -%}
+                                            {%- if bk_stts.animation != 'none' -%}{%- assign use_animation = true -%} {%- endif -%}
+                                            <{{ bk_stts.tag }} data-lh="{{ bk_stts.text_lh_mb }}" data-lh-md="{{ bk_stts.text_lh }}" data-lh-lg="{{ bk_stts.text_lh }}" class="t4s-bl-item t4s-animation-{{ bk_stts.animation }} t4s-text-bl t4s-fnt-fm-{{ bk_stts.fontf }} t4s-font-italic-{{ bk_stts.font_italic }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }} t4s-br-mb-{{ bk_stts.remove_br_tag }} t4s-text-shadow-{{ bk_stts.text_shadow }}" id="b_{{ block.id }}" {{ block.shopify_attributes }} {%- render 'bk_cus_style', type: 'custom_text', bk_stts: bk_stts, ani_delay: ani_delay -%}>{{ bk_stts.text }}</{{ bk_stts.tag }}>
+                                        {%- when 'space_html' -%}
+                                            {%- assign general_block = true -%}
+                                            {%- if bk_stts.animation != 'none' -%}{%- assign use_animation = true -%} {%- endif -%}
+                                            <div class="t4s-space-html t4s-bl-item t4s-animation-{{ bk_stts.animation }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }}" id="b_{{ block.id }}" {{ block.shopify_attributes }} {%- render 'bk_cus_style', type: 'space_html' , bk_stts: bk_stts, ani_delay: ani_delay -%}></div>
+                                        {%- when 'html' -%}
+                                            {%- assign general_block = true -%}
+                                            {%- if bk_stts.animation != 'none' -%}{%- assign use_animation = true -%} {%- endif -%}
+                                            <div class="t4s-bl-item t4s-animation-{{ bk_stts.animation }} t4s-raw-html t4s-rte--list t4s-hidden-mobile-{{ bk_stts.hidden_mobile }}" id="b_{{ block.id }}" {{ block.shopify_attributes }} {%- render 'bk_cus_style', type: 'html', bk_stts: bk_stts, ani_delay: ani_delay -%}>{{ bk_stts.html_content }}</div>
+                                        {%- when 'image' -%}
+                                            {%- assign image = bk_stts.image_child -%}
+                                            {%- if image != blank -%}
+                                                {%- assign general_block = true -%}
+                                                {%- if bk_stts.animation != 'none' -%}{%- assign use_animation = true -%} {%- endif -%}
+                                                <div class="t4s-bl-item t4s-img-child t4s-animation-{{ bk_stts.animation }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }}" id="b_{{ block.id }}" {{ block.shopify_attributes }} {%- render 'bk_cus_style', type: 'image', bk_stts: bk_stts, ani_delay: ani_delay -%}>
+                                                    <img data-maxw="{{ bk_stts.img_width_mb }}" data-maxw-md="{{ bk_stts.img_width }}" data-maxw-lg="{{ bk_stts.img_width }}" class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                                    <span class="lazyloadt4s-loader"></span>
+                                                </div>
+                                            {%- endif -%}
+                                        {%- when "countdown" -%}
+                                            {%- if bk_stts.date != blank -%}
+                                                {%- if bk_stts.animation != 'none' -%}{%- assign use_animation = true -%} {%- endif -%}
+                                                {%- assign countdown = true -%}
+                                                <div class="t4s-bl-item t4s-countdown sepr_coun_dt_wrap t4s-countdown-des-{{ bk_stts.cdt_des }} t4s-countdown-size-{{ bk_stts.cdt_size }} t4s-animation-{{ bk_stts.animation }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }}" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'countdown', bk_stts: bk_stts, ani_delay: ani_delay -%}>
+                                                    <div class="time" data-countdown-t4s data-date='{{ bk_stts.date }}' data-keyid='#countdown-{{ sid }}'></div>
+                                                  </div>
+                                            {% endif %}
+                                        {%- when 'custom_button' -%}
+                                            {%- if bk_stts.button_link != blank and bk_stts.button_text != blank -%}
+                                                {%- if bk_stts.animation != 'none' -%}{%- assign use_animation = true -%} {%- endif -%}
+                                                {%- assign use_button = true -%}
+                                                {%- assign button_style = bk_stts.button_style -%}
+                                                <a href="{{ bk_stts.button_link }}" target="{{ bk_stts.target_link }}" class="t4s-bl-item t4s-animation-{{ bk_stts.animation }} t4s-btn t4s-btn-custom t4s-pe-auto t4s-fnt-fm-{{ bk_stts.fontf }} t4s-animation-{{ bk_stts.animation }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }} t4s-btn-style-{{ button_style }} {% if button_style == 'default' or button_style == 'outline' %}t4s-btn-effect-{{ bk_stts.button_effect }}{% endif %}" id="b_{{ block.id }}" {{ block.shopify_attributes }} {%- render 'bk_cus_style', type: 'custom_button', bk_stts: bk_stts, ani_delay: ani_delay -%}>{{ bk_stts.button_text }} {%- if bk_stts.button_icon_w > 0 -%}<svg class="t4s-btn-icon"><use xlink:href="#t4s-icon-btn"></use></svg>{%- endif -%} </a>
+                                            {%- endif -%}
+                                    {%- endcase -%}
+                                    {%- if bk_stts.animation != 'none' %}{% assign ani_delay = ani_delay | plus: time_ani_delay %}{% endif -%}
+                                {%- endfor -%}
+                            </div>
+                        </div>
+                    <a href="{{ url }}" target="{{ open_link }}" class="t4s-full-width-link{% if url == blank %} t4s-pe-none {% else %} t4s-pe-auto{% endif %}" style="--bg-overlay:{{ bg_overlay }};"></a>
+                </div>
+            </div>
+        {%- endfor -%}
+    </div>  
+    {{- html_layout[1] -}} 
+</div>
+{%- if general_block -%}
+    {{ 'general-block.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- if use_button -%}
+    {{ 'button-style.css' | asset_url | stylesheet_tag }}
+    <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- endif -%}
+{%- if use_animation -%}
+    <link href="{{ 't4s-animation.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- endif -%}
+{%- if countdown -%} 
+    {{ 'countdown.css' | asset_url | stylesheet_tag }}
+    <template id="countdown-{{ sid }}">
+        <span class="countdown-days">
+            <span class="cd_timet4 cd-number">%-D</span>
+            <span class="cd_txtt4 cd-text">%!D:{{ "sections.countdown_text.day" | t }},{{ "sections.countdown_text.day_plural" | t }};</span>
+        </span>
+        <span class="countdown-hours">
+            <span class="cd_timet4 cd-number">%H</span> 
+            <span class="cd_txtt4 cd-text">%!H:{{ "sections.countdown_text.hr" | t }},{{ "sections.countdown_text.hr_plural" | t }};</span>
+        </span>
+        <span class="countdown-min">
+            <span class="cd_timet4 cd-number">%M</span> 
+            <span class="cd_txtt4 cd-text">%!M:{{ "sections.countdown_text.min" | t }},{{ "sections.countdown_text.min_plural" | t }};</span>
+        </span>
+        <span class="countdown-sec">
+            <span class="cd_timet4 cd-number">%S</span> 
+            <span class="cd_txtt4 cd-text">%!S:{{ "sections.countdown_text.sec" | t }},{{ "sections.countdown_text.sec_plural" | t }};</span>
+        </span>
+    </template>
+{%- endif -%}
+{%- schema -%}
+{
+    "name":"Slideshow",
+    "tag": "section",
+    "class": "t4s-section t4s-section-all t4s_bk_flickity t4s_tp_cd t4s-sec-slideshow",
+    "settings":[
+        {
+            "type": "header",
+            "content": "1. General options"
+        },
+        {
+            "type": "select",
+            "id": "se_height",
+            "label": "Section height",
+            "default": "t4s_ratioadapt",
+            "options": [
+                { "value": "t4s_ratioadapt_f","label": "Adapt to first image" },
+                { "value": "t4s_ratioadapt","label": "Adapt to image" },
+                { "value": "t4s_ratio_fh","label": "Full screen height" },
+                { "value": "t4s_ratio_cuspx","label": "Custom height" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "custom_dk",
+            "label": "Use custom height (Desktop)",
+            "default": true
+        },
+        {
+            "type": "number",
+            "id": "height_dk",
+            "label": "Section height (Desktop)",
+            "default": 600
+        },
+        {
+            "type": "checkbox",
+            "id": "custom_tb",
+            "label": "Use custom height (Tablet)",
+            "default": true
+        },
+        {
+            "type": "number",
+            "id": "height_tb",
+            "label": "Section height (Tablet)",
+            "default": 400
+        },
+        {
+            "type": "checkbox",
+            "id": "custom_mb",
+            "label": "Use custom height (Mobile)",
+            "default": true
+        },
+        {
+            "type": "number",
+            "id": "height_mb",
+            "label": "Section height (Mobile)",
+            "default": 250
+        }, 
+        {
+            "type":"header",
+            "content":"+ Options for carousel layout"
+        },
+        {
+            "type": "select","id": "eff", "default": "slide",
+            "label": "Slider effect","info":"Effect between transitioning slides",
+            "options": [
+                {
+                    "value": "slide","label": "Slide"
+                },
+                {
+                    "value": "fade","label": "Fade"
+                }/*,
+                {
+                    "value": "parallax","label": "Parallax"
+                },
+                {
+                    "value": "distortion","label": "Distortion"
+                }*/
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "loop",
+            "label": "Enable loop",
+            "info": "At the end of cells, wrap-around to the other end for infinite scrolling.",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "au_time",
+            "min": 0,
+            "max": 30,
+            "step": 0.5,
+            "label": "Autoplay speed in second",
+            "info": "Set is '0' to disable autoplay.",
+            "unit": "sec",
+            "default": 0
+        },
+        {
+            "type": "checkbox",
+            "id": "au_hover",
+            "label": "Pause autoplay on hover",
+            "info": "Auto-playing will pause when the user hovers over the carousel.",
+            "default": true
+        },
+        {
+            "type": "paragraph",
+            "content": "—————————————————"
+        },
+        {
+            "type": "paragraph",
+            "content": "Prev next button"
+        },
+        {
+            "type": "checkbox",
+            "id": "nav_btn",
+            "label": "Use prev next button",
+            "info": "Creates and enables previous & next buttons.",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "btn_vi",
+            "label": "Visible",
+            "default": "hover",
+            "options": [
+                {
+                    "value": "always",
+                    "label": "Always"
+                },
+                {
+                    "value": "hover",
+                    "label": "Only hover"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_owl",
+            "label": "Button style",
+            "default": "default",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "outline",
+                    "label": "Outline"
+                },
+                {
+                    "value": "simple",
+                    "label": "Simple"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_shape",
+            "label": "Button shape",
+            "info": "Not working with button style 'Simple'",
+            "default": "none",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "Default"
+                },
+                {
+                    "value": "round",
+                    "label": "Round"
+                },
+                {
+                    "value": "rotate",
+                    "label": "Rotate"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_cl",
+            "label": "Button color",
+            "default": "dark",
+            "options": [
+                {
+                    "value": "light",
+                    "label": "Light"
+                },
+                {
+                    "value": "dark",
+                    "label": "Dark"
+                },
+                {
+                    "value": "primary",
+                    "label": "Primary"
+                },
+                {
+                    "value": "custom1",
+                    "label": "Custom color 1"
+                },
+                {
+                    "value": "custom2",
+                    "label": "Custom color 2"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_size",
+            "label": "Buttons size",
+            "default": "small",
+            "options": [
+                {
+                    "value": "small",
+                    "label": "Small"
+                },
+                {
+                    "value": "medium",
+                    "label": "Medium"
+                },
+                {
+                    "value": "large",
+                    "label": "Large"
+                }
+            ]
+        },
+        {
+            "type":"checkbox",
+            "id":"btn_hidden_mobile",
+            "label":"Hidden buttons on mobile",
+            "default":false
+        },
+        {
+            "type": "paragraph",
+            "content": "—————————————————"
+        },
+        {
+            "type": "paragraph",
+            "content": "Page dots"
+        },
+        {
+            "type": "checkbox",
+            "id": "nav_dot",
+            "label": "Use page dots",
+            "info": "Creates and enables page dots.",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "dot_owl",
+            "label": "Dots style",
+            "default": "default",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "outline",
+                    "label": "Outline"
+                },
+                {
+                    "value": "elessi",
+                    "label": "Elessi"
+                },
+                {
+                    "value": "br-outline",
+                    "label": "Bordered outline"
+                },
+                {
+                    "value": "br-outline2",
+                    "label": "Bordered outline 2"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "dots_position",
+            "label": "Dots position",
+            "default": "default",
+            "options": [
+              {
+                "value": "default",
+                "label": "Default"
+              },
+              {
+                "value": "bottom_left",
+                "label": "Bottom left"
+              },
+              {
+                "value": "bottom_right",
+                "label": "Bottom right"
+              }
+            ]
+          },
+        {
+            "type": "select",
+            "id": "dots_cl",
+            "label": "Dots color",
+            "info": "Show scheme background color",
+            "default": "dark",
+            "options": [
+                {
+                    "value": "light",
+                    "label": "Light (Best on dark background)"
+                },
+                {
+                    "value": "dark",
+                    "label": "Dark"
+                },
+                {
+                    "value": "primary",
+                    "label": "Primary"
+                },
+                {
+                    "value": "custom1",
+                    "label": "Custom color 1"
+                },
+                {
+                    "value": "custom2",
+                    "label": "Custom color 2"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "dots_round",
+            "label": "Enable dots round",
+            "default": false
+        },
+        {
+            "type": "range",
+            "id": "dots_space",
+            "min": 2,
+            "max": 30,
+            "step": 1,
+            "label": "Dots between horizontal",
+            "unit": "px",
+            "default": 10
+        },
+        {
+            "type":"checkbox",
+            "id":"dots_hidden_mobile",
+            "label":"Hidden dots on mobile",
+            "default":false
+        },
+        {
+            "type":"header",
+            "content":"+2. Design options"
+        },
+        {
+            "type": "select","id": "layout","default": "t4s-container-fluid","label": "Layout",
+            "options": [
+                {"value": "t4s-container-wrap", "label": "Wrapped container"},
+                { "value": "t4s-container-fluid", "label": "Full width"}
+            ]
+        },
+        {
+            "type": "color",
+            "id": "cl_bg",
+            "label": "Background"
+        },
+        {
+            "type": "color_background",
+            "id": "cl_bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+            "default": ",,50px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+            "placeholder": "50px,,50px,"
+        },
+        {
+          "type": "header",
+          "content": "+ Design Tablet Options"
+        },
+        {
+          "type": "text",
+          "id": "mg_tb",
+          "label": "Margin",
+          "placeholder": ",,50px,"
+        },
+        {
+          "type": "text",
+          "id": "pd_tb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+        },
+        {
+            "type": "header",
+            "content": "+ Design mobile options"
+        },
+        {
+            "type": "text",
+            "id": "mg_mb",
+            "label": "Margin",
+            "default": ",,30px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd_mb",
+            "label": "Padding",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "header",
+            "content": "3. Custom css"
+        },
+        {
+            "id": "use_cus_css",
+            "type": "checkbox",
+            "label": "Use custom css",
+            "default":false,
+            "info": "If you want custom style for this section."
+        },
+        { 
+            "id": "code_cus_css",
+            "type": "textarea",
+            "label": "Code custom css",
+            "info": "Use selector .SectionID to style css"
+            
+          }
+    ],
+    "blocks":[
+        {
+            "type":"image_parent",
+            "name":"Image slide (parent)",
+            "settings":[
+                {
+                    "type": "image_picker","id": "image",
+                    "label": "Image",
+                    "info": "1800 x 600px .jpg recommended"
+                },
+                {
+                    "type": "image_picker","id": "image_mb",
+                    "label": "Mobile image (optional)",
+                    "info": "750 x 1100px .jpg recommended. If none is set, desktop image will be used."
+                },
+                {
+                    "type": "select",
+                    "id": "image_position",
+                    "options": [
+                    {
+                        "value": "default",
+                        "label": "Default"
+                    },
+                    {
+                        "value": "1",
+                        "label": "Left top"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Left center"
+                    },
+                    {
+                        "value": "3",
+                        "label": "Left bottom"
+                    },
+                    {
+                        "value": "4",
+                        "label": "Right top"
+                    },
+                    {
+                        "value": "5",
+                        "label": "Right center"
+                    },
+                    {
+                        "value": "6",
+                        "label": "Right bottom"
+                    },
+                    {
+                        "value": "7",
+                        "label": "Center top"
+                    },
+                    {
+                        "value": "8",
+                        "label": "Center center"
+                    },
+                    {
+                        "value": "9",
+                        "label": "Center bottom"
+                    }
+                    ],
+                    "label": "Image position",
+                    "default": "8",
+                    "info":"This settings apply only if section height is not set to 'Adapt to image','Adapt to first image' and not works when use 'Focal point' on image"
+                },   
+                {
+                    "type": "color",
+                    "id": "cl_img",
+                    "label": "Image color (optional)",
+                    "info": "Will shown until loaded image"
+                },
+                {
+                    "type": "url",
+                    "id": "link_img1",
+                    "label": "Link image",
+                    "info": "The whole image becomes clickable."
+                },
+                {
+                "type": "select",
+                "id": "open_link",
+                "label": "Open link in",
+                "default": "_blank",
+                "options": [
+                        {
+                            "value": "_self",
+                            "label": "Current window"
+                        },
+                        {
+                            "value": "_blank",
+                            "label": "New window"
+                        }
+                    ]
+                },
+                {
+                    "type":"select",
+                    "id":"animate_slide",
+                    "label":"Image effect when slide selected",
+                    "default":"none",
+                    "options":[
+                        {
+                            "label":"None",
+                            "value":"none"
+                        },
+                        {
+                            "label":"Zoom in",
+                            "value":"zoom-in"
+                        },
+                        {
+                            "label":"Zoom out",
+                            "value":"zoom-out"
+                        },
+                        {
+                            "label":"Move to left",
+                            "value":"translate-to-left"
+                        },
+                        {
+                            "label":"Move to right",
+                            "value":"translate-to-right"
+                        },
+                        {
+                            "label":"Move to top",
+                            "value":"translate-to-top"
+                        },
+                        {
+                            "label":"Move to bottom",
+                            "value":"translate-to-bottom"
+                        }
+                    ]
+                }, 
+                {"type": "paragraph","content": "————————————————"},
+                {
+                    "type":"select",
+                    "id":"text_align",
+                    "label":"Content align",
+                    "default":"center",
+                    "options":[
+                        {
+                            "label":"Left",
+                            "value":"start"
+                        },
+                        {
+                            "label":"Center",
+                            "value":"center"
+                        },
+                        {
+                            "label":"Right",
+                            "value":"end"
+                        }
+                    ]
+                },
+                {
+                    "type":"select",
+                    "id":"text_align_mb",
+                    "label":"Content align (Mobile)",
+                    "default":"center",
+                    "options":[
+                        {
+                            "label":"Left",
+                            "value":"start"
+                        },
+                        {
+                            "label":"Center",
+                            "value":"center"
+                        },
+                        {
+                            "label":"Right",
+                            "value":"end"
+                        }
+                    ]
+                },
+                {
+                    "type":"select",
+                    "id":"content_width",
+                    "label":"Content width",
+                    "default":"auto",
+                    "options":[
+                        {
+                            "label":"Auto",
+                            "value":"auto"
+                        },
+                        {
+                            "label":"Container",
+                            "value":"container"
+                        }
+                    ]
+                },
+                {
+                    "type": "header",
+                    "content": "--Content position options--"
+                },
+                  {
+                      "type": "paragraph",
+                      "content": "Warning: \"Content horizontal position\" options doesn't work when using \"Content width\" is 'Container'"
+                  },
+                {
+                    "type":"range",
+                    "id":"cv_pos",
+                    "label":"Content vertical position",
+                    "info":" <= 50: Top position , > 50 bottom position",
+                    "max":100,
+                    "min":0,
+                    "step":1,
+                    "unit":"%",
+                    "default":50
+                },
+                {
+                    "type":"range",
+                    "id":"ch_pos",
+                    "label":"Content horizontal position",
+                    "info":" <= 50: Left position , > 50 right position",
+                    "max":100,
+                    "min":0,
+                    "step":1,
+                    "unit":"%",
+                    "default":50
+                },
+                {
+                    "type": "header",
+                    "content": "--Content position options (Mobile)--"
+                },
+                {
+                    "type":"range",
+                    "id":"cv_pos_mb",
+                    "label":"Content vertical position",
+                    "info":" <= 50: Top position , > 50 bottom position",
+                    "max":100,
+                    "min":0,
+                    "step":1,
+                    "unit":"%",
+                    "default":50
+                },
+                {
+                    "type":"range",
+                    "id":"ch_pos_mb",
+                    "label":"Content horizontal position",
+                    "info":" <= 50: Left position , > 50 right position",
+                    "max":100,
+                    "min":0,
+                    "step":1,
+                    "unit":"%",
+                    "default":50
+                },
+                {
+                    "type": "header",
+                    "content": "+ Content background, color options"
+                },
+                {
+                    "type": "color",
+                    "id": "bg_overlay",
+                    "label": "Overlay",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "bg_opacity",
+                    "label": "Overlay opacity",
+                    "default": 0,
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%"
+                },
+                {"type": "paragraph","content": "————————————————"},
+                {
+                    "type": "color",
+                    "id": "bg_content_cl",
+                    "label": "Background color",
+                    "default": "#fff"
+                },
+                {
+                    "type": "range",
+                    "id": "bg_content_op",
+                    "label": "Background color opacity",
+                    "default": 0,
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%"
+                },
+                {
+                    "type": "range",
+                    "id": "content_radius",
+                    "label": "Background content rounder",
+                    "default": 0,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "%"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "box_square",
+                    "label": "Use box content square",
+                    "default": false,
+                    "info":"When using box content square text-align always center"  
+                },
+                {
+                    "type": "number",
+                    "id": "content_pd_tb",
+                    "label": "Content padding top/bottom (px)",
+                    "default":15,
+                    "info":"Working on the Desktop"   
+                },
+                {
+                    "type": "number",
+                    "id": "content_pd_lr",
+                    "label": "Content padding left/right (px)",
+                    "default":15,
+                    "info":"Working on the Desktop"   
+                },
+                {
+                    "type": "number",
+                    "id": "content_pd_tb_tb",
+                    "label": "Content padding top/bottom (px)",
+                    "default":15,
+                    "info":"Working on the Tablet"   
+                },
+                {
+                    "type": "number",
+                    "id": "content_pd_lr_tb",
+                    "label": "Content padding left/right (px)",
+                    "default":15,
+                    "info":"Working on the Tablet"   
+                },
+                {
+                    "type": "number",
+                    "id": "content_pd_tb_mb",
+                    "label": "Content padding top/bottom (px)",
+                    "default":10,
+                    "info":"Working on the Mobile"    
+                },
+                {
+                    "type": "number",
+                    "id": "content_pd_lr_mb",
+                    "label": "Content padding left/right (px)",
+                    "default":10,
+                    "info":"Working on the mobile"
+                },
+                {"type": "paragraph","content": "————————————————"},
+                {
+                    "type": "checkbox",
+                    "id": "border_bl",
+                    "label": "Use border content",
+                    "default": false
+                },
+                {
+                    "type": "color",
+                    "id": "br_color",
+                    "label": "Border color",
+                    "default": "#222"
+                },
+                {
+                    "type": "color",
+                    "id": "br_bg",
+                    "label": "Background border",
+                    "default": "#fff"
+                },
+                {
+                    "type": "range",
+                    "id": "br_opacity",
+                    "label": "Border opacity",
+                    "default": 0,
+                    "min": 0,
+                    "default": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%"
+                },
+                {
+                    "type": "select",
+                    "id": "br_style",
+                    "label": "Border style",
+                    "default":"solid",
+                    "options": [
+                        {
+                            "value": "none",
+                            "label": "None"
+                        },
+                        {
+                            "value": "solid",
+                            "label": "Solid"
+                        },
+                        {
+                            "value": "dashed",
+                            "label": "Dashed"
+                        },
+                        {
+                            "value": "double",
+                            "label": "Double"
+                        }
+                    ]
+                },
+                {
+                    "type": "range",
+                    "id": "br_pd",
+                    "label": "Border padding (Desktop)",
+                    "default": 20,
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "br_pd_mb",
+                    "label": "Border padding (Mobile)",
+                    "default": 10,
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "header",
+                    "content": "--Animation Options--"
+                },
+                {
+                    "type":"range",
+                    "id":"time_animation",
+                    "label":"Duration animation each block",
+                    "max":5,
+                    "min":1,
+                    "default":1,
+                    "unit":"s",
+                    "step":0.5
+                },
+                {
+                    "type":"range",
+                    "id":"animation_delay",
+                    "label":"Time animation delay",
+                    "max":110,
+                    "min":10,
+                    "step":10,
+                    "unit":"%",
+                    "default":40,
+                    "info":"Defines the number of time to wait when the animation previous end, before the animation next will start."
+                }  
+            ]
+        },
+        {
+            "type":"custom_text",
+            "name":"Text",
+            "settings":[
+                {
+                    "type":"textarea",
+                    "id":"text",
+                    "label":"Input text",
+                    "default":"Text",
+                    "info":"If you want to line break, please add a <br> tag in the text"
+                },
+                {
+                    "type":"checkbox",
+                    "id":"remove_br_tag",
+                    "label":"Remove <br> tag on mobile",
+                    "default":false
+                },
+                {
+                    "type": "select",
+                    "id": "tag",
+                    "label": "Html tag",
+                    "default": "p",
+                    "options": [
+                        {
+                            "value": "h2",
+                            "label": "H2"
+                        },
+                        {
+                            "value": "h3",
+                            "label": "H3"
+                        },
+                        {
+                            "value": "h4",
+                            "label": "H4"
+                        },
+                        {
+                            "value": "h5",
+                            "label": "H5"
+                        },
+                        {
+                            "value": "h6",
+                            "label": "H6"
+                        },
+                        {
+                            "value": "p",
+                            "label": "P"
+                        },
+                        {
+                            "value": "div",
+                            "label": "DIV"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "fontf",
+                    "default":"inherit",
+                    "label": "Font family",
+                    "options": [
+                        {
+                            "label": "Inherit",
+                            "value": "inherit"
+                        },
+                        {
+                            "label": "Font Family #1",
+                            "value": "1"
+                        },
+                        {
+                            "label": "Font Family #2",
+                            "value": "2"
+                        },
+                        {
+                            "label": "Font Family #3",
+                            "value": "3"
+                        }
+                    ]
+                },
+                {
+                    "type":"color",
+                    "id":"text_cl",
+                    "label":"Color text",
+                    "default":"#fff"
+                },
+                {
+                    "type":"range",
+                    "id":"text_fs",
+                    "label":"Font size",
+                    "max":100,
+                    "min":10,
+                    "step":1,
+                    "unit":"px",
+                    "default":16
+                },
+                {
+                    "type":"range",
+                    "id":"text_lh",
+                    "label":"Line height",
+                    "max":100,
+                    "min":0,
+                    "step":1,
+                    "default":0,
+                    "unit":"px",
+                    "info":"Set is '0' use to default"            
+                },
+                {
+                    "type":"range",
+                    "id":"text_fw",
+                    "label":"Font weight",
+                    "min":100,
+                    "max":900,
+                    "step":100,
+                    "default":400
+                },
+                {
+                    "type":"range",
+                    "id":"text_ls",
+                    "label":"Letter spacing",
+                    "max":10,
+                    "min":0,
+                    "default":0,
+                    "step":0.1,
+                    "unit":"px"
+                },
+                {
+                    "type": "number",
+                    "id": "text_mgb",
+                    "label": "Margin bottom",
+                    "default": 15
+                },
+                {
+                    "type":"checkbox",
+                    "id":"font_italic",
+                    "label":"Enable font style italic",
+                    "default":false
+                },
+                {
+                    "type":"checkbox",
+                    "id":"text_shadow",
+                    "label":"Enable text shadow",
+                    "default":false
+                },
+                {
+                    "type":"header",
+                    "content":"===== Option mobile ====="
+                },
+                {
+                    "type":"checkbox",
+                    "id":"hidden_mobile",
+                    "label":"Hidden on mobile",
+                    "default":false
+                },
+                {
+                    "type":"range",
+                    "id":"text_fs_mb",
+                    "label":"Font size (Mobile)",
+                    "max":60,
+                    "min":10,
+                    "step":1,
+                    "unit":"px",
+                    "default":16
+                },
+                {
+                    "type":"range",
+                    "id":"text_lh_mb",
+                    "label":"Line height (Mobile)",
+                    "max":70,
+                    "min":0,
+                    "step":1,
+                    "default":0,
+                    "unit":"px",
+                    "info":"Set is '0' use to default"            
+                },
+                {
+                    "type":"range",
+                    "id":"text_ls_mb",
+                    "label":"Letter spacing (Mobile)",
+                    "min":0,
+                    "max":10,
+                    "step":0.1,
+                    "unit":"px",
+                    "default":0
+                },
+                {
+                    "type": "number",
+                    "id": "text_mgb_mobile",
+                    "label": "Margin bottom (Mobile)",
+                    "default": 10
+                },
+                {
+                    "type": "paragraph",
+                    "content": "————————————————"
+                },
+                {
+                  "type":"select",
+                  "id":"animation",
+                  "label":"Animation",
+                  "default":"none",
+                  "options":[
+                    {
+                        "label":"None",
+                        "value":"none"
+                    },
+                    {
+                        "label":"fadeIn",
+                        "value":"fadeIn"
+                    },
+                    {
+                        "label":"fadeInDown",
+                        "value":"fadeInDown"
+                    },
+                    {
+                        "label":"fadeInDownBig",
+                        "value":"fadeInDownBig"
+                    },
+                    {
+                        "label":"fadeInLeft",
+                        "value":"fadeInLeft"
+                    },
+                    {
+                        "label":"fadeInLeftBig",
+                        "value":"fadeInLeftBig"
+                    },
+                    {
+                        "label":"fadeInRight",
+                        "value":"fadeInRight"
+                    },
+                    {
+                        "label":"fadeInRightBig",
+                        "value":"fadeInRightBig"
+                    },
+                    {
+                        "label":"fadeInUp",
+                        "value":"fadeInUp"
+                    },
+                    {
+                        "label":"fadeInUpBig",
+                        "value":"fadeInUpBig"
+                    },
+                    {
+                        "label":"fadeInTopLeft",
+                        "value":"fadeInTopLeft"
+                    },
+                    {
+                        "label":"fadeInTopRight",
+                        "value":"fadeInTopRight"
+                    },
+                    {
+                        "label":"fadeInBottomLeft",
+                        "value":"fadeInBottomLeft"
+                    },
+                    {
+                        "label":"fadeInBottomRight",
+                        "value":"fadeInBottomRight"
+                    },
+                    {
+                        "label":"bounceIn",
+                        "value":"bounceIn"
+                    },
+                    {
+                        "label":"bounceInDown",
+                        "value":"bounceInDown"
+                    },
+                    {
+                        "label":"bounceInLeft",
+                        "value":"bounceInLeft"
+                    },
+                    {
+                        "label":"bounceInRight",
+                        "value":"bounceInRight"
+                    },
+                    {
+                        "label":"bounceInUp",
+                        "value":"bounceInUp"
+                    },
+                    {
+                        "label":"zoomIn",
+                        "value":"zoomIn"
+                    },
+                    {
+                        "label":"zoomInDown",
+                        "value":"zoomInDown"
+                    },
+                    {
+                        "label":"zoomInLeft",
+                        "value":"zoomInLeft"
+                    },
+                    {
+                        "label":"zoomInRight",
+                        "value":"zoomInRight"
+                    },
+                    {
+                        "label":"zoomInUp",
+                        "value":"zoomInUp"
+                    },
+                    {
+                        "label":"slideInDown",
+                        "value":"slideInDown"
+                    },
+                    {
+                        "label":"slideInLeft",
+                        "value":"slideInLeft"
+                    },
+                    {
+                        "label":"slideInRight",
+                        "value":"slideInRight"
+                    },
+                    {
+                        "label":"slideInUp",
+                        "value":"slideInUp"
+                    },
+                    {
+                        "label":"lightSpeedInRight",
+                        "value":"lightSpeedInRight"
+                    },
+                    {
+                        "label":"lightSpeedInLeft",
+                        "value":"lightSpeedInLeft"
+                    },
+                    {
+                        "label":"lightSpeedOutRight",
+                        "value":"lightSpeedOutRight"
+                    },
+                    {
+                        "label":"lightSpeedOutLeft",
+                        "value":"lightSpeedOutLeft"
+                    },
+                    {
+                        "label":"jello",
+                        "value":"jello"
+                    },
+                    {
+                        "label":"tada",
+                        "value":"tada"
+                    },
+                    {
+                        "label":"pulse",
+                        "value":"pulse"
+                    }
+                  ]
+                }
+            ]
+        },
+        {
+            "type": "html",
+            "name": "HTML",
+            "settings": [
+                {
+                    "type": "html",
+                    "id": "html_content",
+                    "label": "Type html"
+                },
+                {
+                    "type":"checkbox",
+                    "id":"hidden_mobile",
+                    "label":"Hidden on mobile",
+                    "default":false
+                },
+                {
+                    "type": "paragraph",
+                    "content": "————————————————"
+                },
+                {
+                    "type":"select",
+                    "id":"animation",
+                    "label":"Animation",
+                    "default":"none",
+                    "options":[
+                    {
+                        "label":"None",
+                        "value":"none"
+                    },
+                    {
+                        "label":"fadeIn",
+                        "value":"fadeIn"
+                    },
+                    {
+                        "label":"fadeInDown",
+                        "value":"fadeInDown"
+                    },
+                    {
+                        "label":"fadeInDownBig",
+                        "value":"fadeInDownBig"
+                    },
+                    {
+                        "label":"fadeInLeft",
+                        "value":"fadeInLeft"
+                    },
+                    {
+                        "label":"fadeInLeftBig",
+                        "value":"fadeInLeftBig"
+                    },
+                    {
+                        "label":"fadeInRight",
+                        "value":"fadeInRight"
+                    },
+                    {
+                        "label":"fadeInRightBig",
+                        "value":"fadeInRightBig"
+                    },
+                    {
+                        "label":"fadeInUp",
+                        "value":"fadeInUp"
+                    },
+                    {
+                        "label":"fadeInUpBig",
+                        "value":"fadeInUpBig"
+                    },
+                    {
+                        "label":"fadeInTopLeft",
+                        "value":"fadeInTopLeft"
+                    },
+                    {
+                        "label":"fadeInTopRight",
+                        "value":"fadeInTopRight"
+                    },
+                    {
+                        "label":"fadeInBottomLeft",
+                        "value":"fadeInBottomLeft"
+                    },
+                    {
+                        "label":"fadeInBottomRight",
+                        "value":"fadeInBottomRight"
+                    },
+                    {
+                        "label":"bounceIn",
+                        "value":"bounceIn"
+                    },
+                    {
+                        "label":"bounceInDown",
+                        "value":"bounceInDown"
+                    },
+                    {
+                        "label":"bounceInLeft",
+                        "value":"bounceInLeft"
+                    },
+                    {
+                        "label":"bounceInRight",
+                        "value":"bounceInRight"
+                    },
+                    {
+                        "label":"bounceInUp",
+                        "value":"bounceInUp"
+                    },
+                    {
+                        "label":"zoomIn",
+                        "value":"zoomIn"
+                    },
+                    {
+                        "label":"zoomInDown",
+                        "value":"zoomInDown"
+                    },
+                    {
+                        "label":"zoomInLeft",
+                        "value":"zoomInLeft"
+                    },
+                    {
+                        "label":"zoomInRight",
+                        "value":"zoomInRight"
+                    },
+                    {
+                        "label":"zoomInUp",
+                        "value":"zoomInUp"
+                    },
+                    {
+                        "label":"slideInDown",
+                        "value":"slideInDown"
+                    },
+                    {
+                        "label":"slideInLeft",
+                        "value":"slideInLeft"
+                    },
+                    {
+                        "label":"slideInRight",
+                        "value":"slideInRight"
+                    },
+                    {
+                        "label":"slideInUp",
+                        "value":"slideInUp"
+                    },
+                    {
+                        "label":"lightSpeedInRight",
+                        "value":"lightSpeedInRight"
+                    },
+                    {
+                        "label":"lightSpeedInLeft",
+                        "value":"lightSpeedInLeft"
+                    },
+                    {
+                        "label":"lightSpeedOutRight",
+                        "value":"lightSpeedOutRight"
+                    },
+                    {
+                        "label":"lightSpeedOutLeft",
+                        "value":"lightSpeedOutLeft"
+                    },
+                    {
+                        "label":"jello",
+                        "value":"jello"
+                    },
+                    {
+                        "label":"tada",
+                        "value":"tada"
+                    },
+                    {
+                        "label":"pulse",
+                        "value":"pulse"
+                    }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "image",
+            "name": "Image (Child)",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image_child",
+                    "label": "Image (Child)"
+                },
+                {
+                    "type": "number",
+                    "id": "img_width",
+                    "label": "Image width (Unit: px)",
+                    "info": "Set 0 to use width default of image",
+                    "default": 0
+                },
+                {
+                    "type": "number",
+                    "id": "img_width_mb",
+                    "label": "Image width on mobile (Unit: px)",
+                    "info": "Set 0 to use width default of image",
+                    "default": 0
+                },
+                {
+                    "type":"checkbox",
+                    "id":"hidden_mobile",
+                    "label":"Hidden on mobile",
+                    "default":false
+                },
+                {
+                    "type": "number",
+                    "id": "mgb",
+                    "label": "Margin bottom (Unit: px)",
+                    "default": 20
+                },
+                {
+                    "type": "number",
+                    "id": "mgb_mb",
+                    "label": "Margin bottom on mobile(Unit: px)",
+                    "default": 20
+                },
+                {
+                    "type": "paragraph",
+                    "content": "————————————————"
+                },
+                {
+                    "type":"select",
+                    "id":"animation",
+                    "label":"Animation",
+                    "default":"none",
+                    "options":[
+                        {
+                            "label":"None",
+                            "value":"none"
+                        },
+                        {
+                            "label":"fadeIn",
+                            "value":"fadeIn"
+                        },
+                        {
+                            "label":"fadeInDown",
+                            "value":"fadeInDown"
+                        },
+                        {
+                            "label":"fadeInDownBig",
+                            "value":"fadeInDownBig"
+                        },
+                        {
+                            "label":"fadeInLeft",
+                            "value":"fadeInLeft"
+                        },
+                        {
+                            "label":"fadeInLeftBig",
+                            "value":"fadeInLeftBig"
+                        },
+                        {
+                            "label":"fadeInRight",
+                            "value":"fadeInRight"
+                        },
+                        {
+                            "label":"fadeInRightBig",
+                            "value":"fadeInRightBig"
+                        },
+                        {
+                            "label":"fadeInUp",
+                            "value":"fadeInUp"
+                        },
+                        {
+                            "label":"fadeInUpBig",
+                            "value":"fadeInUpBig"
+                        },
+                        {
+                            "label":"fadeInTopLeft",
+                            "value":"fadeInTopLeft"
+                        },
+                        {
+                            "label":"fadeInTopRight",
+                            "value":"fadeInTopRight"
+                        },
+                        {
+                            "label":"fadeInBottomLeft",
+                            "value":"fadeInBottomLeft"
+                        },
+                        {
+                            "label":"fadeInBottomRight",
+                            "value":"fadeInBottomRight"
+                        },
+                        {
+                            "label":"bounceIn",
+                            "value":"bounceIn"
+                        },
+                        {
+                            "label":"bounceInDown",
+                            "value":"bounceInDown"
+                        },
+                        {
+                            "label":"bounceInLeft",
+                            "value":"bounceInLeft"
+                        },
+                        {
+                            "label":"bounceInRight",
+                            "value":"bounceInRight"
+                        },
+                        {
+                            "label":"bounceInUp",
+                            "value":"bounceInUp"
+                        },
+                        {
+                            "label":"zoomIn",
+                            "value":"zoomIn"
+                        },
+                        {
+                            "label":"zoomInDown",
+                            "value":"zoomInDown"
+                        },
+                        {
+                            "label":"zoomInLeft",
+                            "value":"zoomInLeft"
+                        },
+                        {
+                            "label":"zoomInRight",
+                            "value":"zoomInRight"
+                        },
+                        {
+                            "label":"zoomInUp",
+                            "value":"zoomInUp"
+                        },
+                        {
+                            "label":"slideInDown",
+                            "value":"slideInDown"
+                        },
+                        {
+                            "label":"slideInLeft",
+                            "value":"slideInLeft"
+                        },
+                        {
+                            "label":"slideInRight",
+                            "value":"slideInRight"
+                        },
+                        {
+                            "label":"slideInUp",
+                            "value":"slideInUp"
+                        },
+                        {
+                            "label":"lightSpeedInRight",
+                            "value":"lightSpeedInRight"
+                        },
+                        {
+                            "label":"lightSpeedInLeft",
+                            "value":"lightSpeedInLeft"
+                        },
+                        {
+                            "label":"lightSpeedOutRight",
+                            "value":"lightSpeedOutRight"
+                        },
+                        {
+                            "label":"lightSpeedOutLeft",
+                            "value":"lightSpeedOutLeft"
+                        },
+                        {
+                            "label":"jello",
+                            "value":"jello"
+                        },
+                        {
+                            "label":"tada",
+                            "value":"tada"
+                        },
+                        {
+                            "label":"pulse",
+                            "value":"pulse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type":"custom_button",
+            "name":"Button",
+            "settings":[
+                {
+                    "type":"text",
+                    "id":"button_text",
+                    "label":"Button label",
+                    "default":"Button label",
+                    "info":"If set blank will not show"
+                },
+                {
+                    "type":"url",
+                    "id":"button_link",
+                    "label":"Button link",
+                    "info":"If set blank will not show"
+                },
+                {
+                    "type":"select",
+                    "id":"target_link",
+                    "label":"Open link in",
+                    "default":"_self",
+                    "options":[
+                        {
+                            "value": "_self",
+                            "label": "Current window"
+                        },
+                        {
+                            "value": "_blank",
+                            "label": "New window"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "fontf",
+                    "default":"inherit",
+                    "label": "Font family",
+                    "options": [
+                        {
+                            "label": "Inherit",
+                            "value": "inherit"
+                        },
+                        {
+                            "label": "Font Family #1",
+                            "value": "1"
+                        },
+                        {
+                            "label": "Font Family #2",
+                            "value": "2"
+                        },
+                        {
+                            "label": "Font Family #3",
+                            "value": "3"
+                        }
+                    ]
+                },
+                {
+                    "type":"range",
+                    "id":"button_icon_w",
+                    "label":"Button icon width",
+                    "min":0,
+                    "max":50,
+                    "step":1,
+                    "unit":"px",
+                    "default":0
+                },
+                {
+                    "type": "select",
+                    "id": "button_style",
+                    "label": "Button style",
+                    "options": [
+                        {
+                            "label": "Default",
+                            "value": "default"
+                        },
+                        {
+                            "label": "Outline",
+                            "value": "outline"
+                        },
+                        {
+                            "label": "Bordered bottom",
+                            "value": "bordered"
+                        },
+                        {
+                            "label": "Link",
+                            "value": "link"
+                        }
+                    ]
+                },
+                {
+                    "type":"select",
+                    "id":"button_effect",
+                    "label":"Button hover effect",
+                    "default":"default",
+                    "info":"Only working button style default, outline",
+                    "options":[
+                        {
+                            "label":"Default",
+                            "value":"default"
+                        },
+                        {
+                            "label":"Fade",
+                            "value":"fade"
+                        },
+                        {
+                            "label":"Rectangle out",
+                            "value":"rectangle-out"
+                        },
+                        {
+                            "label":"Sweep to right",
+                            "value":"sweep-to-right"
+                        },
+                        {
+                            "label":"Sweep to left",
+                            "value":"sweep-to-left"
+                        },
+                        {
+                            "label":"Sweep to bottom",
+                            "value":"sweep-to-bottom"
+                        },
+                        {
+                            "label":"Sweep to top",
+                            "value":"sweep-to-top"
+                        },
+                        {
+                            "label":"Shutter out horizontal",
+                            "value":"shutter-out-horizontal"
+                        },
+                        {
+                            "label":"Outline",
+                            "value":"outline"
+                        },
+                        {
+                            "label":"Shadow",
+                            "value":"shadow"
+                        }
+                    ]
+                },
+                {
+                    "type":"color",
+                    "id":"pri_cl",
+                    "label":"Primary color",
+                    "default":"#222"
+                },
+                {
+                    "type":"color",
+                    "id":"second_cl",
+                    "label":"Secondary color",
+                    "info":"Only working button style default"
+                },
+                {
+                    "type":"color",
+                    "id":"pri_cl_hover",
+                    "label":"Primary color hover",
+                    "default":"#56cfe1"
+                },
+                {
+                    "type":"color",
+                    "id":"second_cl_hover",
+                    "label":"Secondary color hover",
+                    "info":"Only working button style default, outline",
+                    "default":"#fff"
+                },
+                {
+                    "type":"range",
+                    "id":"fsbutton",
+                    "label":"Font size",
+                    "max":50,
+                    "min":10,
+                    "step":1,
+                    "unit":"px",
+                    "default":14
+                },
+                {
+                    "type":"range",
+                    "id":"fwbutton",
+                    "label":"Font weight",
+                    "min":100,
+                    "max":900,
+                    "step":100,
+                    "default":400
+                },
+                {
+                    "type":"range",
+                    "id":"button_ls",
+                    "label":"Letter spacing",
+                    "min":0,
+                    "max":10,
+                    "step":0.1,
+                    "unit":"px",
+                    "default":0
+                },
+                {
+                    "type":"range",
+                    "id":"button_mh",
+                    "label":"Min height",
+                    "min":20,
+                    "max":80,
+                    "step":1,
+                    "unit":"px",
+                    "default":42,
+                    "info":"Only working button style default, outline"
+                },
+                {
+                    "type":"range",
+                    "id":"button_bdr",
+                    "label":"Border radius",
+                    "min":0,
+                    "max":40,
+                    "step":1,
+                    "unit":"px",
+                    "default":0,
+                    "info":"Only working button style default, outline"
+                },
+                {
+                    "type":"range",
+                    "id":"button_pd_lr",
+                    "label":"Padding left/right",
+                    "min":0,
+                    "max":100,
+                    "step":1,
+                    "unit":"px",
+                    "default":20,
+                    "info":"Only working button style default, outline"
+                },
+                {
+                    "type": "number",
+                    "id": "button_mgb",
+                    "label": "Margin bottom",
+                    "default": 0
+                },
+                {
+                    "type":"header",
+                    "content":"+ Option Mobile"
+                },
+                {
+                    "type":"checkbox",
+                    "id":"hidden_mobile",
+                    "label":"Hidden on mobile",
+                    "default":false
+                },
+                {
+                    "type":"range",
+                    "id":"button_icon_w_mb",
+                    "label":"Button icon width (Mobile)",
+                    "min":0,
+                    "max":50,
+                    "step":1,
+                    "unit":"px",
+                    "default":0
+                },
+                {
+                    "type":"range",
+                    "id":"fsbutton_mb",
+                    "label":"Font size (Mobile)",
+                    "max":50,
+                    "min":0,
+                    "step":1,
+                    "unit":"px",
+                    "default":10
+                },
+                {
+                    "type":"range",
+                    "id":"button_mh_mb",
+                    "label":"Min height (Mobile)",
+                    "min":10,
+                    "max":50,
+                    "step":1,
+                    "unit":"px",
+                    "default":36,
+                    "info":"Only working button style default, outline"
+                },
+                {
+                    "type":"range",
+                    "id":"button_pd_lr_mb",
+                    "label":"Padding left/right (Mobile)",
+                    "min":0,
+                    "max":100,
+                    "step":1,
+                    "unit":"px",
+                    "default":15,
+                    "info":"Only working button style default, outline"
+                },
+                {
+                    "type":"range",
+                    "id":"button_ls_mb",
+                    "label":"Letter spacing (Mobile)",
+                    "min":0,
+                    "max":10,
+                    "step":0.1,
+                    "unit":"px",
+                    "default":0
+                },
+                {
+                    "type": "number",
+                    "id": "button_mgb_mb",
+                    "label": "Margin bottom (Mobile)",
+                    "default": 0
+                },
+                {
+                    "type": "paragraph",
+                    "content": "————————————————"
+                },
+                {
+                    "type":"select",
+                    "id":"animation",
+                    "label":"Animation",
+                    "default":"none",
+                    "options":[
+                        {
+                            "label":"None",
+                            "value":"none"
+                        },
+                        {
+                            "label":"fadeIn",
+                            "value":"fadeIn"
+                        },
+                        {
+                            "label":"fadeInDown",
+                            "value":"fadeInDown"
+                        },
+                        {
+                            "label":"fadeInDownBig",
+                            "value":"fadeInDownBig"
+                        },
+                        {
+                            "label":"fadeInLeft",
+                            "value":"fadeInLeft"
+                        },
+                        {
+                            "label":"fadeInLeftBig",
+                            "value":"fadeInLeftBig"
+                        },
+                        {
+                            "label":"fadeInRight",
+                            "value":"fadeInRight"
+                        },
+                        {
+                            "label":"fadeInRightBig",
+                            "value":"fadeInRightBig"
+                        },
+                        {
+                            "label":"fadeInUp",
+                            "value":"fadeInUp"
+                        },
+                        {
+                            "label":"fadeInUpBig",
+                            "value":"fadeInUpBig"
+                        },
+                        {
+                            "label":"fadeInTopLeft",
+                            "value":"fadeInTopLeft"
+                        },
+                        {
+                            "label":"fadeInTopRight",
+                            "value":"fadeInTopRight"
+                        },
+                        {
+                            "label":"fadeInBottomLeft",
+                            "value":"fadeInBottomLeft"
+                        },
+                        {
+                            "label":"fadeInBottomRight",
+                            "value":"fadeInBottomRight"
+                        },
+                        {
+                            "label":"bounceIn",
+                            "value":"bounceIn"
+                        },
+                        {
+                            "label":"bounceInDown",
+                            "value":"bounceInDown"
+                        },
+                        {
+                            "label":"bounceInLeft",
+                            "value":"bounceInLeft"
+                        },
+                        {
+                            "label":"bounceInRight",
+                            "value":"bounceInRight"
+                        },
+                        {
+                            "label":"bounceInUp",
+                            "value":"bounceInUp"
+                        },
+                        {
+                            "label":"zoomIn",
+                            "value":"zoomIn"
+                        },
+                        {
+                            "label":"zoomInDown",
+                            "value":"zoomInDown"
+                        },
+                        {
+                            "label":"zoomInLeft",
+                            "value":"zoomInLeft"
+                        },
+                        {
+                            "label":"zoomInRight",
+                            "value":"zoomInRight"
+                        },
+                        {
+                            "label":"zoomInUp",
+                            "value":"zoomInUp"
+                        },
+                        {
+                            "label":"slideInDown",
+                            "value":"slideInDown"
+                        },
+                        {
+                            "label":"slideInLeft",
+                            "value":"slideInLeft"
+                        },
+                        {
+                            "label":"slideInRight",
+                            "value":"slideInRight"
+                        },
+                        {
+                            "label":"slideInUp",
+                            "value":"slideInUp"
+                        },
+                        {
+                            "label":"lightSpeedInRight",
+                            "value":"lightSpeedInRight"
+                        },
+                        {
+                            "label":"lightSpeedInLeft",
+                            "value":"lightSpeedInLeft"
+                        },
+                        {
+                            "label":"lightSpeedOutRight",
+                            "value":"lightSpeedOutRight"
+                        },
+                        {
+                            "label":"lightSpeedOutLeft",
+                            "value":"lightSpeedOutLeft"
+                        },
+                        {
+                            "label":"jello",
+                            "value":"jello"
+                        },
+                        {
+                            "label":"tada",
+                            "value":"tada"
+                        },
+                        {
+                            "label":"pulse",
+                            "value":"pulse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "countdown",
+            "name": "Countdown timer",
+            "limit": 4,
+            "settings":[
+                {
+                    "type": "text",
+                    "id": "date",
+                    "label": "Date countdown",
+                    "default": "2023\/12\/26",
+                    "info": "Countdown to the end sale date will be shown"
+                },
+                {
+                    "type": "select",
+                    "id": "cdt_des",
+                    "label": "Countdown design",
+                    "default": "1",
+                    "options": [
+                    {
+                        "value": "1",
+                        "label": "Design 1"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Design 2"
+                    }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "cdt_size",
+                    "label": "Countdown size",
+                    "default": "medium",
+                    "options": [
+                    {
+                    "value": "small",
+                    "label": "Small"
+                    },
+                    {
+                        "value": "medium",
+                        "label": "Medium"
+                    },
+                    {
+                        "value": "large",
+                        "label": "Large"
+                    },
+                    {
+                        "value": "extra_large",
+                        "label": "Extra large"
+                    }
+                    ]
+                },
+                {
+                    "type": "range",
+                    "id": "box_bdr",
+                    "label": "Border radius",
+                    "default": 0,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "%"
+                },
+                {
+                    "type": "range",
+                    "id": "bd_width",
+                    "label": "Border width",
+                    "default": 0,
+                    "min": 0,
+                    "max": 5,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "space_item",
+                    "label": "Space between items",
+                    "default": 10,
+                    "min": 0,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "color",
+                    "id": "number_cl",
+                    "label": "Number color",
+                    "default": "#fff"
+                },
+                {
+                    "type": "color",
+                    "id": "text_cl",
+                    "label": "Text color",
+                    "default": "#fff"
+                },
+                {
+                    "type": "color",
+                    "id": "border_cl",
+                    "label": "Border color item time",
+                    "default": "#000"
+                },
+                {
+                    "type": "color",
+                    "id": "bg_cl",
+                    "label": "Background item time",
+                    "default": "#000"
+                },
+                {
+                    "type":"checkbox",
+                    "id":"hidden_mobile",
+                    "label":"Hidden on mobile ",
+                    "default":false
+                },
+                {
+                    "type": "number",
+                    "id": "mgb",
+                    "label": "Margin bottom",
+                    "default": 15
+                },
+                {
+                    "type": "number",
+                    "id": "mgb_mb",
+                    "label": "Margin bottom (Mobile)",
+                    "default": 10
+                },
+                {
+                    "type": "paragraph",
+                    "content": "————————————————"
+                },
+                {
+                    "type":"select",
+                    "id":"animation",
+                    "label":"Animation",
+                    "default":"none",
+                    "options":[
+                        {
+                            "label":"None",
+                            "value":"none"
+                        },
+                        {
+                            "label":"fadeIn",
+                            "value":"fadeIn"
+                        },
+                        {
+                            "label":"fadeInDown",
+                            "value":"fadeInDown"
+                        },
+                        {
+                            "label":"fadeInDownBig",
+                            "value":"fadeInDownBig"
+                        },
+                        {
+                            "label":"fadeInLeft",
+                            "value":"fadeInLeft"
+                        },
+                        {
+                            "label":"fadeInLeftBig",
+                            "value":"fadeInLeftBig"
+                        },
+                        {
+                            "label":"fadeInRight",
+                            "value":"fadeInRight"
+                        },
+                        {
+                            "label":"fadeInRightBig",
+                            "value":"fadeInRightBig"
+                        },
+                        {
+                            "label":"fadeInUp",
+                            "value":"fadeInUp"
+                        },
+                        {
+                            "label":"fadeInUpBig",
+                            "value":"fadeInUpBig"
+                        },
+                        {
+                            "label":"fadeInTopLeft",
+                            "value":"fadeInTopLeft"
+                        },
+                        {
+                            "label":"fadeInTopRight",
+                            "value":"fadeInTopRight"
+                        },
+                        {
+                            "label":"fadeInBottomLeft",
+                            "value":"fadeInBottomLeft"
+                        },
+                        {
+                            "label":"fadeInBottomRight",
+                            "value":"fadeInBottomRight"
+                        },
+                        {
+                            "label":"bounceIn",
+                            "value":"bounceIn"
+                        },
+                        {
+                            "label":"bounceInDown",
+                            "value":"bounceInDown"
+                        },
+                        {
+                            "label":"bounceInLeft",
+                            "value":"bounceInLeft"
+                        },
+                        {
+                            "label":"bounceInRight",
+                            "value":"bounceInRight"
+                        },
+                        {
+                            "label":"bounceInUp",
+                            "value":"bounceInUp"
+                        },
+                        {
+                            "label":"zoomIn",
+                            "value":"zoomIn"
+                        },
+                        {
+                            "label":"zoomInDown",
+                            "value":"zoomInDown"
+                        },
+                        {
+                            "label":"zoomInLeft",
+                            "value":"zoomInLeft"
+                        },
+                        {
+                            "label":"zoomInRight",
+                            "value":"zoomInRight"
+                        },
+                        {
+                            "label":"zoomInUp",
+                            "value":"zoomInUp"
+                        },
+                        {
+                            "label":"slideInDown",
+                            "value":"slideInDown"
+                        },
+                        {
+                            "label":"slideInLeft",
+                            "value":"slideInLeft"
+                        },
+                        {
+                            "label":"slideInRight",
+                            "value":"slideInRight"
+                        },
+                        {
+                            "label":"slideInUp",
+                            "value":"slideInUp"
+                        },
+                        {
+                            "label":"lightSpeedInRight",
+                            "value":"lightSpeedInRight"
+                        },
+                        {
+                            "label":"lightSpeedInLeft",
+                            "value":"lightSpeedInLeft"
+                        },
+                        {
+                            "label":"lightSpeedOutRight",
+                            "value":"lightSpeedOutRight"
+                        },
+                        {
+                            "label":"lightSpeedOutLeft",
+                            "value":"lightSpeedOutLeft"
+                        },
+                        {
+                            "label":"jello",
+                            "value":"jello"
+                        },
+                        {
+                            "label":"tada",
+                            "value":"tada"
+                        },
+                        {
+                            "label":"pulse",
+                            "value":"pulse"
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "type": "space_html",
+            "name": "Space HTML",
+            "settings":[
+                {
+                    "type": "color",
+                    "id": "color",
+                    "label": "Color",
+                    "default": "#fff"
+                },
+                {
+                    "type": "range",
+                    "id": "width",
+                    "min": 1,
+                    "max": 100,
+                    "step": 1,
+                    "label": "Width",
+                    "unit": "px",
+                    "default": 40
+                },
+                {
+                    "type": "range",
+                    "id": "height",
+                    "min": 1,
+                    "max": 100,
+                    "step": 1,
+                    "label": "Height",
+                    "unit": "px",
+                    "default": 2
+                },
+                {
+                    "type": "number",
+                    "id": "mgb",
+                    "label": "Margin bottom (Unit: px)",
+                    "default": 20
+                },
+                {
+                    "type": "paragraph",
+                    "content": "————————————————"
+                },
+                {
+                    "type": "range",
+                    "id": "width_mb",
+                    "min": 1,
+                    "max": 100,
+                    "step": 1,
+                    "label": "Width (Mobile)",
+                    "unit": "px",
+                    "default": 40
+                },
+                {
+                    "type": "range",
+                    "id": "height_mb",
+                    "min": 1,
+                    "max": 100,
+                    "step": 1,
+                    "label": "Height (Mobile)",
+                    "default": 2
+                },
+                {
+                    "type":"checkbox",
+                    "id":"hidden_mobile",
+                    "label":"Hidden on mobile",
+                    "default":false
+                },
+                {
+                    "type": "number",
+                    "id": "mgb_mb",
+                    "label": "Margin bottom on mobile(Unit: px)",
+                    "default": 20
+                },
+                {
+                    "type": "paragraph",
+                    "content": "————————————————"
+                },
+                {
+                    "type":"select",
+                    "id":"animation",
+                    "label":"Animation",
+                    "default":"none",
+                    "options":[
+                    {
+                        "label":"None",
+                        "value":"none"
+                    },
+                    {
+                        "label":"fadeIn",
+                        "value":"fadeIn"
+                    },
+                    {
+                        "label":"fadeInDown",
+                        "value":"fadeInDown"
+                    },
+                    {
+                        "label":"fadeInDownBig",
+                        "value":"fadeInDownBig"
+                    },
+                    {
+                        "label":"fadeInLeft",
+                        "value":"fadeInLeft"
+                    },
+                    {
+                        "label":"fadeInLeftBig",
+                        "value":"fadeInLeftBig"
+                    },
+                    {
+                        "label":"fadeInRight",
+                        "value":"fadeInRight"
+                    },
+                    {
+                        "label":"fadeInRightBig",
+                        "value":"fadeInRightBig"
+                    },
+                    {
+                        "label":"fadeInUp",
+                        "value":"fadeInUp"
+                    },
+                    {
+                        "label":"fadeInUpBig",
+                        "value":"fadeInUpBig"
+                    },
+                    {
+                        "label":"fadeInTopLeft",
+                        "value":"fadeInTopLeft"
+                    },
+                    {
+                        "label":"fadeInTopRight",
+                        "value":"fadeInTopRight"
+                    },
+                    {
+                        "label":"fadeInBottomLeft",
+                        "value":"fadeInBottomLeft"
+                    },
+                    {
+                        "label":"fadeInBottomRight",
+                        "value":"fadeInBottomRight"
+                    },
+                    {
+                        "label":"bounceIn",
+                        "value":"bounceIn"
+                    },
+                    {
+                        "label":"bounceInDown",
+                        "value":"bounceInDown"
+                    },
+                    {
+                        "label":"bounceInLeft",
+                        "value":"bounceInLeft"
+                    },
+                    {
+                        "label":"bounceInRight",
+                        "value":"bounceInRight"
+                    },
+                    {
+                        "label":"bounceInUp",
+                        "value":"bounceInUp"
+                    },
+                    {
+                        "label":"zoomIn",
+                        "value":"zoomIn"
+                    },
+                    {
+                        "label":"zoomInDown",
+                        "value":"zoomInDown"
+                    },
+                    {
+                        "label":"zoomInLeft",
+                        "value":"zoomInLeft"
+                    },
+                    {
+                        "label":"zoomInRight",
+                        "value":"zoomInRight"
+                    },
+                    {
+                        "label":"zoomInUp",
+                        "value":"zoomInUp"
+                    },
+                    {
+                        "label":"slideInDown",
+                        "value":"slideInDown"
+                    },
+                    {
+                        "label":"slideInLeft",
+                        "value":"slideInLeft"
+                    },
+                    {
+                        "label":"slideInRight",
+                        "value":"slideInRight"
+                    },
+                    {
+                        "label":"slideInUp",
+                        "value":"slideInUp"
+                    },
+                    {
+                        "label":"lightSpeedInRight",
+                        "value":"lightSpeedInRight"
+                    },
+                    {
+                        "label":"lightSpeedInLeft",
+                        "value":"lightSpeedInLeft"
+                    },
+                    {
+                        "label":"lightSpeedOutRight",
+                        "value":"lightSpeedOutRight"
+                    },
+                    {
+                        "label":"lightSpeedOutLeft",
+                        "value":"lightSpeedOutLeft"
+                    },
+                    {
+                        "label":"jello",
+                        "value":"jello"
+                    },
+                    {
+                        "label":"tada",
+                        "value":"tada"
+                    },
+                    {
+                        "label":"pulse",
+                        "value":"pulse"
+                    }
+                    ]
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "category": "homepage1",
+            "name":"Slideshow",
+            "blocks":[
+                {
+                    "type":"image_parent",
+                    "settings":{
+                        "text_align":"start"
+                    }
+                    
+                },
+                {
+                    "type":"custom_text",
+                    "settings":{
+                        "text":"Summer sale",
+                        "text_fs":16,
+                        "text_fw":400,
+                        "text_ls":1
+                    }
+                },
+                {
+                    "type":"custom_text",
+                    "settings":{
+                        "text":"New Arrival Collection",
+                        "text_fs":70,
+                        "text_fw":300,
+                        "text_lh":70,
+                        "text_mgb":25
+                    }
+                },
+                {
+                    "type":"custom_button",
+                    "settings":{
+                        "fsbutton":14,
+                        "button_mh":42,
+                        "button_pd_lr":20
+                    }
+                },
+                {
+                    "type":"image_parent",
+                    "settings":{
+                        "text_align":"start"
+                    }
+                    
+                },
+                {
+                    "type":"custom_text",
+                    "settings":{
+                        "text":"Summer sale",
+                        "text_fs":16,
+                        "text_fw":400,
+                        "text_ls":1
+                    }
+                },
+                {
+                    "type":"custom_text",
+                    "settings":{
+                        "text":"Lookbook Collection",
+                        "text_fs":70,
+                        "text_fw":300,
+                        "text_lh":70,
+                        "text_mgb":25
+                    }
+                },
+                {
+                    "type":"custom_button",
+                    "settings":{
+                        "fsbutton":14,
+                        "button_mh":42,
+                        "button_pd_lr":20
+                    }
+                }
+
+            ]
+        }
+    ]
+}
+{% endschema %}

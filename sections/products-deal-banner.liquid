@@ -1,0 +1,1381 @@
+<!-- section/products-deal-banner.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'content-position.css' | asset_url | stylesheet_tag }}
+{{ 'banner.css' | asset_url | stylesheet_tag }}
+{{ 'collection-products.css' | asset_url | stylesheet_tag }}
+{{ 'product-deal-banner.css' | asset_url | stylesheet_tag }}
+<link href="{{ 't4s-animation.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- liquid
+  assign sid = section.id
+  assign se_stts = section.settings
+  assign se_blocks = section.blocks
+  assign stt_layout = se_stts.layout
+  assign stt_image_bg = se_stts.image_bg
+
+  assign show_vendor = se_stts.show_vendor
+  assign use_link_vendor = settings.use_link_vendor
+  assign enable_rating = settings.enable_rating
+  assign countdown = false
+  assign general_block = false
+  if stt_layout == 't4s-se-container' 
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+  assign image_ratio = se_stts.image_ratio
+  if image_ratio == "ratioadapt"
+    assign imgatt = ''
+   else 
+    assign imgatt = 'data-'
+  endif
+
+  assign t4s_se_class = 't4s_nt_se_' | append: sid
+  if se_stts.use_cus_css and se_stts.code_cus_css != blank
+    render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+  endif 
+ -%} 
+<div class="t4s-section-inner t4s_nt_se_{{ sid }} t4s_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+  {{- html_layout[0] -}}
+  {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+  <div class="t4s-product-deal-banner t4s-d-flex t4s-justify-content-center t4s_{{ image_ratio }} t4s_position_{{ se_stts.image_position }} t4s_{{ se_stts.image_size }} t4s-equal-height-{{ se_stts.equal_height }} t4s-row t4s-gx-md-{{ se_stts.space_h_item }} t4s-gy-md-{{ se_stts.space_v_item }} t4s-gx-{{ se_stts.space_h_item_mb }} t4s-gy-{{ se_stts.space_v_item_mb }}">
+    {%- for block in se_blocks -%}
+      {%- assign bk_stts = block.settings -%}
+      {%- case block.type -%}
+        {%- when 'banner1' -%}
+          {%- assign image = bk_stts.image -%}
+          {%- assign url = bk_stts.url -%}
+          <div class="t4s-col-item t4s-col-12 t4s-col-md-4 t4s-col-lg-4">
+            <div class="t4s-banner-item t4s-eff t4s-eff-{{ bk_stts.b_effect }} t4s-eff-img-{{ bk_stts.img_effect }} t4s-banner-item1">
+              <div class="t4s-banner-inner" style="--bg-overlay:{{ bg_overlay }};">
+                {%- if url != blank -%}
+                  {%- assign ARRhtml = 'a,,' | split: ',' -%}
+                {%- else -%}
+                  {%- assign ARRhtml = 'div,data-,data-' | split: ',' -%}
+                {%- endif -%}
+                <{{ ARRhtml[0] }} {{ ARRhtml[1] }}href="{{ url }}"  {{ ARRhtml[2] }}target="{{ bk_stts.open_link }}" class="t4s-d-block t4s_ratio t4s_ratio_hasmb" {{ imgatt }}style="--aspect-ratioapt: {{ image.aspect_ratio | default: 2 }};ngao">
+                  {%- if image != blank -%}
+                    <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                      <span class="lazyloadt4s-loader is-bg-img t4s-d-md-none" style="background: url({{ image_mb | image_url: width: 1 }})"></span>
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1 t4s-obj-eff' }}
+                  {%- endif -%}
+                </{{ ARRhtml[0] }}>
+                <div class="t4s-banner-content t4s-content-position t4s-pa t4s-text-md-{{ bk_stts.content_align }} t4s-text-{{ bk_stts.content_align_mobile }}" style="--time-animation:{{ bk_stts.time_animation }}s; {%- render 'position_content', ch_pos: bk_stts.ch_pos, cv_pos: bk_stts.cv_pos,ch_pos_mb: bk_stts.ch_pos_mb,cv_pos_mb: bk_stts.cv_pos_mb,append_bg_content_style:append_bg_content_style -%}">
+                    {% if bk_stts.heading != blank %}
+                      <h3 class="text1" style="--text-cl1 :{{ bk_stts.cl_t1 }}">{{ bk_stts.heading }}</h3>
+                    {% endif %}
+                     {% if bk_stts.heading2 != blank %}
+                      <h3 class="text2" style="--text-cl2 :{{ bk_stts.cl_t2 }}">{{ bk_stts.heading2 }}</h3>
+                    {% endif %}
+                     {% if bk_stts.heading3 != blank %}
+                      <h3 class="text3" style="--text-cl3 :{{ bk_stts.cl_t3 }}">{{ bk_stts.heading3 }}</h3>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- when 'product' -%}
+          {%- liquid assign product = bk_stts.product
+          
+          assign show_img = settings.show_img
+          assign isGrowaveWishlist = false
+          if settings.wishlist_mode == "3" and shop.customer_accounts_enabled
+            assign isGrowaveWishlist = true
+          endif
+          assign enable_pr_size = settings.enable_pr_size
+          assign pr_size_pos = settings.pr_size_pos
+          assign show_size_type = settings.show_size_type
+          assign size_ck = settings.size_ck | append: ',size,sizes,Größe' 
+          assign get_size = size_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+          assign enable_pr_color = settings.enable_pr_color
+          assign show_cl_type = settings.show_color_type
+          assign color_ck = settings.color_ck | append: ',color,colors,couleur,colour'
+          assign get_color = color_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+          assign price_varies_style = settings.price_varies_style
+          assign app_review = settings.app_review
+          assign use_countdown = se_stts.use_cdt
+         -%}
+            <div class="t4s-col-item t4s-col-12 t4s-col-md-4 t4s-col-lg-4">
+                <div data-collection-url="{{ collection.url }}" class="t4s-product-outer t4s-text-md-{{ bk_stts.content_align }} t4s-text-{{ bk_stts.content_align_mobile }} t4s-row">
+                  {% if product != blank %}
+                    {%- liquid 
+                    render 'product-grid-item1' , product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false -%}
+                  {% else %}
+                    <div class="t4s-col-item t4s-product t4s-pr-grid t4s-pr-style{{ product_des }} t4s-pr-item t4s-pr-des-{{ product_des }}">
+                      <div class="t4s-product-wrapper">
+                        <div class="t4s-product-inner" data-cacl-slide >
+                          <div class="t4s-product-image">
+                            <a class="t4s-d-block" data-cacl-slide href="/admin/products">{%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%} 
+                            {{ 'product-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg' }}</a>
+                          </div>
+                        </div>
+                        <div class="t4s-product-info">
+                          <div class="t4s-product-info__inner">
+                            <h3 class="t4s-product-title"><a href="/admin/products">{{ 'onboarding.product_title' | t }}</a></h3>
+                            <span class="t4s-product-price"><del>$59.00</del><ins>$39.00</ins></span>
+                          </div>
+                        </div>
+                      </div>   
+                    </div>
+                  {% endif %}
+                  {%- if bk_stts.date != blank -%}
+                    {%- assign countdown = true -%}
+                    <div class="t4s-col-item t4s-countdown sepr_coun_dt_wrap t4s-countdown-des-{{ bk_stts.cdt_des }} t4s-countdown-size-{{ bk_stts.cdt_size }} t4s-animation-{{ bk_stts.animation }} t4s-hidden-mobile-{{ bk_stts.hidden_mobile }}" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'countdown', bk_stts: bk_stts, ani_delay: ani_delay -%}>
+                      <div class="time" data-countdown-t4s data-date='{{ bk_stts.date }}' data-keyid='#countdown-{{ sid }}'></div>
+                    </div>
+                  {% endif %}
+                </div>
+            </div>
+        {%- when 'banner2' -%}
+          {%- assign image = bk_stts.image -%}
+          {%- assign url = bk_stts.url -%}
+          <div class="t4s-col-item t4s-col-12 t4s-col-md-4 t4s-col-lg-4">
+            <div class="t4s-banner-item t4s-eff t4s-eff-{{ bk_stts.b_effect }} t4s-eff-img-{{ bk_stts.img_effect }} t4s-banner-item2">
+              <div class="t4s-banner-inner" style="--bg-overlay:{{ bg_overlay }};">
+                {%- if url != blank -%}
+                  {%- assign ARRhtml = 'a,,' | split: ',' -%}
+                {%- else -%}
+                  {%- assign ARRhtml = 'div,data-,data-' | split: ',' -%}
+                {%- endif -%}
+                <{{ ARRhtml[0] }} {{ ARRhtml[1] }}href="{{ url }}"  {{ ARRhtml[2] }}target="{{ bk_stts.open_link }}" class="t4s-d-block t4s_ratio t4s_ratio_hasmb" {{ imgatt }}style="--aspect-ratioapt: {{ image.aspect_ratio | default: 2 }};--aspect-ratioaptmb: {{ image_mb.aspect_ratio | default: 2 }};">
+                  {%- if image != blank -%}
+                      <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                      <span class="lazyloadt4s-loader is-bg-img t4s-d-md-none" style="background: url({{ image_mb | image_url: width: 1 }})"></span>
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1 t4s-obj-eff' }}
+                  {%- endif -%}
+                </{{ ARRhtml[0] }}>
+                <div class="t4s-banner-content t4s-content-position t4s-pa t4s-text-md-{{ bk_stts.content_align }} t4s-text-{{ bk_stts.content_align_mobile }}" style="--time-animation:{{ bk_stts.time_animation }}s; {%- render 'position_content', ch_pos: bk_stts.ch_pos, cv_pos: bk_stts.cv_pos,ch_pos_mb: bk_stts.ch_pos_mb,cv_pos_mb: bk_stts.cv_pos_mb,append_bg_content_style:append_bg_content_style -%}">
+                    {% if bk_stts.heading != blank %}
+                      <h3 class="text1" style="--text-cl1 :{{ bk_stts.cl_t1 }}">{{ bk_stts.heading }}</h3>
+                    {% endif %} 
+                     {% if bk_stts.heading2 != blank %}
+                      <h3 class="text2" style="--text-cl2 :{{ bk_stts.cl_t2 }}">{{ bk_stts.heading2 }}</h3>
+                    {% endif %}
+                    {%- if url != blank and bk_stts.button_text != blank -%}
+                      {{ 'button-style.css' | asset_url | stylesheet_tag }}
+                      <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+                      <a class="t4s-btn t4s-btn-base t4s-btn-style-{{ bk_stts.button_style }} t4s-btn-size-{{ bk_stts.btns_size }} t4s-btn-icon-{{ bk_stts.btn_icon }} t4s-btn-color-{{ bk_stts.btns_cl }} {% if bk_stts.button_style == 'default' or bk_stts.button_style == 'outline' %}t4s-btn-effect-{{ bk_stts.button_effect }}{% endif %}" href="{{ url }}">{{ bk_stts.button_text }}{%- if bk_stts.btn_icon -%} <svg class="t4s-btn-icon" viewBox="0 0 14 10"><use xlink:href="#t4s-icon-btn"></use></svg>{%- endif -%}</a>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+  {{- html_layout[1] -}}
+</div> 
+{%- if countdown -%} 
+  {{ 'countdown.css' | asset_url | stylesheet_tag }}
+  <template id="countdown-{{ sid }}">
+      <span class="countdown-days">
+          <span class="cd_timet4 cd-number">%-D</span>
+          <span class="cd_txtt4 cd-text">%!D:{{ "sections.countdown_text.day" | t }},{{ "sections.countdown_text.day_plural" | t }};</span>
+      </span>
+      <span class="countdown-hours">
+          <span class="cd_timet4 cd-number">%H</span> 
+          <span class="cd_txtt4 cd-text">%!H:{{ "sections.countdown_text.hr" | t }},{{ "sections.countdown_text.hr_plural" | t }};</span>
+      </span>
+      <span class="countdown-min">
+          <span class="cd_timet4 cd-number">%M</span> 
+          <span class="cd_txtt4 cd-text">%!M:{{ "sections.countdown_text.min" | t }},{{ "sections.countdown_text.min_plural" | t }};</span>
+      </span>
+      <span class="countdown-sec">
+          <span class="cd_timet4 cd-number">%S</span> 
+          <span class="cd_txtt4 cd-text">%!S:{{ "sections.countdown_text.sec" | t }},{{ "sections.countdown_text.sec_plural" | t }};</span>
+      </span>
+  </template>
+{%- endif -%}
+
+{%- schema -%}
+  {
+    "name": "Product deal with banner",
+    "tag": "section",
+    "class": "t4s-section t4s-section-all t4s_tp_cdt t4s_tp_cd t4s-products-deal-banner",
+    "settings": [
+      {
+        "type": "header",
+        "content": "1. General options"
+      },
+      
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show product vendors",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "use_cdt",
+        "label": "Show product countdown",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image ratio",
+        "default": "ratio1_1",
+        "info": "Aspect Ratio Custom will settings in General panel",
+        "options": [
+          {
+            "group": "Natural",
+            "value": "ratioadapt",
+            "label": "Adapt to image"
+          },
+          {
+            "group": "Landscape",
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "group": "Landscape",
+            "value": "ratio16_9",
+            "label": "16:9"
+          },
+          {
+            "group": "Landscape",
+            "value": "ratio8_5",
+            "label": "8:5"
+          },
+          {
+            "group": "Landscape",
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "group": "Landscape",
+            "value": "ratio4_3",
+            "label": "4:3"
+          },
+          {
+            "group": "Landscape",
+            "value": "rationt",
+            "label": "Ratio ASOS"
+          },
+          {
+            "group": "Squared",
+            "value": "ratio1_1",
+            "label": "1:1"
+          },
+          {
+            "group": "Portrait",
+            "value": "ratio2_3",
+            "label": "2:3"
+          },
+          {
+            "group": "Portrait",
+            "value": "ratio1_2",
+            "label": "1:2"
+          },
+          {
+            "group": "Custom",
+            "value": "ratiocus1",
+            "label": "Ratio custom 1"
+          },
+          {
+            "group": "Custom",
+            "value": "ratiocus2",
+            "label": "Ratio custom 2"
+          },
+          {
+            "group": "Custom",
+            "value": "ratio_us3",
+            "label": "Ratio custom 3"
+          },
+          {
+            "group": "Custom",
+            "value": "ratiocus4",
+            "label": "Ratio custom 4"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image size",
+        "default": "cover",
+        "info": "This settings apply only if the image ratio is not set to 'Adapt to image'",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Full"
+          },
+          {
+            "value": "contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "1",
+            "label": "Left top"
+          },
+          {
+            "value": "2",
+            "label": "Left center"
+          },
+          {
+            "value": "3",
+            "label": "Left bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right top"
+          },
+          {
+            "value": "5",
+            "label": "Right center"
+          },
+          {
+            "value": "6",
+            "label": "Right bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center top"
+          },
+          {
+            "value": "8",
+            "label": "Center center"
+          },
+          {
+            "value": "9",
+            "label": "Center bottom"
+          }
+        ],
+        "label": "Image position",
+        "default": "8"
+      },
+      {
+        "type":"checkbox",
+        "id":"equal_height",
+        "label":"Enable equal items height",
+        "info": "Use when the item widths are not equal (Not working on Mobile)",
+        "default":false
+      },
+      {
+        "type": "select",
+        "id": "space_h_item",
+        "options": [
+          {
+              "value": "0", 
+              "label": "0"
+          },
+          {
+              "value": "2", 
+              "label": "2px"
+          },
+          {
+              "value": "4", 
+              "label": "4px"
+          },
+          {
+              "value": "6", 
+              "label": "6px"
+          },
+          {
+              "value": "8", 
+              "label": "8px"
+          },
+          {
+              "value": "10", 
+              "label": "10px"
+          },
+          {
+              "value": "15", 
+              "label": "15px"
+          },
+          {
+              "value": "20",
+              "label": "20px"
+          },
+          {
+              "value": "30",
+              "label": "30px"
+          }
+        ],
+        "label": "Space horizontal items",
+        "default": "30"
+      },
+      {
+        "type": "select",
+        "id": "space_v_item",
+        "options": [
+          {
+              "value": "0", 
+              "label": "0"
+          },
+          {
+              "value": "2", 
+              "label": "2px"
+          },
+          {
+              "value": "4", 
+              "label": "4px"
+          },
+          {
+              "value": "6", 
+              "label": "6px"
+          },
+          {
+              "value": "8", 
+              "label": "8px"
+          },
+          {
+              "value": "10", 
+              "label": "10px"
+          },
+          {
+              "value": "15", 
+              "label": "15px"
+          },
+          {
+              "value": "20",
+              "label": "20px"
+          },
+          {
+              "value": "30",
+              "label": "30px"
+          }
+        ],
+        "label": "Space vertical items",
+        "default": "30"
+      },
+      {
+        "type": "select",
+        "id": "space_h_item_mb",
+        "options": [
+          {
+              "value": "0", 
+              "label": "0"
+          },
+          {
+              "value": "2", 
+              "label": "2px"
+          },
+          {
+              "value": "4", 
+              "label": "4px"
+          },
+          {
+              "value": "6", 
+              "label": "6px"
+          },
+          {
+              "value": "8", 
+              "label": "8px"
+          },
+          {
+              "value": "10", 
+              "label": "10px"
+          },
+          {
+              "value": "15", 
+              "label": "15px"
+          },
+          {
+              "value": "20",
+              "label": "20px"
+          },
+          {
+              "value": "30",
+              "label": "30px"
+          }
+        ],
+        "label": "Space horizontal items (Mobile)",
+        "default": "10"
+      },
+      {
+        "type": "select",
+        "id": "space_v_item_mb",
+        "options": [
+          {
+              "value": "0", 
+              "label": "0"
+          },
+          {
+              "value": "2", 
+              "label": "2px"
+          },
+          {
+              "value": "4", 
+              "label": "4px"
+          },
+          {
+              "value": "6", 
+              "label": "6px"
+          },
+          {
+              "value": "8", 
+              "label": "8px"
+          },
+          {
+              "value": "10", 
+              "label": "10px"
+          },
+          {
+              "value": "15", 
+              "label": "15px"
+          },
+          {
+              "value": "20",
+              "label": "20px"
+          },
+          {
+              "value": "30",
+              "label": "30px"
+          }
+        ],
+        "label": "Space vertical items (Mobile)",
+        "default": "10"
+      },
+      {
+        "type": "header",
+        "content": "2. Design options"
+      },
+      {
+        "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+        "options": [
+            { "value": "t4s-se-container", "label": "Container"},
+            { "value": "t4s-container-wrap", "label": "Wrapped container"},
+            { "value": "t4s-container-fluid", "label": "Full width"}
+        ]
+      },
+      {
+        "type": "color",
+        "id": "cl_bg",
+        "label": "Background"
+      },
+      {
+        "type": "color_background",
+        "id": "cl_bg_gradient",
+        "label": "Background gradient"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_bg",
+        "label": "Background image"
+      },
+      {
+          "type": "text",
+          "id": "mg",
+          "label": "Margin",
+          "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+          "default": ",,50px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd",
+          "label": "Padding",
+          "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+          "placeholder": "50px,,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design Tablet Options"
+      },
+      {
+        "type": "text",
+        "id": "mg_tb",
+        "label": "Margin",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "text",
+        "id": "pd_tb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design mobile options"
+      },
+      {
+          "type": "text",
+          "id": "mg_mb",
+          "label": "Margin",
+          "default": ",,30px,",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd_mb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+      },
+      {
+        "type": "header",
+        "content": "4. Custom css"
+      },
+      {
+        "id": "use_cus_css",
+        "type": "checkbox",
+        "label": "Use custom css",
+        "default":false,
+        "info": "If you want custom style for this section."
+      },
+      { 
+        "id": "code_cus_css",
+        "type": "textarea",
+        "label": "Code custom css",
+        "info": "Use selector .SectionID to style css"
+        
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "label": "Content align",
+            "default": "center",
+            "options":[
+                {
+                  "label":"Left",
+                  "value":"start"
+                },
+                {
+                  "label":"Center",
+                  "value":"center"
+                },
+                {
+                  "label":"Right",
+                  "value":"end"
+                }
+            ]
+          },
+          {
+            "type":"select",
+            "id":"content_align_mobile",
+            "label":"Content align (Mobile)",
+            "default":"center",
+            "options":[
+                {
+                    "label":"Left",
+                    "value":"start"
+                },
+                {
+                    "label":"Center",
+                    "value":"center"
+                },
+                {
+                    "label":"Right",
+                    "value":"end"
+                }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "date",
+            "label": "Date countdown",
+            "default": "2023\/12\/26",
+            "info": "Countdown to the end sale date will be shown"
+          },
+          {
+            "type": "select",
+            "id": "cdt_des",
+            "label": "Countdown design",
+            "default": "1",
+            "options": [
+              {
+                  "value": "1",
+                  "label": "Design 1"
+              },
+              {
+                  "value": "2",
+                  "label": "Design 2"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "cdt_size",
+            "label": "Countdown size",
+            "default": "medium",
+            "options": [
+              {
+              "value": "small",
+              "label": "Small"
+              },
+              {
+                  "value": "medium",
+                  "label": "Medium"
+              },
+              {
+                  "value": "large",
+                  "label": "Large"
+              },
+              {
+                  "value": "extra_large",
+                  "label": "Extra large"
+              }
+            ]
+          },
+          {
+            "type": "range",
+            "id": "box_bdr",
+            "label": "Border radius",
+            "default": 0,
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "unit": "%"
+          },
+          {
+            "type": "range",
+            "id": "bd_width",
+            "label": "Border width",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "step": 1,
+            "unit": "px"
+          },
+          {
+            "type": "range",
+            "id": "space_item",
+            "label": "Space between items",
+            "default": 10,
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "unit": "px"
+          },
+          {
+            "type": "color",
+            "id": "number_cl",
+            "label": "Number color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "text_cl",
+            "label": "Text color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "border_cl",
+            "label": "Border color item time",
+            "default": "#000"
+          },
+          {
+            "type": "color",
+            "id": "bg_cl",
+            "label": "Background item time",
+            "default": "#000"
+          }
+        ]
+      },
+      {
+        "type": "banner1",
+        "name": "Banner 1",
+        "settings": [
+         {
+           "type": "image_picker",
+           "id": "image",
+           "label": "Image"
+         },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Banner link"
+          },
+          {
+            "type": "select",
+            "id": "img_effect",
+            "label": "Image hover effect",
+            "info": "Waring: Hovering effect will resize your images",
+            "default": "none",
+            "options": [
+              {
+                "value": "none",
+                "label": "None"
+              },
+              {
+                "value": "zoom",
+                "label": "Zoom in"
+              },
+              {
+                "value": "rotate",
+                "label": "Rotate"
+              },
+              {
+                "value": "translateToTop",
+                "label": "Move to top"
+              },
+              {
+                "value": "translateToRight",
+                "label": "Move to right"
+              },
+              {
+                "value": "translateToBottom",
+                "label": "Move to bottom"
+              },
+              {
+                "value": "translateToLeft",
+                "label": "Move to left"
+              },
+              {
+                "value": "filter",
+                "label": "Filter"
+              },
+              {
+                "value": "bounceIn",
+                "label": "BounceIn"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "b_effect",
+            "label": "Banner effect when hover",
+            "default": "none",
+            "options": [
+              {
+                "value": "none",
+                "label": "None"
+              },
+              {
+                "value": "border-run",
+                "label": "Border run"
+              },
+              {
+                "value": "plus-zoom-overlay",
+                "label": "Plus zoom overlay"
+              },
+              {
+                "value": "dark-overlay",
+                "label": "Dark overlay"
+              },
+              {
+                "value": "light-overlay",
+                "label": "Light overlay"
+              } 
+            ]
+          },
+          {
+            "type": "header",
+            "content": "--Content position options--"
+          },
+          {
+             "type": "range",
+             "id": "cv_pos",
+             "label": "Content vertical position",
+             "info":" <= 50: Top position , > 50 bottom position",
+             "default": 50,
+             "min": 0,
+             "max": 100,
+             "step": 1,
+             "unit": "%"
+          },
+          {
+             "type": "range",
+             "id": "ch_pos",
+             "label": "Content horizontal position",
+             "info":" <= 50: Left position , > 50 right position",
+             "default": 50,
+             "min": 0,
+             "max": 100,
+             "step": 1,
+             "unit": "%"
+          },
+          {
+            "type": "header",
+            "content": "--Content position options (Mobile)--"
+          },
+          {
+             "type": "range",
+             "id": "cv_pos_mb",
+             "label": "Content vertical position",
+             "info":" <= 50: Top position , > 50 bottom position",
+             "default": 50,
+             "min": 0,
+             "max": 100,
+             "step": 1,
+             "unit": "%"
+          },
+          {
+             "type": "range",
+             "id": "ch_pos_mb",
+             "label": "Content horizontal position",
+             "info":" <= 50: Left position , > 50 right position",
+             "default": 50,
+             "min": 0,
+             "max": 100,
+             "step": 1,
+             "unit": "%"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "label": "Content align",
+            "default": "center",
+            "options":[
+                {
+                  "label":"Left",
+                  "value":"start"
+                },
+                {
+                  "label":"Center",
+                  "value":"center"
+                },
+                {
+                  "label":"Right",
+                  "value":"end"
+                }
+            ]
+          },
+          {
+            "type":"select",
+            "id":"content_align_mobile",
+            "label":"Content align (Mobile)",
+            "default":"center",
+            "options":[
+                {
+                    "label":"Left",
+                    "value":"start"
+                },
+                {
+                    "label":"Center",
+                    "value":"center"
+                },
+                {
+                    "label":"Right",
+                    "value":"end"
+                }
+            ]
+          },
+         {
+           "type": "header",
+           "content": "+ Text Settings"
+         },
+         {
+           "type": "text",
+           "id": "heading",
+           "label": "Text 1",
+           "default": "VIEW COLLECTIONS"
+         },
+         {
+           "type": "color",
+           "id": "cl_t1",
+           "label": "Color Text 1",
+           "default": "#222222"
+         },
+         {
+           "type": "text",
+           "id": "heading2",
+           "label": "Text 2",
+           "default": "LOOKBOOK"
+         },
+         {
+           "type": "color",
+           "id": "cl_t2",
+           "label": "Color Text 2",
+           "default": "#222222"
+         },
+         {
+           "type": "text",
+           "id": "heading3",
+           "label": "Text 3",
+           "default": "your world of fashion in numbers"
+         },
+         {
+           "type": "color",
+           "id": "cl_t3",
+           "label": "Color Text 3",
+           "default": "#878787"
+         }
+        ]
+      },
+       {
+        "type": "banner2",
+        "name": "Banner 2",
+        "settings": [
+         {
+           "type": "image_picker",
+           "id": "image",
+           "label": "Image"
+         },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Banner link"
+          },
+          {
+            "type": "select",
+            "id": "img_effect",
+            "label": "Image hover effect",
+            "info": "Waring: Hovering effect will resize your images",
+            "default": "none",
+            "options": [
+              {
+                "value": "none",
+                "label": "None"
+              },
+              {
+                "value": "zoom",
+                "label": "Zoom in"
+              },
+              {
+                "value": "rotate",
+                "label": "Rotate"
+              },
+              {
+                "value": "translateToTop",
+                "label": "Move to top"
+              },
+              {
+                "value": "translateToRight",
+                "label": "Move to right"
+              },
+              {
+                "value": "translateToBottom",
+                "label": "Move to bottom"
+              },
+              {
+                "value": "translateToLeft",
+                "label": "Move to left"
+              },
+              {
+                "value": "filter",
+                "label": "Filter"
+              },
+              {
+                "value": "bounceIn",
+                "label": "BounceIn"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "b_effect",
+            "label": "Banner effect when hover",
+            "default": "none",
+            "options": [
+              {
+                "value": "none",
+                "label": "None"
+              },
+              {
+                "value": "border-run",
+                "label": "Border run"
+              },
+              {
+                "value": "plus-zoom-overlay",
+                "label": "Plus zoom overlay"
+              },
+              {
+                "value": "dark-overlay",
+                "label": "Dark overlay"
+              },
+              {
+                "value": "light-overlay",
+                "label": "Light overlay"
+              } 
+            ]
+          },
+          {
+            "type": "header",
+            "content": "--Content position options--"
+          },
+          {
+             "type": "range",
+             "id": "cv_pos",
+             "label": "Content vertical position",
+             "info":" <= 50: Top position , > 50 bottom position",
+             "default": 50,
+             "min": 0,
+             "max": 100,
+             "step": 1,
+             "unit": "%"
+          },
+          {
+             "type": "range",
+             "id": "ch_pos",
+             "label": "Content horizontal position",
+             "info":" <= 50: Left position , > 50 right position",
+             "default": 50,
+             "min": 0,
+             "max": 100,
+             "step": 1,
+             "unit": "%"
+          },
+          {
+            "type": "header",
+            "content": "--Content position options (Mobile)--"
+          },
+          {
+             "type": "range",
+             "id": "cv_pos_mb",
+             "label": "Content vertical position",
+             "info":" <= 50: Top position , > 50 bottom position",
+             "default": 50,
+             "min": 0,
+             "max": 100,
+             "step": 1,
+             "unit": "%"
+          },
+          {
+             "type": "range",
+             "id": "ch_pos_mb",
+             "label": "Content horizontal position",
+             "info":" <= 50: Left position , > 50 right position",
+             "default": 50,
+             "min": 0,
+             "max": 100,
+             "step": 1,
+             "unit": "%"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "label": "Content align",
+            "default": "center",
+            "options":[
+                {
+                  "label":"Left",
+                  "value":"start"
+                },
+                {
+                  "label":"Center",
+                  "value":"center"
+                },
+                {
+                  "label":"Right",
+                  "value":"end"
+                }
+            ]
+          },
+          {
+            "type":"select",
+            "id":"content_align_mobile",
+            "label":"Content align (Mobile)",
+            "default":"center",
+            "options":[
+                {
+                    "label":"Left",
+                    "value":"start"
+                },
+                {
+                    "label":"Center",
+                    "value":"center"
+                },
+                {
+                    "label":"Right",
+                    "value":"end"
+                }
+            ]
+          },
+         {
+           "type": "header",
+           "content": "+ Text Settings"
+         },
+         {
+           "type": "text",
+           "id": "heading",
+           "label": "Text 1",
+           "default": "VIEW COLLECTIONS"
+         },
+         {
+           "type": "color",
+           "id": "cl_t1",
+           "label": "Color Text 1",
+           "default": "#222222"
+         },
+         {
+           "type": "text",
+           "id": "heading2",
+           "label": "Text 2",
+           "default": "LOOKBOOK"
+         },
+         {
+           "type": "color",
+           "id": "cl_t2",
+           "label": "Color Text 2",
+           "default": "#222222"
+         },
+         {
+           "type": "text",
+           "id": "button_text",
+           "label": "Button label",
+           "default": "Shop now"
+         },
+         {
+            "type":"checkbox",
+            "id":"btn_icon",
+            "label":"Enable button icon",
+            "default":false
+          },
+          {
+            "type": "select",
+            "id": "button_style",
+            "label": "Button style",
+            "options": [
+                {
+                    "label": "Default",
+                    "value": "default"
+                },
+                {
+                    "label": "Outline",
+                    "value": "outline"
+                },
+                {
+                    "label": "Bordered bottom",
+                    "value": "bordered"
+                },
+                {
+                    "label": "Link",
+                    "value": "link"
+                }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "btns_size",
+            "label": "Button size",
+            "default":"large",
+            "options": [
+                {
+                    "label": "Extra small",
+                    "value": "small"
+                },
+                {
+                    "label": "Small",
+                    "value": "extra-small"
+                },
+                {
+                    "label": "Medium",
+                    "value": "medium"
+                },
+                {
+                    "label": "Large",
+                    "value": "extra-medium"
+                },
+                {
+                    "label": "Extra large",
+                    "value": "large"
+                },
+                {
+                    "label": "Extra extra large",
+                    "value": "extra-large"
+                }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "btns_cl",
+            "label": "Button color",
+            "default": "dark",
+            "options": [
+              {
+                  "value": "light",
+                  "label": "Light"
+              },
+              {
+                  "value": "dark",
+                  "label": "Dark"
+              },
+              {
+                  "value": "primary",
+                  "label": "Primary"
+              },
+              {
+                  "value": "custom1",
+                  "label": "Custom color 1"
+              },
+              {
+                  "value": "custom2",
+                  "label": "Custom color 2"
+              }
+            ]
+          },
+           {
+              "type":"select",
+              "id":"button_effect",
+              "label":"Button hover effect",
+              "default":"default",
+              "info":"Only working button style default, outline",
+              "options":[
+                  {
+                      "label":"Default",
+                      "value":"default"
+                  },
+                  {
+                      "label":"Fade",
+                      "value":"fade"
+                  },
+                  {
+                      "label":"Rectangle out",
+                      "value":"rectangle-out"
+                  },
+                  {
+                      "label":"Sweep to right",
+                      "value":"sweep-to-right"
+                  },
+                  {
+                      "label":"Sweep to left",
+                      "value":"sweep-to-left"
+                  },
+                  {
+                      "label":"Sweep to bottom",
+                      "value":"sweep-to-bottom"
+                  },
+                  {
+                      "label":"Sweep to top",
+                      "value":"sweep-to-top"
+                  },
+                  {
+                      "label":"Shutter out horizontal",
+                      "value":"shutter-out-horizontal"
+                  },
+                  {
+                      "label":"Outline",
+                      "value":"outline"
+                  },
+                  {
+                      "label":"Shadow",
+                      "value":"shadow"
+                  }
+              ]
+          }
+        ]
+      }
+    ],
+  "presets": [
+      {
+        "name": "Product deal with banner",
+        "category": "Homepage",
+        "blocks": [
+          {"type": "banner1"},
+          {"type": "product"},
+          {"type": "banner2"}
+        ]
+      }
+    ]
+  }
+{%- endschema -%}

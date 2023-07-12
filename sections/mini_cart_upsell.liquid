@@ -1,0 +1,44 @@
+{%- if recommendations.products_count > 0 -%}
+	{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+	<style>
+	.t4s-minicart-recommendations {margin: 20px;border-radius: 5px;overflow: hidden;box-shadow: 0 0 3px 0 rgb(0 0 0 / 20%);color: var(--secondary-color);}.t4s-minicart-recommendations__title {background-color: #f5f5f5;font-size: 15px;font-weight: 500;padding: 10px;color: var(--secondary-color);}.t4s-minicart-recommendations_items.flickityt4s-enabled {display: flex;}.t4s-minicart-recommendations__item--title {font-size: 14px;line-height: 1.35;color: var(--secondary-color);}.t4s-minicart-recommendations__item--img {margin: 10px;}.t4s-minicart-recommendations__item--img>a {width: 80px;max-height: 110px;}.t4s-minicart-recommendations__item--img img {object-fit: contain;max-height: 110px;border-radius: 2px;overflow: hidden;}.t4s-minicart-recommendations__item .t4s-col-auto {max-width: 100px;}.t4s-minicart-recommendations_items .flickityt4s-viewport, .t4s-minicart-recommendations_items:not(.flickityt4s-enabled) .t4s-minicart-recommendations__item:not(:last-child) {border-bottom: 4px double var(--border-color);}.t4s-minicart-recommendations__item--qv {padding: 10px;line-height: 1;color: var(--t4s-light-color);border-radius: 5px;box-shadow: 0 0 3px 0 rgb(0 0 0 / 20%);margin: 10px;width: 35px;height: 35px;padding: 0;display: flex;align-items: center;justify-content: center;background-color: var(--accent-color);}.t4s-minicart-recommendations__item--qv svg.t4s-btn-op0 {width: 14px;}.t4sp-hover .t4s-minicart-recommendations__item--qv:hover {opacity: .6;color: var(--t4s-light-color);}.t4s-minicart-recommendations__item--price {color: var(--secondary-price-color);}.t4s-minicart-recommendations__item--price ins {color: var(--primary-price-color);margin-left: 5px;}.rtl_true .t4s-minicart-recommendations__item--price ins {margin-left: 0;margin-right: 5px;}.t4s-minicart-recommendations__item .onsale.nt_label {min-width: auto;margin: 0 5px;width: auto;height: auto;border-radius: 3px;font-size: 10px;color: #fff;display: inline-block;padding: 4px;line-height: 1;}.t4s-minicart-recommendations .flickityt4s-prev-next-button {position: static;width: 44px;height: 44px;flex: 0 0 auto;-ms-flex-order: 4;order: 4;color: #222;border: 0;background: 0 0;border-radius: 0;display: block;transition: color .3s,background-color .3s,border-color .3s,box-shadow .3s,opacity .3 }.t4sp-hover .t4s-minicart-recommendations .flickityt4s-prev-next-button:hover {background-color: #f5f5f5;}.t4s-minicart-recommendations .flickityt4s-prev-next-button.next {-ms-flex-order: 5;order: 5;}.t4s-minicart-recommendations .flickityt4s-prev-next-button .flickityt4s-button-icon {height: 14px;width: 14px;stroke-width: 3px;stroke: currentColor;fill: currentcolor;}.t4s-minicart-recommendations .flickityt4s-page-dots {width: 100%;flex: 1 0 0%;-ms-flex-order: 4;order: 4;display: flex;flex-wrap: wrap;align-items: center;justify-content: center;margin: 0;border: 1px solid var(--border-color);border-width: 0 1px;}.t4s-minicart-recommendations .flickityt4s-prev-next-button:before {display: inline-block;width: 100%;font-size: 36px;height: auto;line-height: 1;}.t4s-minicart-recommendations .flickityt4s-enabled .flickityt4s-prev-next-button {-webkit-transform: scale(1);transform: scale(1);opacity: 1;}.t4s-minicart-recommendations .flickityt4s-page-dots .dot {display: inline-block;width: 11px;height: 11px;margin: 5px;border-radius: 50%;background: var(--t4s-light-color);border: 2px solid rgba(0,0,0,.2);cursor: pointer;}.t4s-minicart-recommendations .flickityt4s-page-dots .dot.is-selected {background-color: var(--secondary-color);}
+	</style>
+	{%- liquid 
+		assign app_review = settings.app_review
+		assign price_varies_style = settings.price_varies_style
+		assign enable_rating = settings.enable_rating
+		assign placeholder_img = settings.placeholder_img
+	 -%}
+	<div class="t4s-minicart-recommendations t4s_bk_flickity t4s_ratioadapt">
+		<div class="t4s-minicart-recommendations__title t4s-text-center">{{ 'cart.mini_cart.title_recommendations' | t }}</div>
+		<div class="t4s-minicart-recommendations_items t4s-row t4s-row-cols-1 t4s-g-0 flickityt4s" data-flickityt4s-js='{"setPrevNextButtons":true,"arrowIcon":"2","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": 0,"pageDots": true, "autoPlay" : 0, "pauseAutoPlayOnHover" : true }' style="--space-dots: 8px;--flickity-btn-pos: 0px;--flickity-btn-pos-mb: 0px;">
+		    {%- for product in recommendations.products -%}
+		    	{%- liquid
+				    assign pr_url = product.url
+						assign image = product.featured_media | default: placeholder_img
+					 -%}
+		       	<div class="t4s-minicart-recommendations__item t4s-col-item">
+		       		<div class="t4s-row t4s-g-0 t4s-align-items-center">
+						<div class="t4s-col-item t4s-col-auto t4s-minicart-recommendations__item--img">
+							{%- if image != blank -%}
+								<a class="t4s-d-block t4s-pr t4s-oh t4s_ratio" href="{{ pr_url }}"style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1 }}">
+									<img class="lazyloadt4s" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+									<span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span>
+								</a>
+							{%- endif -%} 
+						</div>
+						<div class="t4s-col-item t4s-col t4s-pr t4s-oh">
+							{%- if enable_rating -%}{%- render 'product-rating', product: product, app_review: app_review -%}{%- endif -%}
+							<a href="{{ pr_url }}" class="t4s-d-block t4s-minicart-recommendations__item--title t4s-truncate">{{ product.title }}</a>
+							{%- render 'product-price', class_price: 't4s-minicart-recommendations__item--price', product: product, price_varies_style: price_varies_style, type: 'card', isGrouped: false -%}
+						</div>
+						{%- if settings.enable_quickview %}<div class="t4s-col-item t4s-col-auto"><a href="{{ pr_url }}" data-id="{{ product.id }}" data-tooltip="top" title="{{ 'products.product_card.quick_view' | t | escape }}" rel="nofollow" class="t4s-minicart-recommendations__item--qv t4s-btn-loading__svg" data-action-quickview>
+							<svg viewBox="0 0 24 24" class="t4s-btn-op0"><use xlink:href="#t4s-icon-qv"></use></svg>
+							<span class="t4s-loading__spinner" hidden><svg width="16" height="16" hidden="" class="t4s-svg-spinner" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg></span>
+						</a></div>{% endif %}
+					</div>
+                </div>
+		    {%- endfor -%}
+	    </div>
+    </div>
+{%- endif -%} 

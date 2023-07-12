@@ -1,0 +1,279 @@
+<!-- sections/main-store-locator.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 't4s-store-locator.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign sid = section.id
+    assign se_stts = section.settings  
+    assign stt_layout = se_stts.layout
+    assign stt_image_bg = se_stts.image_bg
+    assign img_marker = se_stts.img_marker
+    assign blog_sidebar = se_stts.blog_sidebar
+    if blog_sidebar == 'none'
+        assign use_sidebar = false
+    endif
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif
+    assign se_blocks = section.blocks
+    if img_marker != blank
+      assign is_img_marker = true
+    else
+      assign is_img_marker = false
+    endif 
+ -%}
+
+{%- if se_blocks.size > 0 -%}
+   <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
+   <link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
+   {%- if se_stts.enable_searchbox -%}
+   <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css" rel="stylesheet">
+   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js"></script>
+   {%- endif -%}
+   {%- unless is_img_marker -%}
+   <svg xmlns="http://www.w3.org/2000/svg" class="t4s-d-none"><symbol id="icon--store-locator-marker" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></symbol></svg>
+   {%- endunless -%}
+  
+   <div id="stores-locator{{ sid }}" data-store-locator-options='{ "accessToken": {{ se_stts.access_token | default: 'not4s' | base64_encode | json }}, "sid": "{{ sid }}", "style": "{{ se_stts.style_map }}", "enableSearchBox" : {{ se_stts.enable_searchbox }}, "zoom": {{ se_stts.zoom }}, "pitch": {{ se_stts.pitch }}, "bearing": 0, "scrollZoom": false, "isImgMarker": {{ is_img_marker }} }' class="t4s-store-locator{% if is_img_marker %} has--custom-img-marker{% endif %} t4s-section-inner t4s_nt_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+      {{- html_layout[0] -}}
+      {%- if stt_layout == 't4s-se-container' -%}
+      <div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5"{% endif %}>{% endif -%}
+         <div class="t4s-row t4s-g-0">
+            {%- if se_stts.access_token != blank -%}
+            <div class="t4s-store-locator__sidebar t4s-col-12 t4s-col-md-3">
+               <div id="listings{{ sid }}" class="t4s-store-locator__listings">
+                  {%- for block in se_blocks limit: 8 %}{% assign bk_stts = block.settings -%}
+                  <div id="t4s-listing-{{ forloop.index0 }}" class="t4s-store-locator__item">
+                     <a href="#" class="t4s-store-locator__title needsclick" id="t4s-link-{{ forloop.index0 }}">{{ bk_stts.heading | escape }}</a>
+                     <div class="t4s-rte">{{ bk_stts.content }}</div>
+                  </div>
+                  {%- endfor -%}
+               </div>
+            </div>
+            <div class="t4s-store-locator__content t4s-col-12 t4s-col-md-9 t4s-pr t4s-oh"><div id="map{{ sid }}" class="t4s-store-locator__map"></div></div>
+            {%- else -%}
+                <div class="t4s-col-12 t4s-text-center">You need an Mapbox API access token</div>
+            {%- endif -%}
+         </div>
+       {{- html_layout[1] -}}
+   </div>
+
+   {%- style -%}
+     #stores-locator{{ sid }} {--color-marker:{{ se_stts.color_marker }};{%- if is_img_marker %}--marker-img: url("{{ img_marker | image_url: width: 94 }}");{% endif -%} }
+   {%- endstyle -%}
+
+   <script id="stores-json{{ sid }}" type="application/json">
+         {
+           "type": "FeatureCollection",
+           "features": [ 
+             {%- for block in se_blocks %}{% assign bk_stts = block.settings -%}
+             {
+               "type": "Feature",
+               "geometry": {
+                 "type": "Point",
+
+                 "coordinates": [{{ bk_stts.longitude | default: 94 }}, {{ bk_stts.latitude | default: 94 }}]
+               },
+               "properties": {
+                  "name": "{{ bk_stts.heading | escape }}",
+                  "content": {{ bk_stts.content | json }}
+               }
+             }{% unless forloop.last %},{% endunless %}
+             {%- endfor -%}
+           ]
+         }
+   </script>
+   <script id="t4s-store-locator-js" src="{{ 't4s-store-locator.min.js' | asset_url }}" type="text/javascript"></script>
+
+{%- endif -%}
+
+{% schema %}
+{
+   "name": "Main store locator",
+   "tag": "section",
+   "class": "t4s-section t4s-section-main t4s-main-store-locator",
+   "settings": [
+        {
+            "type": "paragraph",
+            "content": "[Please visit our documentation page ](https://docs.the4.co/kalles-4/pages/store-locator)"
+        },
+        {
+            "type": "select","id": "layout","default": "t4s-container-wrap","label": "Layout",
+            "options": [
+                { "value": "t4s-se-container", "label": "Container"},
+                { "value": "t4s-container-wrap", "label": "Wrapped container"},
+                { "value": "t4s-container-fluid", "label": "Full width"}
+            ]
+        },
+        {
+            "type": "text",
+            "id": "access_token",
+            "label": "Enter a Mapbox access token",
+            "info": "Read more about [Mapbox API access tokens](https://docs.mapbox.com/help/getting-started/access-tokens/#how-access-tokens-work)"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_searchbox",
+            "label": "Enable search box",
+            "default": true
+        },
+        {
+            "type": "select","id": "style_map","default": "streets","label": "Style map",
+            "options": [
+                { "value": "streets", "label": "Streets"},
+                { "value": "outdoors", "label": "Outdoors"},
+                { "value": "light", "label": "Light"},
+                { "value": "dark", "label": "Dark"},
+                { "value": "satellite_streets", "label": "Satellite Streets"}
+            ]
+        },
+         {
+           "type": "range",
+           "id": "zoom",
+           "min": 0,
+           "max": 22,
+           "step": 1,
+           "label": "Starting zoom",
+           "default": 12
+         },
+         {
+           "type": "range",
+           "id": "pitch",
+           "min": 0,
+           "max": 85,
+           "step": 1,
+           "label": "Pitch",
+           "info": "The desired pitch in degrees",
+           "default": 60
+         },
+         /*{
+           "type": "range",
+           "id": "bearing",
+           "min": -90,
+           "max": 90,
+           "step": 10,
+           "label": "Bearing",
+           "info": "The desired bearing in degrees",
+           "default": 0
+         },*/
+        {
+            "type": "image_picker",
+            "id": "img_marker",
+            "label": "Custom marker image"
+        },
+        {
+            "type": "color",
+            "id": "color_marker",
+            "label": "Color marker icon",
+            "info": "Only working when not used 'Custom marker image'",
+            "default": "#0ec1ae"
+        },
+        /*{
+            "type": "color",
+            "id": "cl_bg",
+            "label": "Background"
+        },
+        {
+            "type": "color_background",
+            "id": "cl_bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_bg",
+            "label": "Background image"
+        },*/
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+            "default": "60px,,60px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+            "placeholder": "50px,,50px,"
+        },
+        {
+            "type": "header",
+            "content": "+ Design tablet options"
+        },
+        {
+            "type": "text",
+            "id": "mg_tb",
+            "label": "Margin",
+            "default": ",,50px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd_tb",
+            "label": "Padding",
+            "placeholder": "50px,,50px,"
+        },
+        {
+            "type": "header",
+            "content": "+ Design mobile options"
+        },
+        {
+            "type": "text",
+            "id": "mg_mb",
+            "label": "Margin",
+            "default": ",,30px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd_mb",
+            "label": "Padding",
+            "placeholder": ",,50px,"
+        }
+   ],
+   "blocks": [
+        {
+            "name": "Store",
+            "type": "store",
+            "settings": [
+              {
+                  "type": "text",
+                  "id": "heading",
+                  "label": "Name",
+                  "default": "1471 P St NW"
+              },
+              {
+                  "type": "text",
+                  "id": "latitude",
+                  "label": "Latitude",
+                  "info": "[Get your latitude and longitude](https:\/\/www.latlong.net) or [Latitude and longitude finder](https://www.itilog.com/)",
+                  "default": "38.909882"
+              },
+              {
+                  "type": "text",
+                  "id": "longitude",
+                  "label": "Longitude",
+                  "info": "[Get your latitude and longitude](https:\/\/www.latlong.net) or [Latitude and longitude finder](https://www.itilog.com/)",
+                  "default": "-77.034149"
+              },
+              {
+                  "type": "richtext",
+                  "id": "content",
+                  "label": "Content",
+                  "default": "<p>Washington DC <\/br>(202) 234-7336<\/p>"
+              }
+            ]
+         }
+   ],
+   "default": {
+      "blocks": [
+        { "type": "store" },{ "type": "store" },{ "type": "store" }
+      ]
+   }
+}
+{% endschema %}

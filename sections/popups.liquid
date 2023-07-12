@@ -1,0 +1,3287 @@
+{%- comment -%}
+1. Newsletter Popup
+2. Sales Popup
+3. Exit Product popup
+4. Cookie Banner
+5. Age Verification Popup
+{%- endcomment -%}
+
+{%- liquid 
+	assign se_stts     = section.settings
+	assign se_id       = section.id
+	assign design_mode = request.design_mode
+	assign page_type   = request.page_type
+	assign exit_product_popup   = false
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  {%- for block in section.blocks %}{% assign bk_stts = block.settings -%}
+		{%- case block.type -%}
+			{%- when 'newsletter' -%}
+			  {%- if design_mode %}<div {{ block.shopify_attributes }}></div>{% endif -%}
+			  {%- liquid
+				  unless bk_stts[page_type]
+				   	continue
+				  endunless -%}
+	        {%- style -%}
+						#t4s-popup__newsletter {
+					    max-width: 530px !important;
+					    background-color: var(--t4s-light-color);
+							margin: 30px auto;
+						}
+						#t4s-popup__newsletter:not(.t4s-news-layout1) {
+							max-width: 800px !important;
+						}
+						.t4s-popup-newsletter-form {
+							padding: 30px;
+						}
+						.t4s-popup-newsletter-form .t4s-news-heading {
+							font-size: 18px;
+						    line-height: 30px;
+						    margin-top: 0;
+						    margin-bottom:10px;
+						    color: var(--heading-color)
+						}
+						.t4s-popup-newsletter-form .t4s-news-subheading {
+						    margin-bottom:10px;
+						}
+						.t4s-popup-newsletter-form form {
+							margin-bottom: 10px;
+						}
+						.t4s-popup-news-footer,
+						.t4s-popup-news-checkzone {
+							font-size: 12px;
+						}
+						.t4s-news-layout3 > .t4s-row {
+							flex-direction: row-reverse;
+						}
+						.t4s-popup-news-checkzone .t4s-popup_new_checkbox {
+							display:none;
+						}
+						.t4s-popup-news-checkzone .t4s-popup_new_checkbox + label {
+		    				cursor: pointer;
+						}
+						.t4s-popup-news-checkzone .t4s-popup_new_checkbox + label::before {
+							content: '';
+					    display: inline-block;
+					    margin-right: 10px;
+					    width: 16px;
+					    height: 16px;
+					    min-width: 16px;
+					    border: 1px solid #d4d6d8;
+					    background: #fff;
+					    box-shadow: 0 1px rgb(212 214 216 / 40%);
+					    border-radius: 2px;
+					    -webkit-appearance: none;
+					    position: relative;
+	    				top: 3px;
+	    				box-shadow: none;
+					    background-size: cover;
+					    background-repeat: no-repeat;
+					    background-position: 50%;
+					    transition: .2s ease-in-out;
+						}
+						.t4s-popup-news-checkzone .t4s-popup_new_checkbox:checked + label::before {
+							background-color: var(--accent-color);
+		    				border-color: var(--accent-color);
+						}
+						.t4s-popup-news-checkzone .t4s-popup_new_checkbox~svg {
+							display: block;
+					    width: 12px;
+					    height: 12px;
+					    fill: #fff;
+					    position: absolute;
+					    top: 5px;
+					    left: 2px;
+					    pointer-events: none;
+					    transform: scale(0);
+					    -webkit-transform: scale(0);
+					    -webkit-transition: .25s ease-in-out;
+					    transition: .25s ease-in-out;
+						}
+						.t4s-popup-news-checkzone .t4s-popup_new_checkbox:checked~svg {
+					    transform: scale(1);
+	    				-webkit-transform: scale(1);
+						}
+				   	#t4s-form-popups .t4s-newsletter__response > div {
+				   	 	position: static;
+					    z-index: 2;
+					    background-color: #fff;
+					    padding: 5px 15px;
+		    			 color: var(--t4s-success-color);
+		    			 background: rgba(var(--t4s-success-color-rgb),.1);
+					    border: solid 1px var(--t4s-success-color);
+					    border-radius: var(--btn-radius);
+					    text-align: start;
+					    margin: 10px 0;
+					    font-size: 13px;
+					    display: inline-block;
+					  }
+				   	#t4s-form-popups .t4s-newsletter__response .t4s-newsletter__error {
+					   	border-color: var(--t4s-error-color);
+		    			color: var(--t4s-error-color);
+		    			background: rgba(var(--t4s-error-color-rgb),.1);
+			   		}
+				  	#t4s-form-popups .t4s-newsletter__response .t4s-newsletter__success svg {
+					    fill: currentColor;
+					    width: 16px;
+					    margin: 5px;
+					    display: inline-block;
+					    vertical-align: middle;
+					  }
+	        	@media(max-width: 767px) {
+		        	.t4s-popup-newsletter-form {
+		        		padding: 30px 15px;
+		        	}
+	        	}
+	        {%- endstyle -%}
+			  <div id="t4s-popup__newsletter" data-block="{{ block.id }}" class="mfp-with-anim mfp-hide t4s-text-center t4s-news-layout{{ bk_stts.news_layout }} t4s_ratioadapt t4s_position_8 t4s_cover" data-stt='{ "number_pages": {{ bk_stts.number_pages }},"pp_version": {{ bk_stts.version }},"after": "{{ bk_stts.after }}","time_delay": {{ bk_stts.time_delay }}000,"scroll_delay": {{ bk_stts.scroll_delay }},"day_next": {{ bk_stts.day_next }},"isMobile":{{ bk_stts.mb }} }'>
+			   	<div class="t4s-row t4s-gx-0 t4s-gy-0 {% if bk_stts.news_layout != "1" and bk_stts.image != blank %} t4s-row-cols-md-2 {% endif %} t4s-row-cols-1 ">
+			   		{%- assign image = bk_stts.image -%}
+			   		{% if image %}
+			   			<div class="t4s-col-item t4s_ratio" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1.2 }}">
+								<img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+								<span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span>
+			   			</div>
+			   		{% endif %}
+			   		<div class="t4s-col-item" {%- render 'bk_cus_style', type: 'newsletter', bk_stts: bk_stts -%}>
+			   			<div class="t4s-popup-newsletter-form">
+					   	{% if bk_stts.heading != blank %} <h4 class="t4s-news-heading">{{ bk_stts.heading }}</h4>{% endif %}
+					   	{% if bk_stts.sub_heading != blank %} <p class="t4s-news-subheading">{{ bk_stts.sub_heading }}</p>{% endif %}
+	                         {%- render 'newsletter', form_id: se_id, buttonIcon: bk_stts.btn_icon -%}
+							 {%- if bk_stts.txt != blank %}<div class="t4s-popup-news-footer">{{ bk_stts.txt }}</div>{% endif -%}
+							 {%- if bk_stts.txt2 != blank and bk_stts.btn_ck and bk_stts.day_next > 0 -%}
+								 <div class="t4s-popup-news-checkzone t4s-pr t4s-d-inline-block">
+								 	<input data-checked-newsletter type="checkbox" id="t4s-checkbox-{{ se_id }}" class="t4s-popup_new_checkbox">
+								 	<label for="t4s-checkbox-{{ se_id }}" class="t4s-popup_new_label">{{ bk_stts.txt2 }}</label>
+								 	<svg class="t4s-dn t4s-icon_checked" viewBox="0 0 24 24"><path d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg>
+								 </div>
+				         {%- endif -%}
+				        </div>
+				    </div>
+		      </div>
+			  </div>
+			{%- when 'cookie' -%}
+				{%- style -%}
+				#t4s-popup__cookies-law {
+				    position: fixed;
+				    top: auto;
+				    bottom:0;
+				    left:0;
+				    right:0;
+				    background-color: var(--t4s-light-color);
+				    z-index: 999;
+				    padding: 15px 35px;
+				    box-shadow: 0 0 9px rgba(0,0,0,.14);
+				    transition: -webkit-transform .35s ease;
+				    transition: transform .35s ease;
+				    transition: transform .35s ease,-webkit-transform .35s ease;
+				    -webkit-transform: translate3d(0,100%,0);
+				    transform: translate3d(0,100%,0);
+				}
+				#t4s-popup__cookies-law.on--show {
+				    -webkit-transform: none;
+				    transform: none;
+				}
+				.t4s-popup__cookies-law.on--hide {
+				    -webkit-transform: translate3d(0,100%,0);
+				    transform: translate3d(0,100%,0);
+				}
+				a.t4s-pp_cookies__more-btn {
+				    border-bottom: 2px solid #f6f6f8;
+				    color: var(--secondary-color);
+				    font-weight: 500;
+				    font-size: 13px;
+				    margin-right: 20px;
+				    transition: all .25s ease;
+				}
+				a.t4s-pp_cookies__more-btn:focus, a.t4s-pp_cookies__more-btn:hover {
+				    opacity: .7;
+				}
+				button.t4s-pp_cookies__decline-btn,
+				button.t4s-pp_cookies__accept-btn {
+				    font-weight: 500;
+				    padding: 10px 14px;
+				    font-size: 12px;
+				    background-color: {{ bk_stts.cl_btn }};
+				    color: var(--t4s-light-color);
+				    min-width: 100px;
+				    border-radius: 4px;
+				    transition: all .25s ease;
+				}
+				button.t4s-pp_cookies__accept-btn:focus, 
+				button.t4s-pp_cookies__accept-btn:hover {
+				    background-color: {{ bk_stts.cl_btn_hover }};
+				}
+				button.t4s-pp_cookies__decline-btn {
+				    margin-right: 20px;
+				    padding: 8px 25px;
+				    background-color: var(--t4s-light-color);
+				    color: rgba(var(--secondary-color-rgb), 0.7);
+				    border: 2px solid rgba(var(--secondary-color-rgb), 0.5);
+				}
+				button.t4s-pp_cookies__decline-btn:hover {
+					background-color: rgba(var(--secondary-color-rgb), 0.035);
+				}
+				@media (max-width: 767px) {
+				  .t4s-popup_cookies_text {
+				      margin-bottom: 15px;
+				  }
+				}
+				{%- endstyle -%}
+	         
+				<div id="t4s-popup__cookies-law" data-block="{{ block.id }}" class="t4s-popup_cookies_wrap t4s-container-fluid on--hide" data-stt='{ "day_next": {{ bk_stts.day_next | default: 60 }},"pp_version":{{ bk_stts.pp_version | default: 1994 }}, "show":{{ bk_stts.show }} }' {{ block.shopify_attributes }}>
+				   <div class="t4s-row t4s-align-items-center t4s-justify-content-center t4s-text-center t4s-text-md-start">
+				     <div class="t4s-col-item t4s-col-12 t4s-col-md t4s-popup_cookies_text t4s-rte">{{ bk_stts.text }}</div>
+				     <div class="t4s-col-item t4s-col-12 t4s-col-md-auto t4s-popup_cookies_btns">
+				        {%- if bk_stts.links != blank -%}<a href="{{ bk_stts.links }}" class="t4s-pp_cookies__more-btn">{{ bk_stts.more }}</a>{% endif -%}
+						  {%- if bk_stts.decline != blank -%}<button type="button" class="t4s-pp_cookies__decline-btn">{{ bk_stts.decline }}</button>{% endif -%}
+						  {%- if bk_stts.accept != blank -%}<button type="button" class="t4s-pp_cookies__accept-btn">{{ bk_stts.accept }}</button>{% endif -%}
+				     </div>
+				   </div>
+				</div>
+			{%- when 'age' -%}
+				{%- style -%}
+					.t4s-popup__age_wrap {
+						position: relative;
+						overflow: hidden;
+					    margin: 30px auto;
+					    padding: 30px;
+					    width: 100%;
+					    max-width: 500px;
+					    background-color: {{ bk_stts.cl_bg }};
+					    {% if bk_stts.cl_gradient != blank %}background-image: {{ bk_stts.cl_gradient }};{% endif %}
+					    color: var(--t4s-light-color);
+					    background-size: cover;
+					    background-repeat: no-repeat;
+					    background-position: center center;
+				    }
+				    .t4s-popup__age_wrap:before {
+					    content: '';
+					    opacity: {{ bk_stts.overlay | divided_by: 100.0 }};
+					    position: absolute;
+					    background: #000;
+					    left: 0;
+					    top: 0;
+					    width: 100%;
+					    height: 100%;
+					    z-index: 40;
+					    pointer-events: none;
+					}
+					.t4s-popup__age_wrap.mfp-with-anim>* {
+					    position: relative;
+					    z-index: 50;
+					}
+				    .t4s-popup__age_wrap h4 {
+					    color: var(--t4s-light-color);
+					    font-weight: 500;
+					    font-size: 40px;
+					    margin-top: 0;
+					    margin-bottom: 20px;
+				    }
+				    .t4s-age_verify_buttons {
+				       margin-top: 25px;
+				       margin-bottom: -10px;
+				    }
+					.t4s-age_verify_buttons>button {
+					    margin: 0 5px 10px;
+					    padding: 12px 25px;
+					    border-radius: var(--btn-radius);
+					    font-weight: 500;
+					    text-transform: uppercase;
+					    background-color: var(--t4s-light-color);
+					    color: var(--text-color);
+					    display: inline-block;
+	                    min-width: 125px;
+					    transition: color .25s ease,background-color .25s ease,border-color .25s ease,box-shadow .25s ease,opacity .25s ease;
+					}
+					.t4s-age_verify_buttons>button.t4s-age_verify_allowed {
+					    color: var(--t4s-light-color);
+					    background-color: {{ bk_stts.cl_btn }};
+					}
+					.t4s-age_verify_buttons>button:hover {
+						background-color: #f6f6f8;
+					}
+					.t4s-age_verify_buttons>button.t4s-age_verify_allowed:hover {
+					    background-color: {{ bk_stts.cl_btn_hover }};
+					}
+					.t4s-age_date_of_birth {
+					    margin-top: 25px;
+				        margin-bottom: -10px;
+					    margin-right: -5px;
+					    margin-left: -5px;
+				    }
+				    .t4s-age_date_of_birth>.col-12{
+				       padding-left: 5px;
+				       padding-right: 5px;
+				    }
+					.t4s-age_date_of_birth select {
+						margin-bottom: 10px;
+					    color: var(--secondary-color);
+					    border: 0;
+					    background-color: var(--t4s-light-color);
+					    text-align: center;
+					    border-radius: 2px;
+					    box-shadow: inset 0 -2px 0 rgba(0,0,0,.15);
+					}
+					.active_forbidden .t4s-age_verify_txt,
+					.active_forbidden .t4s-age_date_of_birth,
+					.active_forbidden .t4s-age_verify_buttons {
+				       display: none
+					}
+				  .t4s-age_verify_txt_error {
+				    -webkit-animation: ani-fadeIn .6s ease;
+				    animation: ani-fadeIn .6s ease;
+				  }
+					.active_forbidden .t4s-age_verify_txt_error {
+				       display: block
+					}
+				    @media (min-width: 768px) {
+						.t4s-popup__age_wrap {
+						    padding: 60px;
+						}
+				    }
+				   .t4s-mg__0 {
+				   	magrin:0
+				   }
+				   .t4s-animated {
+					    -webkit-animation-duration: 1s;
+					    -webkit-animation-fill-mode: both;
+					    animation-duration: 1s;
+					    animation-fill-mode: both;
+					}
+
+					.t4s-shake {
+					    -webkit-animation-name: shake;
+					    animation-name: shake;
+					}
+					@-webkit-keyframes t4s-shake {
+					    from,to {
+					        -webkit-transform: translate3d(0,0,0);
+					        transform: translate3d(0,0,0)
+					    }
+
+					    10%,30%,50%,70%,90% {
+					        -webkit-transform: translate3d(-10px,0,0);
+					        transform: translate3d(-10px,0,0)
+					    }
+
+					    20%,40%,60%,80% {
+					        -webkit-transform: translate3d(10px,0,0);
+					        transform: translate3d(10px,0,0)
+					    }
+					}
+
+					@keyframes shake {
+					    from,to {
+					        -webkit-transform: translate3d(0,0,0);
+					        transform: translate3d(0,0,0)
+					    }
+
+					    10%,30%,50%,70%,90% {
+					        -webkit-transform: translate3d(-10px,0,0);
+					        transform: translate3d(-10px,0,0)
+					    }
+
+					    20%,40%,60%,80% {
+					        -webkit-transform: translate3d(10px,0,0);
+					        transform: translate3d(10px,0,0)
+					    }
+					}
+
+					.shake {
+					    -webkit-animation-name: shake;
+					    animation-name: shake
+					}
+				{%- endstyle -%}
+
+				{%- assign age_limit = bk_stts.age_limit -%}
+				{%- assign image = bk_stts.image -%}
+
+	         {%- if design_mode %}<div {{ block.shopify_attributes }}></div>{% endif -%}
+				<div id="t4s-popup__age" data-block="{{ block.id }}" class="t4s-popup__age_wrap mfp-with-anim mfp-hide t4s-text-center{% if image != blank %} lazyloadt4s{% endif %}" data-stt='{ "day_next": {{ bk_stts.day_next }},"date_of_birth":{{ bk_stts.date_of_birth }},"age_limit":{{ bk_stts.age_limit }} }'{% if image != blank %}{% assign ratio = image.aspect_ratio %} data-bgset="{{ image | image_url: width: 1 }}" data-optimumx="2" data-parent-fit="width" data-ratio="{{ image.aspect_ratio }}" data-sizes="auto" style="background-image: url({{ image | image_url: width: 1 }})"{% endif %}>
+				   <div class="t4s-age_verify_txt">
+				        <h4>{{ bk_stts.heading }}</h4>
+				        <p class="t4s-mg__0">{{ bk_stts.sub }}</p>
+				   </div>
+				   <div class="t4s-age_verify_txt_error t4s-dn">
+				      <h4>{{ bk_stts.txt }}</h4>
+				      <p class="t4s-mg__0">{{ bk_stts.txt2 }}</p>
+				   </div> 
+				   {%- if bk_stts.date_of_birth -%}
+					<div class="t4s-row t4s-g-10 t4s-age_date_of_birth">
+					  <div class="t4s-col-12 t4s-col-md-4 t4s-col-item">
+					    <select name="agemonth" class="t4s-w-100" id="agemonth">
+					      <option value="12">{{ bk_stts.month }}</option>
+					      {%- for i in (1..12) %}{% assign month_i = 'month' | append: i %}<option value="{{ i }}">{{ bk_stts[month_i] }}</option>{% endfor -%}
+					    </select> 
+					  </div>
+					  <div class="t4s-col-12 t4s-col-md-4 t4s-col-item">
+					    <select name="ageday" class="t4s-w-100" id="ageday">
+					      <option value="28">{{ bk_stts.day }}</option>
+					      {%- for i in (1..31) %}<option value="{{ i }}">{{ i }}</option>{% endfor -%}
+					    </select>
+					  </div>
+					  <div class="t4s-col-12 t4s-col-md-4 t4s-col-item">
+					      {%- assign now_year = 'now' | date: '%Y' | plus: 0 -%}
+					      {%- assign calc_year = now_year | minus: age_limit | plus: 1 -%}
+					    <select name="ageyear" class="t4s-w-100" id="ageyear">
+					      <option value="{{ now_year }}">{{ bk_stts.year }}</option>
+					      {%- for i in (1910..calc_year) reversed %}<option value="{{ i }}">{{ i }}</option>{% endfor -%}
+					    </select>
+					  </div>
+					</div>
+				   {%- endif -%}
+				   <div class="t4s-age_verify_buttons">
+				   	<button type="button" class="t4s-age_verify_allowed">{{ bk_stts.age_enter }}</button>
+				   	<button type="button" class="t4s-age_verify_forbidden">{{ bk_stts.age_exit }}</button>
+				   </div>
+				</div>
+			{%- when 'sales' -%}
+			  {%- if design_mode %}<div {{ block.shopify_attributes }}></div>{% endif -%}
+			  {%- liquid
+			  assign product_list = bk_stts.product_list
+			  assign available_products = product_list | where: "available"
+			  if bk_stts[page_type] == false or available_products.size == 0
+			   	continue
+			  endif
+		   	assign product   = available_products.first
+				assign enable_cl = bk_stts.enable_cl
+				assign enable_qv = bk_stts.enable_qv
+				assign locationArray = bk_stts.list_user | replace: ' | ', ' |' | replace: ' |', ' |' | replace: ' | ', ' |' | split: '|'
+				assign timeArray = bk_stts.list_time | replace: ' | ', ' |' | replace: ' |', ' |' | replace: ' | ', ' |' | split: '|'
+				-%}       
+	      <style>
+					.t4s-popup__sales {
+					    max-width: 350px;
+					    position: fixed;
+					    top: auto;
+					    background-color: var(--t4s-body-background);
+					    transition: all .25s ease;
+					    -moz-box-shadow: 0 0 12px rgba(0,0,0,.12);
+					    -webkit-box-shadow: 0 0 12px rgb(0 0 0 / 12%);
+					    box-shadow: 0 0 12px rgb(0 0 0 / 12%);
+					    border-radius: 5px;
+						 left: 3px;
+					    bottom: 55px;
+					    width: 100%;
+					    z-index: 400;
+					}
+					.sticky-is--active .t4s-popup__sales {
+					    bottom: calc( 10px + var(--stickyATC-height, 30px) );
+					}
+					.template-product.sticky-is--active .t4s-popup__sales {
+						bottom: 100px;
+					}
+					@media (max-width: 1024px) {
+						.t4s-popup__sales {
+							bottom: 60px;
+						}
+						.template-product.sticky-is--active .t4s-popup__sales {
+							bottom: 95px;
+						}
+					}
+					@media (max-width: 767px) {
+						.template-product.sticky-is--active .t4s-popup__sales {
+							bottom: 95px;
+						}
+					}
+					@media (min-width: 768px) {
+						.t4s-popup__sales {
+					    	left: 35px;
+						}
+					}
+					.t4s-pp-slpr-progressbar {
+					    position: absolute;
+					    left: 0;
+					    bottom: 0;
+					    height: 2px;
+					    width: 100%;
+					    z-index: 1;
+					    background: rgba(255,255,255,.2);
+					}
+					.t4s-pp-slpr-progressbar>span {
+						display: block;
+					    height: 100%;
+					    width: 100%;    
+					    background-color: rgba(var(--accent-color-rgb), 0.7);
+					    border-radius: 0 0 3px 3px;
+					    animation-name: t4s-ani-w;
+	                animation-fill-mode: forwards;
+					    /* animation-iteration-count: infinite; */
+					    animation-timing-function: linear;
+					}
+					.t4s-popup__sales:hover .t4s-pp-slpr-progressbar>span {
+					    animation-play-state: paused;
+					}
+					@keyframes t4s-ani-w {
+					  from {
+					    width: 100%;
+					  }
+					  to {
+					    width: 0%;
+					  }
+					}
+					.t4s-pp_slpr_thumb {
+					    padding: 10px;
+					}
+					.t4s-pp_slpr_thumb img {
+					    max-width: 65px;max-height: 68px;
+					}
+					.t4s-pp-slpr-location {
+					    display: block;
+					}
+					.t4s-pp-slpr-location > span {
+						color: var(--secondary-color);
+					}
+					.t4s-pp_slpr_info {
+					    max-width: 265px;
+					    padding: 10px 10px 10px 0!important;
+					}
+					.t4s-popup__sales.has--btns .t4s-pp_slpr_info {
+					    padding-right: 30px!important;
+					}
+					.t4s-pp-slpr-title {
+					    font-weight: 500;
+					    color: var(--secondary-color);
+					    text-transform: uppercase;
+					    font-size: 13px;
+					    width: 100%;
+					    display: block;
+					}
+					.t4s-pp-slpr-title:hover {
+					    color: var(--accent-color);
+					}
+					.t4s-pp-slpr-ago {
+					    font-size: 12px;
+					}
+					.t4s-pp-slpr-verify {
+					   font-size: 13px;
+					   color: var(--secondary-color);
+				   }
+				   .t4s-pp-slpr-verify >svg {
+					    color: var(--t4s-success-color);
+					    width: 13px;
+					    margin: 0 5px 0 10px;
+					}
+					button.t4s-pp-slpr-close, 
+					a.t4s-pp-slpr-qv {
+					    right: 5px;
+					    top: 12px;
+					    text-align: center;
+					    opacity: 1;
+					    display: inline-block;
+					    line-height: 25px;
+					    width: 25px;
+					    height: 25px;
+					    font-size: 20px;
+					    border-radius: 5px;
+					    font-weight: 400;
+					    padding: 0;
+					    background-color: transparent;
+					    color: var(--secondary-color);
+					}
+					button.t4s-pp-slpr-close> svg {
+						    width: 14px;
+						    stroke-width: 2px;
+					}
+					.t4s-pp-slpr-qv.t4s-btn-loading__svg.is--loading {
+					    position: absolute;
+					}
+					.t4s-pp-slpr-qv.is--loading>svg {
+					    opacity: 0;
+					    visibility: hidden;
+					}
+					a.t4s-pp-slpr-qv {
+					    top: auto;
+					    bottom: 12px;
+					}
+					a.t4s-pp-slpr-qv> svg {
+						width: 18px;
+					}
+					.t4s-popup__sales.is--design2 {
+					    border-radius: var(--btn-radius);
+					}
+					.t4s-popup__sales.is--design2 .t4s-pp-slpr-progressbar {
+					    right: 0;
+					    width: 80%;    
+					    margin: 0 auto;
+					}
+					.t4s-popup__sales.is--design2 .t4s-pp_slpr_thumb>a {
+					   border-radius: 50%;
+					}
+					.t4s-popup__sales.is--design2 .t4s-pp_slpr_info {
+					    padding: 3px 10px 3px 0!important;
+					}
+					.t4s-popup__sales.is--design2.has--btns .t4s-pp_slpr_info {
+					    padding-right: 35px!important;
+					}
+					.t4s-sales-slideIn {
+					    opacity: 0;
+					}
+					.t4s-popup__sales .t4s-sales-slideIn {
+					    animation: t4s-ani-slideIn 1s cubic-bezier(.16,.81,.32,1) both;
+					}
+					@keyframes t4s-ani-slideIn {
+					    0% {
+					        opacity: 0;
+					        transform: translateX(50px)
+					    }
+
+					    to {
+					        opacity: 1;
+					        transform: translateX(0)
+					    }
+					}
+					.is-sales_animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;animation-fill-mode:both}@-webkit-keyframes anislideOutDown{from{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1}to{visibility:hidden;-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0 }}@keyframes anislideOutDown{from{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1}to{visibility:hidden;-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0 }}.anislideOutDown{-webkit-animation-name:anislideOutDown;animation-name:anislideOutDown}@-webkit-keyframes anislideOutLeft{from{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1}to{visibility:hidden;-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0);opacity:0 }}@keyframes anislideOutLeft{from{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1}to{visibility:hidden;-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0);opacity:0 }}.anislideOutLeft{-webkit-animation-name:anislideOutLeft;animation-name:anislideOutLeft}@-webkit-keyframes anifadeOut{from{opacity:1}to{opacity:0 }}@keyframes anifadeOut{from{opacity:1}to{opacity:0 }}.anifadeOut{-webkit-animation-name:anifadeOut;animation-name:anifadeOut}@-webkit-keyframes anifadeOutLeft{from{opacity:1}to{opacity:0;-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0) }}@keyframes anifadeOutLeft{from{opacity:1}to{opacity:0;-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0) }}.anifadeOutLeft{-webkit-animation-name:anifadeOutLeft;animation-name:anifadeOutLeft}@-webkit-keyframes anibounceOutDown{20%{-webkit-transform:translate3d(0,10px,0);transform:translate3d(0,10px,0)}40%,45%{opacity:1;-webkit-transform:translate3d(0,-20px,0);transform:translate3d(0,-20px,0)}to{opacity:0;-webkit-transform:translate3d(0,2000px,0);transform:translate3d(0,2000px,0) }}@keyframes anibounceOutDown{20%{-webkit-transform:translate3d(0,10px,0);transform:translate3d(0,10px,0)}40%,45%{opacity:1;-webkit-transform:translate3d(0,-20px,0);transform:translate3d(0,-20px,0)}to{opacity:0;-webkit-transform:translate3d(0,2000px,0);transform:translate3d(0,2000px,0) }}.anibounceOutDown{-webkit-animation-name:anibounceOutDown;animation-name:anibounceOutDown}@-webkit-keyframes anibounceOutLeft{20%{opacity:1;-webkit-transform:translate3d(20px,0,0);transform:translate3d(20px,0,0)}to{opacity:0;-webkit-transform:translate3d(-2000px,0,0);transform:translate3d(-2000px,0,0) }}@keyframes anibounceOutLeft{20%{opacity:1;-webkit-transform:translate3d(20px,0,0);transform:translate3d(20px,0,0)}to{opacity:0;-webkit-transform:translate3d(-2000px,0,0);transform:translate3d(-2000px,0,0) }}.anibounceOutLeft{-webkit-animation-name:anibounceOutLeft;animation-name:anibounceOutLeft}@-webkit-keyframes anirotateOutDownLeft{from{-webkit-transform-origin:left bottom;transform-origin:left bottom;opacity:1}to{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:rotate3d(0,0,1,45deg);transform:rotate3d(0,0,1,45deg);opacity:0 }}@keyframes anirotateOutDownLeft{from{-webkit-transform-origin:left bottom;transform-origin:left bottom;opacity:1}to{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:rotate3d(0,0,1,45deg);transform:rotate3d(0,0,1,45deg);opacity:0 }}.anirotateOutDownLeft{-webkit-animation-name:anirotateOutDownLeft;animation-name:anirotateOutDownLeft}@-webkit-keyframes anirotateOutDownLeft{from{-webkit-transform-origin:left bottom;transform-origin:left bottom;opacity:1}to{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:rotate3d(0,0,1,45deg);transform:rotate3d(0,0,1,45deg);opacity:0 }}@keyframes anirotateOutDownLeft{from{-webkit-transform-origin:left bottom;transform-origin:left bottom;opacity:1}to{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:rotate3d(0,0,1,45deg);transform:rotate3d(0,0,1,45deg);opacity:0 }}.anirotateOutDownLeft{-webkit-animation-name:anirotateOutDownLeft;animation-name:anirotateOutDownLeft}@-webkit-keyframes aniflipOutX{from{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);opacity:1}to{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);opacity:0 }}@keyframes aniflipOutX{from{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);opacity:1}to{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);opacity:0 }}.aniflipOutX{-webkit-animation-duration:.75s;animation-duration:.75s;-webkit-animation-name:aniflipOutX;animation-name:aniflipOutX;-webkit-backface-visibility:visible!important;backface-visibility:visible!important}@-webkit-keyframes anizoomOut{from{opacity:1}50%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}to{opacity:0 }}@keyframes anizoomOut{from{opacity:1}50%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}to{opacity:0 }}.anizoomOut{-webkit-animation-name:anizoomOut;animation-name:anizoomOut}@-webkit-keyframes anirollOut{from{opacity:1}to{opacity:0;-webkit-transform:translate3d(100%,0,0) rotate3d(0,0,1,120deg);transform:translate3d(100%,0,0) rotate3d(0,0,1,120deg) }}@keyframes anirollOut{from{opacity:1}to{opacity:0;-webkit-transform:translate3d(100%,0,0) rotate3d(0,0,1,120deg);transform:translate3d(100%,0,0) rotate3d(0,0,1,120deg) }}.anirollOut{-webkit-animation-name:anirollOut;animation-name:anirollOut}@-webkit-keyframes anibounceOutDown{20%{-webkit-transform:translate3d(0,10px,0);transform:translate3d(0,10px,0)}40%,45%{opacity:1;-webkit-transform:translate3d(0,-20px,0);transform:translate3d(0,-20px,0)}to{opacity:0;-webkit-transform:translate3d(0,2000px,0);transform:translate3d(0,2000px,0) }}@keyframes anibounceOutDown{20%{-webkit-transform:translate3d(0,10px,0);transform:translate3d(0,10px,0)}40%,45%{opacity:1;-webkit-transform:translate3d(0,-20px,0);transform:translate3d(0,-20px,0)}to{opacity:0;-webkit-transform:translate3d(0,2000px,0);transform:translate3d(0,2000px,0) }}.anibounceOutDown{-webkit-animation-name:anibounceOutDown;animation-name:anibounceOutDown}@keyframes anislideInUp{from{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible;opacity:0}to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1 }}.anislideInUp{-webkit-animation-name:anislideInUp;animation-name:anislideInUp}@-webkit-keyframes anislideInLeft{from{-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0);visibility:visible;opacity:0}to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1 }}@keyframes anislideInLeft{from{-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0);visibility:visible;opacity:0}to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1 }}.anislideInLeft{-webkit-animation-name:anislideInLeft;animation-name:anislideInLeft}@-webkit-keyframes anifadeIn{from{opacity:0}to{opacity:1 }}@keyframes anifadeIn{from{opacity:0}to{opacity:1 }}.anifadeIn{-webkit-animation-name:anifadeIn;animation-name:anifadeIn}@-webkit-keyframes anifadeInLeft{from{opacity:0;-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0)}to{opacity:1;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0) }}@keyframes anifadeInLeft{from{opacity:0;-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0)}to{opacity:1;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0) }}.anifadeInLeft{-webkit-animation-name:anifadeInLeft;animation-name:anifadeInLeft}@-webkit-keyframes anibounceInUp{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}from{opacity:0;-webkit-transform:translate3d(0,3000px,0);transform:translate3d(0,3000px,0)}60%{opacity:1;-webkit-transform:translate3d(0,-20px,0);transform:translate3d(0,-20px,0)}75%{-webkit-transform:translate3d(0,10px,0);transform:translate3d(0,10px,0)}90%{-webkit-transform:translate3d(0,-5px,0);transform:translate3d(0,-5px,0)}to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0) }}@keyframes anibounceInUp{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}from{opacity:0;-webkit-transform:translate3d(0,3000px,0);transform:translate3d(0,3000px,0)}60%{opacity:1;-webkit-transform:translate3d(0,-20px,0);transform:translate3d(0,-20px,0)}75%{-webkit-transform:translate3d(0,10px,0);transform:translate3d(0,10px,0)}90%{-webkit-transform:translate3d(0,-5px,0);transform:translate3d(0,-5px,0)}to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0) }}.anibounceInUp{-webkit-animation-name:anibounceInUp;animation-name:anibounceInUp}@-webkit-keyframes anibounceInLeft{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;-webkit-transform:translate3d(-3000px,0,0);transform:translate3d(-3000px,0,0)}60%{opacity:1;-webkit-transform:translate3d(25px,0,0);transform:translate3d(25px,0,0)}75%{-webkit-transform:translate3d(-10px,0,0);transform:translate3d(-10px,0,0)}90%{-webkit-transform:translate3d(5px,0,0);transform:translate3d(5px,0,0)}to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0) }}@keyframes anibounceInLeft{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;-webkit-transform:translate3d(-3000px,0,0);transform:translate3d(-3000px,0,0)}60%{opacity:1;-webkit-transform:translate3d(25px,0,0);transform:translate3d(25px,0,0)}75%{-webkit-transform:translate3d(-10px,0,0);transform:translate3d(-10px,0,0)}90%{-webkit-transform:translate3d(5px,0,0);transform:translate3d(5px,0,0)}to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0) }}.anibounceInLeft{-webkit-animation-name:anibounceInLeft;animation-name:anibounceInLeft}@-webkit-keyframes anirotateInDownLeft{from{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:rotate3d(0,0,1,-45deg);transform:rotate3d(0,0,1,-45deg);opacity:0}to{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1 }}@keyframes anirotateInDownLeft{from{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:rotate3d(0,0,1,-45deg);transform:rotate3d(0,0,1,-45deg);opacity:0}to{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1 }}.anirotateInDownLeft{-webkit-animation-name:anirotateInDownLeft;animation-name:anirotateInDownLeft}@-webkit-keyframes anirotateInUpLeft{from{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:rotate3d(0,0,1,45deg);transform:rotate3d(0,0,1,45deg);opacity:0}to{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1 }}@keyframes anirotateInUpLeft{from{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:rotate3d(0,0,1,45deg);transform:rotate3d(0,0,1,45deg);opacity:0}to{-webkit-transform-origin:left bottom;transform-origin:left bottom;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1 }}.anirotateInUpLeft{-webkit-animation-name:anirotateInUpLeft;animation-name:anirotateInUpLeft}@-webkit-keyframes aniflipInX{from{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in;opacity:0}40%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}60%{-webkit-transform:perspective(400px) rotate3d(1,0,0,10deg);transform:perspective(400px) rotate3d(1,0,0,10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-5deg);transform:perspective(400px) rotate3d(1,0,0,-5deg)}to{-webkit-transform:perspective(400px);transform:perspective(400px) }}@keyframes aniflipInX{from{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in;opacity:0}40%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}60%{-webkit-transform:perspective(400px) rotate3d(1,0,0,10deg);transform:perspective(400px) rotate3d(1,0,0,10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-5deg);transform:perspective(400px) rotate3d(1,0,0,-5deg)}to{-webkit-transform:perspective(400px);transform:perspective(400px) }}.aniflipInX{-webkit-backface-visibility:visible!important;backface-visibility:visible!important;-webkit-animation-name:aniflipInX;animation-name:aniflipInX}@-webkit-keyframes anizoomIn{from{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1 }}@keyframes anizoomIn{from{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}50%{opacity:1 }}.anizoomIn{-webkit-animation-name:anizoomIn;animation-name:anizoomIn}@-webkit-keyframes anirollIn{from{opacity:0;-webkit-transform:translate3d(-100%,0,0) rotate3d(0,0,1,-120deg);transform:translate3d(-100%,0,0) rotate3d(0,0,1,-120deg)}to{opacity:1;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0) }}@keyframes anirollIn{from{opacity:0;-webkit-transform:translate3d(-100%,0,0) rotate3d(0,0,1,-120deg);transform:translate3d(-100%,0,0) rotate3d(0,0,1,-120deg)}to{opacity:1;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0) }}.anirollIn{-webkit-animation-name:anirollIn;animation-name:anirollIn}@-webkit-keyframes aniswing{20%{-webkit-transform:rotate3d(0,0,1,15deg);transform:rotate3d(0,0,1,15deg)}40%{-webkit-transform:rotate3d(0,0,1,-10deg);transform:rotate3d(0,0,1,-10deg)}60%{-webkit-transform:rotate3d(0,0,1,5deg);transform:rotate3d(0,0,1,5deg)}80%{-webkit-transform:rotate3d(0,0,1,-5deg);transform:rotate3d(0,0,1,-5deg)}to{-webkit-transform:rotate3d(0,0,1,0deg);transform:rotate3d(0,0,1,0deg) }}@keyframes aniswing{20%{-webkit-transform:rotate3d(0,0,1,15deg);transform:rotate3d(0,0,1,15deg)}40%{-webkit-transform:rotate3d(0,0,1,-10deg);transform:rotate3d(0,0,1,-10deg)}60%{-webkit-transform:rotate3d(0,0,1,5deg);transform:rotate3d(0,0,1,5deg)}80%{-webkit-transform:rotate3d(0,0,1,-5deg);transform:rotate3d(0,0,1,-5deg)}to{-webkit-transform:rotate3d(0,0,1,0deg);transform:rotate3d(0,0,1,0deg) }}.aniswing{-webkit-transform-origin:top center;transform-origin:top center;-webkit-animation-name:aniswing;animation-name:aniswing}@-webkit-keyframes anishake{from,to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}10%,30%,50%,70%,90%{-webkit-transform:translate3d(-10px,0,0);transform:translate3d(-10px,0,0)}20%,40%,60%,80%{-webkit-transform:translate3d(10px,0,0);transform:translate3d(10px,0,0) }}@keyframes anishake{from,to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}10%,30%,50%,70%,90%{-webkit-transform:translate3d(-10px,0,0);transform:translate3d(-10px,0,0)}20%,40%,60%,80%{-webkit-transform:translate3d(10px,0,0);transform:translate3d(10px,0,0) }}.anishake{-webkit-animation-name:anishake;animation-name:anishake}@-webkit-keyframes aniwobble{from{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}15%{-webkit-transform:translate3d(-25%,0,0) rotate3d(0,0,1,-5deg);transform:translate3d(-25%,0,0) rotate3d(0,0,1,-5deg)}30%{-webkit-transform:translate3d(20%,0,0) rotate3d(0,0,1,3deg);transform:translate3d(20%,0,0) rotate3d(0,0,1,3deg)}45%{-webkit-transform:translate3d(-15%,0,0) rotate3d(0,0,1,-3deg);transform:translate3d(-15%,0,0) rotate3d(0,0,1,-3deg)}60%{-webkit-transform:translate3d(10%,0,0) rotate3d(0,0,1,2deg);transform:translate3d(10%,0,0) rotate3d(0,0,1,2deg)}75%{-webkit-transform:translate3d(-5%,0,0) rotate3d(0,0,1,-1deg);transform:translate3d(-5%,0,0) rotate3d(0,0,1,-1deg)}to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0) }}@keyframes aniwobble{from{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}15%{-webkit-transform:translate3d(-25%,0,0) rotate3d(0,0,1,-5deg);transform:translate3d(-25%,0,0) rotate3d(0,0,1,-5deg)}30%{-webkit-transform:translate3d(20%,0,0) rotate3d(0,0,1,3deg);transform:translate3d(20%,0,0) rotate3d(0,0,1,3deg)}45%{-webkit-transform:translate3d(-15%,0,0) rotate3d(0,0,1,-3deg);transform:translate3d(-15%,0,0) rotate3d(0,0,1,-3deg)}60%{-webkit-transform:translate3d(10%,0,0) rotate3d(0,0,1,2deg);transform:translate3d(10%,0,0) rotate3d(0,0,1,2deg)}75%{-webkit-transform:translate3d(-5%,0,0) rotate3d(0,0,1,-1deg);transform:translate3d(-5%,0,0) rotate3d(0,0,1,-1deg)}to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0) }}.aniwobble{-webkit-animation-name:aniwobble;animation-name:aniwobble}@-webkit-keyframes anijello{11.1%,from,to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}22.2%{-webkit-transform:skewX(-12.5deg) skewY(-12.5deg);transform:skewX(-12.5deg) skewY(-12.5deg)}33.3%{-webkit-transform:skewX(6.25deg) skewY(6.25deg);transform:skewX(6.25deg) skewY(6.25deg)}44.4%{-webkit-transform:skewX(-3.125deg) skewY(-3.125deg);transform:skewX(-3.125deg) skewY(-3.125deg)}55.5%{-webkit-transform:skewX(1.5625deg) skewY(1.5625deg);transform:skewX(1.5625deg) skewY(1.5625deg)}66.6%{-webkit-transform:skewX(-.78125deg) skewY(-.78125deg);transform:skewX(-.78125deg) skewY(-.78125deg)}77.7%{-webkit-transform:skewX(.390625deg) skewY(.390625deg);transform:skewX(.390625deg) skewY(.390625deg)}88.8%{-webkit-transform:skewX(-.1953125deg) skewY(-.1953125deg);transform:skewX(-.1953125deg) skewY(-.1953125deg) }}@keyframes anijello{11.1%,from,to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}22.2%{-webkit-transform:skewX(-12.5deg) skewY(-12.5deg);transform:skewX(-12.5deg) skewY(-12.5deg)}33.3%{-webkit-transform:skewX(6.25deg) skewY(6.25deg);transform:skewX(6.25deg) skewY(6.25deg)}44.4%{-webkit-transform:skewX(-3.125deg) skewY(-3.125deg);transform:skewX(-3.125deg) skewY(-3.125deg)}55.5%{-webkit-transform:skewX(1.5625deg) skewY(1.5625deg);transform:skewX(1.5625deg) skewY(1.5625deg)}66.6%{-webkit-transform:skewX(-.78125deg) skewY(-.78125deg);transform:skewX(-.78125deg) skewY(-.78125deg)}77.7%{-webkit-transform:skewX(.390625deg) skewY(.390625deg);transform:skewX(.390625deg) skewY(.390625deg)}88.8%{-webkit-transform:skewX(-.1953125deg) skewY(-.1953125deg);transform:skewX(-.1953125deg) skewY(-.1953125deg) }}.anijello{-webkit-animation-name:anijello;animation-name:anijello;-webkit-transform-origin:center;transform-origin:center}
+	      </style>
+				<template data-block="{{ block.id }}" id="t4s-popup__sales-tmp">
+					<div class="t4s-popup__sales is-sales_animated {{ bk_stts.pp_ani }} is--design{{ bk_stts.des }}{% if enable_cl or enable_qv %} has--btns{% endif %}">
+					   <div class="t4s-row t4s-align-items-center t4s-g-0 t4s-flex-nowrap t4s-pr">
+					      <div class="t4s-col-item t4s-col-auto t4s-pp_slpr_thumb">
+					        {%- if design_mode and product.featured_image != blank -%}
+					        <a data-href-sale href="{{ product.url }}" class="t4s-d-block t4s-pr t4s-oh"><img data-img-sale src="{{ product.featured_image | image_url: width: 130 }}" alt="sales popup"></a>
+					        {%- else -%}
+					        <a data-href-sale href="" class="t4s-d-block t4s-pr t4s-oh"><img data-img-sale src="" srcset="" alt="sales popup"></a>
+					        {%- endif -%}
+					      </div>
+					      <div class="t4s-col-item t4s-col t4s-pp_slpr_info">
+					        <span class="t4s-pp-slpr-location t4s-sales-slideIn"><span data-location-sale>{{ locationArray[0] }}</span> {{ bk_stts.txt1 | escape }}</span>
+					          <a data-href-sale data-title-sale href="{{ product.url }}" class="t4s-pp-slpr-title t4s-truncate t4s-sales-slideIn">{{ product.title }}</a>
+					          <div class="t4s-pp-slpr-ago t4s-sales-slideIn">
+					               {%- if bk_stts.enable_time %}<span data-ago-sale class="t4s-pp-slpr-time">{{ timeArray[0] }}</span>{% endif -%}
+					               {%- if bk_stts.enable_verify %}<span class="t4s-pp-slpr-verify"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M466.5 83.71l-192-80c-5.875-2.5-12.16-3.703-18.44-3.703S243.5 1.203 237.6 3.703L45.61 83.71C27.73 91.08 16 108.6 16 127.1C16 385.4 205.4 512 255.9 512C305.2 512 496 387.3 496 127.1C496 108.6 484.3 91.08 466.5 83.71zM463.9 128.3c0 225.3-166.2 351.7-207.8 351.7C213.3 479.1 48 352.2 48 128c0-6.5 3.875-12.25 9.75-14.75l192-80c1.973-.8275 4.109-1.266 6.258-1.266c2.071 0 4.154 .4072 6.117 1.266l192 80C463.3 117.1 463.9 125.8 463.9 128.3zM336 181.3c-4.094 0-8.188 1.562-11.31 4.688L229.3 281.4L187.3 239.4C184.2 236.2 180.1 234.7 176 234.7c-9.139 0-16 7.473-16 16c0 4.094 1.562 8.188 4.688 11.31l53.34 53.33C221.2 318.4 225.3 320 229.3 320s8.188-1.562 11.31-4.688l106.7-106.7C350.4 205.5 352 201.4 352 197.3C352 188.8 345.1 181.3 336 181.3z"/></svg>{{ bk_stts.txt2 | escape }}</span>{% endif -%}
+					          </div>
+					      </div>
+					      {%- if enable_cl %}<button data-close-sale class="t4s-pp-slpr-close t4s-pa t4s-op-0" data-tooltip="top-end"><svg role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg><span class="visually-hidden">{{ bk_stts.close }}</span></button>{% endif -%}
+					      {%- if enable_qv -%}
+					      <a data-href-sale data-id="{{ product.id }}" data-action-quickview data-tooltip="top-end" href="{{ product.url }}" rel="nofollow" class="t4s-pp-slpr-qv t4s-btn-loading__svg t4s-pa t4s-op-0">
+					      	<svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-qv"></use></svg><span class="t4s-d-none">{{ 'products.product_card.quick_view' | t }}</span>
+		                  <div class="t4s-loading__spinner t4s-dn">
+		                    <svg width="16" height="16" aria-hidden="true" focusable="false" role="presentation" class="t4s-svg__spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+		                  </div>
+					      </a>
+					      {%- endif -%}
+					      {%- if bk_stts.enable_progressbar -%}
+					      <div class="t4s-pp-slpr-progressbar"><span style="animation-duration: {{ bk_stts.stay_time | times: bk_stts.stay_time_unit }}ms;"></span></div>
+					      {%- endif -%}
+					   </div>
+					</div>
+				</template>
+				<script type="application/json" id="t4s-popup__sales-JSON">
+					{
+				    "classDown":{
+				      "aniswing":"anibounceOutDown","anishake":"anibounceOutDown","aniwobble":"anibounceOutDown","anijello":"anibounceOutDown","anislideInUp":"anislideOutDown","anislideInLeft":"anislideOutLeft","anifadeIn":"anifadeOut","anifadeInLeft":"anifadeOutLeft","anibounceInUp":"anibounceOutDown","anibounceInLeft":"anibounceOutLeft","anirotateInDownLeft":"anirotateOutDownLeft","anirotateInUpLeft":"anirotateOutDownLeft","aniflipInX":"aniflipOutX","anizoomIn":"anizoomOut","anirollIn":"anirollOut"
+				    },
+				    "ppType": {{ bk_stts.pp_type | json }},
+				    "starTime": {{ bk_stts.start_time | json }},
+				    "starTimeUnit": {{ bk_stts.start_time_unit | plus: 0 | json }},
+				    "stayTime": {{ bk_stts.stay_time | json }},
+				    "stayTimeUnit": {{ bk_stts.stay_time_unit | plus: 0 | json }},
+				    "classUp": {{ bk_stts.pp_ani | json }},
+				    "locationArray": {{- locationArray | json -}},
+				    "timeArray": {{- timeArray | json -}},
+				    "pauseOnHover": true,
+				    "resetOnHover": false,
+				    "isMobile":{{ bk_stts.mb }},
+					 "idArray": {{- available_products | map: 'id' | json -}},
+					 "titleArray": {{- available_products | map: 'title' | json -}},
+					 "urlArray": {{- available_products | map: 'url' | json -}},
+					 "imageArray": {{- available_products | map: 'featured_image' | json -}} 
+					}
+				</script>		
+			{%- when 'exit' -%}
+				{%- liquid
+					if exit_product_popup == true
+						continue
+				 	endif 
+				 	assign exit_product_popup = true
+				%}
+		   	{%- if design_mode %}<div {{ block.shopify_attributes }}></div>{% endif -%}
+		   	{%- liquid
+			   	assign product_list = bk_stts.product_list
+			   	if bk_stts[page_type] == false or product_list == blank
+			   		continue
+			   	endif 
+			  	assign image_ratio = bk_stts.image_ratio
+			  	if image_ratio == "ratioadapt"
+			    	assign imgatt = ''
+			   	else 
+			    	assign imgatt = 'data-'
+			  	endif
+			  	assign product_des = bk_stts.product_des
+  				assign enable_rating = settings.enable_rating
+  				assign show_vendor = bk_stts.show_vendor
+            assign use_link_vendor = settings.use_link_vendor
+  				assign placeholder_img = settings.placeholder_img
+		   	 -%}
+        {%- style -%}
+					#t4s-popup__exit {
+					    max-width: 950px !important;
+					    background-color: var(--t4s-light-color);
+					    margin: 30px auto;
+					    padding: 30px;
+					}
+          .t4s-opening-qv .t4s-exit_pp_wrapper ~ .t4s-modal,
+          .t4s-opening-qs .t4s-exit_pp_wrapper ~ .t4s-modal{
+              z-index: 99999;
+          }
+        {%- endstyle -%}
+			  <div id="t4s-popup__exit" data-block="{{ block.id }}" class="t4s-popup__exit_wrap t4s-container mfp-with-anim mfp-hide" data-stt='{ "pp_version": {{ bk_stts.pp_version | default: 1 }},"day_next": {{ bk_stts.day_next }} }'>
+          {{ 'collection-products.css' | asset_url | stylesheet_tag }}
+          {{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+          {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+          <link href="{{ 'loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+          {%- render 'section_tophead', se_stts: bk_stts -%}
+				<div data-t4s-resizeobserver class="t4s-flicky-slider t4s_box_pr_slider t4s-products t4s-text-{{ bk_stts.content_align }} t4s_{{ image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} {% if bk_stts.nav_btn %}  t4s-slider-btn-style-{{ bk_stts.btn_owl }} t4s-slider-btn-{{ bk_stts.btn_shape }} t4s-slider-btn-{{ bk_stts.btn_size }} t4s-slider-btn-cl-{{ bk_stts.btn_cl }} t4s-slider-btn-vi-{{ bk_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ bk_stts.btn_hidden_mobile }} {% endif %} {% if bk_stts.nav_dot == true %}   t4s-dots-style-{{ bk_stts.dot_owl }} t4s-dots-cl-{{ bk_stts.dots_cl }} t4s-dots-round-{{ bk_stts.dots_round }} t4s-dots-hidden-mobile-{{ bk_stts.dots_hidden_mobile }} {% endif %}  t4s-row t4s-row-cols-{{ bk_stts.col_dk }} t4s-gx-{{ bk_stts.space_h_item }} flickityt4s" data-flickityt4s-js='{"setPrevNextButtons":true,"arrowIcon":"{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{ bk_stts.loop }},"prevNextButtons": {{ bk_stts.nav_btn }},"percentPosition": 1,"pageDots": {{ bk_stts.nav_dot }}, "autoPlay" : {{ bk_stts.au_time | times: 1000 }}, "pauseAutoPlayOnHover" : {{ bk_stts.au_hover }} }' style="--space-dots: {{ bk_stts.dots_space }}px;--flickity-btn-pos: {{ bk_stts.space_h_item }}px;--flickity-btn-pos-mb: {{ bk_stts.space_h_item_mb }}px;">
+					{%- case product_des -%} 
+		        {%- when '1' -%} 
+			        {%- for product in product_list -%}
+			        	{%- render 'product-grid-item1',
+          				product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color,	enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false -%}
+		            {%- endfor -%}
+		        {%- when '2' -%} 
+			        {%- for product in product_list -%}
+			        	{%- render 'product-grid-item2',
+          				product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color,	enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false -%}
+		            {%- endfor -%}
+		        {%- when '3' -%} 
+			        {%- for product in product_list -%}
+			        	{%- render 'product-grid-item3',
+          				product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color,	enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false -%}
+		            {%- endfor -%}
+		        {%- when '4' -%} 
+			        {%- for product in product_list -%}
+			        	{%- render 'product-grid-item4',
+          				product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color,	enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false -%}
+		            {%- endfor -%}
+		        {%- when '5' -%} 
+			        {%- for product in product_list -%}
+			        	{%- render 'product-grid-item5',
+          				product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color,	enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false -%}
+		            {%- endfor -%}
+		        {%- when '6' -%} 
+			        {%- for product in product_list -%}
+			        	{%- render 'product-grid-item6',
+          				product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color,	enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false -%}
+		            {%- endfor -%}
+		         {%- when '7' -%} 
+			        {%- for product in product_list -%}
+			        	{%- render 'product-grid-item7',
+          				product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color,	enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false -%}
+		            {%- endfor -%}
+					{%- endcase -%}
+					</div>
+			  </div>
+			{%- when 'exit2' -%}
+				{%- liquid
+					if exit_product_popup == true
+						continue
+				 	endif 
+				 	assign exit_product_popup = true
+
+				 	assign use_link_vendor = settings.use_link_vendor
+				  assign placeholder_img = settings.placeholder_img
+				  assign enable_rating = settings.enable_rating
+				  assign app_review = settings.app_review
+
+				  assign show_img = settings.show_img
+				  assign isGrowaveWishlist = false
+				  if settings.wishlist_mode == "3" and shop.customer_accounts_enabled
+				    assign isGrowaveWishlist = true
+				  endif
+				  assign enable_pr_size = settings.enable_pr_size
+				  assign pr_size_pos = settings.pr_size_pos
+				  assign show_size_type = settings.show_size_type
+				  assign size_ck = settings.size_ck | append: ',size,sizes,Größe' 
+				  assign get_size = size_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+				  assign enable_pr_color = settings.enable_pr_color
+				  assign show_cl_type = '1'
+				  assign color_ck = settings.color_ck | append: ',color,colors,couleur,colour'
+				  assign get_color = color_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+				  assign price_varies_style = settings.price_varies_style
+				  assign use_countdown = se_stts.use_cdt
+ 
+				  assign txt_cd = 'products.grid_items.offer_end_in' | t
+				  
+				  assign isLoadmore = false
+				  if layout_des != "3"
+				    if use_pagination == "load-more"
+				      assign isLoadmore = true
+				      assign typeAjax = 'LmDefault'
+				    else
+				      assign typeAjax = 'AjaxDefault'
+				    endif
+				  else
+				     if use_pagination == "load-more"
+				      assign isLoadmore = true
+				      assign typeAjax = 'LmIsotope'
+				    else
+				      assign typeAjax = 'AjaxIsotope'
+				    endif
+				  endif
+				  
+				  assign enable_bar_lm = se_stts.enable_bar_lm 
+				  assign results_count = collection.products_count 
+
+				  assign t4s_se_class = 't4s_nt_se_' | append: sid
+				  if se_stts.use_cus_css and se_stts.code_cus_css != blank
+				    render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+				  endif 
+				 -%}
+		   	{%- if design_mode %}<div {{ block.shopify_attributes }}></div>{% endif -%}
+		   	{%- liquid
+			   	assign product_list = bk_stts.product_list
+			   	if bk_stts[page_type] == false
+			   		continue
+			   	endif 
+  				assign placeholder_img = settings.placeholder_img
+		   	 -%}
+        {%- style -%}
+					#t4s-popup__exit {
+					    max-width: 950px !important;
+					    background-color: var(--t4s-light-color);
+					    margin: 30px auto;
+					    padding: 30px;
+					    position: relative;
+					}
+					#t4s-popup__exit button.mfp-close {
+						border-radius: 100%;
+						right: -25px;
+						top: -25px;
+						position: absolute;
+						background-color: var(--t4s-light-color);
+						color: var(--t4s-dark-color);
+					}
+					#t4s-popup__exit button.mfp-close:hover {
+						color: var(--t4s-light-color);
+						background-color: var(--t4s-dark-color);
+					}
+          .t4s-opening-qv .t4s-exit_pp_wrapper ~ .t4s-modal,
+          .t4s-opening-qs .t4s-exit_pp_wrapper ~ .t4s-modal{
+              z-index: 99999;
+          }
+          #t4s-popup__exit.t4s-popup__exit2 {
+          	padding: 0;
+          	max-width: 500px !important;
+        	}
+        	.t4s-popup__exit-heading {
+	        	display: flex;
+	        	align-items: center;
+	        	justify-content: center;
+	        	flex-direction: column;
+	        	top: 30px;
+	        	bottom: 30px;
+	        	left: 30px;
+	        	right: 30px;
+	        	height: 100%;
+	        	padding: 95px 30px;
+	        }
+	        .t4s-popup__exit-heading .t4s-heading {
+		        color: var(--content-cl);
+		        font-weight: 600;
+						font-size: 32px;
+						line-height: 48px;
+						margin-bottom: 4px;
+		      }
+	        .t4s-popup__exit-heading .t4s-subheading {
+		        color: var(--content-cl);
+		        font-weight: 400;
+						font-size: 14px;
+						line-height: 21px;
+						margin-bottom: 30px;
+		      }
+	        .t4s-popup__exit-heading .t4s-code {
+		        color: var(--content-cl);
+		        border: solid 1px var(--content-cl);
+		        font-weight: 600;
+						font-size: 16px;
+						line-height: 24px;
+						height: 37px;
+						padding: 6px 16px;
+						margin-bottom:30px;
+		      }
+					
+					.t4s-popup__exit-heading .t4s-coupon-wrap{
+						left:100%;
+						top:0;
+						bottom:0;
+						transition: .3s ease-in-out;
+					}
+					@media (min-width: 1025px){
+						.t4s-popup__exit-heading .t4s-coupon-wrap{
+							opacity: 0;
+						}
+						.t4s-popup__exit-heading:hover .t4s-coupon-wrap{
+							opacity: 1;
+						}
+					}
+					
+					.t4s-coupon-wrap .t4s-btn-coupon{
+						padding: 0 10px;
+						height:37px;
+						display:flex;
+						align-items:center;
+						justify-content:center;
+						background-color: var(--btn-bg-cl);
+						color: var(--t4s-light-color);
+					}
+					.t4s-coupon-wrap .t4s-btn-coupon:hover{
+						background-color: var(--btn-bg-hover-cl);
+					}
+					.t4s-coupon-wrap .tooltiptext {
+						visibility: hidden;
+						background-color: #555;
+						color: #fff;
+						text-align: center;
+						border-radius: 6px;
+						padding: 5px;
+						position: absolute;
+						z-index: 1;
+						top:0;
+						min-width: 150px;
+						transform: translateY(calc(-100% - 10px));
+						opacity: 0;
+						transition: opacity 0.3s;
+					}	
+					.t4s-coupon-wrap .tooltiptext::after {
+						content: "";
+						position: absolute;
+						top: 100%;
+						left: 50%;
+						margin-left: -5px;
+						border-width: 5px;
+						border-style: solid;
+						border-color: #555 transparent transparent transparent;
+					}
+					.t4s-coupon-wrap button:hover .tooltiptext {
+						visibility: visible;
+						opacity: 1;
+					}
+		      .t4s-popup__exit-heading .t4s-description {
+			      color: var(--content-cl);
+			      font-weight: 400;
+						font-size: 14px;
+						line-height: 21px;
+						margin-bottom: 11px;
+			    }
+			    .t4s-popup__exit-heading .t4s-heading-btn {
+				  	padding: 0 50px;
+				  	line-height: 54px;
+						height: 54px;
+						background-color: var(--btn-bg-cl);
+						color: var(--t4s-light-color);
+						border-radius: 30px;
+						font-weight: 500;
+						font-size: 18px;
+				  }
+				  .t4s-popup__exit-heading .t4s-heading-btn:hover {
+					  background-color: var(--btn-bg-hover-cl);
+					}
+	        .t4s-products-recomend .heading {
+		        margin-bottom: 27px;
+		        padding: 24px 16px 11px;
+		        border-bottom: solid 1px var(--border-color);
+		        font-size: 20px;
+		        font-weight: 600;
+		        line-height: 30px;
+		      }
+		      .t4s-products-recomend .t4s-pr-list-recomend {
+			      padding: 0 30px 30px;
+			      max-height: 407px;
+    				overflow-y: auto;
+			    }
+			    .t4s-products-recomend .t4s-pr-list-recomend .t4s-pr-loop-item:not(:last-child) {
+				    margin-bottom: 25px;
+				  }
+			    .t4s-products-recomend .t4s-pr-loop-item .t4s-widget_img_pr{
+			    	padding-inline-start: 0;
+			    	padding-inline-end: 0;
+			    	width: 100px;
+				  }
+				  .t4s-products-recomend .t4s-pr-loop-item .t4s-widget_if_pr {
+				  	padding-inline-start: 13px;
+					}
+					.t4s-products-recomend .t4s-pr-loop-item .t4s-widget__pr-title {
+						font-weight: 500;
+						font-size: 16px;
+						line-height: 24px;
+						margin-bottom: 10px;
+					}
+					.t4s-products-recomend .t4s-pr-loop-item .t4s-widget__pr-price {
+						font-size: 16px;
+						line-height: 24px;
+						margin-bottom: 10px;
+					}
+					.t4s-products-recomend .t4s-pr-loop-item .t4s-widget__pr-price ins {
+						font-weight: 600;
+					}
+				  .t4s-col-heading {
+					  color: var(--content-cl);
+					  background-color: var(--bg-cl);
+					}
+					{%- if product_list != blank -%}
+						#t4s-popup__exit.t4s-popup__exit2 {
+	          	max-width: 1000px !important;
+	        	}
+	        {%- endif -%}
+        	@media(max-width: 1024px) {
+        		#t4s-popup__exit button.mfp-close {
+        			right: -15px;
+  						top: -15px;
+  						width: 40px;
+  						height: 40px;
+        		}
+        		.t4s-popup__exit-heading {
+	        		padding: 60px 15px;
+	        	}
+	        	.t4s-popup__exit-heading .t4s-heading {
+		        	font-size: 24px;
+		        	line-height: 30px;
+		        }
+		        .t4s-popup__exit-heading .t4s-subheading {
+			        margin-bottom: 15px;
+			      }
+			      .t4s-popup__exit-heading .t4s-code {
+				      height: 34px;
+				      line-height: 32px;
+				      padding: 0 14px;
+				      margin-bottom: 15px;			    
+				    }
+						.t4s-coupon-wrap .t4s-btn-coupon{
+							height: 34px;
+						} 
+	        	.t4s-popup__exit-heading .t4s-heading-btn {
+	        		height: 45px;
+	        		line-height: 45px;
+	        		padding: 0 30px;
+	        		font-size: 16px;
+	        	}
+        	}
+        	@media(max-width: 767px) {
+        		#t4s-popup__exit button.mfp-close {
+        			right: -5px;
+  						top: -5px;
+  						width: 30px;
+  						height: 30px;
+        		}
+        		.t4s-popup__exit-heading {
+	        		padding: 30px 15px;
+	        	}
+	        	.t4s-products-recomend .heading {
+		        	padding: 20px 15px 10px;
+		        	margin-bottom: 20px;
+		        }
+		        .t4s-products-recomend .t4s-pr-list-recomend {
+			        padding: 15px;
+			        overflow-y: auto;
+    					max-height: 400px;
+			      }
+			      .t4s-products-recomend .t4s-pr-list-recomend .t4s-pr-loop-item:not(:last-child) {
+				      margin-bottom: 20px;
+				    }
+        	}
+        {%- endstyle -%}
+			  <div id="t4s-popup__exit" data-block="{{ block.id }}" class="t4s-popup__exit_wrap t4s-container mfp-with-anim mfp-hide t4s-popup__exit2" data-stt='{ "pp_version": {{ bk_stts.pp_version | default: 1 }},"day_next": {{ bk_stts.day_next }} }'>
+          <div class="t4s-row t4s-gx-0 t4s-gy-0 {% if product_list != blank %} t4s-row-cols-lg-2 {% endif %} t4s-row-cols-1">
+          	{%- assign image = bk_stts.image -%}
+			   		<div class="t4s-col-item t4s_ratio1_1 t4s_position_center t4s_cover t4s-pr t4s-col-heading lazyloadt4s t4s-has-imgbg" style="--content-cl: {{ bk_stts.content_cl }};--bg-cl: {{ bk_stts.bg_cl }};--btn-bg-cl: {{ bk_stts.btn_bg_cl }};--btn-bg-hover-cl: {{ bk_stts.btn_bg_hover_cl }};" {% if image != blank %} data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>
+			   			<div class="t4s-popup__exit-heading t4s-text-center">
+					   		{% if bk_stts.top_heading != blank %} <h4 class="t4s-heading">{{ bk_stts.top_heading }}</h4>{% endif %}
+					   		{% if bk_stts.sub_heading != blank %} <h5 class="t4s-subheading">{{ bk_stts.sub_heading }}</h5>{% endif %}
+							 	{%- if bk_stts.code != blank %}<div class="t4s-code-wrap t4s-d-flex t4s-pr"><div class="t4s-code">{{ bk_stts.code }}</div>
+									<div class="t4s-coupon-wrap t4s-d-inline-flex t4s-pa">
+										<button class="t4s-pr t4s-btn-coupon" data-coupon="{{ bk_stts.code }}">
+											<span class="tooltiptext">{{ 'general.popup.copy_text' | t }}</span>
+											<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" stroke="currentColor" viewBox="0 0 512 512"><path d="M448 352H288c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32H396.1c4.2 0 8.3 1.7 11.3 4.7l67.9 67.9c3 3 4.7 7.1 4.7 11.3V320c0 17.7-14.3 32-32 32zM497.9 81.9L430.1 14.1c-9-9-21.2-14.1-33.9-14.1H288c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H224c35.3 0 64-28.7 64-64V416H256v32c0 17.7-14.3 32-32 32H64c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32H192V128H64z"/></svg>
+										</button>
+									</div>
+									</div>{% endif -%}
+							 	{%- if bk_stts.description != blank -%} <p class="t4s-description">{{ bk_stts.description }}</p>{% endif -%}
+								{%- if bk_stts.btn_label != blank and bk_stts.btn_link != blank -%}
+									<a href="{{ bk_stts.btn_link }}" class="t4s-heading-btn">{{ bk_stts.btn_label }}</a>
+				        {%- endif -%}
+				      </div>
+				    </div>
+
+				    {% if product_list != blank %}
+				    	{{ 'collection-products.css' | asset_url | stylesheet_tag }}
+					    <div class="t4s-col-item t4s-col-products">
+					    	<div class="t4s-products-recomend">
+					    		{% if bk_stts.heading_recomend != blank %}
+					    			<h3 class="heading">{{ bk_stts.heading_recomend }}</h3>
+					    		{% endif %}
+					    			<div class="t4s-pr-list-recomend t4s_ratioadapt t4s_position_center t4s_cover t4s-current-scrollbar">
+					    				{%- for product in product_list -%}
+					    					{%- render 'pr-loop-item', product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false -%}
+					    					
+					    				{%- endfor -%}
+					    			</div>
+					    	</div>
+					    </div>
+				    {% endif %}
+		      </div>
+			  </div>
+			{%- when 'exit3' -%}
+				{%- liquid
+					if exit_product_popup == true
+						continue
+				 	endif 
+				 	assign exit_product_popup = true
+				 	assign image = bk_stts.image
+				%}
+		   	{%- if design_mode %}<div {{ block.shopify_attributes }}></div>{% endif -%}
+		   	{%- liquid
+			   	if bk_stts[page_type] == false
+			   		continue
+			   	endif
+		   	 -%}
+        {%- style -%}
+        	#t4s-popup__exit.t4s-popup__exit_layout1 {
+        		max-width: 500px !important;
+        	}
+        	#t4s-popup__exit.t4s-popup__exit_layout1  button.mfp-close {
+        		right: -15px;
+						top: -15px;
+						width: 40px;
+						height: 40px;
+        	}
+        	#t4s-popup__exit.t4s-popup__exit_layout3 .t4s-row {
+	        	flex-direction: row-reverse;
+	        }
+					#t4s-popup__exit {
+				    max-width: 1000px !important;
+				    background-color: var(--t4s-light-color);
+				    margin: 30px auto;
+				    padding: 0;
+				    position: relative;
+					}
+          .t4s-opening-qv .t4s-exit_pp_wrapper ~ .t4s-modal,
+          .t4s-opening-qs .t4s-exit_pp_wrapper ~ .t4s-modal{
+              z-index: 99999;
+          }
+          #t4s-popup__exit button.mfp-close {
+						border-radius: 100%;
+						right: -25px;
+						top: -25px;
+						position: absolute;
+						background-color: var(--t4s-light-color);
+						color: var(--t4s-dark-color);
+					}
+					#t4s-popup__exit button.mfp-close:hover {
+						color: var(--t4s-light-color);
+						background-color: var(--t4s-dark-color);
+					}
+					.t4s-popup__exit3 .t4s-popup-exit-form {
+				    display: flex;
+				    flex-direction: column;
+				    align-items: center;
+				    justify-content: center;
+				    height: 100%;
+				    background-color: #f8f8f8;
+				    padding: 95px 30px;
+				 	}
+				 	.t4s-popup__exit3 .t4s-popup-exit-form .t4s-exit-heading {
+				 		font-size: 32px;
+				 		font-weight: 600;
+				 		line-height: 48px;
+				 		margin-bottom: 2px;
+				 	}
+				 	.t4s-popup__exit3 .t4s-popup-exit-form .t4s-exit-subheading {
+				 		color: var(--heading-color);
+				 		font-size: 14px;
+				 		line-height: 21px;
+				 		margin-bottom: 34px;
+				 	}
+				 	.t4s-popup__exit3 .t4s-popup-exit-form form {
+				 		width: 100%;
+				 		max-width: 350px;
+				 	}
+				 	.t4s-popup__exit3 .t4s-popup-exit-form .t4s-newsletter__inner {
+				 		flex-direction: column;
+				 		border: none;
+				 		border-radius: 0;
+				 		gap: 30px;
+				 		padding: 0;
+				 	}
+				 	.t4s-popup__exit3 .t4s-newsletter__inner input.t4s-newsletter__email {
+				 		width: 100%;
+				 		border: solid 1px var(--border-cl);
+				 		border-radius: 0;
+				 		height: 51px;
+				 		font-size: 14px;
+				 	}
+				 	.t4s-popup__exit3 .t4s-newsletter__inner .t4s-newsletter__submit {
+				 		height: 54px;
+				 		font-size: 18px;
+				 		font-weight: 600;
+				 		text-transform: uppercase;
+				 		width: 100%;
+				 		border-radius: 0;
+				 	}
+				 	.t4s-popup__exit3 .t4s-newsletter__inner .is--col-btn {
+					 	width: 100%;
+					}
+					.t4s-popup-exit-checkzone .t4s-popup_exit_checkbox {
+						display: none;
+					}
+					.t4s-popup-exit-checkzone .t4s-popup_exit_checkbox + label {
+	    			cursor: pointer;
+	    			font-size: 14px;
+	    			color: var(--heading-color);
+	    			line-height: 21px;
+	    			margin-top: 17px;
+	    			display: block;
+					} 
+					.t4s-popup-exit-checkzone .t4s-popup_exit_checkbox + label::before {
+						content: '';
+				    display: inline-block;
+				    margin-right: 10px;
+				    width: 16px;
+				    height: 16px;
+				    min-width: 16px;
+				    border: 1px solid #d4d6d8;
+				    background: #fff;
+				    box-shadow: 0 1px rgb(212 214 216 / 40%);
+				    border-radius: 2px;
+				    -webkit-appearance: none;
+				    position: relative;
+    				top: 3px;
+    				box-shadow: none;
+				    background-size: cover;
+				    background-repeat: no-repeat;
+				    background-position: 50%;
+				    transition: .2s ease-in-out;
+					}
+					.t4s-popup-exit-checkzone .t4s-popup_exit_checkbox~svg {
+						display: block;
+				    width: 12px;
+				    height: 12px;
+				    fill: #fff;
+				    position: absolute;
+				    bottom: 5px;
+  					left: 3px;
+				    pointer-events: none;
+				    transform: scale(0);
+				    -webkit-transform: scale(0);
+				    -webkit-transition: .25s ease-in-out;
+				    transition: .25s ease-in-out;
+					}
+					.t4s-popup-exit-checkzone .t4s-popup_exit_checkbox:checked~svg {
+				    transform: scale(1);
+    				-webkit-transform: scale(1);
+					}
+					.t4s-popup-exit-checkzone .t4s-popup_exit_checkbox:checked + label::before {
+						background-color: var(--accent-color);
+	    				border-color: var(--accent-color);
+					}
+					@media(min-width: 768px) {
+						.t4s-popup__exit3 .t4s-newsletter__inner input.t4s-newsletter__email {
+					 		text-align: center !important;
+					 	}
+					}	
+					@media(max-width: 1024px) {
+						#t4s-popup__exit button.mfp-close {
+        			right: -15px;
+  						top: -15px;
+  						width: 40px;
+  						height: 40px;
+        		}
+        		.t4s-popup__exit3 .t4s-popup-exit-form {
+        			padding: 60px 15px;
+        		}
+	        	.t4s-popup__exit3 .t4s-popup-exit-form .t4s-exit-heading {
+		        	font-size: 24px;
+		        	line-height: 30px;
+		        }
+		        .t4s-popup__exit3 .t4s-popup-exit-form .t4s-exit-subheading {
+			        margin-bottom: 15px;
+			      }
+			      .t4s-popup__exit3 .t4s-popup-exit-form .t4s-newsletter__inner {
+			      	gap: 20px;
+			    	}
+	        	.t4s-popup__exit3 .t4s-newsletter__inner .t4s-newsletter__submit {
+	        		height: 45px;
+	        		line-height: 45px;
+	        		padding: 0 10px;
+	        		font-size: 16px;
+	        	}
+	        	.t4s-popup__exit3 .t4s-newsletter__inner input.t4s-newsletter__email {
+		        	height: 45px;
+		        }
+        	}
+        	@media(max-width: 767px) {
+        		#t4s-popup__exit button.mfp-close {
+        			right: -5px;
+  						top: -5px;
+  						width: 30px;
+  						height: 30px;
+        		}
+	        	.t4s-popup__exit3 .t4s-popup-exit-form {
+        			padding: 30px 15px;
+        		}
+        		.t4s-popup__exit3 .t4s-popup-exit-form .t4s-newsletter__inner {
+			      	gap: 10px;
+			    	}
+        	}
+        {%- endstyle -%}
+			  <div id="t4s-popup__exit" data-block="{{ block.id }}" class="t4s-popup__exit_wrap t4s-container mfp-with-anim mfp-hide t4s-popup__exit3 t4s-popup__exit_layout{{ bk_stts.exit_layout }}" data-stt='{ "pp_version": {{ bk_stts.pp_version | default: 1 }},"day_next": {{ bk_stts.day_next }} }'>
+			  	<div class="t4s-row t4s-gx-0 t4s-gy-0 {% if bk_stts.exit_layout != "1" %}t4s-row-cols-md-2{% endif %} {% if image != blank %}t4s_ratio1_1 t4s_position_center t4s_cover{% endif %} t4s-row-cols-1 ">
+			   		{% if image != blank %}
+			   			<div class="t4s-col-item t4s_ratio" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1.2 }}">
+		            <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+		            <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span>
+			   			</div>
+			   		{% endif %}
+			   		<div class="t4s-col-item" {%- render 'bk_cus_style', type: 'newsletter', bk_stts: bk_stts -%}>
+			   			<div class="t4s-popup-exit-form">
+					   	{% if bk_stts.top_heading != blank %} <h4 class="t4s-exit-heading">{{ bk_stts.top_heading }}</h4>{% endif %}
+					   	{% if bk_stts.sub_heading != blank %} <p class="t4s-exit-subheading">{{ bk_stts.sub_heading }}</p>{% endif %}
+	            {%- render 'newsletter', form_id: se_id, buttonIcon: bk_stts.btn_icon -%}
+							{%- if bk_stts.txt2 != blank -%}
+								<div class="t4s-popup-exit-checkzone t4s-pr t4s-d-inline-block">
+								 	<input data-checked-newsletter type="checkbox" id="t4s-checkbox-{{ se_id }}" class="t4s-popup_exit_checkbox">
+								 	<label for="t4s-checkbox-{{ se_id }}" class="t4s-popup_new_label">{{ bk_stts.txt2 }}</label>
+								 	<svg class="t4s-dn t4s-icon_checked" viewBox="0 0 24 24"><path d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path></svg>
+								</div>
+				      {%- endif -%}
+				      </div>
+				    </div>
+		      </div>
+			  </div>
+		{%- endcase -%}
+	{%- endfor -%}
+{%- endif -%}
+ 
+{%- schema -%}
+  {
+    "name": "⚡ Components",
+    "class": "t4s-section-popup t4s-section-admn2-fixed",
+    "settings": [
+    ],
+    "blocks": [
+      {
+        "type": "newsletter",
+        "name": "📪 Newsletter Popup",
+        "limit": 1,
+        "settings": [
+	        {
+	            "type": "paragraph",
+	            "content": "Recommend app: [AVADA Email Marketing](https://apps.shopify.com/avada-email-marketing?utm_source=The4&utm_medium=inapp&utm_campaign=partnership)"
+	        },
+		      {
+		        "type": "header",
+		        "content": "+ General settings"
+		      },
+		      {
+		        "type": "text",
+		        "id": "heading",
+		        "label": "Heading",
+		        "default": "Sign up our newsletter and save 25% off for the next purchase!"
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "sub_heading",
+		        "label": "Subheading",
+		        "default": "Subscribe to our newsletters and don’t miss new arrivals, the latest fashion updates and our promotions."
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "txt",
+		        "label": "Note text",
+		        "default": "Your Information will never be shared with any third party."
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "btn_ck",
+		        "label": "Show 'Do not show it anymore.'",
+		        "info": "Auto hide if 'day next show' set as 0",
+		        "default": true
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "txt2",
+		        "label": "Checkbox text",
+		        "default": "Do not show it anymore."
+		      },
+		      {
+            "type": "color",
+            "id": "input_cl",
+            "label": "Input color",
+            "default": "#878787"
+          },
+          {
+            "type": "color",
+            "id": "border_cl",
+            "label": "Border color",
+            "default": "#000"
+          },
+          {
+            "type": "color",
+            "id": "btn_cl",
+            "label": "Button color",
+            "default": "#ffffff"
+          },
+          {
+            "type": "color",
+            "id": "btn_bg_cl",
+            "label": "Button background color",
+            "default": "#222222"
+          },
+          {
+            "type": "color",
+            "id": "btn_hover_cl",
+            "label": "Button hover color",
+            "default": "#ffffff"
+          },
+          {
+            "type": "color",
+            "id": "btn_hover_bg_cl",
+            "label": "Button hover background color",
+            "default": "#56CFE1"
+          },
+		      {
+		        "type": "image_picker",
+		        "id": "image",
+		        "label": "Image",
+		        "info": "Display based on layout design"
+		      },
+		      {
+		        "type": "select",
+		        "id": "news_layout",
+		        "label": "Layout design",
+		        "default": "1",
+		        "options": [
+		          {
+		            "value": "1",
+		            "label": "One column"
+		          },
+		          {
+		            "value": "2",
+		            "label": "Two columns and image left"
+		          },
+		          {
+		            "value": "3",
+		            "label": "Two columns and image right"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "paragraph",
+		        "content": "Show promo popup to users when they enter the site."
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "mb",
+		        "label": "Show for mobile devices",
+		        "default": false
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Select page to display"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "index",
+		        "label": "Home page",
+		        "default": true,
+		        "info": "Popup will display on home page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "product",
+		        "label": "Product page",
+		        "default": false,
+		        "info": "Popup will display on product page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "collection",
+		        "label": "Collection page",
+		        "default": false,
+		        "info": "Popupl display on collection page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "article",
+		        "label": "Article page",
+		        "default": false,
+		        "info": "Popup will display on article page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "blog",
+		        "label": "Blog page",
+		        "default": false,
+		        "info": "Popup will display on blog page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "cart",
+		        "label": "Cart page",
+		        "default": false,
+		        "info": "Popup will display on cart page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "page",
+		        "label": "Other page",
+		        "default": false,
+		        "info": "Popup will display on other page"
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Show popup after settings"
+		      },
+		      {
+		        "type": "range",
+		        "id": "number_pages",
+		        "min": 0,
+		        "max": 10,
+		        "step": 1,
+		        "label": "Show after number of pages visited",
+		        "info": "You can choose how much pages user should change before popup will be shown.",
+		        "default": 0
+		      },
+		      {
+		        "type": "radio",
+		        "id": "version",
+		        "label": "Popup version",
+		        "info": "If you apply any changes to your popup settings or content you might want to force the popup to all visitor who already close it again. In this case, you just need to change the popup version.",
+		        "default": "1",
+		        "options": [
+		          {
+		            "value": "1",
+		            "label": "1"
+		          },
+		          {
+		            "value": "2",
+		            "label": "2"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "range",
+		        "id": "day_next",
+		        "min": 0,
+		        "max": 30,
+		        "step": 1,
+		        "unit": "day",
+		        "label": "Day next show (n)",
+		        "info": "If user close the popup, next show will be after 'n' days. *Depends on option Show 'Do not show it anymore.'",
+		        "default": 7
+		      },
+		      {
+		        "type": "select",
+		        "id": "after",
+		        "label": "Show popup after",
+		        "default": "scroll",
+		        "options": [
+		          {
+		            "value": "time",
+		            "label": "Some time"
+		          },
+		          {
+		            "value": "scroll",
+		            "label": "User scroll"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "range",
+		        "id": "time_delay",
+		        "min": 1,
+		        "max": 50,
+		        "step": 1,
+		        "unit": "sec",
+		        "label": "++ Popup delay",
+		        "info": "Show popup after some time (in seconds).",
+		        "default": 2
+		      },
+		      {
+		        "type": "range",
+		        "id": "scroll_delay",
+		        "min": 100,
+		        "max": 5000, 
+		        "step": 50,
+		        "label": "++ Show after user scroll down the page",
+		        "info": "Set the number of pixels users have to scroll down before popup opens.",
+		        "default": 800
+		      }
+        ]
+      },
+      {
+         "type": "sales",
+         "name": "💰 Sales Popup",
+         "limit": 1,
+         "settings": [
+		      {
+		        "type": "paragraph",
+		        "content": "Recommend app: [AVADA Boost Sales](https://apps.shopify.com/avada-boost-sales?utm_source=The4&utm_medium=inapp&utm_campaign=partnership)"
+		      },
+		      {
+		        "type": "product_list",
+		        "id": "product_list",
+		        "label": "Products",
+		        "limit": 50
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "mb",
+		        "label": "Show for mobile devices",
+		        "default": false
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Select page to display"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "index",
+		        "label": "Home page",
+		        "default": true,
+		        "info": "Popup will display on home page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "product",
+		        "label": "Product page",
+		        "default": false,
+		        "info": "Popup will display on product page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "collection",
+		        "label": "Collection page",
+		        "default": false,
+		        "info": "Popupl display on collection page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "article",
+		        "label": "Article page",
+		        "default": false,
+		        "info": "Popup will display on article page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "blog",
+		        "label": "Blog page",
+		        "default": false,
+		        "info": "Popup will display on blog page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "cart",
+		        "label": "Cart page",
+		        "default": false,
+		        "info": "Popup will display on cart page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "page",
+		        "label": "Other page",
+		        "default": false,
+		        "info": "Popup will display on other page"
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ General settings"
+		      },
+		      {
+		        "type": "select",
+		        "id": "pp_type",
+		        "label": "Sales popup type",
+		        "default": "2",
+		        "options": [
+		          {
+		            "value": "1",
+		            "label": "Sequential"
+		          },
+		          {
+		            "value": "2",
+		            "label": "Random"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "range",
+		        "id": "start_time",
+		        "min": 1,
+		        "max": 60,
+		        "step": 1,
+		        "label": "Popup start time",
+		        "default": 4
+		      },
+		      {
+		        "type": "select",
+		        "id": "start_time_unit",
+		        "label": "Popup start time unit",
+		        "default": "1000",
+		        "options": [
+		          {
+		            "value": "1000",
+		            "label": "Second"
+		          },
+		          {
+		            "value": "60000",
+		            "label": "Minute"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "range",
+		        "id": "stay_time",
+		        "min": 1,
+		        "max": 60,
+		        "step": 1,
+		        "label": "Popup stay time",
+		        "default": 5
+		      },
+		      {
+		        "type": "select",
+		        "id": "stay_time_unit",
+		        "label": "Popup stay time unit",
+		        "default": "1000",
+		        "options": [
+		          {
+		            "value": "1000",
+		            "label": "Second"
+		          },
+		          {
+		            "value": "60000",
+		            "label": "Minute"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "enable_cl",
+		        "label": "Enable close button",
+		        "default": false
+		      },
+		      {
+		        "type": "text",
+		        "id": "close",
+		        "default": "Close",
+		        "label": "Text 'Close'"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "enable_qv",
+		        "label": "Enable quick view button",
+		        "default": false
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "enable_progressbar",
+		        "label": "Enable progressbar",
+		        "default": true
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "list_user",
+		        "default": "Nathan (California) | Alex (Texas) | Henry (New York) | Kiti (Ohio) | Daniel (Washington) | Hau (California) | Van (Ohio) | Sara (Montana) | Kate (Georgia)",
+		        "info":"separate with ' |'. If you not want use list user you can write a text. eg: 'someone'",
+		        "label": "List user purchased:",
+		        "placeholder": "user1 | user2 | ..."
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "enable_time",
+		        "label": "Enable time ago in suggest",
+		        "default": true
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "list_time",
+		        "default": "4 hours ago | 2 hours ago | 45 minutes ago | 1 day ago | 8 hours ago | 10 hours ago | 25 minutes ago | 2 day ago | 5 hours ago | 40 minutes ago",
+		        "info":"separate with ' |'",
+		        "label": "List time:",
+		        "placeholder": "time1 | time2 | ..."
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "enable_verify",
+		        "label": "Enable verified",
+		        "default": true
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Layout settings"
+		      },
+		      {
+		        "type": "select",
+		        "id": "des",
+		        "options": [
+		          {
+		            "value": "1",
+		            "label": "Desgin 1"
+		          },
+		          {
+		            "value": "2",
+		            "label": "Desgin 2"
+		          }
+		        ],
+		        "label": "Desgin popup:",
+		        "default": "1"
+		      },
+		      {
+		        "type": "select",
+		        "id": "pp_ani",
+		        "label": "Animation style",
+		        "default": "anislideInUp",
+		        "options": [
+		          {
+		            "value": "anislideInUp",
+		            "label": "slideInUp"
+		          },
+		          {
+		            "value": "anislideInLeft",
+		            "label": "slideInLeft"
+		          },
+		          {
+		            "value": "anifadeIn",
+		            "label": "fadeIn"
+		          },
+		          {
+		            "value": "anifadeInLeft",
+		            "label": "fadeInLeft"
+		          },
+		          {
+		            "value": "anibounceInUp",
+		            "label": "bounceInUp"
+		          },
+		          {
+		            "value": "anibounceInLeft",
+		            "label": "bounceInLeft"
+		          },
+		          {
+		            "value": "anirotateInDownLeft",
+		            "label": "rotateInDownLeft"
+		          },
+		          {
+		            "value": "anirotateInUpLeft",
+		            "label": "rotateInUpLeft"
+		          },
+		          {
+		            "value": "aniflipInX",
+		            "label": "flipInX"
+		          },
+		          {
+		            "value": "anizoomIn",
+		            "label": "zoomIn"
+		          },
+		          {
+		            "value": "anirollIn",
+		            "label": "rollIn"
+		          },
+		          {
+		            "value": "aniswing",
+		            "label": "swing"
+		          },
+		          {
+		            "value": "anishake",
+		            "label": "shake"
+		          },
+		          {
+		            "value": "aniwobble",
+		            "label": "wobble"
+		          },
+		          {
+		            "value": "anijello",
+		            "label": "jello"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "text",
+		        "id": "txt1",
+		        "default": "purchased",
+		        "label": "Text 'purchased'"
+		      },
+		      {
+		        "type": "text",
+		        "id": "txt2",
+		        "default": "Verified",
+		        "label": "Text 'verified'"
+		      }
+         ]
+      },
+      {
+         "type": "cookie",
+         "name": "🍪 Cookie Banner",
+         "limit": 1,
+         "settings": [
+		      {
+		        "type": "paragraph",
+		        "content": "Under EU privacy regulations, websites must make it clear to visitors what information about them is being stored. This specifically includes cookies. Turn on this option and user will see info box at the bottom of the page that your web-site is using cookies. You can add a cookie compliance banner to your theme to allow customers to consent to tracking of non-essential cookies. This allows customers to consent to relevant, region-specific, tracking laws such as GDPR and CCPA."
+		      },
+		      {
+		        "type": "paragraph",
+		        "content": "If you’re a merchant operating in or with customers from the EU, EEA (European Economic Area, which includes all EU countries plus Iceland, Liechtenstein, and Norway), UK, or Switzerland, then you need to collect customer consent before installing cookies or gathering data from the user. Cookies are stored on the customer's computer or mobile device, which means your online store is required to ask customers for their consent before we can load analytics cookies."
+		      },
+	         {
+	            "type": "paragraph",
+	            "content": "Recommend app: [AVADA Cookie Bar](https://apps.shopify.com/avada-cookie-bar?utm_source=The4&utm_medium=inapp&utm_campaign=partnership)"
+	         },
+		      {
+		        "type": "select",
+		        "id": "show",
+		        "options": [
+		          {
+		            "value": "1",
+		            "label": "All region"
+		          },
+		          {
+		            "value": "2",
+		            "label": "Targeted regions for limited data collection"
+		          }
+		        ],
+		        "label": "Show cookie banner",
+		        "default": "2"
+		      },
+		      {
+		        "type": "html",
+		        "id": "text",
+		        "label": "Text",
+		        "default": "We use cookies to improve your experience on our website. By browsing this website, you agree to our use of cookies."
+		      },
+		      {
+		        "type": "text",
+		        "id": "accept",
+		        "label": "Button text 'Accept'",
+		        "default": "Accept"
+		      },
+		      {
+		        "type": "text",
+		        "id": "decline",
+		        "label": "Button text 'Decline'",
+		        "default": "Decline"
+		      },
+		      {
+		        "type": "text",
+		        "id": "more",
+		        "label": "Button text 'More info'",
+		        "default": "More info"
+		      },
+		      {
+		        "type": "url",
+		        "id": "links",
+		        "label": "Link 'More info'",
+		        "info": "Choose page that will contain detailed information about your Privacy Policy"
+		      },
+		      /*{
+		        "type": "range",
+		        "id": "pp_version",
+		        "min": 1,
+		        "max": 100,
+		        "step": 1,
+		        "label": "Cookies version",
+		        "info": "If you change your cookie policy information you can increase their version to show the popup to all visitors again.",
+		        "default": 1
+		      },
+		      {
+		        "type": "range",
+		        "id": "day_next",
+		        "min": 1,
+		        "max": 100,
+		        "step": 1,
+		        "unit": "day",
+		        "label": "Day next show (n)",
+		        "info": "if user verify, next show will be after 'n' days",
+		        "default": 30
+		      },*/
+		      {
+		        "type": "header",
+		        "content": "+ Design Options"
+		      },
+		      {
+		        "type": "color",
+		        "id": "cl_btn",
+		        "default":"#56cfe1",
+		        "label": "Background color 'Accept'"
+		      },
+		      {
+		        "type": "color",
+		        "id": "cl_btn_hover",
+		        "default":"#007e91",
+		        "label": "Background color 'Accept' hover"
+		      }
+         ]
+      },
+      {
+         "type": "age",
+         "name": "🔒 Age Verification Popup",
+         "limit": 1,
+         "settings": [
+		      {
+		        "type": "paragraph",
+		        "content": "If you sell products such as wine, cigarettes, or dangerous goods, then you might want to discourage visitors under a certain age from browsing your website."
+		      },
+		      {
+		        "type": "paragraph",
+		        "content": "You can do this by adding an age selection form to your storefront. Keep in mind that age verification is not the best way to prevent visitors from browsing your website, as there's nothing preventing them from lying about their age. It might even be a nuisance to regular visitors, who will have to make an additional click to access your store."
+		      },
+		      {
+		        "type": "range",
+		        "id": "age_limit",
+		        "min": 1,
+		        "max": 100,
+		        "step": 1,
+		        "label": "Changing the age limit",
+		        "default": 18
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "date_of_birth",
+		        "label": "Use enter date of birth",
+		        "default": false
+		      },
+		      {
+		        "type": "text",
+		        "id": "heading",
+		        "label": "Heading",
+		        "default": "Are you over 18?"
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "sub",
+		        "label": "Content",
+		        "default": "You must be 18 years of age or older to view page. Please verify your age to enter."
+		      },
+		      {
+		        "type": "text",
+		        "id": "age_enter",
+		        "label": "Button label submit",
+		        "default": "Submit"
+		      },
+		      {
+		        "type": "text",
+		        "id": "age_exit",
+		        "label": "Button label cancel",
+		        "default": "Cancel"
+		      },
+		      {
+		        "type": "text",
+		        "id": "txt",
+		        "label": "Text forbidden 1",
+		        "default": "Access forbidden"
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "txt2",
+		        "label": "Text forbidden 2",
+		        "default": "Your access is restricted because of your age."
+		      },
+		      {
+		        "type": "range",
+		        "id": "day_next",
+		        "min": 1,
+		        "max": 100,
+		        "step": 1,
+		        "unit": "day",
+		        "label": "Day next show (n)",
+		        "info": "if user verify, next show will be after 'n' days",
+		        "default": 30
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Texts Options"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month",
+		        "label": "Text Month:",
+		        "placeholder": "- Month -",
+		        "default": "- Month -"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month1",
+		        "label": "Text January:",
+		        "placeholder": "January",
+		        "default": "January"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month2",
+		        "label": "Text February:",
+		        "placeholder": "February",
+		        "default": "February"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month3",
+		        "label": "Text March:",
+		        "placeholder": "March",
+		        "default": "March"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month4",
+		        "label": "Text April:",
+		        "placeholder": "April",
+		        "default": "April"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month5",
+		        "label": "Text May:",
+		        "placeholder": "May",
+		        "default": "May"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month6",
+		        "label": "Text June:",
+		        "placeholder": "June",
+		        "default": "June"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month7",
+		        "label": "Text July:",
+		        "placeholder": "July",
+		        "default": "July"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month8",
+		        "label": "Text August:",
+		        "placeholder": "August",
+		        "default": "August"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month9",
+		        "label": "Text September:",
+		        "placeholder": "September",
+		        "default": "September"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month10",
+		        "label": "Text October:",
+		        "placeholder": "October",
+		        "default": "October"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month11",
+		        "label": "Text November:",
+		        "placeholder": "November",
+		        "default": "November"
+		      },
+		      {
+		        "type": "text",
+		        "id": "month12",
+		        "label": "Text December:",
+		        "placeholder": "December",
+		        "default": "December"
+		      },
+		      {
+		        "type": "text",
+		        "id": "day",
+		        "label": "Text Day:",
+		        "placeholder": "- Day -",
+		        "default": "- Day -"
+		      },
+		      {
+		        "type": "text",
+		        "id": "year",
+		        "label": "Text Year:",
+		        "placeholder": "- Year -",
+		        "default": "- Year -"
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Design Options"
+		      },
+		      {
+		        "type": "image_picker",
+		        "id": "image",
+		        "label": "Background Image"
+		      },
+		      {
+		        "type": "color",
+		        "id": "cl_bg",
+		        "default":"#56cfe1",
+		        "label": "Background color"
+		      },
+            {
+	            "type": "color_background",
+	            "id": "cl_gradient",
+	            "label": "Background gradient (optional)"
+            },
+		      {
+		        "type": "color",
+		        "id": "cl_btn",
+		        "default":"#007e91",
+		        "label": "Background color",
+		        "label": "For 'button verify allowed'"
+		      },
+		      {
+		        "type": "color",
+		        "id": "cl_btn_hover",
+		        "default":"#035f6d",
+		        "label": "Background color hover",
+		        "label": "For 'button verify allowed'"
+		      },
+		      {
+		        "type": "range",
+		        "id": "overlay",
+		        "label": "Background overlay",
+		        "default": 0,
+		        "min": 0,
+		        "max": 100,
+		        "step": 1,
+		        "unit": "%"
+		      }
+         ]
+      },
+      {
+         "type": "exit",
+         "name": "⚡ Exit popup 01",
+         "limit": 1,
+         "settings": [
+		      {
+		        "type": "paragraph",
+		        "content": "Please only use one of the two 'Exit product popup' styles, and prioritize the style that was added first. Only visible on desktop."
+		      },
+		      {
+		          "type": "header",
+		          "content": "+ Heading options"
+		      },
+		      {
+		          "type": "select",
+		          "id": "design_heading",
+		          "label": "+ Design heading",
+		          "default": "1",
+		          "options": [
+		              {
+		                  "value": "1",
+		                  "label": "Design 01"
+		              },
+		              {
+		                  "value": "2",
+		                  "label": "Design 02"
+		              },
+		              {
+		                  "value": "3",
+		                  "label": "Design 03"
+		              },
+		              {
+		                  "value": "4",
+		                  "label": "Design 04"
+		              },
+		              {
+		                  "value": "5",
+		                  "label": "Design 05"
+		              },
+		              {
+		                  "value": "6",
+		                  "label": "Design 06 (width line-awesome)"
+		              },
+		              {
+		                  "value": "7",
+		                  "label": "Design 07"
+		              },
+		              {
+		                  "value": "8",
+		                  "label": "Design 08"
+		              },
+		              {
+		                  "value": "9",
+		                  "label": "Design 09"
+		              },
+		              {
+		                  "value": "10",
+		                  "label": "Design 10"
+		              },
+		              {
+		                  "value": "11",
+		                  "label": "Design 11"
+		              },
+		              {
+		                  "value": "12",
+		                  "label": "Design 12"
+		              },
+		              {
+		                  "value": "13",
+		                  "label": "Design 13"
+		              },
+		              {
+		                  "value": "14",
+		                  "label": "Design 14"
+		              }
+		          ]
+		      },
+		      {
+		          "type": "select",
+		          "id": "heading_align",
+		          "label": "+ Heading align",
+		          "default": "t4s-text-center",
+		          "options": [
+		              {
+		                  "value": "t4s-text-start",
+		                  "label": "Left"
+		              },
+		              {
+		                  "value": "t4s-text-center",
+		                  "label": "Center"
+		              },
+		              {
+		                  "value": "t4s-text-end",
+		                  "label": "Right"
+		              }
+		          ]
+		      },
+		      {
+		          "type": "text",
+		          "id": "top_heading",
+		          "label": "+ Heading",
+		          "default": "Wait! Can't find what you're looking for ?"
+		      },
+		      {
+		        "type": "text",
+		        "id": "icon_heading",
+		        "label": "Enter a icon name on heading",
+		        "info": "Only used for design 6 [LineAwesome](https://kalles.the4.co/font-lineawesome/)",
+		        "default": "las la-gem"
+		      },
+		      {
+		          "type": "textarea",
+		          "id": "top_subheading",
+		          "label": "+ Subheading",
+		          "default": "Maybe this will help..."
+		      }, 
+		      {
+		        "type": "number",
+		        "id": "tophead_mb",
+		        "label": "+ Space bottom (px)",
+		        "info": "The vertical spacing between heading and content",
+		        "default": 30
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ General settings"
+		      },
+		      {
+		        "type": "product_list",
+		        "id": "product_list",
+		        "label": "Products",
+		        "limit": 12
+		      },
+		      {
+		        "type": "select",
+		        "id": "product_des",
+		        "options": [
+		          {
+		            "value": "1",
+		            "label": "Design 1"
+		          },
+		          {
+		            "value": "2",
+		            "label": "Design 2"
+		          },
+		          {
+		            "value": "3",
+		            "label": "Design 3"
+		          },
+		          {
+		            "value": "4",
+		            "label": "Design 4"
+		          },
+		          {
+		            "value": "5",
+		            "label": "Design 5"
+		          },
+		          {
+		            "value": "6",
+		            "label": "Design 6"
+		          },
+		          {
+		            "value": "7",
+		            "label": "Design 7"
+		          }
+		        ],
+		        "label": "Product item design",
+		        "default": "1"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "show_vendor",
+		        "label": "Show product vendors",
+		        "default": false
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Options image products"
+		      },
+		      {
+		        "type": "select",
+		        "id": "image_ratio",
+		        "label": "Image ratio",
+		        "default": "rationt",
+		        "info": "Aspect ratio custom will settings in general panel",
+		        "options": [
+		          {
+		            "group": "Natural",
+		            "value": "ratioadapt",
+		            "label": "Adapt to image"
+		          },
+		          {
+		            "group": "Landscape",
+		            "value": "ratio2_1",
+		            "label": "2:1"
+		          },
+		          {
+		            "group": "Landscape",
+		            "value": "ratio16_9",
+		            "label": "16:9"
+		          },
+		          {
+		            "group": "Landscape",
+		            "value": "ratio8_5",
+		            "label": "8:5"
+		          },
+		          {
+		            "group": "Landscape",
+		            "value": "ratio3_2",
+		            "label": "3:2"
+		          },
+		          {
+		            "group": "Landscape",
+		            "value": "ratio4_3",
+		            "label": "4:3"
+		          },
+		          {
+		            "group": "Landscape",
+		            "value": "rationt",
+		            "label": "Ratio ASOS"
+		          },
+		          {
+		            "group": "Squared",
+		            "value": "ratio1_1",
+		            "label": "1:1"
+		          },
+		          {
+		            "group": "Portrait",
+		            "value": "ratio2_3",
+		            "label": "2:3"
+		          },
+		          {
+		            "group": "Portrait",
+		            "value": "ratio1_2",
+		            "label": "1:2"
+		          },
+		          {
+		            "group": "Custom",
+		            "value": "ratiocus1",
+		            "label": "Ratio custom 1"
+		          },
+		          {
+		            "group": "Custom",
+		            "value": "ratiocus2",
+		            "label": "Ratio custom 2"
+		          },
+		          {
+		            "group": "Custom",
+		            "value": "ratio_us3",
+		            "label": "Ratio custom 3"
+		          },
+		          {
+		            "group": "Custom",
+		            "value": "ratiocus4",
+		            "label": "Ratio custom 4"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "select",
+		        "id": "image_size",
+		        "label": "Image size",
+		        "default": "cover",
+		        "info": "This settings apply only if the image ratio is not set to 'Adapt to image'",
+		        "options": [
+		          {
+		            "value": "cover",
+		            "label": "Full"
+		          },
+		          {
+		            "value": "contain",
+		            "label": "Auto"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "select",
+		        "id": "image_position",
+		        "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'",
+		        "options": [
+		          {
+		            "value": "default",
+		            "label": "Default"
+		          },
+		          {
+		            "value": "1",
+		            "label": "Left top"
+		          },
+		          {
+		            "value": "2",
+		            "label": "Left center"
+		          },
+		          {
+		            "value": "3",
+		            "label": "Left bottom"
+		          },
+		          {
+		            "value": "4",
+		            "label": "Right top"
+		          },
+		          {
+		            "value": "5",
+		            "label": "Right center"
+		          },
+		          {
+		            "value": "6",
+		            "label": "Right bottom"
+		          },
+		          {
+		            "value": "7",
+		            "label": "Center top"
+		          },
+		          {
+		            "value": "8",
+		            "label": "Center center"
+		          },
+		          {
+		            "value": "9",
+		            "label": "Center bottom"
+		          }
+		        ],
+		        "label": "Image position",
+		        "default": "8"
+		      },
+		      {
+		        "type": "select",
+		        "id": "content_align",
+		        "label": "Product content align",
+		        "default": "default",
+		        "options": [
+		          {
+		            "label": "Default",
+		            "value": "default"
+		          },
+		          {
+		            "label": "Center",
+		            "value": "center"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "select",
+		        "id": "col_dk",
+		        "label": "Items per row",
+		        "default": "4",
+		        "options": [
+		          {
+		            "value": "1",
+		            "label": "1"
+		          },
+		          {
+		            "value": "2",
+		            "label": "2"
+		          },
+		          {
+		            "value": "3",
+		            "label": "3"
+		          },
+		          {
+		            "value": "4",
+		            "label": "4"
+		          },
+		          {
+		            "value": "5",
+		            "label": "5"
+		          },
+		          {
+		            "value": "6",
+		            "label": "6"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "select",
+		        "id": "space_h_item",
+		        "options": [
+		          {
+		              "value": "0", 
+		              "label": "0"
+		          },
+		          {
+		              "value": "2", 
+		              "label": "2px"
+		          },
+		          {
+		              "value": "4", 
+		              "label": "4px"
+		          },
+		          {
+		              "value": "6", 
+		              "label": "6px"
+		          },
+		          {
+		              "value": "8", 
+		              "label": "8px"
+		          },
+		          {
+		              "value": "10", 
+		              "label": "10px"
+		          },
+		          {
+		              "value": "20",
+		              "label": "20px"
+		          },
+		          {
+		              "value": "30",
+		              "label": "30px"
+		          }
+		        ],
+		        "label": "Space horizontal items",
+		        "default": "30"
+		      },
+		      {
+		        "type": "range",
+		        "id": "day_next",
+		        "min": 0,
+		        "max": 30,
+		        "step": 1,
+		        "unit": "day",
+		        "label": "Day next show (n)",
+		        "info": "if customer close the popup, next show will be after 'n' days",
+		        "default": 7
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Options for carousel layout"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "loop",
+		        "label": "Enable loop",
+		        "info": "At the end of cells, wrap-around to the other end for infinite scrolling",
+		        "default": true
+		      },
+		      {
+		        "type": "range",
+		        "id": "au_time",
+		        "min": 0,
+		        "max": 30,
+		        "step": 0.5,
+		        "label": "Autoplay speed in second.",
+		        "info": "Set is '0' to disable autoplay",
+		        "unit": "s",
+		        "default": 0
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "au_hover",
+		        "label": "Pause autoplay on hover",
+		        "info": "Auto-playing will pause when the user hovers over the carousel",
+		        "default": true
+		      },
+		      {
+		        "type": "paragraph",
+		        "content": "—————————————————"
+		      },
+		      {
+		        "type": "paragraph",
+		        "content": "Prev next button"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "nav_btn",
+		        "label": "Use prev next button",
+		        "info": "Creates and show previous & next buttons",
+		        "default": false
+		      },
+		      {
+		        "type": "select",
+		        "id": "btn_vi",
+		        "label": "Visible",
+		        "default": "hover",
+		        "options": [
+		          {
+		            "value": "always",
+		            "label": "Always"
+		          },
+		          {
+		            "value": "hover",
+		            "label": "Only hover"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "select",
+		        "id": "btn_owl",
+		        "label": "Button style",
+		        "default": "default",
+		        "options": [
+		          {
+		            "value": "default",
+		            "label": "Default"
+		          },
+		          {
+		            "value": "outline",
+		            "label": "Outline"
+		          },
+		          {
+		            "value": "simple",
+		            "label": "Simple"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "select",
+		        "id": "btn_shape",
+		        "label": "Button shape",
+		        "info": "Not working with button style 'Simple'",
+		        "default": "none",
+		        "options": [
+		          {
+		            "value": "none",
+		            "label": "Default"
+		          },
+		          {
+		            "value": "round",
+		            "label": "Round"
+		          },
+		          {
+		            "value": "rotate",
+		            "label": "Rotate"
+		          }
+		        ]
+		      },
+		      {
+		          "type": "select",
+		          "id": "btn_cl",
+		          "label": "Button color",
+		          "default": "dark",
+		          "options": [
+		              {
+		                  "value": "light",
+		                  "label": "Light"
+		              },
+		              {
+		                  "value": "dark",
+		                  "label": "Dark"
+		              },
+		              {
+		                  "value": "primary",
+		                  "label": "Primary"
+		              },
+		              {
+		                  "value": "custom1",
+		                  "label": "Custom color 1"
+		              },
+		              {
+		                  "value": "custom2",
+		                  "label": "Custom color 2"
+		              }
+		          ]
+		      },
+		      {
+		        "type": "select",
+		        "id": "btn_size",
+		        "label": "Button size",
+		        "default": "small",
+		        "options": [
+		          {
+		            "value": "small",
+		            "label": "Small"
+		          },
+		          {
+		            "value": "medium",
+		            "label": "Medium"
+		          },
+		          {
+		            "value": "large",
+		            "label": "Large"
+		          }
+		        ]
+		      },
+		      {
+		        "type":"checkbox",
+		        "id":"btn_hidden_mobile",
+		        "label":"Hidden buttons on mobile ",
+		        "default": true
+		      },
+		      {
+		        "type": "paragraph",
+		        "content": "—————————————————"
+		      },
+		      {
+		        "type": "paragraph",
+		        "content": "Page dots"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "nav_dot",
+		        "label": "Use page dots",
+		        "info": "Creates and show page dots",
+		        "default": false
+		      },
+		      {
+		        "type": "select",
+		        "id": "dot_owl",
+		        "label": "Dots style",
+		        "default": "default",
+		        "options": [
+		          {
+		            "value": "default",
+		            "label": "Default"
+		          },
+		          {
+		            "value": "outline",
+		            "label": "Outline"
+		          },
+		          {
+		            "value": "elessi",
+		            "label": "Elessi"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "select",
+		        "id": "dots_cl",
+		        "label": "Dots color",
+		        "default": "dark",
+		        "options": [
+		          {
+		              "value": "light",
+		              "label": "Light (Best on dark background)"
+		          },
+		          {
+		              "value": "dark",
+		              "label": "Dark"
+		          },
+		          {
+		              "value": "primary",
+		              "label": "Primary"
+		          },
+		          {
+		              "value": "custom1",
+		              "label": "Custom color 1"
+		          },
+		          {
+		              "value": "custom2",
+		              "label": "Custom color 2"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "dots_round",
+		        "label": "Enable dots round",
+		        "default": true
+		      },
+		      {
+		        "type": "range",
+		        "id": "dots_space",
+		        "min": 2,
+		        "max": 20,
+		        "step": 1,
+		        "label": "Dot between horizontal",
+		        "unit": "px",
+		        "default": 10
+		      },
+		      {
+		        "type":"checkbox",
+		        "id":"dots_hidden_mobile",
+		        "label":"Hidden dots on mobile ",
+		        "default": false
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Select page to display"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "index",
+		        "label": "Home page",
+		        "default": true,
+		        "info": "Popup will display on home page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "product",
+		        "label": "Product page",
+		        "default": false,
+		        "info": "Popup will display on product page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "collection",
+		        "label": "Collection page",
+		        "default": false,
+		        "info": "Popupl display on collection page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "article",
+		        "label": "Article page",
+		        "default": false,
+		        "info": "Popup will display on article page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "blog",
+		        "label": "Blog page",
+		        "default": false,
+		        "info": "Popup will display on blog page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "cart",
+		        "label": "Cart page",
+		        "default": false,
+		        "info": "Popup will display on cart page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "page",
+		        "label": "Other page",
+		        "default": false,
+		        "info": "Popup will display on other page"
+		      }/*,
+		      {
+		        "type": "header",
+		        "content": "+ Show popup after settings"
+		      },
+		      {
+		        "type": "range",
+		        "id": "pp_version",
+		        "min": 1,
+		        "max": 100,
+		        "step": 1,
+		        "label": "Popup version",
+		        "info": "If you change your promo popup you can increase its version to show the popup to all visitors again.",
+		        "default": 1
+		      },*/
+         ]
+      },
+      {
+         "type": "exit2",
+         "name": "⚡ Exit popup 02",
+         "limit": 1,
+         "settings": [
+         	{
+	            "type": "paragraph",
+	            "content": "Please only use one of the two 'Exit product popup' styles, and prioritize the style that was added first."
+	        },
+		      {
+		          "type": "header",
+		          "content": "+ Heading options"
+		      },
+         	{
+		        "type": "text",
+		        "id": "top_heading",
+		        "label": "Heading",
+		        "default": "Wait! before you leave..."
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "sub_heading",
+		        "label": "Subheading",
+		        "default": "Get 15% off for your first order"
+		      },
+		      {
+		        "type": "text",
+		        "id": "code",
+		        "label": "Code discount",
+		        "default": "CODE15OFF"
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "description",
+		        "label": "Description",
+		        "default": "Use above code to get 15% 0FF for your first order when checkout"
+		      },
+		      {
+		        "type": "text",
+		        "id": "btn_label",
+		        "label": "Button label",
+		        "default": "GRAB THE DISCOUNT"
+		      },
+		      {
+		        "type": "url",
+		        "id": "btn_link",
+		        "label": "Button link"
+		      },
+
+		      {
+            "type": "color",
+            "id": "content_cl",
+            "label": "Content color",
+            "default": "#000"
+          },
+          {
+            "type": "color",
+            "id": "bg_cl",
+            "label": "Background color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "btn_bg_cl",
+            "label": "Button background color",
+            "default": "#39C4F0"
+          },
+          {
+            "type": "color",
+            "id": "btn_bg_hover_cl",
+            "label": "Button background hover color",
+            "default": "#fff"
+          },
+		      {
+		        "type": "image_picker",
+		        "id": "image",
+		        "label": "Background heading image"
+		      },
+		      {
+		        "type": "header",
+		        "content": "Product recommend"
+		      },
+		      {
+		        "type": "text",
+		        "id": "heading_recomend",
+		        "label": "Heading",
+		        "default": "Recommended Products"
+		      },
+		      {
+		        "type": "product_list",
+		        "id": "product_list",
+		        "label": "Products",
+		        "limit": 50
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Select page to display"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "index",
+		        "label": "Home page",
+		        "default": true,
+		        "info": "Popup will display on home page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "product",
+		        "label": "Product page",
+		        "default": false,
+		        "info": "Popup will display on product page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "collection",
+		        "label": "Collection page",
+		        "default": false,
+		        "info": "Popupl display on collection page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "article",
+		        "label": "Article page",
+		        "default": false,
+		        "info": "Popup will display on article page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "blog",
+		        "label": "Blog page",
+		        "default": false,
+		        "info": "Popup will display on blog page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "cart",
+		        "label": "Cart page",
+		        "default": false,
+		        "info": "Popup will display on cart page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "page",
+		        "label": "Other page",
+		        "default": false,
+		        "info": "Popup will display on other page"
+		      }
+         ]
+      },
+      {
+         "type": "exit3",
+         "name": "⚡ Exit popup 03",
+        "limit": 1,
+        "settings": [
+	        {
+		        "type": "paragraph",
+		        "content": "Please only use one of the two 'Exit product popup' styles, and prioritize the style that was added first."
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ General settings"
+		      },
+		      {
+		        "type": "text",
+		        "id": "top_heading",
+		        "label": "Heading",
+		        "default": "Wait! before you leave..."
+		      },
+		      {
+		        "type": "textarea",
+		        "id": "sub_heading",
+		        "label": "Subheading",
+		        "default": "Get 15% off for your first order"
+		      },
+
+		      {
+		        "type": "textarea",
+		        "id": "txt2",
+		        "label": "Content when off",
+		        "default": "No. thanks"
+		      },
+		      {
+            "type": "color",
+            "id": "input_cl",
+            "label": "Input color",
+            "default": "#878787"
+          },
+          {
+            "type": "color",
+            "id": "border_cl",
+            "label": "Border color",
+            "default": "#000"
+          },
+          {
+            "type": "color",
+            "id": "btn_cl",
+            "label": "Button color",
+            "default": "#ffffff"
+          },
+          {
+            "type": "color",
+            "id": "btn_bg_cl",
+            "label": "Button background color",
+            "default": "#222222"
+          },
+          {
+            "type": "color",
+            "id": "btn_hover_cl",
+            "label": "Button hover color",
+            "default": "#ffffff"
+          },
+          {
+            "type": "color",
+            "id": "btn_hover_bg_cl",
+            "label": "Button hover background color",
+            "default": "#56CFE1"
+          },
+		      {
+		        "type": "image_picker",
+		        "id": "image",
+		        "label": "Image",
+		        "info": "Display based on layout design"
+		      },
+		      {
+		        "type": "select",
+		        "id": "exit_layout",
+		        "label": "Layout design",
+		        "default": "1",
+		        "options": [
+		          {
+		            "value": "1",
+		            "label": "One column"
+		          },
+		          {
+		            "value": "2",
+		            "label": "Two columns and image left"
+		          },
+		          {
+		            "value": "3",
+		            "label": "Two columns and image right"
+		          }
+		        ]
+		      },
+		      {
+		        "type": "paragraph",
+		        "content": "Show promo popup to users when they enter the site."
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "mb",
+		        "label": "Show for mobile devices",
+		        "default": false
+		      },
+		      {
+		        "type": "header",
+		        "content": "+ Select page to display"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "index",
+		        "label": "Home page",
+		        "default": true,
+		        "info": "Popup will display on home page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "product",
+		        "label": "Product page",
+		        "default": false,
+		        "info": "Popup will display on product page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "collection",
+		        "label": "Collection page",
+		        "default": false,
+		        "info": "Popupl display on collection page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "article",
+		        "label": "Article page",
+		        "default": false,
+		        "info": "Popup will display on article page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "blog",
+		        "label": "Blog page",
+		        "default": false,
+		        "info": "Popup will display on blog page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "cart",
+		        "label": "Cart page",
+		        "default": false,
+		        "info": "Popup will display on cart page"
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "page",
+		        "label": "Other page",
+		        "default": false,
+		        "info": "Popup will display on other page"
+		      }
+        ]
+      }
+    ]
+  }
+{% endschema %}

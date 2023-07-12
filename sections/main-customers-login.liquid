@@ -1,0 +1,344 @@
+{{ 'customer.min.css' | asset_url | stylesheet_tag }}
+{{ 'button-style.css' | asset_url | stylesheet_tag }}
+<link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- liquid 
+assign sid            = section.id
+assign se_stts = section.settings -%}
+
+<div class="t4s-customer is--login t4s-text-{{ se_stts.content_align }}">
+
+    {%- comment -%}
+    --------------------------------------------------------------------------------------------------------------------
+    CUSTOMER RECOVERY FORM
+    ----------------------------------------------------------------------9----------------------------------------------
+    {%- endcomment -%}
+   <div id="recover">
+       <h2 class="t4s_mb_20">{{ 'customer.recover_password.title' | t }}</h2>
+       <p>{{ 'customer.recover_password.subtext' | t }}</p>
+       {%- form 'recover_customer_password' -%}
+         {%- assign recover_success = form.posted_successfully? -%}
+         <div class="t4s_field t4s-pr">
+           <input type="email" class="t4s_frm_input{% unless form.errors %} t4s_mb_30{% endunless %}" 
+             value=""
+             name="email"
+             id="RecoverEmail"
+             autocorrect="off"
+             autocapitalize="off"
+             autocomplete="email"
+             {% if form.errors %}
+               aria-invalid="true"
+               aria-describedby="RecoverEmail-email-error"
+               autofocus
+             {% endif %}
+             placeholder="{{ 'customer.recover_password.email' | t }}"
+           >
+           <label for="RecoverEmail">
+             {{ 'customer.recover_password.email' | t }}
+           </label>
+         </div>
+         {%- if form.errors -%}
+           <small id="RecoverEmail-email-error" class="form__message t4s_mb_30">
+             <svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 13 13">
+               <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+               <circle cx="6.5" cy="6.5" r="5.5" fill="var(--t4s-error-color)" stroke="var(--t4s-error-color)" stroke-width="0.7"/>
+               <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+               <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="var(--t4s-error-color)" stroke-width="0.7">
+             </svg>
+             {{ form.errors.messages['form'] }}
+           </small>
+         {%- endif -%}
+         <div class="t4s_field t4s_mb_20">
+           <button class="t4s_btn_submmit t4s-btn t4s-btn-base t4s-btn-{{ se_stts.btn_width }}-width t4s-btn-style-{{ se_stts.button_style }} t4s-btn-size-{{ se_stts.btns_size }} t4s-btn-color-{{ se_stts.btns_cl }} {% if se_stts.button_style == 'default' or se_stts.button_style == 'outline' %}t4s-btn-effect-{{ se_stts.button_effect }}{% endif %}">{{ 'customer.recover_password.submit' | t }}</button>
+         </div>
+         <a class="t4s-d-inline-block" href="#login">{{ 'customer.recover_password.cancel' | t }} </a>
+       {%- endform -%}
+   </div>
+
+    {%- comment -%}
+    --------------------------------------------------------------------------------------------------------------------
+    CUSTOMER LOGIN FORM
+    --------------------------------------------------------------------------------------------------------------------
+    {%- endcomment -%}
+   <div id="login">
+       {%- if recover_success == true -%}
+         <h3 class="form__message t4s_mb_10" tabindex="-1" autofocus>
+           <svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 13 13">
+             <path d="M6.5 12.35C9.73087 12.35 12.35 9.73086 12.35 6.5C12.35 3.26913 9.73087 0.65 6.5 0.65C3.26913 0.65 0.65 3.26913 0.65 6.5C0.65 9.73086 3.26913 12.35 6.5 12.35Z" fill="var(--t4s-success-color)" stroke="white" stroke-width="0.7"/>
+             <path d="M5.53271 8.66357L9.25213 4.68197" stroke="white"/>
+             <path d="M4.10645 6.7688L6.13766 8.62553" stroke="white">
+           </svg>
+           {{ 'customer.recover_password.success' | t }}
+         </h3>
+         <p class="t4s_mb_30">{{ 'customer.recover_password.content_success' | t }}</p>
+       {%- endif -%}
+       {%- form 'customer_login', novalidate: 'novalidate' -%}
+         {%- if settings.return_login != blank -%}<input type="hidden" name="checkout_url" value="{{ settings.return_login }}" />{%- endif -%}
+         {%- if form.errors -%}
+           <h2 class="form__message" tabindex="-1" autofocus>
+             <span class="visually-hidden">{{ 'accessibility.error' | t }} </span>
+             <svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 13 13">
+               <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+               <circle cx="6.5" cy="6.5" r="5.5" fill="var(--t4s-error-color)" stroke="var(--t4s-error-color)" stroke-width="0.7"/>
+               <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+               <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="var(--t4s-error-color)" stroke-width="0.7">
+             </svg>
+             {{ 'customer.form.error_heading' | t }}
+           </h2>
+           {{ form.errors | default_errors }}
+         {%- endif -%}
+
+         <div class="t4s_field t4s-pr t4s_mb_30">        
+           <input class="t4s_frm_input" 
+             type="email"
+             name="customer[email]"
+             id="CustomerEmail"
+             autocomplete="email"
+             autocorrect="off"
+             autocapitalize="off"
+             {% if form.errors contains 'form' %}
+               aria-invalid="true"
+             {% endif %}
+             placeholder="{{ 'customer.login.email' | t }}"
+           >
+           <label for="CustomerEmail">
+             {{ 'customer.login.email' | t }} <span class="required">*</span>
+           </label>
+         </div>
+
+         {%- if form.password_needed -%}
+           <div class="t4s_field t4s-pr t4s_mb_10">          
+             <input class="t4s_frm_input" 
+               type="password"
+               value=""
+               name="customer[password]"
+               id="CustomerPassword"
+               autocomplete="current-password"
+               {% if form.errors contains 'form' %}
+                 aria-invalid="true"
+               {% endif %}
+               placeholder="{{ 'customer.login.password' | t }}"
+             >
+             <label for="CustomerPassword">
+               {{ 'customer.login.password' | t }} <span class="required">*</span>
+             </label>
+           </div>
+
+           <a href="#recover" class="t4s-d-block t4s_mb_30">{{ 'customer.login.forgot_password' | t }}</a>
+         {%- endif -%}
+          <div class="t4s_field t4s_mb_20">
+            <button class="t4s_btn_submmit t4s-btn t4s-btn-base t4s-btn-{{ se_stts.btn_width }}-width t4s-btn-style-{{ se_stts.button_style }} t4s-btn-size-{{ se_stts.btns_size }} t4s-btn-color-{{ se_stts.btns_cl }} {% if se_stts.button_style == 'default' or se_stts.button_style == 'outline' %}t4s-btn-effect-{{ se_stts.button_effect }}{% endif %}">{{ 'customer.login.submit' | t }}</button>
+          </div>
+
+         <a class="t4s-d-inline-block" href="{{ routes.account_register_url }}"> {{ 'customer.login.create_account' | t }}</a>
+         
+       {%- endform -%}
+   </div>
+
+    {%- comment -%}
+    --------------------------------------------------------------------------------------------------------------------
+    CUSTOMER GUEST FORM
+    --------------------------------------------------------------------------------------------------------------------
+    {%- endcomment -%}
+   {%- if shop.checkout.guest_login -%}
+    <div id="guest_login">
+      <hr>
+      <h2 class="t4s_mb_20">{{ 'customer.login.guest_title' | t }}</h2>
+
+      {%- form 'guest_login' -%}
+        <button class="t4s_btn_black">{{ 'customer.login.guest_continue' | t }}</button>
+      {%- endform -%}
+    </div>
+   {%- endif -%}
+
+</div>
+
+{%- schema -%}
+  {
+  "name": "Login",
+  "tag": "section",
+  "class": "t4s-section t4s-section-customers t4s-container",
+    "settings": [
+      {
+        "type": "header",
+        "content": "+ General options"
+      },
+      {
+        "type": "select",
+        "id": "content_align",
+        "label": "Content align",
+        "default": "start",
+        "options": [
+          {
+            "value": "start",
+            "label": "Default"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "+ Button options"
+      },
+      {
+        "type": "select",
+        "id": "btn_width",
+        "label": "Button width",
+        "default": "full",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "full",
+            "label": "Full width"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "button_style",
+        "label": "Button style",
+        "options": [
+            {
+                "label": "Default",
+                "value": "default"
+            },
+            {
+                "label": "Outline",
+                "value": "outline"
+            },
+            {
+                "label": "Bordered bottom",
+                "value": "bordered"
+            },
+            {
+                "label": "Link",
+                "value": "link"
+            }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "btns_size",
+        "label": "Button size",
+        "default":"medium",
+        "options": [
+            {
+                "label": "Extra small",
+                "value": "small"
+            },
+            {
+                "label": "Small",
+                "value": "extra-small"
+            },
+            {
+                "label": "Medium",
+                "value": "medium"
+            },
+            {
+                "label": "Large",
+                "value": "extra-medium"
+            },
+            {
+                "label": "Extra large",
+                "value": "large"
+            },
+            {
+                "label": "Extra extra large",
+                "value": "extra-large"
+            }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "btns_cl",
+        "label": "Button color",
+        "default": "dark",
+        "options": [
+          {
+              "value": "light",
+              "label": "Light"
+          },
+          {
+              "value": "dark",
+              "label": "Dark"
+          },
+          {
+              "value": "primary",
+              "label": "Primary"
+          },
+          {
+              "value": "custom1",
+              "label": "Custom color 1"
+          },
+          {
+              "value": "custom2",
+              "label": "Custom color 2"
+          }
+        ]
+      },
+       {
+          "type":"select",
+          "id":"button_effect",
+          "label":"Button hover effect",
+          "default":"default",
+          "info":"Only working button style default, outline",
+          "options":[
+              {
+                  "label":"Default",
+                  "value":"default"
+              },
+              {
+                  "label":"Fade",
+                  "value":"fade"
+              },
+              {
+                  "label":"Rectangle out",
+                  "value":"rectangle-out"
+              },
+              {
+                  "label":"Sweep to right",
+                  "value":"sweep-to-right"
+              },
+              {
+                  "label":"Sweep to left",
+                  "value":"sweep-to-left"
+              },
+              {
+                  "label":"Sweep to bottom",
+                  "value":"sweep-to-bottom"
+              },
+              {
+                  "label":"Sweep to top",
+                  "value":"sweep-to-top"
+              },
+              {
+                  "label":"Shutter out horizontal",
+                  "value":"shutter-out-horizontal"
+              },
+              {
+                  "label":"Outline",
+                  "value":"outline"
+              },
+              {
+                  "label":"Shadow",
+                  "value":"shadow"
+              },
+              {
+                  "label":"Overlay run (Only working with button default)",
+                  "value":"overlay-run"
+              }
+          ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Login"
+      }
+    ]
+  }
+{% endschema %}

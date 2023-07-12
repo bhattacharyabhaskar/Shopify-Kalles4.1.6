@@ -1,0 +1,125 @@
+{%- liquid
+   assign results_count = search.results_count
+   assign collection = collections[settings.search_prs_suggest]
+   assign limit = 5 
+   assign show_search_suggest = settings.show_search_suggest
+   assign on_sale_txt = 'products.product.on_sale' | t
+   assign save_js = 'products.product.save_js' | t: saved_amount: 'saved_amount'
+   if shop.types.size < 3
+    assign shop_types = shop.types | join: ' ' | remove: ' '
+   else
+    assign shop_types = 'type_the4'
+   endif
+   if settings.within_cat and collection
+      assign isHasCollection = true
+   else  
+      assign isHasCollection = false
+   endif
+   assign placeholder_img = settings.placeholder_img
+   assign price_varies_style = settings.price_varies_style
+   
+   assign search_terms = search.terms
+   assign key_terms = search_terms
+   if search_terms contains 'product_type: '
+     assign arr_terms = search_terms | remove: 'product_type: ' | replace_first: ' AND', ' AND ' | replace_first: '  ', ' ' | split: ' AND '
+     assign product_type = arr_terms[0] | strip
+     assign search_terms = arr_terms[1] | strip
+     if search_terms == blank
+       assign key_terms = key_terms | remove: ' AND '
+   	   assign search_terms = product_type
+     endif
+   endif
+ -%}
+
+{%- if request.design_mode %}<link rel="stylesheet" href="{{ 'search-hidden.css' | asset_url }}" media="all">{% endif -%}
+<div class="t4s-drawer__header">
+   <span class="is--login" aria-hidden="false">{{ 'search.general.title' | t }}</span>
+   <button class="t4s-drawer__close" data-drawer-close aria-label="{{ 'search.general.close_search' | t }}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+</div>
+<form data-frm-search action="{{ routes.search_url }}" method="get" class="t4s-mini-search__frm t4s-pr" role="search">
+   <input type="hidden" name="type" value="product">
+   <input type="hidden" name="options[unavailable_products]" value="{{ settings.unavailable_prs }}">
+   <input type="hidden" name="options[prefix]" value="last">
+
+   {%- if settings.filter_type_search and shop_types != blank -%}
+     <div data-cat-search class="t4s-mini-search__cat">
+         <select data-name="product_type">
+           <option value="*">{{ 'search.general.all_categories' | t }}</option>
+           {%- for product_type in shop.types -%}{%- if product_type == blank %}{% continue -%}{% endif -%}<option value="{{ product_type }}">{{ product_type }}</option>{%- endfor -%}
+         </select>
+     </div>
+   {%- endif -%} 
+   <div class="t4s-mini-search__btns t4s-pr t4s-oh">
+      <input data-input-search class="t4s-mini-search__input" autocomplete="off" type="text" name="q" placeholder="{{ 'search.general.placeholder' | t }}">
+      <button data-submit-search class="t4s-mini-search__submit t4s-btn-loading__svg{% if settings.ajax_search %} t4s-pe-none{% endif %}" type="submit">
+         <svg class="t4s-btn-op0" viewBox="0 0 18 19" width="16"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 112.85 3.5a5.784 5.784 0 018.18 8.18zm.26 1.12a6.78 6.78 0 11.72-.7l5.4 5.4a.5.5 0 11-.71.7l-5.41-5.4z" fill="currentColor"></path></svg>
+         <div class="t4s-loading__spinner t4s-dn">
+            <svg width="16" height="16" aria-hidden="true" focusable="false" role="presentation" class="t4s-svg__spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+         </div>
+      </button>
+   </div>
+
+   {%- assign list_hotkey = settings.list_hotkey -%}
+   {%- if settings.show_search_hotkey and list_hotkey != blank -%}
+     {%- capture link_suggest -%}
+     {{ routes.search_url }}?type=product&options%5Bunavailable_products%5D={{ settings.unavailable_prs }}&options%5Bprefix%5D=last&q=
+     {%- endcapture -%}
+     {%- assign arr_keys = list_hotkey | replace: ' ,', ',' | replace: ', ', ',' | split: ',' -%}
+     {%- assign arr_keys2 = arr_keys | join: ',|nt' | split: ' |nt' -%}
+
+      <div data-listKey class="t4s-mini-search__keys">
+         <span class="t4s-mini-search__label">{{ 'search.general.quick_search' | t }}</span>
+         <ul class="t4s-mini-search__listKey t4s-d-inline-block">
+            {%- for key in arr_keys %}{% assign key_strip = key | strip -%}
+            <li class="t4s-d-inline-block"><a data-key='{{ key_strip | escape }}' href="{{ link_suggest }}{{ key | strip | url_encode }}">{{ arr_keys2[forloop.index0] }} </a></li>
+            {% endfor -%}
+         </ul>
+      </div>
+  {%- endif -%}
+</form>
+{%- if results_count > 1 -%}<div data-title-search class="t4s-mini-search__title">{{ 'search.general.heading.other' | t }}</div>
+{%- elsif results_count == 1 or  results_count == 0 -%}<div data-title-search class="t4s-mini-search__title">{{ 'search.general.heading.one' | t }}</div>
+{%- elsif predictive_search == blank and collection != blank and show_search_suggest -%}<div data-title-search class="t4s-mini-search__title">{{ 'search.general.suggest' | t }}</div>
+{%- else -%}<div data-title-search class="t4s-mini-search__title" style="display:none"></div>
+{%- endif -%}
+<div class="t4s-drawer__content">
+   <div class="t4s-drawer__main">
+      <div data-t4s-scroll-me class="t4s-drawer__scroll t4s-current-scrollbar">
+
+         <div data-skeleton-search class="t4s-skeleton_wrap t4s-dn">
+            {%- for i in (1..4) -%}
+            <div class="t4s-row t4s-space-item-inner">
+               <div class="t4s-col-auto t4s-col-item t4s-widget_img_pr"><div class="t4s-skeleton_img"></div></div>
+               <div class="t4s-col t4s-col-item t4s-widget_if_pr"><div class="t4s-skeleton_txt1"></div><div class="t4s-skeleton_txt2"></div></div>
+            </div>
+            {%- endfor -%}
+         </div>
+         <div data-results-search class="t4s-mini-search__content t4s_ratioadapt">
+           {%- if results_count == 0 -%}{{ 'search.general.no_product_results' | t }}
+           {%- elsif results_count > 0 -%}
+                 {%- for product in search.results limit: limit -%}
+                     {%- render 'pr-sidebar-loop', imgatt: "", product: product, pr_url: product.url, placeholder_img: placeholder_img, price_varies_style: price_varies_style -%} 
+                 {%- endfor -%}
+
+             {%- elsif predictive_search == blank and collection != blank and show_search_suggest -%}
+                 {%- for product in collection.products limit: limit -%}
+                     {%- render 'pr-sidebar-loop', imgatt: "", product: product, pr_url: product.url, placeholder_img: placeholder_img, price_varies_style: price_varies_style -%} 
+                 {%- endfor -%}
+             {%- endif -%}
+             {%- unless settings.only_search_prs %}<div class="t4s-results-others t4s_ratioadapt lazyloadt4s" data-rendert4s='{{ routes.search_url }}?q={{ search.terms | url_encode }}&type=article,page&section_id=search-others'></div>{% endunless -%}
+         </div>
+      </div>
+   </div>
+   {%- if results_count >= 0 -%}
+         <div data-viewAll-search class="t4s-drawer__bottom">
+            <a href="{{ routes.search_url }}?type=product&options%5Bunavailable_products%5D={{ settings.unavailable_prs }}&options%5Bprefix%5D=last&q={{ key_terms | url_escape }}" class="t4s-mini-search__viewAll t4s-d-block" tabindex="-1">{{ 'search.search_for' | t: terms: search_terms }} <svg width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 18.71875 6.78125 L 17.28125 8.21875 L 24.0625 15 L 4 15 L 4 17 L 24.0625 17 L 17.28125 23.78125 L 18.71875 25.21875 L 27.21875 16.71875 L 27.90625 16 L 27.21875 15.28125 Z"/></svg></a>
+         </div>
+   {%- elsif collection != blank -%}
+      {%- if collection.all_products_count > limit -%}
+         <div data-viewAll-search class="t4s-drawer__bottom">
+            <a href="{{ collection.url }}" class="t4s-mini-search__viewAll t4s-d-block">{{ 'search.pagination.view_all' | t }} <svg width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 18.71875 6.78125 L 17.28125 8.21875 L 24.0625 15 L 4 15 L 4 17 L 24.0625 17 L 17.28125 23.78125 L 18.71875 25.21875 L 27.21875 16.71875 L 27.90625 16 L 27.21875 15.28125 Z"/></svg></a>
+         </div>
+      {%- endif -%}
+   {%- else -%}<div data-viewAll-search class="t4s-drawer__bottom" style="display:none"></div>
+   {%- endif -%}
+</div>

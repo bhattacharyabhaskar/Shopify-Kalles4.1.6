@@ -1,0 +1,442 @@
+{%- liquid  
+	assign isShowHTMl = false
+	if template.suffix == 'config' and request.design_mode
+		assign isShowHTMl = true
+	endif 
+ 	assign se_stts = section.settings
+	assign se_blocks = section.blocks 
+ -%}
+{%- if isShowHTMl -%}
+	{{ 'top-head.css' | asset_url | stylesheet_tag }}
+	<div class="t4s-top-heading t4s_des_title_{{ se_stts.design_heading }} {{ se_stts.heading_align }}" style="--tophead_mb: {{ se_stts.tophead_mb }}px;">
+		{%- if se_stts.top_heading != blank -%}<h3 class="t4s-section-title t4s-title"><span>{{ se_stts.top_heading }}</span></h3>{%- endif -%}
+		{% if se_stts.design_heading == "13" %}
+			<span class="heading-char t4s-d-block"><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="82" height="30" viewBox="0 0 82.000000 9.000000" preserveAspectRatio="xMidYMid meet"><g transform="translate(0.000000,9.000000) scale(0.050000,-0.050000)" fill="currentColor" stroke="none"> <path d="M20 161 c0 -10 17 -24 37 -30 21 -7 54 -30 73 -52 50 -54 142 -50 214 11 32 28 75 50 94 50 19 0 56 -22 82 -50 62 -66 157 -66 236 0 75 63 106 63 180 0 76 -64 152 -64 228 0 75 63 117 63 176 0 66 -70 160 -67 245 8 82 74 59 105 -26 34 -77 -65 -113 -65 -199 -2 -86 63 -141 63 -216 0 -75 -63 -113 -63 -188 0 -32 27 -82 50 -110 50 -27 0 -77 -22 -110 -50 -74 -63 -111 -63 -196 0 -37 28 -88 50 -112 50 -25 0 -72 -22 -104 -50 -33 -27 -75 -50 -94 -50 -19 0 -61 23 -94 50 -60 50 -116 66 -116 31z"/></g></svg></span>
+		{% endif %}
+		{%- if se_stts.design_heading == "6" -%}
+			{%- if se_stts.icon_heading != blank -%}
+	            <span class="t4s-cbl"><i class="{{ se_stts.icon_heading }}"></i></span>
+	        {%- endif -%}
+		{%- endif -%}
+		{%- if se_stts.top_subheading != blank -%}<span class="t4s-section-des t4s-subtitle">{{ se_stts.top_subheading }}</span>{%- endif -%}
+	</div>
+{%- endif -%} 
+
+{%- style -%}
+	{%- for block in se_blocks -%}{%- assign bk_stts = block.settings -%}
+		.t4s-{{ block.type }} {
+			{%- if bk_stts.italic%}font-style: italic;{% endif -%}
+		   	--color: {{ bk_stts.color }};
+			font-family: var(--font-family-{{ bk_stts.family }});
+			font-size: {{ bk_stts.size_mb }}px;
+			font-weight: {{ bk_stts.weight }};
+		   {%- if bk_stts.ls_mb != 0 %}letter-spacing: {{ bk_stts.ls_mb }}px;{% endif -%}
+		   {%- if bk_stts.lh_mb != 0 %}line-height: {{ bk_stts.lh_mb }}px;{% endif -%}
+		   {%- if bk_stts.space_mb != 0 %}margin-bottom: {{ bk_stts.space_mb }}px;{% endif -%}
+		}
+		{% if block.type == "title" %}
+			.t4s-top-heading .t4s-cbl {
+				--color: {{ bk_stts.color }};
+			}
+		{% endif %}
+		@media (min-width: 768px) {
+			.t4s-{{ block.type }} {
+			   font-size: {{ bk_stts.size }}px;
+				font-weight: {{ bk_stts.weight }}; 
+			   {%- if bk_stts.ls != 0 %}letter-spacing: {{ bk_stts.ls }}px;{% endif -%}
+			   {%- if bk_stts.lh != 0 %}line-height: {{ bk_stts.lh }}px;{% endif -%}
+		      {%- if bk_stts.space != 0 %}margin-bottom: {{ bk_stts.space }}px;{% endif -%}
+			}
+		}
+	{%- endfor -%}
+{%- endstyle -%}
+
+{%- schema -%}
+{
+  "name": "Section Heading",
+  "tag": "div",
+  "class": "t4s-section t4s-section-config t4s-section-admn-fixed",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Only shown here for preview (not set for all site headings)"
+    },
+    {
+      "type": "paragraph",
+      "content": "—————————————————"
+    },
+    {
+      "type": "select",
+      "id": "design_heading",
+      "label": "+ Design heading",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "Design 01"
+        },
+        {
+          "value": "2",
+          "label": "Design 02"
+        },
+        {
+          "value": "3",
+          "label": "Design 03"
+        },
+        {
+          "value": "4",
+          "label": "Design 04"
+        },
+        {
+          "value": "5",
+          "label": "Design 05"
+        },
+        {
+          "value": "6",
+          "label": "Design 06 (width line-awesome)"
+        },
+        {
+          "value": "7",
+          "label": "Design 07"
+        },
+        {
+          "value": "8",
+          "label": "Design 08"
+        },
+        {
+          "value": "9",
+          "label": "Design 09"
+        },
+        {
+          "value": "10",
+          "label": "Design 10"
+        },
+        {
+          "value": "11",
+          "label": "Design 11"
+        },
+        {
+          "value": "12",
+          "label": "Design 12"
+        },
+        {
+          "value": "13",
+          "label": "Design 13"
+        },
+        {
+          "value": "14",
+          "label": "Design 14"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "+ Heading align",
+      "default": "t4s-text-center",
+      "options": [
+        {
+          "value": "t4s-text-start",
+          "label": "Left"
+        },
+        {
+          "value": "t4s-text-center",
+          "label": "Center"
+        },
+        {
+          "value": "t4s-text-end",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "+ Heading",
+      "default": "BEST SELLER"
+    },
+    {
+      "type": "text",
+      "id": "icon_heading",
+      "label": "Enter a name icon [LineAwesome](https://kalles.the4.co/font-lineawesome/)",
+      "info": "Only used for design 6",
+      "default": "las la-gem"
+    },
+    {
+      "type": "textarea",
+      "id": "top_subheading",
+      "label": "+ Subheading",
+      "default": "Top sale in this week"
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb",
+      "label": "+ Space bottom (px)",
+      "info": "The vertical spacing between heading and content",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#222"
+        },
+        {
+          "type": "select",
+          "id": "family",
+          "label": "Font family:",
+          "default": "1",
+          "options": [
+            {
+              "value": "1",
+              "label": "Font family #1"
+            },
+            {
+              "value": "2",
+              "label": "Font family #2"
+            },
+            {
+              "value": "3",
+              "label": "Font family #3"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "size",
+          "min": 10,
+          "max": 60,
+          "step": 0.5,
+          "label": "Font size",
+          "unit": "px",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "weight",
+          "min": 100,
+          "max": 800,
+          "step": 100,
+          "label": "Font weight",
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "lh",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "Line Height",
+          "info": "set is '0' use to default",
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "ls",
+          "label": "Letter spacing (in pixel)",
+          "info": "set is '0' use to default",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "space",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "label": "Space bottom",
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "+ Mobile settings:"
+        },
+        {
+          "type": "range",
+          "id": "size_mb",
+          "min": 10,
+          "max": 60,
+          "step": 0.5,
+          "label": "Font size",
+          "unit": "px",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "lh_mb",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "Line Height",
+          "info": "set is '0' use to default",
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "ls_mb",
+          "label": "Letter spacing (in pixel)",
+          "info": "set is '0' use to default",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "space_mb",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "label": "Space bottom",
+          "unit": "px",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "subtitle",
+      "name": "Sub heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "italic",
+          "label": "Enable style italic",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#878787"
+        },
+        {
+          "type": "select",
+          "id": "family",
+          "label": "Font family:",
+          "default": "2",
+          "options": [
+            {
+              "value": "1",
+              "label": "Font family #1"
+            },
+            {
+              "value": "2",
+              "label": "Font family #2"
+            },
+            {
+              "value": "3",
+              "label": "Font family #3"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "size",
+          "min": 10,
+          "max": 50,
+          "step": 0.5,
+          "label": "Font size",
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "weight",
+          "min": 100,
+          "max": 800,
+          "step": 100,
+          "label": "Font weight",
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "lh",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "Line Height",
+          "info": "set is '0' use to default",
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "ls",
+          "label": "Letter spacing (in pixel)",
+          "info": "set is '0' use to default",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "space",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "label": "Space bottom",
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "+ Mobile settings:"
+        },
+        {
+          "type": "range",
+          "id": "size_mb",
+          "min": 10,
+          "max": 50,
+          "step": 0.5,
+          "label": "Font size",
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "lh_mb",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "Line Height",
+          "info": "set is '0' use to default",
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "ls_mb",
+          "label": "Letter spacing (in pixel)",
+          "info": "set is '0' use to default",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "space_mb",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "label": "Space bottom",
+          "unit": "px",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "title"
+      },
+      {
+        "type": "subtitle"
+      }
+    ]
+  }
+}
+{% endschema %}

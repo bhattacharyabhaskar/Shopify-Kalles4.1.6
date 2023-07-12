@@ -1,0 +1,692 @@
+<!-- sections/testimonial_2.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+{{ 'testimonials_2.css' | asset_url | stylesheet_tag }}
+{%- liquid 
+    assign sid = section.id
+    assign se_stts = section.settings
+    assign se_blocks = section.blocks
+    assign color = se_stts.color
+    assign content_pd = se_stts.pd_sl | remove: ' ' | split: ','  
+    assign content_pd_mb = se_stts.pd_sl_mb | remove: ' ' | split: ','
+    assign se_height = se_stts.se_height
+    assign stt_layout = se_stts.layout
+    assign stt_image_bg = se_stts.image_bg
+    assign attr_img = ''
+    assign isRunLoop = true
+    assign SetBL = true
+    if se_height == 't4s_ratioadapt_f'
+        assign SetBL = false
+    endif
+    if se_height == 't4s_ratio_fh'
+        assign attr_img = 'data-'
+    endif
+    assign first_ratio = se_blocks[0].settings.image
+    if stt_layout == 't4s-se-container' 
+        assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+    elsif stt_layout == 't4s-container-wrap'
+        assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+    else
+        assign html_layout = '__' | split: '__'
+    endif
+    assign t4s_se_class = 't4s_nt_se_' | append: sid
+    if se_stts.use_cus_css and se_stts.code_cus_css != blank
+        render 'se_cus_css', code_cus_css: se_stts.code_cus_css, t4s_se_class: t4s_se_class
+    endif 
+   -%}
+{%- capture data-flickityt4s_main -%}{
+    "cellAlign": "center","freeScroll": 0, "contain" : 1,"dragThreshold" : 15,"percentPosition": 1,"imagesLoaded": 0,"lazyload": 0, "prevNextButtons": {{ se_stts.nav_btn }},"pageDots": {{ se_stts.nav_dot }},"pauseAutoPlayOnHover":1,"wrapAround": {{ se_stts.loop }},"autoPlay":{{ se_stts.au_time | times: 1000 }},"arrowIcon":"{{ arrow_icon }}","pauseAutoPlayOnHover" : {{ se_stts.au_hover }}
+}{%- endcapture -%}
+{%- capture data-flickityt4s_img -%}{
+    "sync": "#t4s-testimonial-main__{{ sid }}", "contain": 1, "pageDots": 0,"prevNextButtons":0,"wrapAround": {{ se_stts.loop }},"adaptiveHeight":{% if se_height != 't4s_ratio_fh' and se_height != 't4s_ratioadapt_f' %}1{% else %}0{% endif %}
+}{%- endcapture -%}
+{%- if se_height != "t4s_ratio_fh" -%}
+    {%- capture append_style -%}
+        --aspect-ratio-cusdt:{{ se_stts.height_dk }}px;--aspect-ratio-custb:{{ se_stts.height_tb }}px;--aspect-ratio-cusmb:{{ se_stts.height_mb }}px;
+    {%- endcapture -%}
+{%- endif %}
+<div class="t4s-section-inner t4s_nt_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="2"{% endif %}  {% render 'section_style', se_stts:se_stts, append_style: append_style %}>
+    {{- html_layout[0] -}}
+    {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %}>{% endif -%}
+    <div class="t4s-testimonials-inner t4s-row t4s-g-0 t4s-align-items-center t4s-row-cols-md-2 t4s-row-cols-1" style="--primary-color-testimonials-2: {{ color }};--content-pd: {{ content_pd[0] | default: 0 }} {{ content_pd[1] | default: 0 }} {{ content_pd[2] | default: 0 }} {{ content_pd[3] | default: 0 }};--content-pd-mb: {{ content_pd_mb[0] | default: 0 }} {{ content_pd_mb[1] | default: 0 }} {{ content_pd_mb[2] | default: 0 }} {{ content_pd_mb[3] | default: 0 }};">
+        <div class="t4s-testimonial-main t4s-oh t4s-col-item">
+            <div id="t4s-testimonial-main__{{ sid }}" class="flickityt4s t4s-flicky-slider t4s-{{ se_stts.dots_align }} {% if se_stts.nav_btn %}  t4s-slider-btn-style-{{ se_stts.btn_owl }} t4s-slider-btn-{{ se_stts.btn_shape }} t4s-slider-btn-{{ se_stts.btn_size }} t4s-slider-btn-cl-{{ se_stts.btn_cl }} t4s-slider-btn-vi-{{ se_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ se_stts.btn_hidden_mobile }} {% endif %} {% if se_stts.nav_dot %} t4s-dots-style-{{ se_stts.dot_owl }} t4s-dots-round-{{ se_stts.dots_round }} t4s-dots-hidden-mobile-{{ se_stts.dots_hidden_mobile }} {% endif %}{% if se_stts.nav_dot %} t4s-dots-style-{{ se_stts.dot_owl }} t4s-dots-cl-{{ se_stts.dots_cl }} t4s-dots-round-{{ se_stts.dots_round }} t4s-dots-hidden-mobile-{{ se_stts.dots_hidden_mobile }}{% endif %}" data-flickityt4s-js='{{ data-flickityt4s_main }}' style="--space-dots: {{ se_stts.dots_space }}px;--flickity-btn-pos: 0px;--flickity-btn-pos-mb: 0px;">
+                {%- for block in se_blocks -%}
+                    {%- assign bk_stts = block.settings -%}
+                    <div class="t4s-testimonial-item t4s-{{ se_stts.content_align }}" id="b_{{ block.id }}" data-select-flickity {{ block.shopify_attributes }}>
+                        <div class="t4s-testimonial-inner">
+                            <div class="t4s-testimonial-content t4s-rte">
+                                {%- render 'rating_star', rating: bk_stts.rating -%}
+                                {%- if bk_stts.heading -%}<h3 class="t4s-testimonial-heading t4s-fnt-fm-{{ se_stts.fontf }}">{{ bk_stts.heading }}</h3>{%- endif -%}
+                                {%- if bk_stts.content -%}{{ bk_stts.content }}{%- endif -%}
+                            </div>
+                            <div class="t4s-testimonial-author">
+                                {%- if bk_stts.author -%}<h4 class="t4s-testimonial-name">{{ bk_stts.author }}</h4>{%- endif -%}
+                                {%- if bk_stts.pos -%}<p class="t4s-testimonial-pos">{{ bk_stts.pos }}</p>{%- endif -%}
+                            </div>
+                        </div>
+                    </div>
+                {%- endfor -%}
+            </div>
+        </div>
+        <div class="t4s-testimonial-image t4s-col-item">
+            <div class="flickityt4s t4s-flicky-slider t4s-pr t4s-oh {{ se_height }} t4s-slide-eff-fade t4scuspx1_{{ se_stts.custom_mb }} t4scuspx2_{{ se_stts.custom_tb }} t4scuspx3_{{ se_stts.custom_dk }}" data-flickityt4s-js='{{ data-flickityt4s_img }}'>
+                    {%- for block in se_blocks -%}
+                        {%- liquid 
+                            assign bk_stts = block.settings
+                            assign image = bk_stts.image 
+                            assign mb_image = bk_stts.image_mb | default: image 
+                            if isRunLoop
+                                assign ratio = image.aspect_ratio 
+                                assign ratiomb = mb_image.aspect_ratio 
+                                assign isRunLoop = SetBL
+                            endif
+                           -%}
+                    <div class="t4s-testimonial-img t4s-w-100 t4s-d-block">
+                        <div class="t4s_ratio t4s_ratio_hasmb" {{ attr_img }}style="--aspect-ratioapt:{{ ratio | default: 1.7777 }};--aspect-ratioaptmb:{{ ratiomb | default: 1.7777 }};">
+                            {% capture class_img %} t4s-slide-{{ bk_stts.animate_slide }}{% endcapture %}
+                            {%- if image -%}
+                                {%- if forloop.first -%}
+                                    {%- assign class_img_first = 'lazyloadt4s t4s-lz--fadeIn t4s-img-as-bg t4s-d-md-none' | append: class_img -%}
+                                    {{ mb_image | image_url: width: 800 | image_tag: class: class_img_first, loading: lazy, widths: '375, 575, 750' }}
+                                    <img class="lazyloadt4s t4s-lz--fadeIn t4s-img-as-bg t4s-d-none t4s-d-md-block t4s-slide-{{ bk_stts.animate_slide }}" data-src="{{ image | image_url: width: 1 }}" data-widths="[800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2500, 3000, 3400, 3800, 4100]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                    <span class="lazyloadt4s-loader is-bg-img t4s-d-none t4s-d-md-block" style="background: url({{ image | image_url: width: 1 }})"></span>
+                                {%- else -%}
+                                    <img class="lazyloadt4s t4s-lz--fadeIn t4s-img-as-bg t4s-d-md-none t4s-slide-{{ bk_stts.animate_slide }}" data-src="{{ mb_image | image_url: width: 1 }}" data-widths="[375, 575, 750]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: mb_image.width, h: mb_image.height %}" width="{{ mb_image.width }}" height="{{ mb_image.height }}" alt="{{ mb_image.alt | escape }}">
+                                    <span class="lazyloadt4s-loader is-bg-img t4s-d-md-none" style="background: url({{ mb_image | image_url: width: 1 }})"></span>
+                                    <img class="lazyloadt4s t4s-lz--fadeIn t4s-img-as-bg t4s-d-none t4s-d-md-block t4s-slide-{{ bk_stts.animate_slide }}" data-src="{{ image | image_url: width: 1 }}" data-widths="[800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2500, 3000, 3400, 3800, 4100]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                    <span class="lazyloadt4s-loader is-bg-img t4s-d-none t4s-d-md-block" style="background: url({{ image | image_url: width: 1 }})"></span>
+                                {%- endif -%}
+                            {%- else -%}
+                                {%- capture current -%}{% cycle 1, 2 %}{%- endcapture -%}
+                                {{ 'lifestyle-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg t4s-svg-bg1' }}
+                            {%- endif -%}
+                        </div>
+                    </div>
+                    {%- endfor -%}
+            </div>
+        </div>
+    </div>
+    {{- html_layout[1] -}}
+    <div class="t4s-d-none">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <symbol id="t4s_star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M329.6 176H488C498.3 176 507.4 182.5 510.7 192.2C514 201.9 510.8 212.6 502.7 218.9L371.9 320.7L422.9 480.7C426.1 490.7 422.4 501.7 413.7 507.7C405.1 513.7 393.6 513.4 385.3 506.9L256 406.4L126.7 506.9C118.4 513.4 106.9 513.7 98.27 507.7C89.65 501.7 85.94 490.7 89.13 480.7L140.1 320.7L9.267 218.9C1.174 212.6-2.027 201.9 1.3 192.2C4.628 182.5 13.75 176 24 176H182.5L233.1 16.72C236.3 6.764 245.6 0 256 0C266.5 0 275.7 6.764 278.9 16.72L329.6 176z"/></svg></symbol>
+            <symbol id="t4s_star_half"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M233.1 16.72C236.3 6.764 245.5 .0006 256 0V406.4L126.7 506.9C118.4 513.4 106.9 513.7 98.27 507.7C89.65 501.7 85.94 490.7 89.13 480.7L140.1 320.7L9.267 218.9C1.174 212.6-2.027 201.9 1.3 192.2C4.628 182.5 13.75 175.1 24 175.1H182.5L233.1 16.72z"/><path class="t4s-star-emty" d="M278.9 16.72C275.7 6.764 266.5 .0006 255.1 0V406.4L385.3 506.9C393.6 513.4 405.1 513.7 413.7 507.7C422.4 501.7 426.1 490.7 422.9 480.7L371.9 320.7L502.7 218.9C510.8 212.6 514 201.9 510.7 192.2C507.4 182.5 498.3 175.1 488 175.1H329.5L278.9 16.72z"/></svg></symbol>
+        </svg>
+        <style>
+        path.t4s-star-emty {
+            fill: #dedede;
+        }
+        </style>
+    </div>
+</div>
+
+{%- schema -%}
+{
+    "name": "Testimonials 2",
+    "tag": "section",
+    "class": "t4s-section t4s_bk_flickity t4s-section-all t4s_tp_cdt t4s-testimonials-2",
+    "settings": [
+        {
+            "type": "header",
+            "content": "1. General options"
+        },
+        {
+            "type": "select",
+            "id": "se_height",
+            "label": "Section height",
+            "default": "t4s_ratioadapt",
+            "options": [
+                { "value": "t4s_ratioadapt_f","label": "Adapt to first image" },
+                { "value": "t4s_ratioadapt","label": "Adapt to image" },
+                { "value": "t4s_ratio_fh","label": "Full screen height" },
+                { "value": "t4s_ratio_cuspx","label": "Custom height" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "custom_dk",
+            "label": "Use custom height (Desktop)",
+            "default": true
+        },
+        {
+            "type": "number",
+            "id": "height_dk",
+            "label": "Section height (Desktop)",
+            "default": 600
+        },
+        {
+            "type": "checkbox",
+            "id": "custom_tb",
+            "label": "Use custom height (Tablet)",
+            "default": true
+        },
+        {
+            "type": "number",
+            "id": "height_tb",
+            "label": "Section height (Tablet)",
+            "default": 400
+        },
+        {
+            "type": "checkbox",
+            "id": "custom_mb",
+            "label": "Use custom height (Mobile)",
+            "default": true
+        },
+        {
+            "type": "number",
+            "id": "height_mb",
+            "label": "Section height (Mobile)",
+            "default": 250
+        },
+        {
+            "type": "select",
+            "id": "fontf",
+            "default":"inherit",
+            "label": "Heading font family",
+            "options": [
+                {
+                    "label": "Inherit",
+                    "value": "inherit"
+                },
+                {
+                    "label": "Font Family #1",
+                    "value": "1"
+                },
+                {
+                    "label": "Font Family #2",
+                    "value": "2"
+                },
+                {
+                    "label": "Font Family #3",
+                    "value": "3"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "content_align",
+            "label": "Content align",
+            "default": "text-start",
+            "options": [
+                {
+                    "label": "Left",
+                    "value": "text-start"
+                },
+                {
+                    "label": "Center",
+                    "value": "text-center"
+                },
+                {
+                    "label": "Right",
+                    "value": "text-end"
+                }
+            ]
+        },
+        {
+            "type": "color",
+            "label": "Rating star color",
+            "id": "color",
+            "default": "#e56a54"
+        },
+        {
+            "type": "text",
+            "label": "Content slide padding",
+            "id": "pd_sl",
+            "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+            "default": ",20px,,"
+        },
+        {
+            "type": "text",
+            "label": "Content slide padding (Mobile)",
+            "id": "pd_sl_mb",
+            "default": ",,30px,",
+            "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank"
+        },
+        {
+            "type": "header",
+            "content": "+Options for carousel layout"
+        },
+        {
+            "type": "checkbox",
+            "id": "loop",
+            "label": "Enable loop",
+            "info": "At the end of cells, wrap-around to the other end for infinite scrolling",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "au_time",
+            "min": 0,
+            "max": 30,
+            "step": 0.5,
+            "label": "Autoplay speed in second.",
+            "info": "Set is '0' to disable autoplay",
+            "unit": "s",
+            "default": 0
+        },
+        {
+            "type": "checkbox",
+            "id": "au_hover",
+            "label": "Pause autoplay on hover",
+            "info": "Auto-playing will pause when the user hovers over the content carousel",
+            "default": true
+        },
+        {
+            "type": "paragraph",
+            "content": "—————————————————"
+        },
+        {
+            "type": "paragraph",
+            "content": "Prev next button"
+        },
+        {
+            "type": "checkbox",
+            "id": "nav_btn",
+            "label": "Use prev next button",
+            "info": "Creates and show previous & next buttons",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "btn_vi",
+            "label": "Visible",
+            "default": "hover",
+            "options": [
+                {
+                    "value": "always",
+                    "label": "Always"
+                },
+                {
+                    "value": "hover",
+                    "label": "Only hover"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_owl",
+            "label": "Button style",
+            "default": "default",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "outline",
+                    "label": "Outline"
+                },
+                {
+                    "value": "simple",
+                    "label": "Simple"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_shape",
+            "label": "Button shape",
+            "info": "Not working with button style 'Simple'",
+            "default": "none",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "Default"
+                },
+                {
+                    "value": "round",
+                    "label": "Round"
+                },
+                {
+                    "value": "rotate",
+                    "label": "Rotate"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_cl",
+            "label": "Button color",
+            "default": "dark",
+            "options": [
+                {
+                    "value": "light",
+                    "label": "Light"
+                },
+                {
+                    "value": "dark",
+                    "label": "Dark"
+                },
+                {
+                    "value": "primary",
+                    "label": "Primary"
+                },
+                {
+                    "value": "custom1",
+                    "label": "Custom color 1"
+                },
+                {
+                    "value": "custom2",
+                    "label": "Custom color 2"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_size",
+            "label": "Button size",
+            "default": "small",
+            "options": [
+                {
+                    "value": "small",
+                    "label": "Small"
+                },
+                {
+                    "value": "medium",
+                    "label": "Medium"
+                },
+                {
+                    "value": "large",
+                    "label": "Large"
+                }
+            ]
+        },
+        {
+            "type":"checkbox",
+            "id":"btn_hidden_mobile",
+            "label":"Hidden buttons on mobile ",
+            "default": true
+        },
+        {
+            "type": "paragraph",
+            "content": "—————————————————"
+        },
+        {
+            "type": "paragraph",
+            "content": "Page dots"
+        },
+        {
+            "type": "checkbox",
+            "id": "nav_dot",
+            "label": "Use page dots",
+            "info": "Creates and show page dots",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "dot_owl",
+            "label": "Dots style",
+            "default": "number",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "outline",
+                    "label": "Outline"
+                },
+                {
+                    "value": "elessi",
+                    "label": "Elessi"
+                },
+                {
+                    "value": "number",
+                    "label": "Number"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "dots_round",
+            "label": "Enable dots round",
+            "default": true
+        },       
+        {
+            "type": "select",
+            "id": "dots_cl",
+            "label": "Dots color",
+            "default": "dark",
+            "options": [
+                {
+                    "value": "light",
+                    "label": "Light (Best on dark background)"
+                },
+                {
+                    "value": "dark",
+                    "label": "Dark"
+                },
+                {
+                    "value": "primary",
+                    "label": "Primary"
+                },
+                {
+                    "value": "custom1",
+                    "label": "Custom color 1"
+                },
+                {
+                    "value": "custom2",
+                    "label": "Custom color 2"
+                }
+            ]
+        },
+        {
+            "type": "range",
+            "id": "dots_space",
+            "min": 2,
+            "max": 40,
+            "step": 1,
+            "label": "Dot between horizontal",
+            "unit": "px",
+            "default": 20
+        },
+        {
+            "type": "select",
+            "id": "dots_align",
+            "label": "Dots align",
+            "default": "text-start",
+            "options": [
+                {
+                    "label": "Left",
+                    "value": "text-start"
+                },
+                {
+                    "label": "Center",
+                    "value": "text-center"
+                },
+                {
+                    "label": "Right",
+                    "value": "text-end"
+                }
+            ]
+        },
+        {
+            "type":"checkbox",
+            "id":"dots_hidden_mobile",
+            "label":"Hidden dots on mobile ",
+            "default": false
+        },
+        {
+            "type": "header",
+            "content": "2. Design options"
+        },
+        {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout",
+            "options": [
+                {
+                    "label": "Container",
+                    "value": "t4s-se-container"
+                },
+                {
+                    "value": "t4s-container-wrap",
+                    "label": "Wrapped container"
+                },
+                {
+                    "label": "Full width",
+                    "value": "t4s-container-fluid"
+                }
+            ],
+            "default": "t4s-se-container"
+        },
+        {
+            "type": "color",
+            "id": "cl_bg",
+            "label": "Background"
+        },
+        {
+            "type": "color_background",
+            "id": "cl_bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_bg",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info": "Margin top, margin right, margin bottom, margin left. If you not use to blank",
+            "default": ",,50px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info": "Padding top, padding right, padding bottom, padding left. If you not use to blank",
+            "placeholder": "50px,,50px,"
+        },
+        {
+          "type": "header",
+          "content": "+ Design Tablet Options"
+        },
+        {
+          "type": "text",
+          "id": "mg_tb",
+          "label": "Margin",
+          "placeholder": ",,50px,"
+        },
+        {
+          "type": "text",
+          "id": "pd_tb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+        },
+        {
+            "type": "header",
+            "content": "+ Design mobile options"
+        },
+        {
+            "type": "text",
+            "id": "mg_mb",
+            "label": "Margin",
+            "default": ",,30px,",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "text",
+            "id": "pd_mb",
+            "label": "Padding",
+            "placeholder": ",,50px,"
+        },
+        {
+            "type": "header",
+            "content": "4. Custom css"
+        },
+        {
+            "id": "use_cus_css",
+            "type": "checkbox",
+            "label": "Use custom css",
+            "default":false,
+            "info": "If you want custom style for this section."
+        },
+        { 
+            "id": "code_cus_css",
+            "type": "textarea",
+            "label": "Code custom css",
+            "info": "Use selector .SectionID to style css"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "testimonial",
+            "name": "Testimonial",
+            "settings": [
+                {
+                    "type": "header",
+                    "content": "+Options for image"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "image_picker","id": "image_mb",
+                    "label": "Mobile image (optional)",
+                    "info": "750 x 1100px .jpg recommended. If none is set, desktop image will be used."
+                },
+                {
+                    "type": "header",
+                    "content": "+Options for content"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Heading"
+                },
+                {
+                    "type": "richtext",
+                    "id": "content",
+                    "label": "Text",
+                    "default": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>"
+                },
+                {
+                    "type": "text",
+                    "id": "author",
+                    "label": "Author",
+                    "default": "Author's name"
+                },
+                {
+                    "type": "text",
+                    "id": "pos",
+                    "label": "Position"
+                },
+                {
+                    "type": "range",
+                    "id": "rating",
+                    "min": 0,
+                    "max": 5,
+                    "step": 0.5,
+                    "label": "Rating",
+                    "info": "Set less than '1' to disable Rating.",
+                    "default": 5
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Testimonials 2",
+            "category": "Homepage",
+            "blocks": [
+                {
+                    "type": "testimonial"
+                },
+                {
+                    "type": "testimonial"
+                },
+                {
+                    "type": "testimonial"
+                }
+            ]
+        }
+    ]
+}
+{%- endschema -%}

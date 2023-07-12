@@ -1,0 +1,332 @@
+{%- assign sid = section.id -%}
+  
+  {%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks %}<div {{ block.shopify_attributes }}></div>{% endfor -%}
+    {%- assign img_size_sw = '100x100' -%} 
+
+    {%- capture cl_css_jsnt -%}
+      {%- for block in section.blocks -%}
+
+          {%- liquid
+            assign bk_stts = block.settings 
+            assign b_title = bk_stts.title | split: ';'
+            if b_title == blank
+              continue
+            endif
+
+            assign title_h = b_title | join: '-kt4t-' | handleize | split: '-kt4t-'
+            assign color = bk_stts.color -%}
+
+            {%- case block.type -%} 
+               {%- when 'bg_color' -%}
+                  {%- assign color_2_c = bk_stts.color_2_c -%}
+                  .bg_color_{{ title_h | join: ',.bg_color_' }} { 
+
+                    {%- if color != blank -%}--t4s-bg-color: {{ color }};{%- endif -%}
+                    {%- if bk_stts.cl_gradient != blank and bk_stts.color_img == false or bk_stts.color_jpg == blank -%}background-image: {{ bk_stts.cl_gradient }}{%- endif -%}
+                  }
+                  {%- if bk_stts.color_img and bk_stts.color_jpg != blank -%} 
+                  .bg_color_{{ title_h }}.lazyloadt4sed{background-image: url('{{ bk_stts.color_jpg | image_url: width: 100, height: 100, crop: 'center' }}')}
+                  {%- endif -%}
+
+               {%- when 'lb_menu' -%}
+                  .t4s_lb_menu_{{ title_h | join: ',.t4s_lb_menu_' }}{ {% if color != blank %}background-color: {{ color }};{% endif %}{% if bk_stts.cl_gradient != blank %}background-image: {{ bk_stts.cl_gradient }};{% endif %}{% if bk_stts.color_txt != blank %}color: {{ bk_stts.color_txt }}{% endif %} }
+
+               {%- else -%}
+                  .t4s-badge-item.t4s-badge-{{ title_h | join: ',.t4s-badge-item.t4s-badge-' }}{ {% if color != blank %}background-color: {{ color }};{% endif %}{% if bk_stts.cl_gradient != blank %}background-image: {{ bk_stts.cl_gradient }};{% endif %}{% if bk_stts.color_txt != blank %}color: {{ bk_stts.color_txt }}{% endif %} }
+
+            {%- endcase -%}
+          
+      {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- style -%}{{ cl_css_jsnt | replace: '.bg_color_', '[class*=" bg_color_"].bg_color_' | replace: '.t4s_lb_menu_', '.t4s_lb_nav.t4s_lb_menu_' }}{%- endstyle -%}
+
+      <style>
+        #shopify-section-t4s_custom_color:not(style) {
+            display: none;
+        }
+        .color_section {
+            padding-bottom: 60px;
+            margin-bottom: 60px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            background-color: #f8f8f8;
+        }
+        .color_section textarea {
+              opacity: 0;
+              height: 100px;
+              max-width: 300px;
+              margin: 0 auto;
+              width: 100%;
+              display: block;
+              margin-top: 0!important;
+              border: 1px solid #ccc;
+        }
+        .color_section button.button {
+            box-shadow: inset 0 -2px 0 rgb(0 0 0 / 15%);
+            background-color: #008060;
+            border-color: #008060;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -ms-flex-align: center;
+            align-items: center;
+            transition: 150ms;
+            position: relative;
+            padding: 10px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin: 60px 0;
+        }
+        .color_section button.button>svg {
+            margin-right: 5px;
+        }
+        .color_section .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 170px;
+          background-color: #222;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px;
+          position: absolute;
+          z-index: 1;
+          bottom: 150%;
+          left: 50%;
+          margin-left: -85px;
+          opacity: 0;
+          transition: opacity .3s;
+          font-size: 12px;
+          font-weight: 400;
+          text-transform: none;
+        }
+        .color_section .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #222 transparent transparent;
+        }
+        .color_section button.button:hover {
+            background-color: #004c3f;
+            color: #fff;
+            box-shadow: 0 5px 25px 0 rgb(0 0 0 / 25%);
+        }
+        .color_section button.button.tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .color_section h3.section-title {
+            font-size: 24px;
+            font-weight: 500;
+        }
+        .color_section .mt__30 {
+            margin-top: 30px;
+        }
+        .color_section .pt__15 {
+            padding-top: 15px;
+        }
+        .color_section .pb__15 {
+            padding-bottom: 15px;
+        }
+        .color_section h5 {
+          font-size: 15px;
+          font-weight: normal;
+       }
+       .color_section .t4s-color-bg-config {
+          width: 20px;
+          height: 20px;
+          display: inline-block;
+          border-radius: 50%;
+          background-position: center center!important;
+          background-repeat: no-repeat!important;
+          background-size: cover!important;
+       }
+       .color_section .t4s-badge-item {
+            font-size: 14px;
+            padding: 3px 13px;
+            margin-bottom: 2px;
+            display: inline-block;
+        }
+       .color_section .t4s_lb_nav {
+          transition: opacity .3s ease-in-out;
+          box-shadow: rgb(0 0 0 / 30%) 1px 1px 3px 0;
+          font-size: 14px;
+          padding: 3px 13px;
+          margin-bottom: 2px;
+          display: inline-block;
+          opacity: 1;
+          position: static;
+          transform: none;
+          margin-top: 0;
+        }
+        .color_section .t4s-col-auto.is--selected {
+            background-image: repeating-linear-gradient(0deg,#d41616,#d41616 9px,transparent 9px,transparent 16px,#d41616 16px),repeating-linear-gradient(90deg,#d41616,#d41616 9px,transparent 9px,transparent 16px,#d41616 16px),repeating-linear-gradient(180deg,#d41616,#d41616 9px,transparent 9px,transparent 16px,#d41616 16px),repeating-linear-gradient(270deg,#d41616,#d41616 9px,transparent 9px,transparent 16px,#d41616 16px);
+            background-size: 2px calc(100% + 16px),calc(100% + 16px) 2px,2px calc(100% + 16px),calc(100% + 16px) 2px;
+            background-position: 0 0,0 0,100% 0,0 100%;
+            background-repeat: no-repeat;
+            animation: .6s linear infinite borderAnimation;
+        }
+        .admclnt_note {
+            font-size: 17px;
+            margin-bottom: 0;
+            color: var(--t4s-warning-color);
+        }
+        @keyframes borderAnimation{from{background-position:0 0,-16px 0,100% -16px,0 100%}to{background-position:0 -16px,0 0,100% 0,-16px 100% }}
+      </style>  
+      <textarea readonly id="myInput{{ sid }}">/*! Code css #{{ sid }} */ {{ cl_css_jsnt }}</textarea>
+        
+      <div id="admclnt_{{ sid }}" class="t4s-text-center admclnt">
+        
+        <p class="admclnt_note">
+          1. In order showing the color on live page, click "COPY CSS CODE" button and then click on Actions->Edit code to paste the code in the file assets/colors.css.<br> 
+          2. From Theme settings->CUSTOM CSS/JS option, click on checkbox "Use colors custom css". Then, click Save at the top right.<br> 
+          <a href="https://the4.gitbook.io/kalles-4.0/general-sections/custom-color" target="_blank">👉 See guide</a><br> 
+        </p>
+        <button onclick="myFunctionT4('{{ sid }}')" onmouseout="outFuncT4('{{ sid }}')" class="btn_cp tooltip button mt__60 mb__60 pr tc">
+        <span class="tooltiptext" id="myTooltip{{ sid }}">Copy code to clipboard</span>
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy css code
+        </button>
+
+         <h3 class="section-title t4s-text-center"><span>Demo swatch, Label settings Preview:</span></h3>
+         <div class="t4s-row t4s-align-items-center t4s-justify-content-center mt__30">
+         {%- for block in section.blocks %}{% assign bk_stts = block.settings -%} 
+           {%- if bk_stts.title != "" -%}{%- assign title = bk_stts.title | split: ';' | first -%}{%- assign title_h = title | handleize -%}
+              <div class="t4s-col-auto t4s-col-item pt__15 pb__15 t4s-text-center" id="item_{{ block.id }}" {{ block.shopify_attributes }}>
+                {%- case block.type -%}
+                  
+                  {%- when 'bg_color' -%}
+                    <span class="t4s-color-bg-config bg_color_{{ title_h }} lazyloadt4s"></span>
+
+                  {%- when 'lb_menu' -%}<span class="t4s_lb_nav t4s_lb_menu_{{ title_h }}">{{ title }}</span>
+
+                  {%- else -%}{%- assign splitTags = title | split: 'badge_' | last -%}<span class="t4s-badge-item t4s-badge-{{ splitTags | handleize }}">{{ splitTags }}</span>
+
+                {%- endcase -%}
+                <h5>{{ forloop.index }}. {{ title }}</h5>
+              </div>
+           {%- endif -%}
+         {%- endfor -%}
+        </div>
+
+      </div>
+  {%- endif -%}
+
+{%- schema -%}
+  {
+    "name": "Custom color",
+    "class": "color_section",
+    "settings": [
+      {
+      "type": "paragraph",
+      "content": "Set name the color and select the color code you want to customize."
+      },
+      {
+      "type": "paragraph",
+      "content": "Separate by a comma ; . If you want support multilingual"
+      },
+      {
+      "type": "paragraph",
+      "content": "Eg: yellow; jaune"
+      }
+    ],
+    "blocks": [
+      {
+        "type":"bg_color",
+        "name":"Swatch color",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "title",
+            "label": "Color Name",
+            "info": "eg: yellow"
+          },
+          {
+            "type": "color",
+            "id": "color",
+            "label": "Background color"
+          },
+          {
+            "type": "color_background",
+            "id": "cl_gradient",
+            "label": "Background gradient (optional)"
+          },
+          {
+            "type": "checkbox",
+            "id": "color_img",
+            "label": "Show image"
+          },
+          {
+            "type": "image_picker",
+            "id": "color_jpg",
+            "label": "Color image",
+            "info": "100px x 100px recommended"
+          }
+        ]
+      },
+      {
+        "type":"lb_menu",
+        "name":"Label menu color",
+        "settings": [
+           {
+              "type": "textarea",
+              "id": "title",
+              "label": "Label Menu Name",
+              "info": "eg: Sale"
+            },
+           {
+            "type": "color",
+            "id": "color",
+              "label": "Background color"
+            },
+          {
+            "type": "color_background",
+            "id": "cl_gradient",
+            "label": "Background gradient (optional)"
+          },
+          {
+            "type": "color",
+            "id": "color_txt",
+            "label": "Text color",
+            "default":"#fff"
+          }
+        ]
+      },
+      {
+        "type":"nt_label",
+        "name":"Label product custom",
+        "settings": [
+           {
+              "type": "textarea",
+              "id": "title",
+              "label": "Label Product Name",
+              "info": "eg: Sale"
+            },
+          {
+            "type": "color",
+            "id": "color",
+              "label": "Background color"
+            },
+          {
+            "type": "color_background",
+            "id": "cl_gradient",
+            "label": "Background gradient (optional)"
+          },
+          {
+            "type": "color",
+            "id": "color_txt",
+            "label": "Text color",
+            "default":"#fff"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+

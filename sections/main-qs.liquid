@@ -1,0 +1,1031 @@
+{%- liquid
+assign admin_sp = request.design_mode
+if admin_sp
+  assign arrTemp = '<template>|</template>' | split: '|'
+  assign product = section.settings.demo_pr
+  if product.id == blank 
+    assign cat_all = collections['all']
+    assign avai_cat_all = cat_all.products | where: "available", true 
+    assign product = avai_cat_all.first | default: cat_all.first
+  endif
+endif 
+
+assign isProductAvailable = product.available
+if isProductAvailable and settings.variant_remove == '2'
+   assign remove_soldout = true 
+else 
+   assign remove_soldout = false  
+endif 
+assign se_stts          = section.settings
+assign se_id            = section.id
+assign pr_se_id         = product.id | append: se_id
+assign media_layout     = se_stts.media_layout | default: 'without_thumbnails'
+assign pr_variants      = product.variants 
+assign variants_size    = pr_variants.size 
+assign selected_variant = product.selected_variant
+assign pr_curent        = settings.pr_curent
+if pr_curent == '1' and variants_size > 1
+  assign current_variant = selected_variant
+elsif pr_curent == '2' 
+  assign current_variant = selected_variant | default: pr_variants.first 
+  if remove_soldout and current_variant.available == false and isProductAvailable 
+    assign current_variant = product.first_available_variant 
+  endif
+else 
+  assign current_variant = product.selected_or_first_available_variant 
+endif
+assign PR_no_pick = false
+if pr_curent == '1' and variants_size > 1 and selected_variant == blank
+  assign PR_no_pick = true
+endif
+assign isProductDefault = product.has_only_default_variant
+
+
+assign ntsoldout  = false
+assign unvariants = false
+assign ck_so_un   = false
+if isProductDefault == false and variants_size > 1
+  assign unavailable_prs = pr_variants | where: "available", false 
+  assign options_size = product.options.size
+  assign vls0 = product.options_with_values[0].values.size | default: 1
+  assign vls1 = product.options_with_values[1].values.size | default: 1
+  assign vls2 = product.options_with_values[2].values.size | default: 1
+  assign ntvariants_size = vls0 | times: vls1 | times: vls2 | minus: pr_variants.size
+  if unavailable_prs.size > 0 or product.available == false
+    assign ntsoldout = true
+  endif
+  if ntvariants_size > 0
+    assign unvariants = true
+  endif
+  if ntsoldout or unvariants
+    assign ck_so_un = true
+  endif
+endif
+
+assign ck_external        = false
+assign pr_metafields      = product.metafields
+assign pr_metafields_meta = pr_metafields.meta
+assign meta_theme         = product.metafields.theme
+assign cus_qty            = meta_theme.cus_qty | default: 1
+assign custom_badge = meta_theme.custom_badge
+if custom_badge != blank
+   assign arr_badge = custom_badge | replace: '  ', '' | replace: ' ;', ';' | replace: '; ', ';' | split: ';' | join: 'nt-t4s' | escape | split: 'nt-t4s'
+   assign arr_badge_handle = arr_badge | join: 'nt-t4s' | handle | split: 'nt-t4s'
+else
+   assign badge_tags = product.tags | where: "badge_"
+   if badge_tags.size > 0
+      assign arr_badge_tags   = badge_tags | join: 'nt-t4s' | remove: 'badge_' | escape
+   endif
+endif
+
+assign media_size = product.media.size
+
+assign inventory_quantity = current_variant.inventory_quantity
+assign inventory_management = current_variant.inventory_management
+if inventory_quantity <= 0  and inventory_management == 'shopify' and current_variant.available
+  assign isPreoder = true
+else 
+  assign isPreoder = false
+endif
+
+assign seBlocks = section.blocks
+assign Block_price = seBlocks | where: 'type', 'price' | first
+assign block_price_stts = Block_price.settings
+
+assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
+ -%}
+
+{%- if Block_price != blank and product.price_varies and block_price_stts.price != '0' -%}
+  {%- capture style_price -%}
+  style="--price-size:{{ block_price_stts.size_price_pr }}px;--price-weight:{{ block_price_stts.fw_price_pr }};--price-color:{{ block_price_stts.price_color }};--price-sale-color:{{ block_price_stts.price_sale_color }};"
+  {%- endcapture -%}
+  {%- capture html_price -%}
+    {%- render 'product-price-single', variant: current_variant, product: product, PR_no_pick: false, type_sale: block_price_stts.type_sale, price_varies_style: '0', style_inline: style_price -%}
+  {%- endcapture -%}
+{%- endif -%}
+
+{{- arrTemp[0] -}}
+ 
+
+{{ 'qs-product.css' | asset_url | stylesheet_tag }}
+
+<div class="t4s-product-quick-shop" data-product-featured='{"id":"{{ product.id }}", "isQuickShopForm": true, "disableSwatch":{{ isProductDefault }}, "media": {% if media_size > 1 %}true{% else %}false{% endif %},"enableHistoryState": false, "formID": "#product-form-{{ pr_se_id }}", "removeSoldout":{{ remove_soldout }}, "changeVariantByImg":{{ settings.use_change_variant_by_img }}, "isNoPick":{{ PR_no_pick }},"hasSoldoutUnavailable":{{ ck_so_un }},"enable_zoom_click_mb":false,"main_click":"none","canMediaGroup":false,"isGrouped":false,"hasIsotope":false,"available":{{ product.available }}, "customBadge":null, "customBadgeHandle":null,"dateStart":{{ product.created_at | date: "%s" }}, "compare_at_price":{{ current_variant.compare_at_price | json }},"price":{{ current_variant.price | json }}, "isPreoder":{{ isPreoder }} }'>
+    <div class="t4s-product-qs-inner">
+
+      {%- for block in seBlocks %}{% assign bk_stts = block.settings -%}{% assign bk_id = block.id -%}
+        {%- case block.type -%}
+
+            {%- when 'properties' %}{% continue -%}
+            {%- when 'title' -%}
+              {%- liquid 
+                if bk_stts.lh_pr == 0
+                  assign lh_pr = 1
+                else
+                  assign lh_pr = bk_stts.lh_pr | append: 'px'
+                endif -%}
+              <h1 class="t4s-product-qs__title" style="--title-family:var(--font-family-{{ bk_stts.fnt_df_pr }});--title-style:{{ bk_stts.txt_tr_pr }};--title-size:{{ bk_stts.size_pr }}px;--title-weight:{{ bk_stts.fw_pr }};--title-line-height:{{ lh_pr }};--title-spacing:{{ bk_stts.ls_pr }}px;--title-color:{{ bk_stts.pr_title_color }};--title-color-hover:{{ bk_stts.pr_title_color }};" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+
+          {%- when 'price' -%}
+            <div class="t4s-product-qs__price" style="--price-size:{{ bk_stts.size_price_pr }}px;--price-weight:{{ bk_stts.fw_price_pr }};--price-color:{{ bk_stts.price_color }};--price-sale-color:{{ bk_stts.price_sale_color }};">
+              {%- render 'product-price-single', variant: current_variant, product: product, PR_no_pick: PR_no_pick, type_sale: bk_stts.type_sale, price_varies_style: bk_stts.price -%}
+            </div>
+
+          {%- when 'form' -%}
+                {%- liquid
+                  assign is_fit_ratio_img = false
+                  if variant_images.size > 0 and bk_stts.enable_fit_ratio_img and bk_stts.color_mode contains 'variant_image'
+                    assign is_fit_ratio_img = true
+                    assign first_ratio_img = variant_images[0].aspect_ratio
+                  endif
+                  assign arr_properties = seBlocks | where: 'type', 'properties'
+                  render 'product-form', type: 'main', product: product, bk_stts: bk_stts, pr_se_id: pr_se_id, isExternal: false, external_title: external_title, external_link: external_link, isProductAvailable: isProductAvailable, isProductDefault: isProductDefault, current_variant: current_variant, remove_soldout: remove_soldout, PR_no_pick: PR_no_pick, isPreoder: isPreoder, is_fit_ratio_img: is_fit_ratio_img, first_ratio_img: first_ratio_img, name_sizeg: null, html_sizeg: null, html_price: html_price , shopify_attributes: block.shopify_attributes, arr_properties: arr_properties, cus_qty: cus_qty
+                  -%}
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+</div>
+
+{{- arrTemp[1] -}}
+
+
+{%- schema -%}
+  {
+    "name": "Product Quickshop",
+    "tag": "section",
+    "class": "t4s-section t4s-section-main t4s-section-main-product t4s-section-admn-fixed",
+    "settings": [
+      {
+        "type": "product",
+        "id": "demo_pr",
+        "label": "Choose a product demo",
+        "info": "Product only shown on admin editor"
+      }
+    ],
+    "blocks": [
+        {
+          "type": "title",
+          "name": "Product Title",
+          "limit": 1,
+          "settings": [
+              {
+                "type": "select",
+                "id": "txt_tr_pr",
+                "default": "none",
+                "options": [
+                  {
+                    "value": "none",
+                    "label": "None"
+                  },
+                  {
+                    "value": "lowercase",
+                    "label": "Lowercase"
+                  },
+                  {
+                    "value": "capitalize",
+                    "label": "Capitalize"
+                  },
+                  {
+                    "value": "uppercase",
+                    "label": "Uppercase"
+                  }
+                ],
+                "label": "Style"
+              },
+              {
+                "type": "select",
+                "id": "fnt_df_pr",
+                "label": "Font family",
+                "default": "1",
+                "options": [
+                  {
+                    "value": "1",
+                    "label": "Font family #1"
+                  },
+                  {
+                    "value": "2",
+                    "label": "Font family #2"
+                  },
+                  {
+                    "value": "3",
+                    "label": "Font family #3"
+                  }
+                ]
+              },
+              {
+                "type": "range",
+                "id": "size_pr",
+                "min": 10,
+                "max": 60,
+                "step": 0.5,
+                "label": "Font size",
+                "unit": "px",
+                "default": 16
+              },
+              {
+                "type": "range",
+                "id": "fw_pr",
+                "min": 300,
+                "max": 900,
+                "step": 100,
+                "label": "Font weight",
+                "default": 600
+              },
+              {
+                "type":"range",
+                "id":"lh_pr",
+                "label":"Line height",
+                "max":100,
+                "min":0,
+                "step":1,
+                "default":0,
+                "unit":"px",
+                "info":"Set is '0' use to default"            
+              },
+              {
+                "type": "number",
+                "id": "ls_pr",
+                "label": "Letter spacing (in pixel)",
+                "info": "set is '0' use to default",
+                "default": 0
+              },
+              {
+                "type": "color",
+                "id": "pr_title_color",
+                "label": "Product title",
+                "default": "#222"
+              },
+              {
+                "type": "color",
+                "id": "pr_title_color_hover",
+                "label": "Product title hover",
+                "default": "#56cfe1"
+              }
+          ]
+        },
+        {
+          "type": "price",
+          "name": "Product price",
+          "limit": 1,
+          "settings": [
+            {
+              "type": "select",
+              "id": "price",
+              "options": [
+                {
+                  "value": "0",
+                  "label": "None"
+                },
+                {
+                  "value": "1",
+                  "label": "$39.00 – $59.00"
+                },
+                {
+                  "value": "2",
+                  "label": "From $39.00"
+                }
+              ],
+              "label": "Price varies settings",
+              "default": "0"
+            },
+            {
+              "type": "select",
+              "id": "type_sale",
+              "options": [
+                {
+                  "value": "0",
+                  "label": "None"
+                },
+                {
+                  "value": "1",
+                  "label": "Percentage"
+                },
+                {
+                  "value": "2",
+                  "label": "Fixed amount"
+                }
+              ],
+              "label": "Save badge type",
+              "default": "0"
+            },
+            {
+                "type": "range",
+                "id": "size_price_pr",
+                "min": 10,
+                "max": 50,
+                "step": 0.5,
+                "label": "Price size",
+                "unit": "px",
+                "default": 22
+            },
+            {
+                "type": "range",
+                "id": "fw_price_pr",
+                "min": 300,
+                "max": 800,
+                "step": 100,
+                "label": "Font weight",
+                "default": 400
+            },
+            {
+              "type": "color",
+              "id": "price_color",
+              "label": "Price",
+              "default": "#696969"
+            },
+            {
+              "type": "color",
+              "id": "price_sale_color",
+              "label": "Sale price",
+              "default": "#ec0101"
+            }
+          ]
+        },
+      {
+        "type": "form",
+        "name": "Product Form",
+        "limit": 1,
+        "settings": [
+             {
+               "type": "header",
+               "content": "+ Product Swatch"
+             },
+            {
+              "type": "select",
+              "id": "selector_mode",
+              "label": "Selector type",
+              "options": [
+                {
+                  "value": "circle",
+                  "label": "Circle"
+                },
+                {
+                  "value": "radio",
+                  "label": "Radio"
+                },
+                {
+                  "value": "radio is-sw__full",
+                  "label": "Radio full"
+                },
+                {
+                  "value": "block",
+                  "label": "Block"
+                },
+                {
+                  "value": "block2",
+                  "label": "Block round"
+                },
+                {
+                  "value": "dropdown",
+                  "label": "Dropdown"
+                }
+              ],
+              "default": "block"
+            },
+            {
+              "type": "select",
+              "id": "color_mode",
+              "label": "Color selector type",
+              /*"info": "Variant image mode requires that all variant has an associated image. [Learn more](https://help.shopify.com/en/manual/products/product-variant-images#add-images-to-existing-variants)",*/
+              "options": [
+                {
+                  "value": "circle",
+                  "label": "Circle"
+                },
+                {
+                  "value": "radio",
+                  "label": "Radio"
+                },
+                {
+                  "value": "radio is-sw-cl__full",
+                  "label": "Radio full"
+                },
+                {
+                  "value": "block",
+                  "label": "Block"
+                },
+                {
+                  "value": "block2",
+                  "label": "Block round"
+                },
+                {
+                  "value": "dropdown",
+                  "label": "Dropdown"
+                },
+                {
+                  "value": "color",
+                  "label": "Color swatch"
+                },
+                {
+                  "value": "color is-sw-cl__round",
+                  "label": "Color swatch round"
+                },
+                {
+                  "value": "variant_image",
+                  "label": "Variant image"
+                },
+                {
+                  "value": "variant_image is-sw-cl__round",
+                  "label": "Variant image round"
+                }
+              ],
+              "default": "color"
+            },
+            {
+              "type": "checkbox",
+              "id": "enable_fit_ratio_img",
+              "label": "Enable adapt to first swatch image variant",
+              "default": false
+            },
+            {
+             "type": "select",
+             "id": "color_size",
+             "options": [
+               {
+                 "value": "small",
+                 "label": "Small"
+               },
+               {
+                 "value": "medium",
+                 "label": "Medium"
+               },
+               {
+                 "value": "large",
+                 "label": "Large"
+               },
+               {
+                 "value": "exlarge",
+                 "label": "Extra Large"
+               }
+             ],
+             "label": "Color selector size",
+             "info": "Only working with color swatch, variant image",
+             "default": "medium"
+            },
+             /*{
+               "type": "select",
+               "id": "swatch_design",
+               "default": "2",
+               "options": [
+                 {
+                   "group": "Circle:",
+                   "value": "1",
+                   "label": "Circle"
+                 },
+                 {
+                   "group": "Circle:",
+                   "value": "2",
+                   "label": "Circle + color"
+                 },
+                 {
+                   "group": "Radio:",
+                   "value": "3",
+                   "label": "Radio"
+                 },
+                 {
+                   "group": "Radio:",
+                   "value": "4",
+                   "label": "Radio + color"
+                 },
+                 {
+                   "group": "Radio:",
+                   "value": "5",
+                   "label": "Radio full width"
+                 },
+                 {
+                   "group": "Radio:",
+                   "value": "6",
+                   "label": "Radio full width + color"
+                 },
+                 {
+                   "group": "Rectangle:",
+                   "value": "7",
+                   "label": "Rectangle"
+                 },
+                 {
+                   "group": "Rectangle:",
+                   "value": "8",
+                   "label": "Rectangle + color"
+                 },
+                 {
+                   "group": "Simple:",
+                   "value": "9",
+                   "label": "Simple"
+                 },
+                 {
+                   "group": "Simple:",
+                   "value": "10",
+                   "label": "Simple + color"
+                 }
+               ],
+               "label": "Swatch design setting"
+             },
+             {
+               "type": "select",
+               "id": "style_color",
+               "options": [
+                 {
+                   "value": "1",
+                   "label": "Swatch color circle"
+                 },
+                 {
+                   "value": "2",
+                   "label": "Swatch color square"
+                 }
+               ],
+               "label": "Swatch color setting for Design"
+             },
+             {
+               "type": "select",
+               "id": "swatch_style",
+               "options": [
+                 {
+                   "value": "1",
+                   "label": "Swatch color (Default or Upload)"
+                 },
+                 {
+                   "value": "2",
+                   "label": "Swatch image variant"
+                 }
+               ],
+               "label": "Swatch Layout setting for color/img"
+             },*/
+             {
+               "type": "checkbox",
+               "id": "show_qty",
+               "label": "Show quantity selector",
+               "default": true
+             },
+             {
+               "type": "checkbox",
+               "id": "enable_wishlist",
+               "label": "Enable wishlist",
+               "default": true
+             },
+             {
+               "type": "checkbox",
+               "id": "enable_compare",
+               "label": "Enable compare",
+               "default": true
+             },
+                /*{
+                    "type": "checkbox",
+                    "id": "btn_atc_full",
+                    "label": "Enable button full width",
+                    "default": true
+                },*/
+                {
+                    "type": "range",
+                    "id": "pr_btn_round",
+                    "min": 0,
+                    "max": 40,
+                    "step": 1,
+                    "label": "Button round corners",
+                    "unit": "px",
+                    "default": 40
+                }, 
+                {
+                    "type": "header",
+                    "content": "+ Add to cart button"
+                },
+                 {
+                   "type": "select",
+                   "id": "ani",
+                   "options": [
+                     {
+                       "value": "none",
+                       "label": "None"
+                     },
+                     {
+                       "value": "t4s-ani-bounce",
+                       "label": "Bounce"
+                     },
+                     {
+                       "value": "t4s-ani-tada",
+                       "label": "Tada"
+                     },
+                     {
+                       "value": "t4s-ani-swing",
+                       "label": "Swing"
+                     },
+                     {
+                       "value": "t4s-ani-flash",
+                       "label": "Flash"
+                     },
+                     {
+                       "value": "t4s-ani-fadeIn",
+                       "label": "FadeIn"
+                     },
+                     {
+                       "value": "t4s-ani-heartBeat",
+                       "label": "HeartBeat"
+                     },
+                     {
+                       "value": "t4s-ani-shake",
+                       "label": "Shake"
+                     }
+                   ],
+                   "label": "Add to cart animation"
+                 },
+                {
+                    "type": "range",
+                    "id": "time",
+                    "min": 2,
+                    "max": 40,
+                    "step": 1,
+                    "label": "Loop time (seconnds)",
+                    "info": "Loop time add to cart animation",
+                    "unit": "s",
+                    "default": 6
+                },
+                {
+                    "type": "select",
+                    "id": "btn_txt",
+                    "default": "3",
+                    "options": [
+                        {
+                            "value": "0",
+                            "label": "None"
+                        },
+                        {
+                            "value": "1",
+                            "label": "Lowercase"
+                        },
+                        {
+                            "value": "2",
+                            "label": "Capitalize"
+                        },
+                        {
+                            "value": "3",
+                            "label": "Uppercase"
+                        }
+                    ],
+                    "label": "Button transform text"
+                },
+                {
+                    "type":"checkbox",
+                    "id":"btn_icon",
+                    "label":"Enable button icon",
+                    "default":false
+                },
+                {
+                    "type": "select",
+                    "id": "button_style",
+                    "label": "Button style",
+                    "options": [
+                        {
+                            "label": "Default",
+                            "value": "default"
+                        },
+                        {
+                            "label": "Outline",
+                            "value": "outline"
+                        },
+                        {
+                            "label": "Bordered bottom",
+                            "value": "bordered"
+                        },
+                        {
+                            "label": "Link",
+                            "value": "link"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "button_color",
+                    "label": "Button color",
+                    "default": "dark",
+                    "options": [
+                        {
+                            "value": "light",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "dark",
+                            "label": "Dark"
+                        },
+                        {
+                            "value": "primary",
+                            "label": "Primary"
+                        },
+                        {
+                            "value": "custom1",
+                            "label": "Custom color 1"
+                        },
+                        {
+                            "value": "custom2",
+                            "label": "Custom color 2"
+                        }
+                    ]
+                },
+                {
+                    "type":"select",
+                    "id":"button_effect",
+                    "label":"Button hover effect",
+                    "default":"fade",
+                    "info":"Only working button style default, outline",
+                    "options":[
+                        {
+                            "label":"Default",
+                            "value":"default"
+                        },
+                        {
+                            "label":"Fade",
+                            "value":"fade"
+                        },
+                        {
+                            "label":"Rectangle out",
+                            "value":"rectangle-out"
+                        },
+                        {
+                            "label":"Sweep to right",
+                            "value":"sweep-to-right"
+                        },
+                        {
+                            "label":"Sweep to left",
+                            "value":"sweep-to-left"
+                        },
+                        {
+                            "label":"Sweep to bottom",
+                            "value":"sweep-to-bottom"
+                        },
+                        {
+                            "label":"Sweep to top",
+                            "value":"sweep-to-top"
+                        },
+                        {
+                            "label":"Shutter out horizontal",
+                            "value":"shutter-out-horizontal"
+                        },
+                        {
+                            "label":"Outline",
+                            "value":"outline"
+                        },
+                        {
+                            "label":"Shadow",
+                            "value":"shadow"
+                        }
+                    ]
+                },
+                {
+                  "type": "header",
+                  "content": "+ Wishlist button color"
+                },
+                {
+                  "type": "color",
+                  "id": "wishlist_color",
+                  "label": "Button wishlistt",
+                  "default": "#222222"
+                },
+                {
+                  "type": "color",
+                  "id": "wishlist_color_hover",
+                  "label": "Button wishlist hover",
+                  "default": "#56cfe1"
+                },
+                {
+                  "type": "color",
+                  "id": "wishlist_color_active",
+                  "label": "Button wishlist active",
+                  "default": "#E81E1E"
+                },
+                {
+                    "type": "header",
+                    "content": "+ Compare button color"
+                },
+                {
+                  "type": "color",
+                  "id": "compare_color",
+                  "label": "Button compare",
+                  "default": "#222222"
+                },
+                {
+                  "type": "color",
+                  "id": "compare_color_hover",
+                  "label": "Button compare hover",
+                  "default": "#56cfe1"
+                },
+                {
+                    "type": "color",
+                    "id": "compare_color_active",
+                    "label": "Button compare active",
+                    "default": "#222222"
+                },
+                {
+                    "type": "header",
+                    "content": "+ Dynamic checkout buttons"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show_dynamic_checkout",
+                    "label": "Show dynamic checkout buttons",
+                    "info": "Using the payment methods available on your store, customers see their preferred option, like PayPal or Apple Pay. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/change-the-layout\/dynamic-checkout)",
+                    "default": false
+                },
+                {
+                    "type": "select",
+                    "id": "btn_txt2",
+                    "default": "3",
+                    "options": [
+                    {
+                        "value": "0",
+                        "label": "None"
+                    },
+                    {
+                        "value": "1",
+                        "label": "Lowercase"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Capitalize"
+                    },
+                    {
+                        "value": "3",
+                        "label": "Uppercase"
+                    }
+                    ],
+                    "label": "Button transform text"
+                },
+                {
+                    "type": "select",
+                    "id": "button_color_payment",
+                    "label": "Button color",
+                    "default": "dark",
+                    "options": [
+                        {
+                            "value": "light",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "dark",
+                            "label": "Dark"
+                        },
+                        {
+                            "value": "primary",
+                            "label": "Primary"
+                        },
+                        {
+                            "value": "custom1",
+                            "label": "Custom color 1"
+                        },
+                        {
+                            "value": "custom2",
+                            "label": "Custom color 2"
+                        }
+                    ]
+                }
+        ]
+      },
+      {
+        "type": "properties",
+        "name": "⚡ Customizable Products",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Block properties are used to collect customization information for an item added to the cart. This information can be collected from the buyer on the product page. Only show on block product form. Not show on product grouped, soldout, external/affiliate"
+          },
+          {
+            "type": "header",
+            "content": "+ Set your form field"
+          },
+          {
+           "type": "radio",
+           "id": "type",
+           "default": "short",
+           "options": [
+             {
+               "value": "short",
+               "label": "Text - Short"
+             },
+             {
+               "value": "long",
+               "label": "Text - Long"
+             },
+             {
+               "value": "checkbox",
+               "label": "Checkbox"
+             },
+             {
+               "value": "radio",
+               "label": "Radio Buttons"
+             },
+             {
+               "value": "select",
+               "label": "Drop-down select"
+             },
+             {
+               "value": "checkbox_group",
+               "label": "Checkbox group"
+             },
+             {
+               "value": "file",
+               "label": "File upload (beta)"
+             }
+           ],
+           "label": "Type of form field"
+          },
+          {
+            "type": "paragraph",
+            "content": "IMPORTANT: Upload file not support dynamic checkout buttons on product page, quick view, quick shop."
+          },
+          {
+           "type": "text",
+           "id": "heading",
+           "default": "Your name",
+           "label": "Your form field label"
+          },
+          {
+           "type": "textarea",
+           "id": "options",
+           "label": "Options if using radio buttons, a drop-down select, or checkbox group",
+           "default": "option1, option2",
+           "info": "Separate your options with a comma."
+          },
+          {
+           "type": "checkbox",
+           "id": "required",
+           "default": false,
+           "label": "Required",
+           "info": "If you use “Required” with a checkbox, then the checkbox will need to be checked for the customer to add the item to the cart."
+          },
+          {
+           "type": "checkbox",
+           "id": "show_at_checkout",
+           "default": true,
+           "label": "Show at checkout, cart",
+           "info": "Uncheck this if you don't want the captured information to be shown in the order summary on the cart, checkout page."
+          },
+          {
+            "type": "header",
+            "content": "+ Set your visibility"
+          },
+          {
+           "type": "radio",
+           "id": "visibility",
+           "default": "all",
+           "options": [
+             {
+               "value": "all",
+               "label": "All"
+             },
+             {
+               "value": "collection",
+               "label": "Collection based"
+             },
+             {
+               "value": "type",
+               "label": "Type based"
+             },
+             {
+               "value": "tag",
+               "label": "Tag based"
+             },
+             {
+               "value": "product",
+               "label": "Product based"
+             },
+             {
+               "value": "metafield",
+               "label": "Metafield based"
+             }
+           ],
+           "label": "Visibility",
+           "info": "Metafield based: theme.visibility_customizable"
+          },
+          {
+           "type": "collection_list",
+           "id": "collection_based",
+           "label": "Collection list",
+           "info": "Maximum choose: 50 collections"
+          },
+          {
+           "type": "textarea",
+           "id": "type_based",
+           "label": "Product types",
+           "placeholder": "type1, type2",
+           "info": "Separate your types with a comma."
+          },
+          {
+           "type": "textarea",
+           "id": "tag_based",
+           "label": "Product tags",
+           "placeholder": "tag1, tag2",
+           "info": "Separate your types with a comma."
+          },
+          {
+           "type": "product_list",
+           "id": "product_based",
+           "label": "Product list",
+           "info": "Maximum choose: 50 products"
+          }
+        ]
+      }
+   ],
+    "default": {
+      "blocks": [
+        { "type": "title" },{ "type": "price" },{ "type": "form" }
+      ]
+    }
+  }
+{% endschema %}

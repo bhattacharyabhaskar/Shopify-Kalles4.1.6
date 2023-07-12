@@ -1,0 +1,893 @@
+{{ 'button-style.css' | asset_url | stylesheet_tag }}
+<link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+{%- liquid
+  assign section_blocks   = section.blocks
+  assign se_stts          = section.settings
+  assign ccount           = cart.item_count
+  assign ck_lumise        = 'ck_lumise'  
+  assign cart_url         = routes.cart_url
+  assign cart_change_url  = routes.cart_change_url
+  assign min_qty          = settings.min_qty | plus: 0
+  assign compare_tt_price = 0
+  assign shipping_amount  = settings.free_ship_pr.metafields.theme.shipping_money.value | default: settings.free_ship_pr.price | default: -1
+  assign total_price    = cart.total_price
+
+  assign gift_pr = all_products[settings.gift_wrap_pr]
+  assign gift_pr_id = gift_pr.id
+  assign arr_gift_id = cart.items | where: 'product_id', gift_pr_id
+
+  assign ck_agree = false 
+  assign arrblock = section_blocks | where: "type", 'agree'
+  if arrblock.size > 0
+    assign cl_agree = ' t4s-pe-none'
+    assign ck_agree = true
+  endif
+  if cart.note != blank
+    assign style_add  = 't4s-d-none'
+    assign style_edit = ''
+  else
+    assign style_add  = ''
+    assign style_edit = 't4s-d-none'
+  endif
+  assign edit_item = settings.edit_item
+  assign cur_code_enabled = settings.currency_code_enabled 
+  assign atc_ajax_enable  = settings.atc_ajax_enable
+  assign cart_ajax_enable = settings.cart_ajax_enable
+  unless cart_ajax_enable
+   assign min_qty = 1
+  endunless -%}
+
+<link rel="stylesheet" href="{{ 'main-cart.css' | asset_url }}" media="all">
+<svg class="t4s-d-none">
+<symbol id="icon-cart-remove" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
+</symbol>
+<symbol id="icon-cart-edit" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+</symbol>
+<symbol id="icon-cart-tag" viewBox="0 0 448 512">
+  <path d="M48 32H197.5C214.5 32 230.7 38.74 242.7 50.75L418.7 226.7C443.7 251.7 443.7 292.3 418.7 317.3L285.3 450.7C260.3 475.7 219.7 475.7 194.7 450.7L18.75 274.7C6.743 262.7 0 246.5 0 229.5V80C0 53.49 21.49 32 48 32L48 32zM112 176C129.7 176 144 161.7 144 144C144 126.3 129.7 112 112 112C94.33 112 80 126.3 80 144C80 161.7 94.33 176 112 176z"/>
+</symbol>
+<symbol id="icon-cart-spinner" viewBox="0 0 66 66">
+  <circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+</symbol>
+<symbol id="icon-cart-check" viewBox="0 0 448 512">
+  <path d="M443.3 100.7C449.6 106.9 449.6 117.1 443.3 123.3L171.3 395.3C165.1 401.6 154.9 401.6 148.7 395.3L4.686 251.3C-1.562 245.1-1.562 234.9 4.686 228.7C10.93 222.4 21.06 222.4 27.31 228.7L160 361.4L420.7 100.7C426.9 94.44 437.1 94.44 443.3 100.7H443.3z"/>
+</symbol>
+<symbol id="icon-cart-selected" viewBox="0 0 24 24">
+<path d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path>
+</symbol>
+</svg>
+<div class="t4s-container">
+  <div class="t4s-cookie-message t4s-dn">{{ 'cart.general.cookies_required' | t }}</div>
+  <form data-cart-content data-cart-wrapper action="{{ routes.cart_url }}" method="post" novalidate class="t4s-cartPage__form t4s-pr t4s-oh">
+    <input type="hidden" data-cart-attr-rm name="attributes[collection_items_per_row]" value="">
+    <div class="t4s-cartPage__header">
+      <div class="t4s-row t4s-align-items-center">
+        <div class="t4s-col-5 t4s-col-item">{{ 'cart.cart_page.label.product' | t }}</div>
+        <div class="t4s-col-3 t4s-col-item t4s-text-center">{{ 'cart.cart_page.label.price' | t }}</div>
+        <div class="t4s-col-2 t4s-col-item t4s-text-center">{{ 'cart.cart_page.label.quantity' | t }}</div>
+        <div class="t4s-col-2 t4s-col-item t4s-text-center t4s-text-lg-end">{{ 'cart.cart_page.label.total' | t }}</div>
+      </div>
+    </div>
+    <div class="t4s-cartPage__items t4s_ratioadapt t4s-product" data-cart-items>
+
+       {%- if ccount > 0 -%}
+         {%- for item in cart.items -%}
+         {%- render 'cart-item-page', item: item , gift_pr_id: gift_pr_id, min_qty: min_qty, compare_tt_price: compare_tt_price, cart_change_url: cart_change_url, edit_item: edit_item, cur_code_enabled: cur_code_enabled, atc_ajax_enable: atc_ajax_enable -%}
+         {%- endfor -%}
+
+       {%- else -%}
+             <div class="t4s-mini_cart__emty t4s-text-center">
+                 <svg id="icon-cart-emty" widht="50" height="50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M263.4 103.4C269.7 97.18 279.8 97.18 286.1 103.4L320 137.4L353.9 103.4C360.2 97.18 370.3 97.18 376.6 103.4C382.8 109.7 382.8 119.8 376.6 126.1L342.6 160L376.6 193.9C382.8 200.2 382.8 210.3 376.6 216.6C370.3 222.8 360.2 222.8 353.9 216.6L320 182.6L286.1 216.6C279.8 222.8 269.7 222.8 263.4 216.6C257.2 210.3 257.2 200.2 263.4 193.9L297.4 160L263.4 126.1C257.2 119.8 257.2 109.7 263.4 103.4zM80 0C87.47 0 93.95 5.17 95.6 12.45L100 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H158.2L172.8 352H496C504.8 352 512 359.2 512 368C512 376.8 504.8 384 496 384H160C152.5 384 146.1 378.8 144.4 371.5L67.23 32H16C7.164 32 0 24.84 0 16C0 7.164 7.164 0 16 0H80zM107.3 64L150.1 256H487.8L541.8 64H107.3zM128 456C128 425.1 153.1 400 184 400C214.9 400 240 425.1 240 456C240 486.9 214.9 512 184 512C153.1 512 128 486.9 128 456zM184 480C197.3 480 208 469.3 208 456C208 442.7 197.3 432 184 432C170.7 432 160 442.7 160 456C160 469.3 170.7 480 184 480zM512 456C512 486.9 486.9 512 456 512C425.1 512 400 486.9 400 456C400 425.1 425.1 400 456 400C486.9 400 512 425.1 512 456zM456 432C442.7 432 432 442.7 432 456C432 469.3 442.7 480 456 480C469.3 480 480 469.3 480 456C480 442.7 469.3 432 456 432z"/></svg>
+                 <h4 class="t4s-cart_page_heading">{{ 'cart.cart_page.empty' | t }}</h4>
+                 <div class="t4s-cart_page_txt">{{ 'cart.cart_page.empty_html' | t }}</div>
+                  {%- assign btn_blocks = section_blocks | where: "type", 'btn' -%}
+                  {%- if btn_blocks.size > 0 -%}
+                     {%- for block in btn_blocks -%}
+                     {%- assign bk_stts = block.settings -%}
+                     {%- assign button_style = bk_stts.button_style -%}
+                         {%- if bk_stts.title != blank -%}
+                            <p class="t4s-return-to-shop"><a data-loading-bar class="t4s-btn-cart__emty t4s-btn t4s-btn-base t4s-btn-style-{{ button_style }} t4s-btn-color-{{ bk_stts.btn_cl }} {% if button_style == 'default' or button_style == 'outline' %}t4s-btn-effect-{{ bk_stts.button_effect }}{% endif %} t4s-justify-content-center t4s-truncate" href="{{ bk_stts.url | default: routes.all_products_collection_url }}" >{{ bk_stts.title }}{%- if bk_stts.btn_icon -%}<svg class="t4s-btn-icon"><use xlink:href="#t4s-icon-btn"></use></svg>{%- endif -%}</a></p>
+                         {%- endif -%}
+                     {%- endfor -%}
+                  {%- endif -%}
+                  {%- if se_stts.enable_calc_ship and shipping_amount > -1 -%}
+                      {%- liquid
+                      assign shipping_money  = shipping_amount | money
+                      assign des_shipbar_per_1 = settings.des_shipbar_per_1
+                      assign des_shipbar_per_2 = settings.des_shipbar_per_2
+                      assign des_shipbar_per_3 = settings.des_shipbar_per_3
+                      assign less_100 = 99.99
+                      assign array_shipbar_per = des_shipbar_per_1 | append: ';' | append: des_shipbar_per_2 | append: ';' | append: des_shipbar_per_3 | split: ';' | sort_natural
+                      assign percent_class =  array_shipbar_per[0] | plus: 0
+                      if percent_class == 100
+                          assign percent_class = less_100
+                      endif -%}
+                
+                     {%- style -%}
+                     [data-t4s-percent="{% if des_shipbar_per_1 == 100 %}{{ less_100 }}{% else %}{{ des_shipbar_per_1 }}{% endif %}"] { --main-threshold-color: {{ settings.des_shipbar_cl_1 }}; }
+                     [data-t4s-percent="{% if des_shipbar_per_2 == 100 %}{{ less_100 }}{% else %}{{ des_shipbar_per_2 }}{% endif %}"] { --main-threshold-color: {{ settings.des_shipbar_cl_2 }}; }
+                     [data-t4s-percent="{% if des_shipbar_per_3 == 100 %}{{ less_100 }}{% else %}{{ des_shipbar_per_3 }}{% endif %}"] { --main-threshold-color: {{ settings.des_shipbar_cl_3 }}; }
+                     [data-t4s-percent="100"] { --main-threshold-color: {{ settings.des_shipbar_cl_4 }}; }
+                     {%- endstyle -%}
+                    <div class="t4s-cart__threshold" data-t4s-percent="{{ percent_class }}"><div class="t4s-cart__thres1">{{ 'cart.shipping_threshold.text_1_html' | t: money: shipping_money }}</div></div>
+                 {%- endif -%}
+             </div>
+       {%- endif -%}
+    </div>
+    <div class="t4s-cartPage__footer">
+       <div class="t4s-row t4s-g-md-30 t4s-g-20">
+         {%- if se_stts.enable_note or se_stts.enable_discount or se_stts.enable_gift_wrap and gift_pr.available == true -%}{%- assign ck_col = true -%}
+         <div class="t4s-col-item t4s-col-12 t4s-col-md-6 cart_actions t4s-text-md-start t4s-text-center t4s-order-2">
+           {%- if se_stts.enable_gift_wrap and gift_pr.available == true -%}
+               <div data-toogle-gift class="t4s-gift_wrap t4s-row t4s-align-items-center t4s-text-center t4s-text-md-start"{% if arr_gift_id.size > 0 %} style="display:none"{% endif %}>
+                  <div class="t4s-gift_wrap_info t4s-col-lg-7 t4s-col-12 t4s-col-item">
+                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="t4s-d-inline-block t4s-pr"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
+                     {%- assign gift_pr_money = gift_pr.variants.first.price | money -%}
+                     <span class="t4s-gift-wrap__text t4s-d-inline-block">{{ 'cart.tool.gift_wrap_html' | t: money: gift_pr_money }}</span>
+                  </div>
+                  <div class="t4s-gift_wrap_action t4s-col-lg t4s-col-12 t4s-col-item t4s-text-md-start t4s-text-lg-end">
+                     <a href="{{ gift_pr.url }}" data-variant-id="{{ gift_pr.variants.first.id }}" data-action-atc data-add-gift class="t4s-gift_wrap_action_btn t4s-truncate t4s-btn-loading__svg"><span class="t4s-btn-atc_text">{{ 'cart.tool.add_gift_wrap' | t }}</span>
+                      <div class="t4s-loading__spinner t4s-dn">
+                        <svg  width="16" height="16" aria-hidden="true" focusable="false" role="presentation" class="t4s-svg__spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+                      </div>  
+                    </a>
+                  </div>
+               </div>
+           {%- endif -%}
+           {%- if se_stts.enable_note -%}
+              <label for="CartSpecialInstructions" class="t4s-cart-note__label t4s-d-block"><span class="t4s-txt_add_note {{ style_add }}">{{ 'cart.tool.note' | t }}</span><span class="t4s-txt_edit_note {{ style_edit }}">{{ 'cart.tool.edit_note' | t }}</span></label>
+              <textarea name="note" id="CartSpecialInstructions" class="t4s-cart-note__input" placeholder="{{ 'cart.tool.placeholder_note' | t }}">{{ cart.note }}</textarea>
+           {%- endif -%}
+           {%- if se_stts.enable_discount -%}
+              <label for="CartDiscountcode" class="t4s-cart-couponcode__label t4s-d-block">{{ 'cart.tool.coupon' | t }}</label>
+             <p>{{ 'cart.tool.info_coupon' | t }}</p>
+              <input type="text" data-name="discount" id="CartDiscountcode" value placeholder="{{ 'cart.tool.placeholder_coupon' | t }}">
+           {%- endif -%}
+         </div>
+         {%- endif -%}
+
+         <div class="t4s-col-item t4s-col-12 t4s-text-md-end t4s-text-center t4s-order-4{% if ck_col %} t4s-col-md-6{% endif %}">
+            {%- if se_stts.enable_calc_ship and shipping_amount > -1 -%}
+               {%- liquid
+               assign shipping_money = shipping_amount | money
+               assign enable_shipbar = settings.enable_shipbar 
+               assign des_shipbar_per_1 = settings.des_shipbar_per_1
+               assign des_shipbar_per_2 = settings.des_shipbar_per_2
+               assign des_shipbar_per_3 = settings.des_shipbar_per_3
+               assign less_100 = 99.99 -%}
+               
+               {%- if enable_shipbar -%}
+                  {%- capture text_w_ship -%}
+                     {%- if total_price == 0 -%}
+                        {%- liquid
+                        assign array_shipbar_per = des_shipbar_per_1 | append: ';' | append: des_shipbar_per_2 | append: ';' | append: des_shipbar_per_3 | split: ';' | sort_natural
+                        assign percent_class =  array_shipbar_per[0] | plus: 0
+                        if percent_class == 100
+                           assign percent_class = less_100
+                        endif
+                       -%}
+                        {%- capture style_w %} style="width:0"{% endcapture -%}
+                        <div data-cart-ship-text class="t4s-cart__thres1">{{ 'cart.shipping_threshold.text_1_html' | t: money: shipping_money }}</div>
+                     {%- elsif shipping_amount > total_price %}{% assign space_money = shipping_amount | minus: total_price | money -%}
+                        <div data-cart-ship-text class="t4s-cart__thres2">{{ 'cart.shipping_threshold.text_2_html' | t: money: space_money }}</div>
+                     
+                        {%- liquid
+                        assign array_shipbar_per = des_shipbar_per_1 | append: ';' | append: des_shipbar_per_2 | append: ';' | append: des_shipbar_per_3 | split: ';' | sort_natural
+                        assign percent_w2 = shipping_amount | minus: total_price | times: 100.0 | divided_by: shipping_amount
+                        assign percent_w2 = 100 | minus: percent_w2
+                        assign shipbar_num_0 = array_shipbar_per[0] | plus: 0
+                        assign shipbar_num_1 = array_shipbar_per[1] | plus: 0
+                        assign shipbar_num_2 = array_shipbar_per[2] | plus: 0
+                        if percent_w2 < shipbar_num_0
+                           assign percent_class = shipbar_num_0
+                        elsif percent_w2 < shipbar_num_1
+                           assign percent_class = shipbar_num_1
+                        else
+                           assign percent_class = shipbar_num_2
+                        else
+                           assign percent_class = 99.994
+                        endif
+                        if percent_class == 100
+                           assign percent_class = less_100
+                        endif
+                       -%}
+                        {%- capture style_w %} style="width:{{ percent_w2 }}%"{% endcapture -%}
+                     {%- else -%}
+                        <div data-cart-ship-text data-cart-ship-done class="t4s-cart__thres3">{{ 'cart.shipping_threshold.text_3' | t | replace: '[', '<span class="t4s-cr is--congratulations">' | replace: ']', '</span>' }}</div>
+                        {%- assign percent_class = 100 -%}
+                        {%- capture style_w %} style="width:100%"{% endcapture -%}
+                     {%- endif -%}
+
+                  {%- endcapture -%}
+                   
+                  {%- style -%}
+                  [data-t4s-percent="{% if des_shipbar_per_1 == 100 %}{{ less_100 }}{% else %}{{ des_shipbar_per_1 }}{% endif %}"] { --main-threshold-color: {{ settings.des_shipbar_cl_1 }}; }
+                  [data-t4s-percent="{% if des_shipbar_per_2 == 100 %}{{ less_100 }}{% else %}{{ des_shipbar_per_2 }}{% endif %}"] { --main-threshold-color: {{ settings.des_shipbar_cl_2 }}; }
+                  [data-t4s-percent="{% if des_shipbar_per_3 == 100 %}{{ less_100 }}{% else %}{{ des_shipbar_per_3 }}{% endif %}"] { --main-threshold-color: {{ settings.des_shipbar_cl_3 }}; }
+                  [data-t4s-percent="99.994"],[data-t4s-percent="100"] { --main-threshold-color: {{ settings.des_shipbar_cl_4 }}; }
+                  {%- endstyle -%}
+               {%- endif -%}
+
+               <link rel="stylesheet" href="{{ 'shipping_bar.css' | asset_url }}" media="all">
+               <div data-cart-calc-shipping data-t4s-percent="{{ percent_class }}" class="t4s-cart__threshold">
+                  {{- text_w_ship -}}
+                  {%- if settings.enable_shipbar %}<div class="t4s-cart-thes__bar bgt4_svg{{ settings.des_shipbar }} t4s-pr"><span data-cart-ship-bar class="t4s-pr t4s-d-block t4s-h-100"{{ style_w }}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path class="fa-primary" d="M64 48C64 21.49 85.49 0 112 0H368C394.5 0 416 21.49 416 48V96H466.7C483.7 96 499.1 102.7 512 114.7L589.3 192C601.3 204 608 220.3 608 237.3V352C625.7 352 640 366.3 640 384C640 401.7 625.7 416 608 416H574.9C567.1 361.7 520.4 320 464 320C407.6 320 360.9 361.7 353.1 416H286.9C279.1 361.7 232.4 320 176 320C127.9 320 86.84 350.4 70.99 392.1C66.56 385.7 64 377.1 64 368V256H208C216.8 256 224 248.8 224 240C224 231.2 216.8 224 208 224H64V192H240C248.8 192 256 184.8 256 176C256 167.2 248.8 160 240 160H64V128H272C280.8 128 288 120.8 288 112C288 103.2 280.8 96 272 96H64L64 48zM544 256V237.3L466.7 160H416V256H544z"/><path class="t4s-ship-secondary" d="M272 128H16C7.164 128 0 120.8 0 112C0 103.2 7.164 96 16 96H272C280.8 96 288 103.2 288 112C288 120.8 280.8 128 272 128zM240 160C248.8 160 256 167.2 256 176C256 184.8 248.8 192 240 192H48C39.16 192 32 184.8 32 176C32 167.2 39.16 160 48 160H240zM208 224C216.8 224 224 231.2 224 240C224 248.8 216.8 256 208 256H16C7.164 256 0 248.8 0 240C0 231.2 7.164 224 16 224H208zM256 432C256 476.2 220.2 512 176 512C131.8 512 96 476.2 96 432C96 387.8 131.8 352 176 352C220.2 352 256 387.8 256 432zM544 432C544 476.2 508.2 512 464 512C419.8 512 384 476.2 384 432C384 387.8 419.8 352 464 352C508.2 352 544 387.8 544 432z"/></svg></span></div>{% endif -%}
+               </div>
+            {%- endif -%}
+
+            {%- for block in section_blocks -%}
+                {%- assign bk_stts = block.settings -%}
+                {%- assign button_style = bk_stts.button_style -%}
+               {%- case block.type -%}
+                  {%- when 'price' -%}
+                        <div data-cart-discounts class="t4s-text-md-end t4s-text-center">
+                            {%- if cart.cart_level_discount_applications != blank -%}
+                                <ul class="t4s-cart_discounts">
+                                {%- for discount_application in cart.cart_level_discount_applications -%}<li class="t4s-order_cart_discounts"><svg viewBox="0 0 24 24" width="20"><use href="#icon-cart-tag"/></svg> {{- discount_application.title -}} (-{{ discount_application.total_allocated_amount | money }})</li>{%- endfor -%}
+                                </ul>
+                            {%- endif -%}
+                        </div>
+                        <div class="t4s-cart-total">
+                            <div class="t4s-row t4s-gx-30 t4s-gy-0 t4s-d-inline-flex t4s-align-items-center t4s-justify-content-between">
+                                <div class="t4s-col-auto t4s-col-item"><strong>{{ 'cart.cart_page.subtotal' | t }}</strong></div>
+                                <div data-cart-prices class="t4s-col-auto t4s-col-item t4s-text-right t4s-cart__ttprice">
+                                    {%- if cart.total_discount > 0 -%}
+                                        <div class="t4s-cart__originalPrice">{{ cart.original_total_price | money }}</div>
+                                        <div class="t4s-cart__discountPrice"> - {{ cart.total_discount | money }}</div>
+                                    {%- elsif compare_tt_price > total_price and false -%}
+                                        <div class="t4s-cart__originalPrice">{{ compare_tt_price | money }}</div>
+                                        <div class="t4s-cart__discountPrice"> - {{ compare_tt_price | minus: total_price | money }}</div>
+                                    {%- endif -%}
+                                    <div class="t4s-cart__totalPrice">{{ total_price | money }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                  {%- when 'tax' -%}
+                     {%- capture taxes_shipping_checkout -%}{%- assign page_url = pages[settings.link_ship].url -%}
+                        {%- if se_stts.show_discount -%}
+                            {%- if cart.taxes_included and page_url != blank -%}
+                              {{ 'cart.general.taxes_included_discounts_and_shipping_policy_html' | t: link: page_url }}
+                            {%- elsif cart.taxes_included -%}
+                              {{ 'cart.general.taxes_included_discounts_but_shipping_at_checkout' | t }}
+                            {%- elsif page_url != blank -%}
+                              {{ 'cart.general.taxes_discounts_and_shipping_policy_at_checkout_html' | t: link: page_url }}
+                            {%- else -%}
+                              {{ 'cart.general.taxes_discounts_and_shipping_at_checkout' | t }}
+                            {%- endif -%}
+                        {%- else -%}
+                            {%- if cart.taxes_included and page_url != blank -%}
+                              {{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: page_url }}
+                            {%- elsif cart.taxes_included -%}
+                              {{ 'cart.general.taxes_included_but_shipping_at_checkout' | t }}
+                            {%- elsif page_url != blank -%}
+                              {{ 'cart.general.taxes_and_shipping_policy_at_checkout_html' | t: link: page_url }}
+                            {%- else -%}
+                              {{ 'cart.general.taxes_and_shipping_at_checkout' | t }}
+                            {%- endif -%}
+                        {%- endif -%}
+                     {%- endcapture -%}
+                     <p class="t4s-cart__tax">{{ taxes_shipping_checkout }}</p>
+
+                  {%- when 'agree' -%}
+                     {%- capture terms_and_conditions -%}{%- assign page_url = pages[settings.link_conditions].url -%}
+                      {%- if page_url != blank -%}
+                        {{ 'cart.general.terms_and_conditions_html' | t: link: page_url }}
+                      {%- else -%}
+                        {{ 'cart.general.terms_and_conditions' | t }}
+                      {%- endif -%}
+                     {%- endcapture -%}
+                     <p class="t4s-pr t4s-cart__agree"><input type="checkbox" id="cart_agree" data-agree-checkbox name="{{ ck_lumise }}"><label for="cart_agree">{{ terms_and_conditions }}</label><svg class="t4s-dn t4s-icon_checked"><use href="#icon-cart-selected"/></svg></p>
+                     <div class="t4s-clearfix"></div>
+                  {%- when 'btnck' -%}
+                    {%- if settings.currency_type == '2' and settings.notify_currency and settings.mess_currency != blank %}{% assign cart_iso_code = cart.currency.iso_code %}{% assign text1 = '{{ currency }}' -%}
+                        <p class="t4s-db" data-currency-jsnotify>{{ settings.mess_currency | replace: text1, cart_iso_code | replace: '[currency]', cart_iso_code | replace: '[original_currency]', cart_iso_code | replace: '[current_currency]', '<span class="selected-currency"></span>' }}</p>
+                    {%- endif -%}
+                    <div class="t4s-btn-group__checkout-update">
+                        {%- unless cart_ajax_enable -%}{%- assign button_style2 = bk_stts.button_style2 -%}
+                            <button type="submit" name="update" class="t4s-btn__update t4s-btn t4s-btn-base t4s-btn-style-{{ button_style2 }}  t4s-btn-size-{{ bk_stts.btn_size2 }} t4s-btn-color-{{ bk_stts.btn_cl2 }} {% if button_style2 == 'default' or button_style2 == 'outline' %}t4s-btn-effect-{{ bk_stts.button_effect2 }}{% endif %} t4s-w-100 t4s-justify-content-center t4s-truncate">{%- if bk_stts.btn_icon2 -%}<svg class="t4s-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M63.1 464H348.5C360.7 482.8 376.5 499.1 394.8 512H64C28.65 512 0 483.3 0 448V224C0 188.7 28.65 160 64 160H448C471.8 160 492.5 172.9 503.5 192.2C501 192.1 498.5 192 496 192C469.8 192 444.9 197.7 422.6 208H64C55.16 208 48 215.2 48 224V448C48 456.8 55.16 464 64 464H63.1zM440 80C453.3 80 464 90.75 464 104C464 117.3 453.3 128 440 128H71.1C58.74 128 47.1 117.3 47.1 104C47.1 90.75 58.74 80 71.1 80H440zM392 0C405.3 0 416 10.75 416 24C416 37.25 405.3 48 392 48H119.1C106.7 48 95.1 37.25 95.1 24C95.1 10.75 106.7 0 119.1 0H392zM352 368C352 288.5 416.5 224 496 224C575.5 224 640 288.5 640 368C640 447.5 575.5 512 496 512C416.5 512 352 447.5 352 368zM512 303.1C512 295.2 504.8 287.1 496 287.1C487.2 287.1 480 295.2 480 303.1V351.1H432C423.2 351.1 416 359.2 416 367.1C416 376.8 423.2 383.1 432 383.1H480V431.1C480 440.8 487.2 447.1 496 447.1C504.8 447.1 512 440.8 512 431.1V383.1H560C568.8 383.1 576 376.8 576 367.1C576 359.2 568.8 351.1 560 351.1H512V303.1z"></path></svg>{%- endif -%}{{ 'cart.cart_page.update' | t }}</button>
+                        {% endunless -%}
+                        <button type="submit" data-loading-bar data-confirm="{{ ck_lumise }}" name="checkout" class="t4s-btn__checkout t4s-btn t4s-btn-base t4s-btn-style-{{ button_style }} t4s-btn-size-{{ bk_stts.btn_size }} t4s-btn-color-{{ bk_stts.btn_cl }} {% if button_style == 'default' or button_style == 'outline' %}t4s-btn-effect-{{ bk_stts.button_effect }}{% endif %} t4s-w-100 t4s-justify-content-center t4s-truncate">{%- if bk_stts.btn_icon -%}<svg xmlns="http://www.w3.org/2000/svg" class="t4s-btn-icon" viewBox="0 0 640 512"><path d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L537.6 196.9C524.3 193.7 510.3 192 496 192C493.7 192 491.4 192 489.1 192.1L520.6 80H131.1L161.6 240H375.2C360.6 253.8 348.4 269.1 339.2 288H170.7L179.9 336H322.9C320.1 346.4 319.1 357.1 319.1 368C319.1 373.4 320.2 378.7 320.7 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.26 0 24C0 10.75 10.75 .0003 24 .0003L96 0zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM640 368C640 447.5 575.5 512 496 512C416.5 512 352 447.5 352 368C352 288.5 416.5 224 496 224C575.5 224 640 288.5 640 368zM480 385.4L451.3 356.7C445.1 350.4 434.9 350.4 428.7 356.7C422.4 362.9 422.4 373.1 428.7 379.3L468.7 419.3C474.9 425.6 485.1 425.6 491.3 419.3L563.3 347.3C569.6 341.1 569.6 330.9 563.3 324.7C557.1 318.4 546.9 318.4 540.7 324.7L480 385.4z"></path></svg>{%- endif -%}{{ 'cart.cart_page.checkout' | t }}</button>
+                    </div>
+                {%- when 'btnmr' -%}
+                    {%- if additional_checkout_buttons and settings.enable_sub_reCharge == false -%}<div data-add-ckt4 class="additional_checkout_buttons additional-checkout-buttons--vertical {{ cl_agree }}">{{ content_for_additional_checkout_buttons }}</div>{%- endif -%}
+                {%- when 'img' -%}{% if bk_stts.image == blank %}{% continue %}{% endif -%}
+                    {%- assign image = bk_stts.image -%}
+                     <div class="t4s-cat__imgtrust t4s_ratioadapt t4s-d-flex t4s-justify-content-md-end t4s-justify-content-center">
+                        <div class=" t4s-cat__imgtrust_ratio t4s_ratio t4s-pr t4s-oh" style="--aspect-ratioapt:{{ image.aspect_ratio | default: 1 }};width: {{ bk_stts.wimg }}%;height:auto;">
+                          <img class="lazyloadt4s" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                          <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span>
+                        </div>
+                      </div>
+                  
+                  {%- else -%}{% continue -%}
+               {%- endcase -%}
+            {%- endfor -%}
+
+         </div>
+       </div>
+    </div>
+
+  </form> 
+
+   {%- if se_stts.enable_rates %}{% assign idShip = 'main_cart' -%}
+    <div data-estimate-shipping-wrap data-id="{{ idShip }}" class="t4s-shipping_calculator t4s-shipping_calc_page">
+      <h3 class="t4s-truncate">{{ 'cart.shipping_estimator.title' | t }}</h3>
+       <div class="t4s-row t4s-align-items-center t4s-justify-content-center">
+          <div class="t4s-field t4s-col-lg-3 t4s-col-md-4 t4s-col-12 t4s-col-item">
+              <label for="ShippingCountry_{{ idShip }}">{{ 'cart.shipping_estimator.country' | t }}</label>
+              <select id="ShippingCountry_{{ idShip }}" name="country" data-default="{% if customer %}{{ customer.default_address.country }}{% elsif se_stts.ship_df_country != '' %}{{ se_stts.ship_df_country | escape }}{% endif %}">{{- country_option_tags -}}</select>
+          </div>
+          <div class="t4s-field t4s-col-lg-3 t4s-col-md-4 t4s-col-12 t4s-col-item" id="ShippingProvinceContainer_{{ idShip }}" style="display:none">
+               <label for="ShippingProvince_{{ idShip }}" id="address_province_label">{{ 'cart.shipping_estimator.province' | t }}</label>
+               <select id="ShippingProvince_{{ idShip }}" name="province" data-default="{% if customer %}{{ customer.default_address.province }}{% endif %}"></select>
+          </div>  
+          <div class="t4s-field t4s-col-lg-3 t4s-col-md-4 t4s-col-12 t4s-col-item">
+               <label for="ShippingZip_{{ idShip }}">{{ 'cart.shipping_estimator.zip_code' | t }}</label>
+               <input type="text" id="ShippingZip_{{ idShip }}" name="zip" value="{% if customer %}{{ customer.default_address.zip }}{% endif %}"/>
+          </div>
+          <div class="t4s-field t4s-col-lg-3 t4s-col-md-6 t4s-col-12 t4s-col-item">
+            <button data-action="estimate-shipping" type="button" class="t4s-get__rates t4s-btn-loading__svg">
+                <span class="t4s-btn-atc_text">{{ 'cart.shipping_estimator.estimate' | t }}</span>
+                <div class="t4s-loading__spinner t4s-dn">
+                  <svg  width="16" height="16" aria-hidden="true" focusable="false" role="presentation" class="t4s-svg__spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="t4s-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+                </div> 
+            </button>
+          </div>
+        </div>
+        <div data-response-rates class="t4s-response__rates t4s-text-center"></div>
+        <template data-lang-rates class="t4s-d-none">
+          {
+            "multiple_rates": {{ 'cart.shipping_estimator.multiple_rates' | t | json }},
+            "one_rate": {{ 'cart.shipping_estimator.one_rate' | t | json }},
+            "no_rates": {{ 'cart.shipping_estimator.no_rates' | t | json }},
+            "rate_value": {{ 'cart.shipping_estimator.rate_value' | t | json }},
+            "errors": {{ 'cart.shipping_estimator.errors' | t | json }}
+          }
+        </template>  
+    </div>
+   {%- endif -%}
+
+</div>
+<script>window.cartT4SectionID = {{ section.id | json }};</script> 
+
+{%- schema -%}
+  {
+  "name": "Cart",
+  "tag": "section",
+  "class": "t4s-section t4s-section-main t4s-main-cart",
+  "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_calc_ship",
+        "label": "Enable calc shipping",
+        "info":"Free shipping minimum amount.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_note",
+        "label": "Enable order notes",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_rates",
+        "label": "Enable shipping rates calculator",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_discount",
+        "label": "Enable input box discounts codes",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_gift_wrap",
+        "label": "Enable gift wrap",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "+ Shipping Rates Calculator"
+      },
+      {
+        "type": "text",
+        "id": "ship_df_country",
+        "label": "Default country selection",
+        "default": "United States"
+      },
+      {
+        "type": "paragraph",
+        "content": "If your customer is logged-in, the country in his default shipping address will be selected. If you are not sure about the  spelling to use here, refer to the first checkout page."
+      }
+  ],
+    "blocks": [
+      {
+        "type": "price",
+        "name": "Total price",
+        "limit": 1
+      },
+      {
+        "type": "tax",
+        "name": "Taxes and shipping info",
+        "limit": 1/*,
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "image",
+            "label": "Content"
+          }
+        ]*/
+      },
+    {
+        "type": "agree",
+        "name": "Terms,conditions checkbox",
+        "limit": 1
+    },
+    {
+        "type": "btnck",
+        "name": "Button checkout, updated",
+        "limit": 1,
+        "settings":[
+            {
+              "type": "header",
+              "content": "+ Checkout button options"
+            },
+            {
+              "type":"checkbox",
+              "id":"btn_icon",
+              "label":"Enable button icon",
+              "default":false
+            },
+            {
+                "type": "select",
+                "id": "button_style",
+                "label": "Button style",
+                "options": [
+                    {
+                        "label": "Default",
+                        "value": "default"
+                    },
+                    {
+                        "label": "Outline",
+                        "value": "outline"
+                    },
+                    {
+                        "label": "Bordered bottom",
+                        "value": "bordered"
+                    },
+                    {
+                        "label": "Link",
+                        "value": "link"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "btn_size",
+                "label": "Button size",
+                "default":"large",
+                "options": [
+                    {
+                        "label": "Extra small",
+                        "value": "small"
+                    },
+                    {
+                        "label": "Small",
+                        "value": "extra-small"
+                    },
+                    {
+                        "label": "Medium",
+                        "value": "medium"
+                    },
+                    {
+                        "label": "Large",
+                        "value": "extra-medium"
+                    },
+                    {
+                        "label": "Extra large",
+                        "value": "large"
+                    },
+                    {
+                        "label": "Extra extra large",
+                        "value": "extra-large"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "btn_cl",
+                "label": "Button color",
+                "default": "dark",
+                "options": [
+                    {
+                        "value": "light",
+                        "label": "Light"
+                    },
+                    {
+                        "value": "dark",
+                        "label": "Dark"
+                    },
+                    {
+                        "value": "primary",
+                        "label": "Primary"
+                    },
+                    {
+                        "value": "custom1",
+                        "label": "Custom color 1"
+                    },
+                    {
+                        "value": "custom2",
+                        "label": "Custom color 2"
+                    }
+                ]
+            },
+            {
+                "type":"select",
+                "id":"button_effect",
+                "label":"Button hover effect",
+                "default":"default",
+                "info":"Only working button style default, outline",
+                "options":[
+                    {
+                        "label":"Default",
+                        "value":"default"
+                    },
+                    {
+                        "label":"Fade",
+                        "value":"fade"
+                    },
+                    {
+                        "label":"Rectangle out",
+                        "value":"rectangle-out"
+                    },
+                    {
+                        "label":"Sweep to right",
+                        "value":"sweep-to-right"
+                    },
+                    {
+                        "label":"Sweep to left",
+                        "value":"sweep-to-left"
+                    },
+                    {
+                        "label":"Sweep to bottom",
+                        "value":"sweep-to-bottom"
+                    },
+                    {
+                        "label":"Sweep to top",
+                        "value":"sweep-to-top"
+                    },
+                    {
+                        "label":"Shutter out horizontal",
+                        "value":"shutter-out-horizontal"
+                    },
+                    {
+                        "label":"Outline",
+                        "value":"outline"
+                    },
+                    {
+                        "label":"Shadow",
+                        "value":"shadow"
+                    }
+                ]
+            },
+            {
+              "type": "header",
+              "content": "+ Update button options"
+            },
+            {
+              "type": "paragraph",
+              "content": "Only visible when disable automatic cart updates"
+            },
+            {
+                "type":"checkbox",
+                "id":"btn_icon2",
+                "label":"Enable button icon",
+                "default":false
+            },
+            {
+                "type": "select",
+                "id": "button_style2",
+                "label": "Button style",
+                "default":"outline",
+                "options": [
+                    {
+                        "label": "Default",
+                        "value": "default"
+                    },
+                    {
+                        "label": "Outline",
+                        "value": "outline"
+                    },
+                    {
+                        "label": "Bordered bottom",
+                        "value": "bordered"
+                    },
+                    {
+                        "label": "Link",
+                        "value": "link"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "btn_size2",
+                "label": "Button size",
+                "default":"large",
+                "options": [
+                    {
+                        "label": "Extra small",
+                        "value": "small"
+                    },
+                    {
+                        "label": "Small",
+                        "value": "extra-small"
+                    },
+                    {
+                        "label": "Medium",
+                        "value": "medium"
+                    },
+                    {
+                        "label": "Large",
+                        "value": "extra-medium"
+                    },
+                    {
+                        "label": "Extra large",
+                        "value": "large"
+                    },
+                    {
+                        "label": "Extra extra large",
+                        "value": "extra-large"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "btn_cl2",
+                "label": "Button color",
+                "default": "dark",
+                "options": [
+                    {
+                        "value": "light",
+                        "label": "Light"
+                    },
+                    {
+                        "value": "dark",
+                        "label": "Dark"
+                    },
+                    {
+                        "value": "primary",
+                        "label": "Primary"
+                    },
+                    {
+                        "value": "custom1",
+                        "label": "Custom color 1"
+                    },
+                    {
+                        "value": "custom2",
+                        "label": "Custom color 2"
+                    }
+                ]
+            },
+            {
+                "type":"select",
+                "id":"button_effect2",
+                "label":"Button hover effect",
+                "default":"default",
+                "info":"Only working button style default, outline",
+                "options":[
+                    {
+                        "label":"Default",
+                        "value":"default"
+                    },
+                    {
+                        "label":"Fade",
+                        "value":"fade"
+                    },
+                    {
+                        "label":"Rectangle out",
+                        "value":"rectangle-out"
+                    },
+                    {
+                        "label":"Sweep to right",
+                        "value":"sweep-to-right"
+                    },
+                    {
+                        "label":"Sweep to left",
+                        "value":"sweep-to-left"
+                    },
+                    {
+                        "label":"Sweep to bottom",
+                        "value":"sweep-to-bottom"
+                    },
+                    {
+                        "label":"Sweep to top",
+                        "value":"sweep-to-top"
+                    },
+                    {
+                        "label":"Shutter out horizontal",
+                        "value":"shutter-out-horizontal"
+                    },
+                    {
+                        "label":"Outline",
+                        "value":"outline"
+                    },
+                    {
+                        "label":"Shadow",
+                        "value":"shadow"
+                    }
+                ]
+            }
+        ]
+    },
+   {
+     "type": "btnmr",
+     "name": "Accelerated checkouts",
+     "limit": 1,
+     "settings": [
+            /*{
+                "type": "paragraph",
+                "content": "Note: Only show when cart empty."
+            }*/
+     ]
+   },
+    {
+        "type": "img",
+        "name": "Image trust",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            },
+            {
+                "type": "range",
+                "id": "wimg",
+                "min": 40,
+                "max": 100,
+                "step": 1,
+                "unit": "%",
+                "label": "Width image",
+                "default": 50
+            }
+        ]
+    },
+    {
+        "type": "btn",
+        "name": "Button emty",
+        "settings": [
+            {
+                "type": "paragraph",
+                "content": "Note: Only show when cart empty."
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Button Title",
+                "default": "Return To Shop",
+                "info":"If set blank will not show"
+            },
+            {
+                "type": "url","id": "url","label": "Button link"
+            },
+            {
+              "type":"checkbox",
+              "id":"btn_icon",
+              "label":"Enable button icon",
+              "default":false
+          },
+          {
+              "type": "select",
+              "id": "button_style",
+              "label": "Button style",
+              "options": [
+                  {
+                      "label": "Default",
+                      "value": "default"
+                  },
+                  {
+                      "label": "Outline",
+                      "value": "outline"
+                  },
+                  {
+                      "label": "Bordered bottom",
+                      "value": "bordered"
+                  },
+                  {
+                      "label": "Link",
+                      "value": "link"
+                  }
+              ]
+          },
+          {
+              "type": "select",
+              "id": "btn_cl",
+              "label": "Button color",
+              "default": "dark",
+              "options": [
+                  {
+                      "value": "light",
+                      "label": "Light"
+                  },
+                  {
+                      "value": "dark",
+                      "label": "Dark"
+                  },
+                  {
+                      "value": "primary",
+                      "label": "Primary"
+                  },
+                  {
+                      "value": "custom1",
+                      "label": "Custom color 1"
+                  },
+                  {
+                      "value": "custom2",
+                      "label": "Custom color 2"
+                  }
+              ]
+          },
+          {
+              "type":"select",
+              "id":"button_effect",
+              "label":"Button hover effect",
+              "default":"fade",
+              "info":"Only working button style default, outline",
+              "options":[
+                  {
+                      "label":"Default",
+                      "value":"default"
+                  },
+                  {
+                      "label":"Fade",
+                      "value":"fade"
+                  },
+                  {
+                      "label":"Rectangle out",
+                      "value":"rectangle-out"
+                  },
+                  {
+                      "label":"Sweep to right",
+                      "value":"sweep-to-right"
+                  },
+                  {
+                      "label":"Sweep to left",
+                      "value":"sweep-to-left"
+                  },
+                  {
+                      "label":"Sweep to bottom",
+                      "value":"sweep-to-bottom"
+                  },
+                  {
+                      "label":"Sweep to top",
+                      "value":"sweep-to-top"
+                  },
+                  {
+                      "label":"Shutter out horizontal",
+                      "value":"shutter-out-horizontal"
+                  },
+                  {
+                      "label":"Outline",
+                      "value":"outline"
+                  },
+                  {
+                      "label":"Shadow",
+                      "value":"shadow"
+                  }
+              ]
+          }
+        ]
+    }
+   ],
+    "default": {
+      "blocks": [
+        {"type": "price"},{"type": "tax"},{"type": "agree"},{"type": "btnck"},{"type": "btnmr"},{"type": "img"},{"type": "btn"}
+      ]
+    }
+}
+{% endschema %}

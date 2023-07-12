@@ -1,0 +1,1768 @@
+{%- liquid 
+    assign se_stts     = section.settings
+    assign se_id       = section.id
+    assign design_mode = request.design_mode
+    assign loadContent = false
+    if content_for_header contains '\u0026section_id=' or content_for_header contains '?section_id='
+       assign loadContent = true
+    endif
+    assign sidebar_position = se_stts.position
+    assign sidebar_size     = se_stts.size
+    assign isSidebarDrawer  = se_stts.enable_drawer 
+ -%}
+    
+{%- if loadContent or design_mode -%}
+    <template class="t4s-d-none">
+    [t4splitlz]
+        {%- if section.blocks.size > 0 -%}
+            <link rel="stylesheet" href="{{ 't4s-widget.css' | asset_url }}" media="all">
+            <div class="t4s-sidebar-inner">
+            <div class="t4s-row t4s-row-cols-1">
+                {%- for block in section.blocks -%}
+                    {%- assign bk_stts = block.settings -%}
+                    {%- case block.type -%}
+                        {%- when 'blog_cate' -%}
+                            {%- assign top_link_list = bk_stts.cat_link_list -%}
+                            {%- if top_link_list == blank -%}<p class="t4s-pr-no-content">{{ 'onboarding.no_content' | t }}</p>{% continue %}{% endif -%}
+                                <div class="t4s-col-item t4s-widget t4s-widget-blog-category t4s-cat-count-{{ bk_stts.count }}">
+                                    {%- if bk_stts.title != blank -%}
+                                        <h5 class="t4s-widget-title">{{ bk_stts.title }}</h5>
+                                    {%- endif -%}
+                                    <ul class="t4s-blog-categories">
+                                        {%- for link in linklists[top_link_list].links -%}
+                                        {%- if link.type != 'blog_link' %}{% continue %}{% endif -%}
+                                        <li class="t4s-cat-item t4s-pr{%- if link.active %} t4s-current-cat{%- endif -%}"><a href="{{ link.url }}">{{ link.title }} <span class="t4s-cat-count">({{ link.object.articles_count }})</a></span></li>
+                                        {%- endfor -%}
+                                    </ul>
+                                </div>
+                            {%- when 'tags' -%}
+                                {%- if blog.all_tags.size < 1 %}{% continue %}{% endif -%}
+                                <div class="t4s-col-item t4s-widget t4s-widget-blog-tags t4s-tags-count-{{ bk_stts.count }}">
+                                    {%- if bk_stts.title != blank -%}
+                                        <h5 class="t4s-widget-title">{{ bk_stts.title }}</h5>
+                                    {%- endif -%}
+                                    <div class="t4s-filter-tags t4s-tags-count-{{ bk_stts.count }}">
+                                        <ul>
+                                            {%- for tag in blog.all_tags -%}
+                                                {%- if current_tags contains tag -%}
+                                                    <li class="t4s-is--active"><a href="{{ blog.url }}">{{ tag | remove : 'category_' | strip }} <span class="t4s-blog-count">({{ tag.total_count }})</span></a></li>
+                                                {%- else -%}
+                                                    <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag | remove : 'category_' | strip }} <span class="t4s-blog-count">({{ tag.total_count }})</span></a></li>
+                                                {%- endif -%}
+                                            {%- endfor -%}
+                                        </ul>
+                                    </div>
+                                </div>
+                        {%- when 'gallery' -%}
+                            {%- liquid
+                                assign open_link = bk_stts.open_link
+                                assign ARRhtml1 = 'a,,' | split: ','
+                                assign ARRhtml2 = 'div,data-' | split: ',' -%}
+                            <div id="t4s-sidebar-{{ block.id }}" class="t4s-col-item t4s-widget t4s-widget-gallery">
+                                {%- if bk_stts.title != blank -%}
+                                    <h5 class="t4s-widget-title">{{ bk_stts.title }}</h5>
+                                {%- endif -%}  
+                                <div class="t4s-row t4s_ratio1_1 t4s_position_8 t4s_cover t4s-row-cols-{{ bk_stts.col_dk }} t4s-row-cols-md-{{ bk_stts.col_dk }} t4s-row-cols-lg-{{ bk_stts.col_dk }} t4s-gx-{{ bk_stts.space_item }} t4s-gy-{{ bk_stts.space_item }}">
+                                {%- for i in (1..9) -%}
+                                    {%- liquid
+                                        assign image_list = 'img' | append: i 
+                                        assign image_url_list = 'link' | append: i 
+                                        assign url = bk_stts[image_url_list]
+                                        assign image = bk_stts[image_list] 
+                                        if url == blank 
+                                            assign ARRhtml = ARRhtml2
+                                        else 
+                                            assign ARRhtml = ARRhtml1  
+                                        endif  
+                                   -%}                                               
+                                    {%- if image != blank -%}
+                                        <div class="t4s-col-item t4s-gallery-item">
+                                            <{{ ARRhtml[0] }} {{ ARRhtml[1] }}href="{{ url }}" {{ ARRhtml[2] }}target="{{ bk_stts.open_link }}" class="t4s-effect t4s-pr t4s-oh t4s-d-block">
+                                                <div class="t4s_ratio" style="background: url({{ image | image_url: width: 1 }});">
+                                                    <img class="lazyloadt4s" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                                </div>
+                                            </{{ ARRhtml[0] }}>
+                                        </div>  
+                                    {%- endif -%}                                            
+                                {%- endfor -%}
+                                </div>
+                                {%- style -%}
+                                    #t4s-sidebar-{{ block.id }} .t4s-gallery-item .t4s_ratio{border-radius:{{ bk_stts.round }}%} 
+                                {%- endstyle -%}
+                            </div>
+                        {%- when 'instagram' -%}
+                            {%- liquid
+                                assign limit = bk_stts.limit
+                                if bk_stts.mode == '1' 
+                                    assign acc = bk_stts.acc | default: settings.global_acc
+                                else
+                                    assign acc = 'ins_19041994'
+                                endif -%}
+        
+                            <div id="t4s-sidebar-{{ block.id }}" class="t4s-col-item t4s-widget t4s-widget-instagram">
+                                {%- if bk_stts.title != blank -%}<h5 class="t4s-widget-title">{{ bk_stts.title }}</h5>{%- endif -%}
+                                <div class="t4s-row t4s_ratio1_1 t4s_position_8 t4s_cover t4s-row-cols-{{ bk_stts.col_dk }} t4s-row-cols-md-{{ bk_stts.col_dk }} t4s-row-cols-lg-{{ bk_stts.col_dk }} t4s-gx-{{ bk_stts.space_item }} t4s-gy-{{ bk_stts.space_item }}" data-inst4s-options='{ "id":"{{ bk_stts.col_dk }}{{ bk_stts.col_tb }}{{ bk_stts.col_mb }}{{ bk_stts.limit }}{{ bk_stts.open_link }}","limit":{{ limit }}, "acc": {{ acc | base64_encode | json }}, "target":"{{ bk_stts.open_link }}" }'><div class="t4s-loading--bg"></div></div>
+                                <template class="t4s-icons-ins-svg"><svg class="t4s-svg-ins-image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22,15.5,18.55,11a2,2,0,0,0-3.14,0L12,15.27a2,2,0,0,1-3,.18l-1.1-1.07a2,2,0,0,0-2.81,0L2,17.5V20a2,2,0,0,0,2,2H20a2,2,0,0,0,2-2Z"></path><rect x="2" y="2" width="20" height="20" rx="2"></rect><line x1="6.99" y1="7" x2="7" y2="7" stroke-linecap="round" stroke-width="2.5"></line></svg>[t4split]<svg class="t4s-svg-ins-video" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16,10l4.55-2.28a1,1,0,0,1,1.45.9v6.76a1,1,0,0,1-1.45.9L16,14" stroke-linecap="round"></path></svg>[t4split]<svg class="t4s-svg-ins-album" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="14" height="14" rx="2"></rect><path d="M20,22H10a2,2,0,0,1-2-2V16h6a2,2,0,0,0,2-2V8h4a2,2,0,0,1,2,2V20A2,2,0,0,1,20,22Z"></path></svg></template>
+                                {%- style -%}
+                                    #t4s-sidebar-{{ block.id }} .t4s-col-ins a{border-radius:{{ bk_stts.round }}%} 
+                                {%- endstyle -%}
+                            </div>   
+                        {%- when 'collection' -%}
+                            {{ 'collection-products.css' | asset_url | stylesheet_tag }}
+                            {%- liquid
+                                if settings.within_cat and collection
+                                    assign isHasCollection = true
+                                else 
+                                    assign isHasCollection = false
+                                endif
+                                    assign placeholder_img = settings.placeholder_img
+                                    assign price_varies_style = settings.price_varies_style
+                                if bk_stts.image_ratio == "t4s_ratioadapt"
+                                    assign imgatt = ''
+                                else 
+                                    assign imgatt = 'data-'
+                                endif -%}
+                            <div id="t4s-sidebar-{{ block.id }}" class="t4s-col-item t4s-widget t4s-sidebar-product-feature">
+                                {%- if bk_stts.title != blank -%}
+                                    <h5 class="t4s-widget-title">{{ bk_stts.title }}</h5>
+                                {%- endif -%}
+                                {%- if bk_stts.collection == blank -%}
+                                    <p class="t4s-pr-no-content">{{ 'onboarding.no_content' | t }}</p>
+                                {%- else -%}{%- assign ck_hide_all = false -%}
+                                <div class="product_list_widget {{ bk_stts.image_ratio }} {{ bk_stts.image_position }} {{ bk_stts.image_size }}">
+                                    {%- for product in collections[bk_stts.collection].products limit: bk_stts.limit_pr -%}
+                                    {% if isHasCollection %}{%- assign pr_url = product.url | within: collection %}{% else %}{%- assign pr_url = product.url %}{% endif -%}
+                                        {%- render 'pr-sidebar-loop', imgatt: imgatt, product: product, pr_url: pr_url, placeholder_img: placeholder_img, price_varies_style: price_varies_style -%} 
+                                    {%- endfor -%}
+                                </div>
+                                {%- endif -%}
+                            </div>
+                        {%- when 'post' -%}
+                            {%- liquid if bk_stts.image_ratio == "t4s_ratioadapt"
+                                assign imgatt = ''
+                            else 
+                                assign imgatt = 'data-'
+                            endif -%} 
+                            <div id="t4s-sidebar-{{ block.id }}" class="t4s-col-item t4s-widget t4s-sidebar-post">
+                                {%- if bk_stts.title != blank -%}
+                                    <h5 class="t4s-widget-title">{{ bk_stts.title }}</h5>
+                                {%- endif -%}
+                                {%- if bk_stts.blog == blank -%}
+                                    <p>{{ 'onboarding.no_content' | t }}</p>
+                                {%- else -%} 
+                                    <div class="t4s-sidebar-post-list">
+                                        {%- for article in blogs[bk_stts.blog].articles limit: bk_stts.limit_post -%}
+                                            {%- render 'ar-sidebar-loop', article: article, date: bk_stts.date, imgatt: imgatt, image_ratio: bk_stts.image_ratio, image_position: bk_stts.image_position, image_size: bk_stts.image_size -%}
+                                        {%- endfor -%}
+                                    </div>
+                                {%- endif -%}
+                            </div> 
+                        {%- when 'shipping' -%}
+                            <div id="t4s-sidebar-{{ block.id }}" class="t4s-col-item t4s-widget t4s-sidebar-shipping">
+                                {%- if bk_stts.title != blank -%}
+                                    <h5 class="t4s-widget-title">{{ bk_stts.title }}</h5>
+                                {%- endif -%}
+                                {%- for i in (1..6) -%}
+                                    {%- assign shipping = 'shipping_' | append: i -%}
+                                    {%- assign shipping_id = bk_stts[shipping] -%}
+                                    {%- if shipping_id != blank -%}
+                                        {%- assign shipping = shipping_id | replace: ' ,', ',' | replace: ', ', ',' | split: ',' -%}
+                                        <div class="t4s-row t4s-gx-0 t4s-gy-0 t4s-text-left t4s-space-item-inner">
+                                            {%- if shipping[0] != blank -%}
+                                                <div class="t4s-sidebar-shipping-icon t4s-col-item icon t4s-col-auto">
+                                                    <i class="{{ shipping[0] }}"></i>
+                                                </div>
+                                            {%- endif -%}
+                                            <div class="t4s-col-item t4s-col">
+                                                <h4 class="t4s-sidebar-shipping-title">{{ shipping[1] }}</h4>
+                                                <p class="t4s-sidebar-shipping-desc">{{ shipping[2] }}</p>
+                                            </div>
+                                        </div>
+                                    {%- endif -%}
+                                {%- endfor -%}
+                            </div>
+                        {%- when 'html' -%}
+                            <div id="t4s-sidebar-{{ block.id }}" class="t4s-col-item t4s-widget t4s-rte t4s-sidebar-content-page">
+                                {%- if bk_stts.title != blank -%}
+                                    <h5 class="t4s-widget-title">{{ bk_stts.title }}</h5>
+                                {%- endif -%}
+                                {%- if bk_stts.custom_html != blank -%}{{ bk_stts.custom_html }}{%- endif -%}
+                            </div>
+                        {%- when 'text' -%}
+                            <div id="t4s-sidebar-{{ block.id }}" class="t4s-col-item t4s-widget t4s-sidebar-content-page t4s-rte">
+                                {%- if bk_stts.title != blank -%}
+                                    <h5 class="t4s-widget-title">{{ bk_stts.title }}</h5>
+                                {%- endif -%}
+                                {%- if bk_stts.text_html != blank -%}{{ bk_stts.text_html }}{%- endif -%}
+                            </div>
+                        {%- when 'image' -%}
+                            <div id="t4s-sidebar-{{ block.id }}" class="t4s-col-item t4s-widget t4s-sidebar-image">
+                                {%- assign image = bk_stts.image_sidebar -%}
+                                {%- if image -%}
+                                    {{ 'custom-effect.css' | asset_url | stylesheet_tag }}
+                                    <div class="t4s-image t4s-pr t4s-eff-img-{{ bk_stts.img_effect }} t4s-countdown-pos-{{ bk_stts.countdown_pos }} t4s-text-{{ bk_stts.content_align }} id="b_{{ block.id }}">
+                                        {%- if bk_stts.b_link != blank -%}
+                                        <a class="t4s-oh t4s-d-block" href="{{ bk_stts.b_link }}" target="{{ bk_stts.open_link }}">
+                                        {%- endif -%}
+                                            <img class="lazyloadt4s t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                            {%- if bk_stts.countdown_pos == "2" -%}<span class="lazyloadt4s-loader"></span>{%- endif -%}
+                                        {%- if bk_stts.b_link != blank -%}
+                                        </a>
+                                        {%- endif -%}
+                                        {%- if bk_stts.date != blank -%}
+                                            {{ 'countdown.css' | asset_url | stylesheet_tag }}
+                                            <div class="t4s-sidebar-countdown t4s-countdown t4s-countdown-des-{{ bk_stts.cdt_des }} t4s-countdown-size-{{ bk_stts.cdt_size }}" id="b_{{ block.id }}" {%- render 'bk_cus_style', type: 'countdown', bk_stts: bk_stts, ani_delay: ani_delay -%}>
+                                                <div class="time" data-countdown-t4s data-date='{{ bk_stts.date }}'>
+                                                <span class="countdown-days">
+                                                    <span class="cd_timet4 cd-number">%-D</span>
+                                                    <span class="cd_txtt4 cd-text">%!D:{{ "sections.countdown_text.day" | t }},{{ "sections.countdown_text.day_plural" | t }};</span>
+                                                </span>
+                                                <span class="countdown-hours"> 
+                                                    <span class="cd_timet4 cd-number">%H</span> 
+                                                    <span class="cd_txtt4 cd-text">%!H:{{ "sections.countdown_text.hr" | t }},{{ "sections.countdown_text.hr_plural" | t }};</span>
+                                                </span>
+                                                <span class="countdown-min">
+                                                    <span class="cd_timet4 cd-number">%M</span> 
+                                                    <span class="cd_txtt4 cd-text">%!M:{{ "sections.countdown_text.min" | t }},{{ "sections.countdown_text.min_plural" | t }};</span>
+                                                </span>
+                                                <span class="countdown-sec">
+                                                    <span class="cd_timet4 cd-number">%S</span> 
+                                                    <span class="cd_txtt4 cd-text">%!S:{{ "sections.countdown_text.sec" | t }},{{ "sections.countdown_text.sec_plural" | t }};</span>
+                                                </span>
+                                                </div>
+                                            </div>
+                                        {%- endif -%} 
+                                    </div>
+                                {%- endif -%}
+                            </div>
+                        {%- when 'cus_socials' -%}
+                            {{ 'icon-social.css' | asset_url | stylesheet_tag }}
+                                <div id="t4s-sidebar-{{ block.id }}" class="t4s-col-item t4s-widget t4s-widget-socials">
+                                    {%- if bk_stts.heading != blank -%}
+                                    <h5 class="t4s-widget-title">{{ bk_stts.heading }}</h5>
+                                    {%- endif -%} 
+                                    <div class="t4s-socials-block t4s-setts-color-{{ bk_stts.use_color_set }} social-{{ block.id }}" style="--cl:{{ bk_stts.icon_cl }};--bg-cl:{{ bk_stts.bg_cl }};--mgb: {{ bk_stts.mgb }}px;--mgb-mb: {{ bk_stts.mgb_mb }}px; --bd-radius:{{ bk_stts.bd_radius }}px;">
+                                    {%- if bk_stts.social_mode == '1' -%} 
+                                        {%- assign follow_social = true -%} 
+                                    {%- else -%} 
+                                        {%- assign share_image = settings.share_image | default: page_image | default: settings.logo -%} 
+                                    {%- endif -%} 
+                                        {%- render 'social_sharing', style: bk_stts.social_style, use_color_set: bk_stts.use_color_set, size: bk_stts.social_size, space_h_item: bk_stts.space_h_item, space_h_item_mb: bk_stts.space_h_item_mb, space_v_item: bk_stts.space_v_item, space_v_item_mb: bk_stts.space_v_item_mb, share_permalink: shop.url, share_title: shop.name, share_image: share_image, follow_social: follow_social -%} 
+                                    </div>
+                                </div>
+                    {%- endcase -%}  
+                {%- endfor -%}
+            </div>
+        </div>
+        {%- else -%}
+            <span class="t4s-onboarding-info">{{ 'onboarding.no_content' | t }}</span>
+    {%- endif -%}
+    [t4splitlz]
+        <link rel="stylesheet" href="{{ 'drawer.min.css' | asset_url }}" media="all">
+        <div id="drawer-{{ se_id }}" class="t4s-drawer t4s-drawer__left" aria-hidden="true">
+            <div class="t4s-drawer__header"><span>{{ 'general.sidebar.title' | t }}</span><button class="t4s-drawer__close" data-drawer-close aria-label="{{ 'general.sidebar.close' | t }}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button></div>
+            <div class="t4s-drawer__content">
+                <div class="t4s-drawer__main t4s-current-scrollbar">[t4splitlz2]</div>
+                <div class="t4s-drawer__footer"></div>
+            </div>
+        </div>     
+    [t4splitlz]
+    </template>
+{%- endif -%}
+<button data-sidebar-id='{{ se_id }}' data-sidebar-{{ isSidebarDrawer }} data-drawer-options='{ "id":"#drawer-{{ se_id }}" }' class="t4s-btn-sidebar"><span class="t4s-btn-sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg></span> <span class="t4s-btn-sidebar-text">{{ 'general.sidebar.open' | t }}</span></button>
+<style>
+    button.t4s-btn-sidebar {
+        position: fixed;
+        top: 50%;
+        z-index: 100;
+        background-color: var(--t4s-light-color);
+        color:  var(--t4s-dark-color);
+        box-shadow: 0 0 3px rgb(0 0 0 / 15%);
+        transition: all .6s cubic-bezier(.19,1,.22,1);
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        min-width: 50px;
+        height: 50px;
+        padding: 0;
+    }
+    .t4s-btn-sidebar .t4s-btn-sidebar-icon {
+        width: 50px;
+        height: 50px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .t4s-btn-sidebar .t4s-btn-sidebar-text {
+        padding: 0;
+        max-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 500;
+        will-change: padding, max-width;
+        transition: padding 0.4s cubic-bezier(.175,.885,.32,1.15),max-width 0.4s cubic-bezier(.175,.885,.32,1.15);
+    }
+    .t4s-btn-sidebar:hover .t4s-btn-sidebar-text {
+        padding-right: 25px;
+        max-width: 280px;
+    }
+    .t4s-sidebar-inner .t4s-widget:not(:last-child){margin-bottom: {{ se_stts.space }}px; }
+    #drawer-{{ se_id }} .t4s-drawer__main{overflow-x: hidden;padding:20px;}
+    {%- unless isSidebarDrawer %}
+    @media screen and (min-width: 1025px) {
+        .t4s-sidebar { display: block }
+        button.t4s-btn-sidebar,.t4s-section-sidebar{display: none;}
+        {%- if sidebar_size == 'small' -%}
+        .t4s-main-area {flex: 0 0 auto;width: 83.33333333%; }.t4s-sidebar {flex: 0 0 auto;width: 16.66666667%; }
+        {%- elsif sidebar_size == 'medium' -%}
+        .t4s-main-area {flex: 0 0 auto;width: 75%; }
+        {%- else -%}
+        .t4s-main-area {flex: 0 0 auto;width: 66.66666667%; }.t4s-sidebar {flex: 0 0 auto;width: 33.33333333%; }
+        {%- endif -%}
+    }
+    .t4s-section-sidebar ~ .t4s-section-main .t4s-main-area{order: 10}
+    .t4s-section-sidebar ~ .t4s-section-main .t4s-sidebar{order: 1}
+    {% endunless -%}
+    {% if se_stts.br_style != 'none' and isSidebarDrawer == false -%}
+    /* css border conffig */
+    .t4s-sidebar-inner {
+        border: 1px {{ se_stts.br_style }} {{ se_stts.brcolor }};
+        padding: {{ se_stts.sidebar_pd }}px;
+        border-radius: {{ se_stts.sidebar_bdr }}px;
+    }
+    {%- endif -%}
+    {%- if design_mode -%}
+        .t4s-section-sidebar {position: fixed;top: 100px;z-index: 20;}
+    {%- endif -%}
+</style>
+  {%- schema -%}
+  {
+    "name": "Sidebar article",
+    "class": "t4s-section t4s-section-sidebar t4s_tp_ins t4s_tp_cd",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_drawer",
+        "label": "Enable layout drawer",
+        "default": true
+      },
+      {
+          "type": "range",
+          "id": "space",
+          "label": "Space bottom",
+          "info": "Space bottom between block",
+          "default": 50,
+          "min": 20,
+          "max": 100,
+          "step": 1,
+          "unit": "px"
+      },
+      {
+        "type": "paragraph",
+        "content": "+ Configs only working when disable layout drawer"
+      },
+      {
+        "type": "select",
+        "id": "size",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ],
+        "label": "Sidebar size",
+        "default": "medium"
+      },
+      {
+          "type": "select",
+          "id": "br_style",
+          "label": "Border style",
+          "default":"none",
+          "options": [
+              {
+                  "value": "none",
+                  "label": "None"
+              },
+              {
+                  "value": "solid",
+                  "label": "Solid"
+              },
+              {
+                  "value": "dashed",
+                  "label": "Dashed"
+              },
+              {
+                  "value": "dotted",
+                  "label": "Dotted"
+              }
+          ]
+      },
+      {
+          "type": "color",
+          "id": "brcolor",
+          "label": "Border color",
+          "info": "Only chose when sidebar has border",
+          "default": "#222"
+      },
+      {
+          "type": "range",
+          "id": "sidebar_bdr",
+          "label": "Border radius",
+          "info": "Only chose when sidebar has border",
+          "default": 5,
+          "min": 0,
+          "max": 15,
+          "step": 1,
+          "unit": "px"
+      },
+      {
+          "type": "range",
+          "id": "sidebar_pd",
+          "label": "Padding inner",
+          "info": "Only chose when sidebar has border",
+          "default": 10,
+          "min": 5, 
+          "max": 15,
+          "step": 1,
+          "unit": "px"
+      }
+    ],
+    "blocks": [
+    {
+        "type": "blog_cate",
+        "name": "Categories",
+        "limit": 1,
+        "settings": [
+            { 
+                "type":"text",
+                "id":"title",
+                "label":"Categories",
+                "default":"Blog categories"
+            },
+            {
+                "type": "link_list",
+                "id": "cat_link_list",
+                "label": "Choose a link list"
+            },
+            {
+                "type": "checkbox",
+                "id": "count",
+                "label": "Show count",
+                "default": true
+            }
+        ]
+    },
+    {
+        "type": "tags",
+        "name": "Blog tags",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading",
+                "default": "Blog tags"
+            },
+            {
+                "type": "checkbox",
+                "id": "count",
+                "label": "Show count",
+                "default": true
+            }
+        ]
+    },
+    {
+        "type": "gallery",
+        "name": "Gallery",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading",
+                "default": "gallery"
+            },
+            {
+                "type": "header",
+                "content": "+ General options"
+            },
+            {
+                "type": "image_picker",
+                "id": "img1",
+                "label": "Image #1",
+                "info": "Choose image"
+            },
+            {
+                "type": "url",
+                "id": "link1",
+                "label": "Link #1",
+                "info": "Choose link"
+            },
+            {
+                "type": "image_picker",
+                "id": "img2",
+                "label": "Image #2",
+                "info": "Choose image"
+            },
+            {
+                "type": "url",
+                "id": "link2",
+                "label": "Link #2",
+                "info": "Choose link"
+            },
+            {
+                "type": "image_picker",
+                "id": "img3",
+                "label": "Image #3",
+                "info": "Choose image"
+            },
+            {
+                "type": "url",
+                "id": "link3",
+                "label": "Link #3",
+                "info": "Choose link"
+            },
+            {
+                "type": "image_picker",
+                "id": "img4",
+                "label": "Image #4",
+                "info": "Choose image"
+            },
+            {
+                "type": "url",
+                "id": "link4",
+                "label": "Link #4",
+                "info": "Choose link"
+            },
+            {
+                "type": "image_picker",
+                "id": "img5",
+                "label": "Image #5",
+                "info": "Choose image"
+            },
+            {
+                "type": "url",
+                "id": "link5",
+                "label": "Link #5",
+                "info": "Choose link"
+            },
+            {
+                "type": "image_picker",
+                "id": "img6",
+                "label": "Image #6",
+                "info": "Choose image"
+            },
+            {
+                "type": "url",
+                "id": "link6",
+                "label": "Link #6",
+                "info": "Choose link"
+            },
+            {
+                "type": "image_picker",
+                "id": "img7",
+                "label": "Image #7",
+                "info": "Choose image"
+            },
+            {
+                "type": "url",
+                "id": "link7",
+                "label": "Link #7",
+                "info": "Choose link"
+            },
+            {
+                "type": "image_picker",
+                "id": "img8",
+                "label": "Image #8",
+                "info": "Choose image"
+            },
+            {
+                "type": "url",
+                "id": "link8",
+                "label": "Link #8",
+                "info": "Choose link"
+            },
+            {
+                "type": "image_picker",
+                "id": "img9",
+                "label": "Image #9",
+                "info": "Choose image"
+            },
+            {
+                "type": "url",
+                "id": "link9",
+                "label": "Link #9",
+                "info": "Choose link"
+            },
+            {
+                "type": "select",
+                "id": "open_link",
+                "options": [
+                    {
+                        "value": "_self",
+                        "label": "Current window (_self)"
+                    },
+                    {
+                        "value": "_blank",
+                        "label": "New window (_blank)"
+                    }
+                ],
+                "label": "Open link in",
+                "default": "_blank"
+            },
+            {
+                "type": "range",
+                "id": "round",
+                "label": "Rounded corners for images",
+                "default": 0,
+                "min": 0,
+                "max": 50,
+                "step": 1,
+                "unit": "%"
+            },
+            {
+                "type": "select",
+                "id": "col_dk",
+                "label": "Items per row",
+                "info": "How many items you want to show per row",
+                "default": "3",
+                "options": [
+                    {
+                        "value": "1",
+                        "label": "1"
+                    },
+                    {
+                        "value": "2",
+                        "label": "2"
+                    },
+                    {
+                        "value": "3",
+                        "label": "3"
+                    },
+                    {
+                        "value": "4",
+                        "label": "4"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "space_item",
+                "options": [
+                    {
+                        "value": "0", 
+                        "label": "0"
+                    },
+                    {
+                        "value": "2", 
+                        "label": "2px"
+                    },
+                    {
+                        "value": "4", 
+                        "label": "4px"
+                    },
+                    {
+                        "value": "6", 
+                        "label": "6px"
+                    },
+                    {
+                        "value": "8", 
+                        "label": "8px"
+                    },
+                    {
+                        "value": "10", 
+                        "label": "10px"
+                    },
+                    {
+                        "value": "20",
+                        "label": "20px"
+                    }
+                ],
+                "label": "Photos Space",
+                "default": "6"
+                }
+            ]
+        },
+        {
+            "type": "instagram",
+            "name": "Instagram feed",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading",
+                    "default": "Instagram"
+                },
+                {
+                    "type": "select",
+                    "id": "mode",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": "Instagram Access Token"
+                        },
+                        {
+                            "value": "2",
+                            "label": "Instagram via APP"
+                        }
+                    ],
+                    "label": "Instagram image Source",
+                    "default": "1" 
+                },
+                {
+                    "type": "header",
+                    "content": "+ Instagram Access Token"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "NOTE: As of June 29th, 2020, the Instagram platform will be deprecating its Legacy API. The Pixel Union Instagram Access Token Generator is no longer available for use. If you are using Instagram Access Token generated by Pixel Union, please beware that all access tokens from the Pixel Union tool will be impacted."
+                },
+                {
+                    "type": "paragraph",
+                    "content": "NOTE: Via GraphQL API (new Instagram API) Long-lived tokens are valid for 60 days. You will have to manually regenerate your access token."
+                },
+                {
+                    "type": "text",
+                    "id": "acc",
+                    "label": "Instagram Access Token via GraphQL API",
+                    "info":"[How to get your Instagram Access Token via GraphQL API.](https://docs.the4.co/kalles-4/installation/how-to-get-instagram-access-token)"
+                },
+                {
+                    "type": "header",
+                    "content": "+ Instagram via APP"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Firstly, you need to install [Section Feed App](https://apps.shopify.com/section-feed-by-maestrooo) to use this section"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "[Document to use this section](https://kalles-docs.the4.co/sections/social-media/5.-instagram-api-via-app)"
+                },
+                {
+                    "type": "header",
+                    "content": "+ General options"
+                },
+                {
+                    "type": "range",
+                    "id": "limit",
+                    "min": 1,
+                    "max": 25,
+                    "step": 1,
+                    "unit": "img",
+                    "label": "Maximum photos to show",
+                    "default": 12
+                },
+                {
+                    "type": "select",
+                    "id": "open_link",
+                    "options": [
+                    {
+                        "value": "_self",
+                        "label": "Current window (_self)"
+                    },
+                    {
+                        "value": "_blank",
+                        "label": "New window (_blank)"
+                    }
+                    ],
+                    "label": "Open link in",
+                    "default": "_blank"
+                },
+                {
+                    "type": "range",
+                    "id": "round",
+                    "label": "Rounded corners for images",
+                    "default": 0,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "%"
+                },
+                {
+                    "type": "select",
+                    "id": "col_dk",
+                    "label": "Items per row",
+                    "info": "How many items you want to show per row",
+                    "default": "3",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": "1"
+                        },
+                        {
+                            "value": "2",
+                            "label": "2"
+                        },
+                        {
+                            "value": "3",
+                            "label": "3"
+                        },
+                        {
+                            "value": "4",
+                            "label": "4"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "space_item",
+                    "label": "Space items",
+                    "default": "6",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "6", 
+                            "label": "6px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "collection",
+            "name": "Featured Products",
+            "limit": 1,
+            "settings": [
+                {
+                    "type":"text",
+                    "id":"title",
+                    "label":"Heading",
+                    "default":"Sale Products"
+                },
+                {
+                    "type": "collection",
+                    "id": "collection",
+                    "label": "Collection to use"
+                },
+                {
+                    "type": "range",
+                    "id": "limit_pr",
+                    "label": "Number of products to show",
+                    "min":1,
+                    "max":20,
+                    "step":1,
+                    "default":5
+                },
+                {
+                    "type": "select",
+                    "id": "image_ratio",
+                    "label": "Image ratio",
+                    "default": "t4s_ratioadapt",
+                    "info": "Aspect ratio custom will settings in general panel",
+                    "options": [
+                    {
+                        "group": "Natural",
+                        "value": "t4s_ratioadapt",
+                        "label": "Adapt to image"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_ratio2_1",
+                        "label": "2:1"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_ratio16_9",
+                        "label": "16:9"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_ratio8_5",
+                        "label": "8:5"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_ratio3_2",
+                        "label": "3:2"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_ratio4_3",
+                        "label": "4:3"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_rationt",
+                        "label": "Ratio ASOS"
+                    },
+                    {
+                        "group": "Squared",
+                        "value": "t4s_ratio1_1",
+                        "label": "1:1"
+                    },
+                    {
+                        "group": "Portrait",
+                        "value": "t4s_ratio2_3",
+                        "label": "2:3"
+                    },
+                    {
+                        "group": "Portrait",
+                        "value": "t4s_ratio1_2",
+                        "label": "1:2"
+                    },
+                    {
+                        "group": "Custom",
+                        "value": "t4s_ratiocus1",
+                        "label": "Ratio custom 1"
+                    },
+                    {
+                        "group": "Custom",
+                        "value": "t4s_ratiocus2",
+                        "label": "Ratio custom 2"
+                    },
+                    {
+                        "group": "Custom",
+                        "value": "t4s_ratio_us3",
+                        "label": "Ratio custom 3"
+                    },
+                    {
+                        "group": "Custom",
+                        "value": "t4s_ratiocus4",
+                        "label": "Ratio custom 4"
+                    }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "image_size",
+                    "label": "Image size",
+                    "default": "t4s_cover",
+                    "info": "This settings apply only if the image ratio is not set to 'Adapt to image'",
+                    "options": [
+                    {
+                        "value": "t4s_cover",
+                        "label": "Full"
+                    },
+                    {
+                        "value": "t4s_contain",
+                        "label": "Auto"
+                    }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "image_position",
+                    "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'",
+                    "options": [
+                    {
+                        "value": "default",
+                        "label": "Default"
+                    },
+                    {
+                        "value": "t4s_position_1",
+                        "label": "Left top"
+                    },
+                    {
+                        "value": "t4s_position_2",
+                        "label": "Left center"
+                    },
+                    {
+                        "value": "t4s_position_3",
+                        "label": "Left bottom"
+                    },
+                    {
+                        "value": "t4s_position_4",
+                        "label": "Right top"
+                    },
+                    {
+                        "value": "t4s_position_5",
+                        "label": "Right center"
+                    },
+                    {
+                        "value": "t4s_position_6",
+                        "label": "Right bottom"
+                    },
+                    {
+                        "value": "t4s_position_7",
+                        "label": "Center top"
+                    },
+                    {
+                        "value": "t4s_position_8",
+                        "label": "Center center"
+                    },
+                    {
+                        "value": "t4s_position_9",
+                        "label": "Center bottom"
+                    }
+                    ],
+                    "label": "Image position",
+                    "default": "t4s_position_8"
+                }
+            ]
+        },
+        {
+            "type": "post",
+            "name": "Recent Post",
+            "limit": 1,
+            "settings": [
+                {
+                    "type":"text",
+                    "id":"title",
+                    "label":"Heading",
+                    "default":"Recent Post"
+                },
+                {
+                    "type": "blog",
+                    "id": "blog",
+                    "label": "Blog to use"
+                },
+                {
+                    "type": "select",
+                    "id": "date",
+                    "options": [
+                        {
+                            "value": "abbreviated_date",
+                            "label": "Apr 19, 1994"
+                        },
+                        {
+                            "value": "basic",
+                            "label": "4/19/1994"
+                        },
+                        {
+                            "value": "date",
+                            "label": "April 19, 1994"
+                        },
+                        {
+                            "value": "%b %d",
+                            "label": "Apr 19"
+                        }
+                    ],
+                    "label": "Date format",
+                    "info":"Different format options display for various languages.",
+                    "default": "date"
+                },
+                {
+                    "type": "range",
+                    "id": "limit_post",
+                    "label": "Number of posts to show",
+                    "min":1,
+                    "max":20,
+                    "step":1,
+                    "default":5
+                },
+                {
+                    "type": "select",
+                    "id": "image_ratio",
+                    "label": "Image ratio",
+                    "default": "t4s_ratioadapt",
+                    "info": "Aspect ratio custom will settings in general panel",
+                    "options": [
+                    {
+                        "group": "Natural",
+                        "value": "t4s_ratioadapt",
+                        "label": "Adapt to image"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_ratio2_1",
+                        "label": "2:1"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_ratio16_9",
+                        "label": "16:9"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_ratio8_5",
+                        "label": "8:5"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_ratio3_2",
+                        "label": "3:2"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_ratio4_3",
+                        "label": "4:3"
+                    },
+                    {
+                        "group": "Landscape",
+                        "value": "t4s_rationt",
+                        "label": "Ratio ASOS"
+                    },
+                    {
+                        "group": "Squared",
+                        "value": "t4s_ratio1_1",
+                        "label": "1:1"
+                    },
+                    {
+                        "group": "Portrait",
+                        "value": "t4s_ratio2_3",
+                        "label": "2:3"
+                    },
+                    {
+                        "group": "Portrait",
+                        "value": "t4s_ratio1_2",
+                        "label": "1:2"
+                    },
+                    {
+                        "group": "Custom",
+                        "value": "t4s_ratiocus1",
+                        "label": "Ratio custom 1"
+                    },
+                    {
+                        "group": "Custom",
+                        "value": "t4s_ratiocus2",
+                        "label": "Ratio custom 2"
+                    },
+                    {
+                        "group": "Custom",
+                        "value": "t4s_ratio_us3",
+                        "label": "Ratio custom 3"
+                    },
+                    {
+                        "group": "Custom",
+                        "value": "t4s_ratiocus4",
+                        "label": "Ratio custom 4"
+                    }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "image_size",
+                    "label": "Image size",
+                    "default": "t4s_cover",
+                    "info": "This settings apply only if the image ratio is not set to 'Adapt to image'",
+                    "options": [
+                    {
+                        "value": "t4s_cover",
+                        "label": "Full"
+                    },
+                    {
+                        "value": "t4s_contain",
+                        "label": "Auto"
+                    }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "image_position",
+                    "info": "The first value is the horizontal position and the second value is the vertical. This settings apply only if the image ratio is not set to 'Adapt to image'",
+                    "options": [
+                    {
+                        "value": "default",
+                        "label": "Default"
+                    },
+                    {
+                        "value": "t4s_position_1",
+                        "label": "Left top"
+                    },
+                    {
+                        "value": "t4s_position_2",
+                        "label": "Left center"
+                    },
+                    {
+                        "value": "t4s_position_3",
+                        "label": "Left bottom"
+                    },
+                    {
+                        "value": "t4s_position_4",
+                        "label": "Right top"
+                    },
+                    {
+                        "value": "t4s_position_5",
+                        "label": "Right center"
+                    },
+                    {
+                        "value": "t4s_position_6",
+                        "label": "Right bottom"
+                    },
+                    {
+                        "value": "t4s_position_7",
+                        "label": "Center top"
+                    },
+                    {
+                        "value": "t4s_position_8",
+                        "label": "Center center"
+                    },
+                    {
+                        "value": "t4s_position_9",
+                        "label": "Center bottom"
+                    }
+                    ],
+                    "label": "Image position",
+                    "default": "t4s_position_8"
+                }
+            ]
+        },
+        {
+            "type": "shipping",
+            "name": "Shipping delivery",
+            "limit": 1,
+            "settings": [
+                {
+                    "type":"text",
+                    "id":"title",
+                    "label":"Heading",
+                    "default":"Shipping & Delivery"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Example: las la-phone,Save up to 20%,limited time [Get icons Line awesome](https://kalles.the4.co/font-lineawesome/)"
+                },
+                {
+                    "type": "textarea",
+                    "id": "shipping_1",
+                    "label":"Shipping block 1",
+                    "default":"las la-truck,FREE SHIPPING,Free shipping for all US order"
+                },
+                {
+                    "type": "textarea",
+                    "id": "shipping_2",
+                    "label":"Shipping block 2",
+                    "default":"las la-headset,SUPPORT 24/7,We support 24 hours a day"
+                },
+                {
+                    "type": "textarea",
+                    "id": "shipping_3",
+                    "label":"Shipping block 3",
+                    "default":"las la-exchange-alt,30 DAYS RETURN,You have 30 days to return"
+                },
+                {
+                    "type": "textarea",
+                    "id": "shipping_4",
+                    "label":"Shipping block 4"
+                },
+                {
+                    "type": "textarea",
+                    "id": "shipping_5",
+                    "label":"Shipping block 5"
+                },
+                {
+                    "type": "textarea",
+                    "id": "shipping_6",
+                    "label":"Shipping block 6"
+                }
+            ]
+        },
+        {
+            "type": "html",
+            "name": "Custom HTML",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading",
+                    "default": "Custom html"
+                },
+                {
+                    "type": "html",
+                    "id": "custom_html",
+                    "label": "Content"
+                }
+            ]
+        },
+        {
+            "type": "image",
+            "name": "Image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image_sidebar",
+                    "label": "Image"
+                },
+                {
+                    "type": "url",
+                    "id": "b_link",
+                    "label": "Banner link"
+                },
+                {
+                    "type": "select",
+                    "id": "open_link",
+                    "options": [
+                    {
+                        "value": "_self",
+                        "label": "Current window"
+                    },
+                    {
+                        "value": "_blank",
+                        "label": "New window"
+                    }
+                    ],
+                    "label": "Open link in",
+                    "default": "_self" 
+                },
+                {
+                    "type": "select",
+                    "id": "img_effect",
+                    "label": "Image hover effect",
+            "info": "Waring: Hovering effect will resize your images",
+                    "default": "none",
+                    "options": [
+                    {
+                        "value": "none",
+                        "label": "None"
+                    },
+                    {
+                        "value": "zoom",
+                        "label": "Zoom in"
+                    },
+                    {
+                        "value": "rotate",
+                        "label": "Rotate"
+                    },
+                    {
+                        "value": "translateToTop",
+                        "label": "Move to top "
+                    },
+                    {
+                        "value": "translateToRight",
+                        "label": "Move to right"
+                    },
+                    {
+                        "value": "translateToBottom",
+                        "label": "Move to bottom"
+                    },
+                    {
+                        "value": "translateToLeft",
+                        "label": "Move to left"
+                    },
+                    {
+                        "value": "filter",
+                        "label": "Filter"
+                    },
+                    {
+                        "value": "bounceIn",
+                        "label": "BounceIn"
+                    }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "date",
+                    "label": "Date countdown",
+                    "default": "2023\/12\/26",
+                    "info": "Countdown to the end sale date will be shown"
+                },
+                {
+                    "type": "select",
+                    "id": "content_align",
+                    "label": "Content align",
+                    "default": "center",
+                    "options": [
+                    {
+                        "label": "Default",
+                        "value": "default"
+                    },
+                    {
+                        "label": "Center",
+                        "value": "center"
+                    }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "cdt_des",
+                    "label": "Countdown design",
+                    "default": "1",
+                    "options": [
+                    {
+                        "value": "1",
+                        "label": "Design 1"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Design 2"
+                    }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "countdown_pos",
+                    "label": "Countdown position",
+                    "default": "2",
+                    "options": [
+                    {
+                        "value": "1",
+                        "label": "Default"
+                    },
+                    {
+                        "value": "2",
+                        "label": "On image"
+                    }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "cdt_size",
+                    "label": "Countdown size",
+                    "default": "medium",
+                    "options": [
+                    {
+                    "value": "small",
+                    "label": "Small"
+                    },
+                    {
+                        "value": "medium",
+                        "label": "Medium"
+                    }
+                    ]
+                },
+                {
+                    "type": "range",
+                    "id": "box_bdr",
+                    "label": "Border radius",
+                    "default": 0,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "%"
+                },
+                {
+                    "type": "range",
+                    "id": "bd_width",
+                    "label": "Border width",
+                    "default": 0,
+                    "min": 0,
+                    "max": 5,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "space_item",
+                    "label": "Space between items",
+                    "default": 10,
+                    "min": 0,
+                    "max": 15,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "color",
+                    "id": "number_cl",
+                    "label": "Number color",
+                    "default": "#fff"
+                },
+                {
+                    "type": "color",
+                    "id": "text_cl",
+                    "label": "Text color",
+                    "default": "#fff"
+                },
+                {
+                    "type": "color",
+                    "id": "border_cl",
+                    "label": "Border color item time",
+                    "default": "#000"
+                },
+                {
+                    "type": "color",
+                    "id": "bg_cl",
+                    "label": "Background item time",
+                    "default": "#000"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "name": "Text",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading",
+                    "default": "Talk about your brand"
+                },
+                {
+                    "type": "richtext",
+                    "id": "text_html",
+                    "label": "Text",
+                    "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+                }
+            ]
+        },
+        {
+            "type": "cus_socials",
+            "name": "Socials",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Heading"
+                },
+                {
+                    "type": "select",
+                    "id": "social_mode",
+                    "label": "Socials mode",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": "Follow"
+                        },
+                        {
+                            "value": "2",
+                            "label": "Share"
+                        }
+                    ],
+                    "default": "1"
+                },
+                {
+                    "type": "select",
+                    "id": "social_style",
+                    "label": "Socials style",
+                    "options": [
+                        { "value": "1", "label": "Style 1"},
+                        { "value": "2", "label": "Style 2 (Has background)"},
+                        { "value": "3", "label": "Style 3 (Has border)"},
+                        { "value": "4", "label": "Style 4 (Has border & background)"}
+                    ],
+                    "default": "3"
+                },
+                {
+                    "type": "select",
+                    "id": "social_size",
+                    "label": "Socials size",
+                    "options": [
+                        { "value": "small", "label": "Small"},
+                        { "value": "medium", "label": "Medium"},
+                        { "value": "large", "label": "Large"}
+                    ],
+                    "default": "small"
+                },
+                {
+                    "type": "range",
+                    "id": "bd_radius", 
+                    "label": "Border radius",
+                    "unit":"px",
+                    "min": 0,
+                    "max": 30,
+                    "default": 0,
+                    "step": 1
+                },
+                {
+                    "type": "checkbox",
+                    "id": "use_color_set",
+                    "label": "Use color settings",
+                    "default": false
+                },
+                {
+                    "type": "header",
+                    "content": "only true when check to box Color Settings"
+                },
+                {
+                    "type": "color",
+                    "id": "icon_cl",
+                    "label": "Primary color",
+                    "default": "#878787"
+                },
+                {
+                    "type": "color",
+                    "id": "bg_cl",
+                    "label": "Secondary color",
+                    "default": "#222222"
+                },
+                {
+                    "type": "select",
+                    "id": "space_h_item",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "5", 
+                            "label": "5px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ],
+                    "label": "Space horizontal items",
+                    "default": "5"
+                },
+                {
+                    "type": "select",
+                    "id": "space_v_item",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "5", 
+                            "label": "5px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ],
+                    "label": "Space vertical items",
+                    "default": "5"
+                },
+                {
+                    "type": "select",
+                    "id": "space_h_item_mb",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "6", 
+                            "label": "6px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ],
+                    "label": "Space horizontal items (Mobile)",
+                    "default": "2"
+                },
+                {
+                    "type": "select",
+                    "id": "space_v_item_mb",
+                    "options": [
+                        {
+                            "value": "0", 
+                            "label": "0"
+                        },
+                        {
+                            "value": "2", 
+                            "label": "2px"
+                        },
+                        {
+                            "value": "4", 
+                            "label": "4px"
+                        },
+                        {
+                            "value": "6", 
+                            "label": "6px"
+                        },
+                        {
+                            "value": "8", 
+                            "label": "8px"
+                        },
+                        {
+                            "value": "10", 
+                            "label": "10px"
+                        },
+                        {
+                            "value": "20",
+                            "label": "20px"
+                        },
+                        {
+                            "value": "30",
+                            "label": "30px"
+                        }
+                    ],
+                    "label": "Space vertical items (Mobile)",
+                    "default": "2"
+                },
+                {
+                    "type": "number",
+                    "id": "mgb",
+                    "label": "Margin bottom (Unit:px)"
+                },
+                {
+                    "type": "number",
+                    "id": "mgb_mb",
+                    "label": "Margin bottom on Mobile (Unit:px)"
+                }
+            ]
+        }
+    ]
+  }
+  {% endschema %}

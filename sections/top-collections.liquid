@@ -1,0 +1,436 @@
+<!-- sections/collection-main.liquid -->
+{{ 'section.css' | asset_url | stylesheet_tag }}
+{{ 'top-collections.css' | asset_url | stylesheet_tag }}
+{{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+<link href="{{ 'loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+
+{%- liquid 
+  assign sid = section.id
+  assign se_stts = section.settings
+  assign se_blocks = section.blocks
+  assign stt_layout = se_stts.layout
+  assign stt_image_bg = se_stts.image_bg
+  assign show_top_collections = se_stts.show_top_collections
+
+  if stt_layout == 't4s-se-container' 
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+  else
+    assign html_layout = '__' | split: '__'
+  endif
+
+  if se_stts.btn_owl == "outline"
+    assign arrow_icon = 1 
+  else
+    assign arrow_icon = 2
+  endif
+    if se_stts.content_align == "start"
+        assign slide_cellAlign = "left"
+    elsif se_stts.content_align == "end"
+        assign slide_cellAlign = "right"
+    else
+        assign slide_cellAlign = "center"
+    endif
+    assign check_cate = false
+ -%}
+{%- capture html_els -%}
+    {%- assign se_sort = se_stts.sort_collections -%}
+        {%- if se_stts.source == '1' and collections.size > 0 -%}
+            {%- case se_sort -%}
+                {%- when 'products_high' or 'products_low' -%}
+                    {%- assign collections = collections | sort: 'all_products_count' -%}
+                {%- when 'date' or 'date_reversed' -%}
+                    {%- assign collections = collections | sort: 'published_at' -%}
+            {%- endcase -%}
+
+            {%- if se_sort == 'products_low' or se_sort == 'date' or se_sort == 'alphabetical' -%}
+                {%- for category in collections -%}
+                    {%- if category.products.size == 0 %}{% continue %}{% endif %}{% assign ck_cat = false -%}
+                    {%- assign check_cate = true -%}
+                    <div class="t4s-col-auto t4s-col-item t4s-cat-item{% if collection.handle == category.handle %} t4s-current-cat{% endif %}"><a class="cat_link dib" href="{{ category.url }}">{{ category.title }}</a></div>
+                {%- endfor -%}
+            {%- else -%}
+                {%- for category in collections reversed -%}
+                    {%- if category.products.size == 0 %}{% continue %}{% endif %}{% assign ck_cat = false -%}
+                    {%- assign check_cate = true -%}
+                    <div class="t4s-col-auto t4s-col-item t4s-cat-item{% if collection.handle == category.handle %} t4s-current-cat{% endif %}"><a class="cat_link dib" href="{{ category.url }}">{{ category.title }}</a></div>
+                {%- endfor -%}
+            {%- endif -%}
+        {%- elsif se_stts.source == '2' and se_blocks.size > 0 -%}
+            {%- for block in se_blocks %}
+                {%- assign bk_stts = block.settings -%}
+                {%  assign category = collections[bk_stts.collection] -%}
+                {%- if category.products.size == 0 %}{% continue %}{% endif %}
+                {%- assign check_cate = true -%}
+                <div class="t4s-col-auto t4s-col-item t4s-cat-item{% if collection.handle == category.handle %} t4s-current-cat{% endif %}">
+                    <a class="cat_link dib" href="{{ category.url }}">
+                        {%- if bk_stts.icon != blank -%}<i class="{{ bk_stts.icon }}"></i>{%- endif -%}
+                        {{ category.title }}
+                    </a>
+                </div>
+            {%- endfor -%}
+        {%- elsif se_stts.source == '3' -%}
+            {%- for link in se_stts.menu.links -%}
+                {%- assign check_cate = true -%}
+                <div class="t4s-col-auto t4s-col-item t4s-cat-item{% if collection.handle == category.handle %} t4s-current-cat{% endif %}">
+                    <a class="cat_link" href="{{ link.url }}" {% if link.current%}  aria-current="page" {% endif %}>
+                    {{ link.title | escape }}
+                    </a>
+                </div>
+            {%- endfor -%} 
+        {%- endif -%}
+{%- endcapture -%}
+{%- if show_top_collections and check_cate -%}
+    <div class="t4s-section-inner t4s_nt_se_{{ sid }} t4s_se_{{ sid }} {{ stt_layout }} {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s {% endif %}"  {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2" {% endif %} {% render 'section_style', se_stts: se_stts %} >
+        {{- html_layout[0] -}}
+        {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner {% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s {% endif %} "  {% if stt_image_bg != blank %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2" {% endif %} > {%- endif -%}
+            <div class="t4s-top-collections t4s-text-{{ se_stts.content_align }} t4s-border-{{ se_stts.box_border }} t4s-hidden-mobile-{{ se_stts.hidden_mobile }}">
+                <div data-lh="{{ bk_stts.text_lh }}" data-lh-md="{{ bk_stts.text_lh }}" data-lh-lg="{{ bk_stts.text_lh }}" class="t4s-top-list-collections t4s-row t4s-g-0 t4s-align-items-center t4s-justify-content-{{ se_stts.content_align }} t4s-fnt-fm-{{ se_stts.fontf }} t4s-font-italic-{{ se_stts.font_italic }} t4s-flicky-slider t4s-slider-btn-style-simple t4s-slider-btn-none t4s-slider-btn-small t4s-slider-btn-vi-always flickityt4s" data-flickityt4s-js='{"isSimple": true,"freeScroll": true, "setPrevNextButtons":{{ se_stts.nav_btn }}, "arrowIcon":"1", "imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5,"minWidthLG": 1025,"cellAlignLG":"{{ slide_cellAlign }}","cellAlign":"center","wrapAround": false,"prevNextButtons": {{ se_stts.nav_btn }},"percentPosition": 0,"pageDots": false, "pauseAutoPlayOnHover" : true }' style="--text-cl:{{ se_stts.text_cl }};--text-cl-hover:{{ se_stts.text_cl_hover }};--text-fs:{{ se_stts.text_fs }}px;--text-fw:{{ se_stts.text_fw }};--text-lh:{{ se_stts.text_lh }}px;--text-ls:{{ se_stts.text_ls }}px;--space-item:{{ se_stts.space_item }}px;">{{ html_els }}</div>
+            </div> 
+        {{- html_layout[1] -}}
+    </div>
+{%- endif -%}
+{%- schema -%}
+  {
+    "name": "Top list collections",
+    "tag": "section",
+    "class": "t4s-section t4s-section-main t4s-top-collections-section t4s_bk_flickity",
+    "settings": [
+      {
+        "type": "header",
+        "content": "1. General options"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_top_collections",
+        "label": "Show top collections",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections."
+      },
+      {
+        "type": "radio",
+        "id": "source",
+        "label": "Select collections to show",
+        "options": [
+          {
+            "value": "1",
+            "label": "All"
+          },
+          {
+            "value": "2",
+            "label": "Added collections"
+          },
+          {
+            "value": "3",
+            "label": "Menu collections"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "link_list",
+        "id": "menu",
+        "label":"Menu collections"
+      },
+      {
+        "type": "select",
+        "id": "sort_collections",
+        "label": "Sort collections by",
+        "info": "Sorting only applies when 'All' is selected",
+        "default": "alphabetical",
+        "options": [
+          {
+            "value": "products_high",
+            "label": "High to low (Product count)"
+          },
+          {
+            "value": "products_low",
+            "label": "Low to high (Product count)"
+          },
+          {
+            "value": "alphabetical",
+            "label": "Alphabetically (A-Z)"
+          },
+          {
+            "value": "alphabetical_reversed",
+            "label": "Alphabetically (Z-A)"
+          },
+          {
+            "value": "date",
+            "label": "Old to new (Date)"
+          },
+          {
+            "value": "date_reversed",
+            "label": "New to old (Date)"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "box_border",
+        "label": "Border",
+        "default": "top",
+        "options": [
+          {
+            "label": "None",
+            "value": "none"
+          },
+          {
+            "label": "Top",
+            "value": "top"
+          },
+          {
+            "label": "Bottom",
+            "value": "bottom"
+          },
+          {
+            "label": "Top + Bottom",
+            "value": "top_bottom"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "content_align",
+        "label": "List collections align",
+        "default": "center",
+        "info":"Working on the Desktop",
+        "options": [
+          {
+            "label": "Left",
+            "value": "start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "hidden_mobile",
+        "label": "Hidden on mobile",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Options for items"
+      },
+      {
+          "type":"range",
+          "id":"space_item",
+          "label":"Space between items",
+          "max":50,
+          "min":0,
+          "step":1,
+          "unit":"px",
+          "default":30
+      },
+      {
+        "type": "select",
+        "id": "fontf",
+        "default":"inherit",
+        "label": "Font family",
+        "options": [
+            {
+                "label": "Inherit",
+                "value": "inherit"
+            },
+            {
+                "label": "Font family #1",
+                "value": "1"
+            },
+            {
+                "label": "Font family #2",
+                "value": "2"
+            },
+            {
+                "label": "Font family #3",
+                "value": "3"
+            }
+        ]
+      },
+      {
+          "type":"color",
+          "id":"text_cl",
+          "label":"Color",
+          "default":"#222"
+      },
+      {
+          "type":"color",
+          "id":"text_cl_hover",
+          "label":"Color hover/active",
+          "default":"#56cfe1"
+      },
+      {
+          "type":"range",
+          "id":"text_fs",
+          "label":"Font size",
+          "max":100,
+          "min":10,
+          "step":1,
+          "unit":"px",
+          "default":14
+      },
+      {
+          "type":"range",
+          "id":"text_lh",
+          "label":"Line height",
+          "max":100,
+          "min":0,
+          "step":1,
+          "default":45,
+          "unit":"px",
+          "info":"Set is '0' use to default"            
+      },
+      {
+          "type":"range",
+          "id":"text_fw",
+          "label":"Font weight",
+          "min":100,
+          "max":900,
+          "step":100,
+          "default":400
+      },
+      {
+          "type":"range",
+          "id":"text_ls",
+          "label":"Letter spacing",
+          "max":10,
+          "min":0,
+          "default":0,
+          "step":0.1,
+          "unit":"px"
+      },
+      {
+          "type":"checkbox",
+          "id":"font_italic",
+          "label": "Enable font style italic",
+          "default":false
+      },
+      {
+        "type": "paragraph", 
+        "content": "—————————————————"
+      },
+      {
+        "type": "paragraph",
+        "content": "Prev next button"
+      },
+      {
+        "type": "checkbox",
+        "id": "nav_btn",
+        "label": "Use prev next button",
+        "info": "Creates and shows previous & next buttons. Only works when the screen is not enough to show all items.",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "2. Design options"
+      },
+      {
+        "type": "select","id": "layout","default": "t4s-container-fluid","label": "Layout",
+        "options": [
+            { "value": "t4s-se-container", "label": "Container"},
+            { "value": "t4s-container-wrap", "label": "Wrapped container"},
+            { "value": "t4s-container-fluid", "label": "Full width"}
+        ]
+      },
+      {
+        "type": "color",
+        "id": "cl_bg",
+        "label": "Background"
+      },
+      {
+        "type": "color_background",
+        "id": "cl_bg_gradient",
+        "label": "Background gradient"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_bg",
+        "label": "Background image"
+      },
+      {
+          "type": "text",
+          "id": "mg",
+          "label": "Margin",
+          "info":"Margin top, margin right, margin bottom, margin left. If you not use to blank",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd",
+          "label": "Padding",
+          "info":"Padding top, padding right, padding bottom, padding left. If you not use to blank",
+          "placeholder": "50px,,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design Tablet Options"
+      },
+      {
+        "type": "text",
+        "id": "mg_tb",
+        "label": "Margin",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "text",
+        "id": "pd_tb",
+        "label": "Padding",
+        "placeholder": ",,50px,"
+      },
+      {
+        "type": "header",
+        "content": "+ Design mobile options"
+      },
+      {
+          "type": "text",
+          "id": "mg_mb",
+          "label": "Margin",
+          "placeholder": ",,50px,"
+      },
+      {
+          "type": "text",
+          "id": "pd_mb",
+          "label": "Padding",
+          "placeholder": ",,50px,"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "cat",
+        "name": "Collection",
+        "settings": [
+          {
+            "label": "Collection",
+            "type": "collection",
+            "id": "collection"
+          },
+          {
+            "label": "Icon",
+            "info": "[LineAwesome](https://kalles.the4.co/font-lineawesome/)",
+            "type": "text",
+            "id": "icon"
+          }
+        ]
+      }
+    ],
+    "default": {
+      "blocks": [
+        ]
+    }
+  }
+{%- endschema -%} 
+
+{%- javascript -%}
+{%- endjavascript -%}

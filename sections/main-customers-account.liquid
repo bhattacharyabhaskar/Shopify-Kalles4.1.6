@@ -1,0 +1,149 @@
+{{ 'customer.min.css' | asset_url | stylesheet_tag }}
+
+<div class="t4s-customer t4s-customer-account is--account t4s-row">
+  <div class="t4s-col-12 t4s-col-md-3 t4s-col-item t4s-account-sidebar">
+      <nav class="t4s-account-nav">
+         <ul>
+            <li class="t4s-account-nav-link t4s-account-nav-link--dashboard is--active t4s-pe-none">
+               <a href="{{ routes.account_url }}"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> {{ 'customer.account.dashboard' | t }}</a>
+            </li>
+            <li class="t4s-account-nav-link t4s-account-nav-link--edit-address">
+               <a href="{{ routes.account_addresses_url }}"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> {{ 'customer.addresses.title' | t }} ({{ customer.addresses_count }})</a>
+            </li>
+            {%- if settings.wishlist_mode != '0' -%}
+            <li class="t4s-account-nav-link t4s-account-nav-link--wishlist">
+               {%- if settings.wishlist_mode != '3' -%}
+               <a data-link-wishlist href="{{ routes.search_url }}/?view=wishlist"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> {{ 'customer.account.wishlist' | t }} (<span data-count-wishlist class="t4s-wcount">0</span>)</a>
+               {%- else -%}
+               <a href="/pages/wishlist"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> {{ 'customer.account.wishlist' | t }} (<span class="t4s-wcount ssw-counter-fave-menu">0</span>)</a>
+               {%- endif -%}
+            </li>
+            {%- endif -%}
+            <li class="t4s-account-nav-link t4s-account-nav-link--customer-logout">
+              <a  href="{{ routes.account_logout_url }}" data-no-instant><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> {{ 'customer.account.log_out' | t }}</a>
+            </li>
+         </ul>
+      </nav>
+  </div>
+  <div class="t4s-col-12 t4s-col-md-9 t4s-col-item t4s-account-content">
+      {%- assign customer_name = customer.name | default: customer.default_address.name | default: customer.email -%}
+      <p class="t4s_mb_20 t4s-account-hello">{{ 'customer.account.hello_html' | t:name:customer_name,link:routes.account_logout_url }}</p>
+      {%- if settings.enable_sub_reCharge -%}   
+       <!-- Begin ReCharge code -->
+       <p class="t4s_mb_20" id="rc_link_container"><a href="/tools/recurring/login">{{ 'customer.account.manage_subs' | t }}</a></p>
+       <!-- End ReCharge code -->
+      {%- endif -%}
+
+      <h2>{{ 'customer.orders.title' | t }}</h2>
+      {%- if customer.orders.size != 0 -%}
+        {%- paginate customer.orders by 20 -%}
+            <table role="table" class="t4s-responsive-table order-history">
+               <caption class="visually-hidden">{{ 'customer.orders.title' | t }}</caption>
+               <thead role="rowgroup">
+                 <tr role="row">
+                   <th id="ColumnOrder" scope="col" role="columnheader">{{ 'customer.orders.order_number' | t }}</th>
+                   <th id="ColumnDate" scope="col" role="columnheader">{{ 'customer.orders.date' | t }}</th>
+                   <th id="ColumnPayment" scope="col" role="columnheader">{{ 'customer.orders.payment_status' | t }}</th>
+                   <th id="ColumnFulfillment" scope="col" role="columnheader">{{ 'customer.orders.fulfillment_status' | t }}</th>
+                   <th id="ColumnTotal" scope="col" role="columnheader">{{ 'customer.orders.total' | t }}</th>
+                 </tr>
+               </thead>
+               <tbody role="rowgroup">
+                 {%- for order in customer.orders -%}
+                   <tr role="row">
+                     <td
+                       id="RowOrder"
+                       role="cell"
+                       headers="ColumnOrder"
+                       data-label="{{ 'customer.orders.order_number' | t }}"
+                     >
+                       <a href="{{ order.customer_url }}" aria-label="{{ 'customer.orders.order_number_link' | t: number: order.name }}">
+                         {{ order.name }}
+                       </a>
+                     </td>
+                     <td headers="RowOrder ColumnDate" role="cell" data-label="{{ 'customer.orders.date' | t }}">
+                       {{ order.created_at | time_tag: format: 'date' }}
+                     </td>
+                     <td headers="RowOrder ColumnPayment" role="cell" data-label="{{ 'customer.orders.payment_status' | t }}">
+                       {{ order.financial_status_label }}
+                     </td>
+                     <td headers="RowOrder ColumnFulfillment" role="cell" data-label="{{ 'customer.orders.fulfillment_status' | t }}">
+                       {{ order.fulfillment_status_label }}
+                     </td>
+                     <td headers="RowOrder ColumnTotal" role="cell" data-label="{{ 'customer.orders.total' | t }}">
+                       {{ order.total_price | money_with_currency }}</td>
+                   </tr>
+                 {%- endfor -%}
+               </tbody>
+            </table>
+            {%- if paginate.pages > 1 -%}{% render 'pagination', paginate: paginate, ajax:false %}{%- endif -%}
+        {%- endpaginate -%}
+      {%- else -%}
+         <div class="form__message t4s-flex-wrap" tabindex="-1">
+           <svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 13 13" class="svg-account-hello">
+             <path d="M6.5 12.35C9.73087 12.35 12.35 9.73086 12.35 6.5C12.35 3.26913 9.73087 0.65 6.5 0.65C3.26913 0.65 0.65 3.26913 0.65 6.5C0.65 9.73086 3.26913 12.35 6.5 12.35Z" fill="var(--t4s-success-color)" stroke="white" stroke-width="0.7"/>
+             <path d="M5.53271 8.66357L9.25213 4.68197" stroke="white"/>
+             <path d="M4.10645 6.7688L6.13766 8.62553" stroke="white"/>
+           </svg>
+           <a class="t4s_mr_10 t4s_mb_10" href="{% if cart.item_count > 0 %}/checkout{% else %}{{ routes.all_products_collection_url | sort_by: 'best-selling' }}{% endif %}">{{ 'customer.account.make_order' | t }}</a><span class="t4s_mb_10">{{ 'customer.account.none' | t }}</span>
+         </div>
+      {%- endif -%}
+      <div class="t4s_mb_60 t4s-pt t4s-oh"> </div>
+
+      <h2>{{ 'customer.account.details' | t }}</h2>
+      {{ customer.default_address | format_address }}
+      <div class="t4s-table-res-df">   
+         <table class="t4s-table-res">
+           <tbody>
+             <tr>
+               <td><strong>{{ 'customer.account.name' | t }}</strong></td>
+               <td>{{ customer_name }}</td>
+             </tr>
+             <tr>
+               <td><strong>{{ 'customer.account.email' | t }}</strong></td>
+               <td>{{ customer.default_address.email | default: customer.email }}</td>
+             </tr>
+             
+             {%- if customer.default_address != nil -%}
+                <tr>
+                  <td><strong>{{ 'customer.account.address' | t }}</strong></td>
+                  <td>{{ customer.default_address.address1 }}</td>
+                </tr>
+                {%- if customer.default_address.address2 != "" -%}
+                <tr>
+                  <td><strong>{{ 'customer.account.address_2' | t }}</strong></td>
+                  <td>{{ customer.default_address.address2 }}</td>
+                </tr>
+                {%- endif -%}
+                {%- if customer.default_address.city != blank -%}
+                <tr>
+                  <td><strong>{{ 'customer.account.country' | t }}</strong></td>
+                  <td>{{ customer.default_address.city }}, {% if address.province_code %}{{ customer.default_address.province_code }}, {% endif %}{{ customer.default_address.country }}</td>
+                </tr>
+                {%- endif -%}
+                {%- if customer.default_address.zip != blank -%}
+                <tr>
+                  <td><strong>{{ 'customer.account.zip' | t }}</strong></td>
+                  <td>{{ customer.default_address.zip }}</td>
+                </tr>
+                {%- endif -%}
+                {%- if customer.default_address.phone != blank -%}
+                <tr>
+                  <td><strong>{{ 'customer.account.phone' | t }}</strong></td>
+                  <td>{{ customer.default_address.phone }}</td>
+                </tr>
+                {%- endif -%}
+             {%- endif -%}
+           </tbody>
+         </table>
+      </div>
+  </div>
+</div>
+
+{%- schema -%}
+{
+  "name": "Account",
+  "tag": "section",
+  "class": "t4s-section t4s-section-customers t4s-container"
+}
+{% endschema %}
