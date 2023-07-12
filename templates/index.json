@@ -871,7 +871,7 @@
         "image_ratio": "rationt",
         "image_size": "cover",
         "image_position": "8",
-        "content_align": "default",
+        "content_align": "center",
         "limit": 8,
         "col_dk": "4",
         "col_tb": "3",
