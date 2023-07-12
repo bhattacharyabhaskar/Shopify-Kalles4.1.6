@@ -356,6 +356,44 @@
               "mgb": 20,
               "mgb_mb": 10
             }
+          },
+          "9114b699-b551-43d2-a4a4-f127f3fb7ca6": {
+            "type": "bl_col",
+            "settings": {
+              "col_heading": "",
+              "menu": "",
+              "menu_style": "1",
+              "col_dk": "12",
+              "col_tb": "12",
+              "col_mb": "12",
+              "content_align": "t4s-text-md-center",
+              "padding_inner": "",
+              "col_heading_mobile": "",
+              "content_align_mb": "t4s-text-start",
+              "padding_inner_mb": ""
+            }
+          },
+          "35a79b40-9993-46cc-85ac-087a1cbfdc98": {
+            "type": "custom_text",
+            "settings": {
+              "text": "Welcome to IndyVogue, your destination for Indian ethnic fashion! We specialize in curating and offering a splendid collection of silk mark certified hand-woven sarees online. Our boutique showcases a diverse range of exquisite sarees, available in an array of captivating colors and styles, all crafted with the utmost care using premium handloom silk. With the silk mark certification, we guarantee that our sarees are made from pure, top-notch silk and are meticulously produced using traditional hand-weaving techniques. <br><br>By shopping at IndyVogue, you not only gain access to a wide selection of stunning handloom sarees but also contribute to the preservation and promotion of the art of traditional handloom silk-weaving in India. We take pride in our 600+ verified reviews, which reflect the satisfaction of our valued customers. Join us on this journey of embracing timeless elegance and supporting the rich heritage of Indian handloom silk.",
+              "remove_br_tag": false,
+              "tag": "p",
+              "fontf": "inherit",
+              "text_cl": "#222",
+              "text_fs": 16,
+              "text_lh": 0,
+              "text_fw": 400,
+              "text_ls": 0,
+              "font_italic": false,
+              "text_shadow": false,
+              "text_mgb": 15,
+              "hidden_mobile": false,
+              "text_fs_mb": 16,
+              "text_lh_mb": 0,
+              "text_ls_mb": 0,
+              "text_mgb_mobile": 10
+            }
           }
         },
         "block_order": [
@@ -370,7 +408,9 @@
           "footer-11",
           "footer-12",
           "385c1474-1235-4a3d-b73c-9555b5f8dcfb",
-          "33eb929e-a001-4d96-82a0-5aab1aaabaea"
+          "33eb929e-a001-4d96-82a0-5aab1aaabaea",
+          "9114b699-b551-43d2-a4a4-f127f3fb7ca6",
+          "35a79b40-9993-46cc-85ac-087a1cbfdc98"
         ],
         "settings": {
           "sticky": false,
