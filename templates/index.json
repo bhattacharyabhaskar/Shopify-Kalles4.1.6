@@ -732,7 +732,7 @@
     "8dd3e86e-0721-4d8e-b449-6936c3b0e0ab": {
       "type": "custom-html",
       "settings": {
-        "code": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #000;color: #fff;\">\n<div data-romw-token=\"SuXYREMYz4nTRed4TUFHciHAwv1qXhpiEuFE4aGRGxvvhK3AdI\"><\/div>\n<script src=\"https:\/\/reviewsonmywebsite.com\/js\/v2\/embed.js?id=8e7313fc946fd3d8c15c886f791a7ab8\" type=\"text\/javascript\"><\/script>\n<\/div>",
+        "code": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #fff;color: #fff;\">\n<div data-romw-token=\"SuXYREMYz4nTRed4TUFHciHAwv1qXhpiEuFE4aGRGxvvhK3AdI\"><\/div>\n<script src=\"https:\/\/reviewsonmywebsite.com\/js\/v2\/embed.js?id=8e7313fc946fd3d8c15c886f791a7ab8\" type=\"text\/javascript\"><\/script>\n<\/div>",
         "layout": "t4s-container-wrap",
         "cl_bg": "",
         "cl_bg_gradient": "",
