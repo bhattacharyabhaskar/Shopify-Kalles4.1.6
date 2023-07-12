@@ -190,7 +190,7 @@
         "show_desc": false,
         "position_desc": "2",
         "product_des": "1",
-        "show_vendor": true,
+        "show_vendor": false,
         "use_cdt": true,
         "image_ratio": "rationt",
         "image_size": "cover",
