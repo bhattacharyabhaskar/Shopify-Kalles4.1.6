@@ -1,0 +1,79 @@
+.t4s-section-inner {
+	margin-top: var(--mg-top);
+	margin-right: var(--mg-right);
+	margin-bottom: var(--mg-bottom);
+	margin-left: var(--mg-left);
+	padding-top: var(--pd-top);
+	padding-right: var(--pd-right);
+	padding-bottom: var(--pd-bottom);
+	padding-left: var(--pd-left);
+}
+.t4s-section-inner:not(.t4s-se-container),
+.t4s-container>.t4s-container-inner {
+	background: var(--bg-gradient);
+    background-color: var(--bg-color);
+}
+.t4s-section-inner.t4s-has-imgbg {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+.t4s-container-fluid {
+	width: calc(100% - var(--mg-left,0) - var(--mg-right,0));
+	width: -webkit-calc(100% - var(--mg-left,0) - var(--mg-right,0));
+}
+.t4s-section-inner.t4s-se-container {
+	padding-top: 0;
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+}
+.t4s-section-inner.t4s-se-container .t4s-container-inner {
+	padding-top: var(--pd-top);
+	padding-right: var(--pd-right);
+	padding-bottom: var(--pd-bottom);
+	padding-left: var(--pd-left);
+}
+.t4s-custom-line {
+	width: var(--width);
+	border-width: var(--height);
+	border-style: var(--line-style);
+	border-color: var(--line-cl);
+	border-top: none;
+    border-right: none;
+    border-left: none;
+    display: inline-block;
+    vertical-align: top;
+}
+@media(max-width: 1024px) {
+	.t4s-container-fluid {
+		width: calc(100% - var(--mgtb-left,0) - var(--mgtb-right,0));
+		width: -webkit-calc(100% - var(--mgtb-left,0) - var(--mgtb-right,0));
+	}
+	.t4s-section-inner {
+		margin-top: var(--mgtb-top);
+		margin-right: var(--mgtb-right);
+		margin-bottom: var(--mgtb-bottom);
+		margin-left: var(--mgtb-left);
+		padding-top: var(--pdtb-top);
+		padding-right: var(--pdtb-right);
+		padding-bottom: var(--pdtb-bottom);
+		padding-left: var(--pdtb-left);
+	}
+}
+@media(max-width: 767px) {
+	.t4s-container-fluid {
+		width: calc(100% - var(--mgmb-left,0) - var(--mgmb-right,0));
+		width: -webkit-calc(100% - var(--mgmb-left,0) - var(--mgmb-right,0));
+	}
+	.t4s-section-inner {
+		margin-top: var(--mgmb-top);
+		margin-right: var(--mgmb-right);
+		margin-bottom: var(--mgmb-bottom);
+		margin-left: var(--mgmb-left);
+		padding-top: var(--pdmb-top);
+		padding-right: var(--pdmb-right);
+		padding-bottom: var(--pdmb-bottom);
+		padding-left: var(--pdmb-left);
+	}
+}

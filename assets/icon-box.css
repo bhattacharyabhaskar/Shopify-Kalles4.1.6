@@ -1,0 +1,183 @@
+.t4s-iconbox-inner{
+    padding: var(--pd-content);
+    border-radius: 10px;
+    transition: .3s all linear;
+    background-color: var(--cl-box);
+}
+.t4s-iconbox-shadow__true .t4s-iconbox-inner{
+    box-shadow: 7px 7px 12.22px 0.78px rgb(85 123 208 / 7%);
+}
+.t4s-iconbox-border__true .t4s-iconbox-inner{
+    border: 1px solid var(--cl-border);
+}
+.t4s-iconbox-head{
+    margin-bottom: 30px;
+}
+.t4s-iconbox-icon{
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.t4s-iconbox-icon__right{ flex-direction: row-reverse;}
+.t4s-iconbox-icon__right .t4s-iconbox-icon{
+    margin-right:0;
+}
+.t4s-iconbox-icon__right .t4s-iconbox-heading{
+    margin-right: 30px;
+}
+.t4s-iconbox-icon{
+    color: var(--cl-icon);
+}
+.t4s-iconbox-icon__awesome i{font-size:var(--icon-awesome-fs);}
+.t4s-iconbox-icon__svg svg{
+    fill: currentColor;
+    width: var(--w-image-svg);
+    height: auto;
+}
+.t4s-iconbox-icon__image img {
+    width: 100%;
+    max-width: var(--width);
+    display: inline-block;
+    vertical-align: top;
+}
+.t4s-iconbox-icon__image[style*="--width:0px"] img {
+    max-width: var(--max-width);
+}
+
+.t4s-iconbox-heading{
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 36px;
+    color: var(--cl-head);
+}
+.t4s-iconbox-des p{
+    font-size: 20px;
+    color: var(--cl-des);
+    line-height: 24px;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.t4s-iconbox-inner:hover{
+    background-color: var(--cl-box-hover);
+}
+.t4s-iconbox-inner.t4s-iconbox-border__true:hover{
+    border-color: var(--cl-box-hover);
+}
+.t4s-iconbox-inner:hover .t4s-iconbox-icon__awesome i,
+.t4s-iconbox-inner:hover .t4s-iconbox-icon__svg svg,
+.t4s-iconbox-inner:hover .t4s-iconbox-heading,
+.t4s-iconbox-inner:hover .t4s-iconbox-des p
+{
+    color: var(--cl-content-hover);
+}
+
+.t4s-iconbox-item:hover .t4s-iconbox-icon {
+    -webkit-animation: bounceIn .5s ease;
+    -o-animation: bounceIn .5s ease;
+    animation: bounceIn .5s ease;
+}
+@-webkit-keyframes bounceIn {
+    from,
+    20%,
+    40%,
+    60%,
+    80%,
+    to {
+      opacity: 1;
+      -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+  
+    0% {
+      opacity: 0;
+      -webkit-transform: scale3d(0.3, 0.3, 0.3);
+      transform: scale3d(0.3, 0.3, 0.3);
+    }
+  
+    20% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1);
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+  
+    40% {
+      -webkit-transform: scale3d(0.9, 0.9, 0.9);
+      transform: scale3d(0.9, 0.9, 0.9);
+    }
+  
+    60% {
+      opacity: 1;
+      -webkit-transform: scale3d(1.03, 1.03, 1.03);
+      transform: scale3d(1.03, 1.03, 1.03);
+    }
+  
+    80% {
+      -webkit-transform: scale3d(0.97, 0.97, 0.97);
+      transform: scale3d(0.97, 0.97, 0.97);
+    }
+  
+    to {
+      opacity: 1;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+  }
+  @keyframes bounceIn {
+    from,
+    20%,
+    40%,
+    60%,
+    80%,
+    to {
+      opacity: 1;
+      -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+  
+    0% {
+      opacity: 0;
+      -webkit-transform: scale3d(0.3, 0.3, 0.3);
+      transform: scale3d(0.3, 0.3, 0.3);
+    }
+  
+    20% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1);
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+  
+    40% {
+      -webkit-transform: scale3d(0.9, 0.9, 0.9);
+      transform: scale3d(0.9, 0.9, 0.9);
+    }
+  
+    60% {
+      opacity: 1;
+      -webkit-transform: scale3d(1.03, 1.03, 1.03);
+      transform: scale3d(1.03, 1.03, 1.03);
+    }
+  
+    80% {
+      -webkit-transform: scale3d(0.97, 0.97, 0.97);
+      transform: scale3d(0.97, 0.97, 0.97);
+    }
+  
+    to {
+      opacity: 1;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
+.flickityt4s-enabled .t4s-iconbox-item__wrapper{
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+@media (max-width:767px){
+    .t4s-iconbox-icon__svg svg{
+        width: var(--w-image-svg-mb);
+    }    
+    .t4s-iconbox-des p{
+        font-size: 14px;
+    }
+}

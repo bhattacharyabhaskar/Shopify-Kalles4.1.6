@@ -1,0 +1,149 @@
+.t4s-lm-bar--txt {
+    font-size: 15px;
+}
+.t4s-lm-bar--progress {
+    display: block;
+    margin: 15px auto 20px;
+    width: 250px;
+    height: 4px;
+    background-color: var(--border-color);
+    border-radius: 5px;
+}
+.t4s-text-start .t4s-lm-bar--progress {
+    margin-left: 0;
+}
+.t4s-text-end .t4s-lm-bar--progress {
+    margin-right: 0;
+}
+.t4s-lm-bar--progress .t4s-lm-bar--current {
+    width: 0;
+    will-change: width;
+    -webkit-transition: width .3s cubic-bezier(.19,1,.22,1);
+    transition: width .3s cubic-bezier(.19,1,.22,1);
+}
+
+.t4s-lm-bar.t4s-btn-color-light .t4s-lm-bar--progress {
+    box-shadow: 0 0 2px var(--border-color);
+}
+.t4s-lm-bar.t4s-btn-color-light .t4s-lm-bar--current {
+     background: linear-gradient(to right,var(--t4s-light-color),var(--accent-color)); ;
+}
+.t4s-lm-bar.t4s-btn-color-dark .t4s-lm-bar--current {
+    background: linear-gradient(to right,var(--t4s-dark-color),var(--accent-color)); ;
+}
+.t4s-lm-bar.t4s-btn-color-primary .t4s-lm-bar--current {
+    background: transparent;
+    background: linear-gradient(to right,var(--accent-color),var(--accent-color-hover));
+}
+.t4s-lm-bar.t4s-btn-color-custom1 .t4s-lm-bar--current,
+.t4s-lm-bar.t4s-btn-color-custom2 .t4s-lm-bar--current {
+    background-color: var(--btn-background);
+    background: linear-gradient(to right,var(--btn-background),var(--btn-background-hover));
+}
+
+.t4s-product a.is--loading::before {
+    width: 18px;
+    height: 18px;
+    border: 1px solid;
+    border-color: currentColor;
+    border-top-color: transparent;
+    border-radius: 100%;
+    opacity: 1;
+    -webkit-animation: 450ms linear infinite spin;
+    animation: 450ms linear infinite spin;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    content: '';
+}
+.t4s-product .t4s-product-btns a.is--loading,
+.t4s-product .t4s-product-btns2 a.is--loading {
+    pointer-events: none;
+}
+.t4s-product .t4s-product-btns a.is--loading > span,
+.t4s-product .t4s-product-btns2 a.is--loading > span {
+    opacity: 0;
+    visibility: hidden;
+}
+.t4s-product a.t4s-pr-wishlist.is--loading, 
+.css_for_wis_app_true .t4s-product .t4s-pr-wishlist.is--loading {
+    --border-cl: var(--wishlist-cl);
+}
+.t4s-product .t4s-pr-compare.is--loading {
+    --border-cl: var(--compare-cl);
+} 
+.t4s-product .t4s-pr-quickview.is--loading {
+    --border-cl: var(--quickview-cl);
+}
+.t4s-product .t4s-pr-addtocart.is--loading {
+    --border-cl: var(--atc-cl);
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn > span,
+.t4s-pagination-wrapper .t4s-loadmore-btn > span {
+    display: flex;
+    align-items: center;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn.is--loading  {
+    pointer-events: none;
+    transition: 0.5s ease 0s;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn.is--loading > span,
+.t4s-pagination-wrapper .t4s-loadmore-btn.is--loading .t4s-btn-icon {
+    opacity: 0;
+    visibility: hidden;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn .t4s-btn-icon {
+    width: 16px;
+    height: 28px;
+    fill: currentColor;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn .t4s-loadmore-icon {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transition: 0.5s ease 0s;
+    max-width: 78px;
+}
+.t4s-pagination-wrapper .t4s-loadmore-btn.is--loading .t4s-loadmore-icon {
+    opacity: 1;
+    visibility: visible;
+}
+body .content--loading {
+    pointer-events: none;
+    position: relative;
+}
+body .content--loading > * {
+    opacity: 0.5;
+}
+body .content--loading::before {
+    position: absolute;
+    content: '';
+    width: 100px;
+    height: 100px;
+    border: 3px solid;
+    border-color: var(--accent-color);;
+    border-top-color: #fff;
+    border-radius: 100%;
+    opacity: 1;
+    -webkit-animation: 450ms linear infinite spin;
+    animation: 450ms linear infinite spin;
+    z-index: 20;
+    top: 20%;
+    right: 0;
+    left: 0;
+    margin: auto;
+}
+.t4s-prs-footer.t4s-has-btn-none,
+.t4s-flicky-slider + .t4s-prs-footer.t4s-has-btn-load-more {
+    display: none;
+}

@@ -1,0 +1,97 @@
+.t4s-ins-info .t4s-ins-icon {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    opacity: 0;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    transition: 0.5s;
+}
+.t4s-ins-info .t4s-ins-icon svg {
+    width: 24px;
+    height: 24px;
+    color: #ededed;
+}
+.t4s-col-ins a .t4s_bg {
+    transition: 0.5s;
+}
+.t4s-col-ins a:hover .t4s-ins-icon{
+    opacity: 1;
+}
+.t4s-col-ins:hover .t4s-ins-icon {
+    opacity: 1;
+}
+.t4s-col-ins a:hover .t4s_bg {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    filter: brightness(0.8);
+}
+.t4s-ins-content {
+    -webkit-transform: translateY(40px);
+    transform: translateY(40px);
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -o-transition: .3s;
+    transition: .3s;
+}
+
+.ins-is--loaded .t4s-ins-content{
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+}
+.ins-is--loaded .t4s-ins-content-wrap {
+    pointer-events: auto;
+}
+.t4s-ins-content>.t4s-ins-content-wrap{
+    padding: 30px;
+    max-width: 300px;
+    width: 100%;
+    box-shadow: 0 0 12px rgb(0 0 0 / 22%);
+    background-color: #fff;
+    z-index: 5;
+}
+.t4s-ins-content-wrap.t4s-ins-content-style2 {
+    outline: rgba(255,255,255,.5) solid 5px;
+}
+.t4s-ins-content.t4s-ins-title-type-4>.t4s-ins-content-wrap {
+    max-width: 400px;
+    padding: 23px 10px;
+    background-color: rgba(246,246,248,.8);
+}
+.t4s-ins-title{font-weight: 600;font-size: 18px;margin-bottom: 10px;}
+.t4s-ins-subtitle{font-weight: 500;font-size: 12px;margin-bottom: 10px;color: #878787;}
+.t4s-ins-content p {
+    font-size: 13px;
+    line-height: 1.5;
+}
+.t4s-hr-border {
+    border-top: 3px solid #000;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.t4s-ins-title-type-4 .t4s-ins-subtitle{
+    color: var(--heading-color);
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom:0px;
+}
+@media (min-width: 768px){
+    .t4s-pa-md {
+        position: absolute;
+    }
+}
+@media (max-width: 767px){
+    .t4s-pa-md .t4s-ins-content.t4s-ins-title-type-4>.t4s-ins-content-wrap,
+    .t4s-pa-md .t4s-ins-content-wrap {
+        box-shadow: none;
+        outline: 0;
+        padding: 0;
+        margin-bottom: 25px;
+        background-color: transparent;
+    }
+    .t4s-ins-content.t4s-ins-title-type-4>.t4s-ins-content-wrap {
+        max-width: 60%;
+    }
+}

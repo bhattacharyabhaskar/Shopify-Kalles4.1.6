@@ -1,0 +1,80 @@
+.t4s-grouped-product-list td {
+	padding: 10px;
+    text-align: center;
+}
+.t4s-grouped-pr__img-wrap img {
+    min-width: 50px;
+    max-width: 100px;
+}
+.t4s-grouped-pr__link {
+	 color: var(--secondary-color);
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.t4s-grouped-pr__info select {
+    border-radius: 2px;
+    max-width: 200px;
+    display: block;
+    margin: 0 auto 10px;
+}
+.t4s-grouped-pr__qty .t4s-quantity-wrapper {
+    display: inline-flex;
+    border-radius: 2px;
+    border: 1px solid var(--border-color);
+}
+.t4s-grouped-pr__qty .t4s-quantity-wrapper button.t4s-quantity-selector {
+    background-color: transparent;
+    padding: 0;
+    width: 30px;
+    height: 40px;
+    color: var(--t4s-dark-color);
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.t4s-grouped-pr__qty .t4s-quantity-wrapper button.t4s-quantity-selector svg {
+	width: 10px;
+}
+.t4s-grouped-pr__qty input.t4s-quantity-input {
+    width: 35px;
+    border: 0;
+    padding: 0;
+    height: 40px;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--t4s-dark-color);
+    text-align: center;
+}
+.t4s-grouped-pr__qty .t4s-quantity-wrapper button.t4s-quantity-selector:hover,
+.t4s-grouped-pr__link:hover {
+   color: var(--accent-color); 
+}
+.t4s-grouped-pr__price {
+    color: var(--primary-price-color);
+}
+.t4s-grouped__total-price del,
+.t4s-grouped-pr__price del {
+    color: var(--secondary-price-color);
+}
+.t4s-grouped__total-price {
+    color: var(--primary-price-color);
+}
+.t4s-grouped__text-total-price {
+    font-size: 20px;
+    color: var(--secondary-color);
+    font-weight: 500;
+    margin: 0 5px 10px 0;
+}
+.t4s-grouped-product-list td {
+    text-align: center;
+}
+
+/* Custom CSS */
+@media (min-width: 1025px) {
+    .t4s-product-form__variants.t4s-grouped-product.is-btn-full-width__false .t4s-product-form__buttons, .t4s-product-form__variants.t4s-grouped-product.is-btn-full-width__false .t4s-product-form__submit {
+        min-width: 230px;
+    }
+}

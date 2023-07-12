@@ -1,0 +1,93 @@
+.t4s-menu-item .t4s-sub-menu {
+	text-align:left;
+}
+.t4s-navigation #t4s-nav-ul {
+    text-align: left;
+}
+.t4s-type__mega>.t4s-sub-menu {
+    padding: 30px 15px;
+}
+.nt_menu .sub-menu .sub-column-item>a {
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.type_mn_link2 > a {
+	display: block;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border-color);
+    position:relative;
+}
+.type_mn_link2>a .t4s_lb_nav {
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: -6px 4px 0;
+}
+.type_mn_link2>a:first-child {
+    padding-top: 0;
+}
+.type_mn_link2>a:last-child {
+    padding-bottom: 0;
+}
+.type_mn_link2 > a:not(:hover) {
+	color: var(--secondary-color);
+}
+.type_mn_link2 > a:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.type_mn_link > .t4s-heading {
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 0 0 13px 0;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+.type_mn_link .t4s-sub-column {
+    padding: 0;
+    margin-bottom:0;
+}
+.type_mn_link .t4s-sub-column li a {
+    padding: 10px 0;
+    display: block;
+    line-height: 1.5;
+    position:relative;
+}
+.type_mn_link .t4s-sub-column li a:not(:hover) {
+  color:var(--text-color);
+}
+.type_mn_link .t4s-sub-column .t4s_lb_nav {
+    right: auto;
+    margin-top: -8px;
+    margin-left: 4px;
+}
+.type_mn_link .t4s-sub-column li:last-child a {
+    padding-bottom: 0;
+}
+.type_mn_link .t4s-sub-column li:last-child a .t4s_lb_nav {
+    margin-top: -4px;
+}
+.t4s-navigation > ul > li.has--children.is-action__hover > a:before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: -40px;
+    right: 0;
+}
+.t4s-navigation .t4s-post-item .t4s-post-info {
+    margin-bottom: 0;
+}
+.t4s-menu-item a > i {
+    font-size: 22px;
+    margin-right: 4px;
+}

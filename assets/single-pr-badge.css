@@ -1,0 +1,84 @@
+.t4s-single-product-badge {
+    opacity: 1 !important;
+    top: 15px;
+    right: 15px;
+    z-index: 100;
+    transform-origin: 100% 0;
+    -webkit-transform-origin: 100% 0;    
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.t4s-single-product-badge > span {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 60px;
+    min-height: 24px;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 10px;
+    word-break: break-word;
+    padding: 0 5px;
+    line-height: 1;
+    text-align: center;
+}
+.badge_shape_1 .t4s-single-product-badge > span {
+    height: 60px;
+    border-radius: 30px;
+}
+.t4s-single-product-badge > .t4s-badge-sale {
+    color: var(--sale-badge-color);
+    background-color: var(--sale-badge-background);
+}
+.t4s-single-product-badge > .t4s-badge-new {
+    color: var(--new-badge-color);
+    background-color: var(--new-badge-background);
+}
+.t4s-single-product-badge > .t4s-badge-hot { 
+    color: var(--hot-badge-color);
+    background-color: var(--hot-badge-background);
+}
+.t4s-single-product-badge > .t4s-badge-soldout {
+    color: var(--soldout-badge-color);
+    background-color: var(--soldout-badge-background);
+}
+.t4s-single-product-badge > .t4s-badge-preorder {
+    color: var(--preorder-badge-color);
+    background-color: var(--preorder-badge-background);
+}
+.t4s-single-product-badge > .t4s-badge-custom {
+    color: var(--custom-badge-color);
+    background-color: var(--custom-badge-background);
+}
+
+.t4s-single-product-badge > .t4s-badge-item {
+    display: none;
+}
+.t4s-single-product-badge > .t4s-badge-item:not([hidden]) {
+    display: inline-flex;
+    -webkit-animation: 1s t4s-ani-fadeIn;
+    animation: 1s t4s-ani-fadeIn;
+}
+[data-main-media] {
+    z-index: 1;
+}
+@media (max-width: 1024px) {
+    .t4s-single-product-badge > span {
+        margin-bottom: 5px;
+        min-width: 40px;
+        font-size: 12px;
+    }
+    .badge_shape_1 .t4s-single-product-badge > span {
+        height: 40px;
+    }
+}
+@media (max-width: 767px) {
+    .t4s-single-product-badge > span {
+        min-width: 36px;
+    }
+    .badge_shape_1 .t4s-single-product-badge > span {
+        height: 36px;
+    }
+}

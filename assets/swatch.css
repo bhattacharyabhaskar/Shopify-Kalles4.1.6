@@ -1,0 +1,257 @@
+.t4s-swatch__item.is--soldout {
+    text-decoration: line-through;
+    text-decoration-color: currentColor;
+}
+.t4s-swatch__item.is--unavailable {
+    opacity: 0.5;
+}
+.is-t4s-style__color .t4s-swatch__item.is-sw__color.is--soldout {
+    position: relative;
+    --color-sold-out: #222;
+}
+.is-t4s-style__color .t4s-swatch__item.is-sw__color.is--soldout:after {
+    content: '';
+    width: 90%;
+    height: var(--sold-out-height);
+    background: var(--color-sold-out);
+    display: block;
+    position: absolute;
+    z-index: 22;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(135deg);
+}
+.t4s-swatch__item.is-sw__color.is--soldout.bg_color_black,
+.t4s-swatch__item.is-sw__color.is--soldout.bg_color_grey,
+.t4s-swatch__item.is-sw__color.is--soldout.bg_color_navy {
+    --color-sold-out: #ddd;
+}
+.is-remove-soldout-true .t4s-swatch__item.is--soldout,
+.is-remove-unavai-1 .t4s-swatch__item.is--unavailable,
+.is-remove-unavai-2 .t4s-swatch__item.is--unavailable {
+  display: none !important;
+}
+
+/* css selector color
+t4s-color-mode__circle 
+t4s-selector-mode__circle  */
+.t4s-swatch__option {
+    margin-bottom: 20px;
+}
+.t4s-swatch__title {
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0.65em 0 0.5em;
+}
+.t4s-swatch__list {
+    margin: 10px -5px 0;
+}
+.t4s-swatch__item {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    display: inline-block;
+    padding: 6px 16px 7px;
+    text-align: center;
+    border: 1px solid var(--border-sw-color);
+    color: var(--secondary-sw-color);
+    border-radius: 3px;
+    vertical-align: middle;
+    cursor: pointer;
+    margin: 5px;    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    transition: color .25s ease, background-color .25s ease, border-color .15s ease, box-shadow .25s ease, opacity .25s ease;
+}
+.t4sp-hover .t4s-swatch__item:hover {
+    border-color: var(--primary-sw-color);
+    color: var(--primary-sw-color);
+}
+.t4s-swatch__item:not(.is-sw__color).is--selected {
+    border-color: var(--primary-sw-color);
+    background: var(--primary-sw-color);
+    color: var(--t4s-light-color);
+}
+/* CSS selector color block round  */
+.t4s-selector-mode__block2 .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__item,
+.t4s-color-mode__block2 .t4s-swatch__option.is-t4s-style__color .t4s-swatch__item  {
+    border-radius: 40px;
+}
+
+/* CSS selector color circle   */
+.t4s-selector-mode__circle .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__item,
+.t4s-color-mode__circle .t4s-swatch__option.is-t4s-style__color .t4s-swatch__item  {
+    padding: 5px;
+    display: inline-block;
+    min-width: 30px;
+    min-height: 30px;
+    line-height: 18px;
+    border-radius: 40px;
+    text-align: center;
+}
+
+/* CSS selector color radio  */
+.t4s-selector-mode__radio .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__item,
+.t4s-color-mode__radio .t4s-swatch__option.is-t4s-style__color .t4s-swatch__item  {
+    padding: 0;
+    display: inline-block;
+    text-align: inherit;
+    position: relative;
+    border: 0;
+    padding-right: 15px;
+}
+.t4s-selector-mode__radio.is-sw__full .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__item,
+.t4s-color-mode__radio.is-sw-cl__full .t4s-swatch__option.is-t4s-style__color .t4s-swatch__item  {
+    padding: 2.5px 15px;
+    display: block;
+    text-align: inherit;
+    border: 1px solid var(--border-sw-color);
+}
+.t4s-selector-mode__radio .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__item:before,
+.t4s-color-mode__radio .t4s-swatch__option.is-t4s-style__color .t4s-swatch__item:before  {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    box-shadow: inset 0px 0px 0 2px #fff;
+    border-radius: 50%;
+    border: 1px solid var(--border-sw-color);
+    position: relative;
+    top: 2px;
+    margin-right: 10px;
+}
+.t4s-selector-mode__radio .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__item.is--selected,
+.t4s-color-mode__radio .t4s-swatch__option.is-t4s-style__color .t4s-swatch__item.is--selected {
+    background: transparent;
+    color: var(--primary-sw-color);
+}
+.t4sp-hover .t4s-selector-mode__radio .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__item:hover:before ,
+.t4sp-hover .t4s-color-mode__radio .t4s-swatch__option.is-t4s-style__color .t4s-swatch__item:hover:before  {
+    border-color: var(--primary-sw-color);
+}
+.t4s-selector-mode__radio .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__item.is--selected:before ,
+.t4s-color-mode__radio .t4s-swatch__option.is-t4s-style__color .t4s-swatch__item.is--selected:before  {
+    border-color: var(--primary-sw-color);
+    background: var(--primary-sw-color);
+}
+/* CSS selector color dropdown  */
+.t4s-selector-mode__dropdown .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__list,
+.t4s-color-mode__dropdown .t4s-swatch__option.is-t4s-style__color .t4s-swatch__list {
+    margin: 10px 0 0;
+    position: relative;
+}
+.t4s-selector-mode__dropdown .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__list> button,
+.t4s-color-mode__dropdown .t4s-swatch__option.is-t4s-style__color .t4s-swatch__list> button {
+    padding: 0 20px 0 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: var(--secondary-sw-color);
+    border: 1px solid var(--border-sw-color);
+    border-radius: 3px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: block;
+    width: 100%;
+    position: relative;
+    background-color: transparent;
+    text-align: inherit;
+}
+.t4s-dropdown__wrapper .t4s-swatch__item {
+    margin: 0;
+    padding: 0 20px 0 10px;
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    background: transparent;
+    text-align: inherit;
+    border: 0;
+    border-radius: 0;
+}
+.t4s-dropdown__wrapper .t4s-swatch__item.is--selected {
+    color: var(--primary-sw-color);
+    background: rgba(var( --primary-sw-color-rgb),.06);
+}
+@media (min-width: 768px) {
+    .t4s-swatch__list .t4s-dropdown__wrapper {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+    .t4s-swatch__list .t4s-dropdown__wrapper .t4s-drop-arrow {
+      display: none
+    }
+    .t4s-modal__content .t4s-swatch__list .t4s-dropdown__wrapper {
+        max-height: 150px;
+    }
+}
+
+/* color css */
+
+.t4s-swatch {
+    --sw-width: 30px;
+    --sw-height: 30px;
+    --sold-out-height: 1px;
+}
+.t4s-swatch.t4s-color-size__small {
+    --sw-width: 24px;
+    --sw-height: 24px;
+    --sold-out-height: 1px;
+}
+.t4s-swatch.t4s-color-size__large {
+    --sw-width: 38px;
+    --sw-height: 38px;
+    --sold-out-height: 2px;
+}
+.t4s-swatch.t4s-color-size__exlarge {
+    --sw-width: 48px;
+    --sw-height: 48px;
+    --sold-out-height: 3px;
+}
+.t4s-swatch__item.is-sw__color {
+    width: var(--sw-width);
+    height: var(--sw-height);
+    padding: 0;
+    font-size: 0; 
+    box-shadow: inset 0px 0px 0 2px var(--t4s-light-color);
+}
+.is-sw-cl__round .t4s-swatch__item.is-sw__color {
+    border-radius: 50%;
+}
+.t4s-swatch__item.is-sw__color.is--selected {
+   border-color: var(--primary-sw-color);
+   border-width: 2px;
+}
+.is--fist-ratio-true {
+    --mw-img-fit :  35px;
+}
+.is--fist-ratio-true .t4s-swatch.t4s-color-size__small {
+    --mw-img-fit: 25px;
+}
+.is--fist-ratio-true .t4s-swatch.t4s-color-size__large {
+    --mw-img-fit: 44px;
+}
+.is--fist-ratio-true .t4s-swatch.t4s-color-size__exlarge {
+    --mw-img-fit: 55px;
+}
+.is--fist-ratio-true .is-t4s-style__color.is--first-color .t4s-swatch__item {
+   width: var(--mw-img-fit);
+   height: auto!important;
+}
+.is--fist-ratio-true .is-t4s-style__color.is--first-color .t4s-swatch__item:before {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-top: calc(100% / (var(--fit-ratio-img)));
+}
+.t4s-swatch__title>a.t4s-btn__size-chart {
+    margin: 0 10px;
+    text-transform: none;
+    text-decoration: underline;
+    font-weight: 500;
+    display: inline-block;
+}

@@ -1,0 +1,270 @@
+
+.t4s-widget > ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+h5.t4s-widget-title {
+    position: relative;
+    padding-bottom: 20px; 
+    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+h5.t4s-widget-title:after {
+    content: "";
+    width: 60px;
+    border-bottom: 2px solid;
+    left: 0;
+    bottom: 15px;
+    position: absolute;
+}
+.t4s-widget a:hover,
+.t4s-widget .t4s-widget__pr-title:hover,
+.t4s-widget .t4s-article-title:hover{
+    color: var(--accent-color);
+}
+
+.t4s-widget .t4s-widget__pr-title {
+    display: block; 
+    line-height: 1.25;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--secondary-color);
+}
+.t4s-widget .t4s-widget__pr-title:hover {
+    color: var(--accent-color);
+}
+.t4s-widget .t4s-widget__pr-price {
+    color: var(--secondary-price-color);
+}
+.t4s-widget .t4s-widget__pr-price ins{
+    color: var(--primary-price-color);
+    margin-left: 5px;
+}
+.t4s-widget .t4s-article-title {
+    display: block; 
+    color: var(--heading-color);
+    font-weight: 500;
+    line-height: 24px;
+}
+.t4s-space-item-inner:not(:last-child) {
+    margin-bottom: 15px;
+}
+.t4s-widget .t4s-widget_img_pr,
+.t4s-widget .t4s-widget_img_ar {
+    padding-right: 0;
+    min-width: 95px;
+    max-width: 95px;
+}
+.t4s-widget_if_pr{
+    color: var(--text-color);
+}
+.t4s-widget .product-tags li {
+    display: inline-block;
+    margin: 0 2px 5px 0;
+    color: inherit;
+    line-height: 24px;
+    font-size: 14px;
+    border-radius: var(--btn-radius);
+}
+.t4s-widget .product-tags li a {
+    border: 1px solid;
+    line-height: 24px;
+    border-radius: var(--btn-radius);
+    padding: 0 10px;
+    display: inline-block;
+}
+.t4s-product_list_widget .onsale.nt_label {
+    width: auto;
+    height: auto;
+    color: var(--t4s-light-color);
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-size: 10px;
+    margin: 5px;
+}
+.nt_label, .nt_label.on, .qs_label.onsale, .txt_sale {
+    background-color: var(--sale-badge-background);
+}
+/* widget blog category */
+.t4s-blog-categories .t4s-cat-item {
+    padding-left: 15px;
+    position: relative;
+    margin-bottom: 5px;
+}
+.t4s-blog-categories .t4s-cat-item.t4s-current-cat a{color:var(--accent-color)}
+
+.t4s-blog-categories .t4s-cat-item >a{
+    display: inline-block;
+    position: relative;
+}
+.t4s-blog-categories .t4s-cat-item .t4s_lb_nav {
+    margin: 0;
+    position: absolute;
+    transform: none;
+    right: 0;
+    top: -14px;
+}
+.t4s-blog-categories .t4s-cat-item a i{font-size: 20px; margin-right: 5px;}
+.t4s-blog-categories .t4s-cat-item::before {
+    color: var(--secondary-color);
+    content: "+";
+    left: 0;
+    position: absolute;
+}
+.t4s-widget-blog-category.t4s-cat-count-false .t4s-cat-count{display: none;}
+
+/* widget filter tags */
+.t4s-filter-tags ul li {
+    line-height: 25px;
+    list-style: none;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.t4s-filter-tags ul li a{
+    border: 1px solid var(--secondary-color);;
+    border-radius: var(--btn-radius);
+    color: var(--secondary-color);;
+    display: inline-block;
+    font-size: 13px;
+    margin: 0 5px 3px 0;
+    padding: 2px 15px 1px;
+}
+.t4s-filter-tags ul{padding-left: 0px;}
+.t4s-filter-tags ul li a:hover,
+.t4s-filter-tags ul li.t4s-is--active a{
+    color: var(--t4s-light-color);
+    border-color: var(--accent-color);
+    background-color: var(--accent-color);
+}
+.t4s-tags-count-false .t4s-blog-count{display: none;}
+
+/* widget shiiping */
+.t4s-sidebar-shipping-icon{
+    font-size: 36px;
+    margin-right: 20px;
+    color: var(--heading-color);
+    line-height: 100%;
+}
+.t4s-sidebar-shipping .t4s-sidebar-shipping-title{
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--heading-color);
+    margin-bottom: 5px;
+}
+.t4s-sidebar-shipping .t4s-sidebar-shipping-desc{margin-bottom: 0px;}
+
+/*Gallery*/
+.t4s-gallery-item .t4s_ratio {
+    overflow: hidden;
+}
+.t4s-gallery-item img{
+    transition: 0.5s;
+}
+.t4s-gallery-item:hover img{
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    filter: brightness(0.8);
+}
+/*Instagram*/
+.t4s-ins-info .t4s-ins-icon {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    opacity: 0;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    transition: 0.5s;
+}
+.t4s-ins-info .t4s-ins-icon svg {
+    width: 20px;
+    height: 20px;
+    color: #ededed;
+}
+.t4s-col-ins a .t4s_bg {
+    transition: 0.5s;
+}
+.t4s-col-ins a:hover .t4s-ins-icon{
+    opacity: 1;
+}
+.t4s-col-ins a:hover .t4s_bg {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    filter: brightness(0.8);
+}
+/*Widget image*/
+.t4s-image-s img {
+    transition: 0.5s;
+}
+.t4s-image-s:hover img {
+    transform: scale(1.05);
+    filter: brightness(0.9);
+}
+/*Widget social*/
+.t4s-social {
+    margin-bottom: -6px;
+}
+a.t4s-s-item {
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+    justify-content: center;
+    align-items: center;
+    background: #333;
+    margin-right: 6px;
+    color: var(--t4s-light-color);
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+a.t4s-s-item:hover{
+    background: var(--link-color-hover);
+    color: var(--t4s-light-color);
+}
+/*Widget banner countdown*/
+.t4s-sidebar-image .t4s-countdown-pos-1 .t4s-sidebar-countdown{
+    margin-top: 10px;
+}
+.t4s-sidebar-image .t4s-countdown-pos-2 .t4s-sidebar-countdown{
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+}
+/*Widget product category */
+.t4s-widget-category .t4s-product-categories {
+    max-height: 250px;
+    list-style: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+.t4s-product-categories .t4s-cat-item {
+    padding-left: 15px;
+    position: relative;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    color: var(--secondary-color);
+}
+.t4s-product-categories .t4s-cat-item a {
+    color: inherit;
+}
+.t4s-product-categories .t4s-cat-item a:hover {
+    color: var(--accent-color);
+}
+.t4s-product-categories .t4s-cat-item.t4s-current-cat a{
+    color:var(--accent-color);
+}
+.t4s-product-categories .t4s-cat-item::before {
+    color: inherit;
+    content: "+";
+    left: 0;
+    position: absolute;
+}
+.t4s-widget-product-category.t4s-cat-count-false .t4s-cat-count{display: none;}
+
+
+.t4s-toolbart-sidebar.t4s-toolbar-item{display: block;}

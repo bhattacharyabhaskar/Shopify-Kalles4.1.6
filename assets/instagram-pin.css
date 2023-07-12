@@ -1,0 +1,182 @@
+.t4s-ins-item .t4s_ratio img {
+    transition: 0.3s;
+}
+.t4s-ins-item:hover .t4s_ratio img {
+    transform: scale(1.05);
+}
+.t4s-lookbook-pin:hover{
+    opacity: 0.8;
+    color: var(--cl-pin);
+}
+.t4s-lookbook-pin{
+  border-radius: 50px;
+  position: absolute;
+  top: var(--ps-top);
+  left: var(--ps-left);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(calc(-1*var(--ps-left)), calc(-1*var(--ps-top)) );
+  z-index: 2;
+  cursor: pointer;
+}
+.t4s-lookbook-pin .t4s-zoompin {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    bottom: -8px;
+    left: -8px;
+    display: block;
+    -webkit-animation: zoompin 2s ease infinite;
+    animation: zoompin 2s ease infinite;
+    border-radius: 50%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 800px;
+    perspective: 800px;
+    background-color: rgba(255,255,255,.5);
+    pointer-events: none;
+}
+
+.t4s-pin__popup .t4s-pr-style6 .t4s-product-info__inner {
+    margin-bottom: 0;
+}
+@-webkit-keyframes zoompin {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(.2);
+        transform: scale(.2)
+    }
+
+    50% {
+        opacity: .8
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(1);
+        transform: scale(1)
+    }
+}
+
+@keyframes zoompin {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(.2);
+        transform: scale(.2)
+    }
+
+    50% {
+        opacity: .8
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(1); 
+        transform: scale(1)
+    }
+}
+.t4s-ins-pin.t4s-lookbook-pin {
+    width: 30px;
+    height: 30px;
+}
+.t4s-hotspot-ins {
+    cursor: pointer;
+    border-radius: 50%;
+    text-align: center;
+    z-index: 10;
+    padding: 0;
+    backface-visibility: hidden;
+    width: 30px;
+    line-height: 26px;
+    height: 30px;
+    font-size: 14px;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: 2px solid #000;
+    background-color: #fff;
+    color: #000;
+    text-shadow: none;
+    font-weight: 600;
+    overflow: hidden;
+    transition: transform .2s ease-out,opacify .2s ease-out;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+.t4s-hotspot-ins.t4s-hotspot-dark {
+    border-color: #eee;
+    background-color: #000; 
+    color: #fff; 
+}
+.t4s-lb-pr-wrapper,
+.t4s-lb-txt-wrapper {
+    background-color: #fff;
+    position: absolute;
+    width: 300px;
+    padding: 15px;
+    box-shadow: 0 0 20px rgb(0 0 0 / 20%);    
+    opacity: 0;
+    visibility: hidden;
+    will-change: transform, opacity, visibility;
+    border-radius: 5px;
+}
+.t4s-lb-arrow {
+    background-color: #fff;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    transform: rotate(45deg);
+}
+.pin__popup h3.t4s-product-title {
+    font-size: 14px;
+}
+.t4s-lb-txt-wrapper .t4s-lb-title {
+    color: var(--heading-color);
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.t4s-lb-content p {
+    margin-bottom: 0;
+}
+.pr_border_style_2 .t4s-lb-pr-wrapper  .t4s-product .t4s-product-inner, .pr_border_style_3 .t4s-lb-pr-wrapper .t4s-product {
+    box-shadow: none;
+}
+.t4s-ins-wrap .t4s_ratio {
+    border-radius: var(--br-rdu);
+    overflow: hidden;
+}
+.t4s-lookbook-pin .t4s-hotspot-ins:after {
+    top: 50%;
+    left: 50%;
+    margin-top: -9px;
+    margin-left: -9px;
+    position: absolute;
+    opacity: 0;
+    -webkit-transition: opacity .2s;
+    transition: opacity .2s;
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(255,255,255,.3);
+    border-left-color: #fff;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.t4s-lookbook-pin .t4s-hotspot-ins.t4s-hotspot-light:after {
+    border: 1px solid rgba(0,0,0,.3);
+    border-left-color: #222;
+}
+.t4s-lookbook-pin.is--loading .t4s-hotspot-ins::after{
+    opacity: 1!important;
+    -webkit-animation: 450ms linear infinite spin;
+    animation: 450ms linear infinite spin;
+}
+.t4s-lookbook-pin.is--loading .t4s-hotspot-ins {
+    font-size:0;
+}

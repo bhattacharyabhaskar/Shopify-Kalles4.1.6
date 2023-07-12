@@ -1,0 +1,160 @@
+.t4s-tabs-list-collections .t4s-tabs-ul {
+  margin-bottom: var(--mgb);
+  display: flex;
+}
+.t4s-tabs-list-collections .t4s-tabs-ul.flickityt4s_prev_enable,
+.t4s-tabs-list-collections .t4s-tabs-ul.flickityt4s_next_enable {
+  padding: 0 24px;
+}
+.t4s-tabs-list-collections .t4s-tabs-ul .flickityt4s-prev-next-button.next {
+  right: 0;
+}
+.t4s-tabs-list-collections .t4s-tabs-ul .flickityt4s-prev-next-button.previous {
+  left: 0;
+}
+.t4s-tabs-list-collections .t4s-tabs-ul.t4s-flicky-slider .flickityt4s-button {
+  color: var(--item-cl);
+  width: 24px;
+  height: 24px;
+}
+.t4s-tabs-list-collections .t4s-tabs-ul.t4s-flicky-slider:not(:hover) .flickityt4s-button {
+  transform: translate(0) translateY(-50%);
+}
+.t4s-tabs-list-collections .t4s-tabs-ul.t4s-flicky-slider .flickityt4s-button:hover {
+  color: var(--item-cl-active);
+}
+.t4s-tabs-list-collections .t4s-tabs-ul li:not(:last-child) {
+  margin-right: var(--space-between);
+}
+.t4s-tabs-list-collections .t4s-tabs-ul li a {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  position: relative;
+  color: var(--item-cl);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding-bottom: 5px;
+}
+.t4s-tabs-list-collections .t4s-tabs-ul li a::after {
+  height: 2px;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  transition: width .4s cubic-bezier(.175,.885,.32,1.15);
+  background-color: var(--item-bg-active);
+}
+.t4s-tabs-list-collections .t4s-tabs-ul .t4s-tab-item a.t4s-active::after {
+  width: 100%;
+}
+.t4s-tabs-list-collections .t4s-tabs-ul li a:hover,
+.t4s-tabs-list-collections .t4s-tabs-ul li a.t4s-active {
+  opacity: 1;
+  color: var(--item-cl-active);
+}
+.t4s-tabs-list-collections .t4s-tabs-ul li a .t4s-icon-title {
+  font-size: 20px;
+}
+
+.t4s-tabs-list-collections .t4s-tabs-head {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--mgb);
+  flex-direction: row;
+}
+.t4s-tabs-list-collections .t4s-section-title {
+  position: relative;
+  z-index: 1;
+  margin-right: 30px;
+  flex: 0 0 auto;
+  margin-bottom: 2px;
+}
+.t4s-tabs-list-collections .t4s-tabs .t4s-tabs-ul {
+  margin-bottom: 0;
+  display: flex;
+  padding: 0;
+  flex: 1 1 auto;
+}
+.t4s-tabs-list-collections .t4s-tabs .t4s-tabs-ul.flickityt4s_prev_enable,
+.t4s-tabs-list-collections .t4s-tabs .t4s-tabs-ul.flickityt4s_next_enable {
+  padding: 0 25px;
+}
+.t4s-tabs-list-collections .t4s-tabs .t4s-tabs-ul li {
+	display: inline-flex;
+}
+.t4s-tabs-list-collections.t4s-border-none .t4s-tabs-head,
+.t4s-tabs-list-collections.t4s-border-none .t4s-section-title {
+  border-bottom: none;
+}
+.rtl_true .t4s-slider-btn-pos-ontop.t4s-flicky-slider .flickityt4s-button.previous {
+  right: calc(var(--flickity-btn-pos)/2)
+}
+.rtl_true .t4s-slider-btn-pos-ontop.t4s-flicky-slider .flickityt4s-button.next {
+  right: calc(var(--btn-height-slider) + 20px + var(--flickity-btn-pos)/2)
+}
+@media(max-width: 991px) { 
+  .t4s-tabs-list-collections .t4s-tabs-head {
+    flex-direction: column;
+    align-items: center;
+    border-bottom: none;
+    display: block;
+  }
+  .t4s-tabs-list-collections .t4s-tabs .t4s-tabs-ul {
+  	display: block;
+  	padding: 10px 0 0;
+  }
+  .t4s-tabs-list-collections .t4s-section-title {
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 15px;
+  }
+}
+@media(max-width: 767px) { 
+  .t4s-g-50, .t4s-gx-50, .t4s-px-50 {
+    --ts-gutter-x: 50px;
+  }
+  .t4s-g-50, .t4s-gy-50 {
+    --ts-gutter-y: 50px;
+  }
+  .t4s-g-60, .t4s-gx-60, .t4s-px-60 {
+    --ts-gutter-x: 60px;
+  }
+  .t4s-g-60, .t4s-gy-60 {
+    --ts-gutter-y: 60px;
+  }
+  .t4s-g-70, .t4s-gx-70, .t4s-px-70 {
+    --ts-gutter-x: 70px;
+  }
+  .t4s-g-70, .t4s-gy-70 {
+    --ts-gutter-y: 70px;
+  }
+}
+@media(min-width: 768px) {
+  .t4s-g-md-50, .t4s-gx-md-50, .t4s-px-md-50 {
+    --ts-gutter-x: 50px;
+  }
+  .t4s-g-md-50, .t4s-gy-md-50 {
+    --ts-gutter-y: 50px;
+  }
+  .t4s-g-md-60, .t4s-gx-md-60, .t4s-px-md-60 {
+    --ts-gutter-x: 60px;
+  }
+  .t4s-g-md-60, .t4s-gy-md-60 {
+    --ts-gutter-y: 60px;
+  }
+  .t4s-g-md-70, .t4s-gx-md-70, .t4s-px-md-70 {
+    --ts-gutter-x: 70px;
+  }
+  .t4s-g-md-70, .t4s-gy-md-70 {
+    --ts-gutter-y: 70px;
+  }
+
+
+
+
+
+
+}
