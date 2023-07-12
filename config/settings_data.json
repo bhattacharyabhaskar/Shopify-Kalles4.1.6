@@ -36,6 +36,7 @@
     "use_change_variant_by_img": true,
     "enable_his": true,
     "variant_remove": "2",
+    "use_notify_me": false,
     "share_source": "1",
     "gift_wrap_pr": "gift-wrap",
     "filter_type_search": true,
