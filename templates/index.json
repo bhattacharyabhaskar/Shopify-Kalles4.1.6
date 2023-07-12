@@ -410,7 +410,6 @@
     },
     "164603504020ce33da": {
       "type": "collections-list-manual",
-      "disabled": true,
       "blocks": {
         "1646035040fee424aa-0": {
           "type": "collection_item",
@@ -1225,6 +1224,158 @@
         "use_cus_css": false,
         "code_cus_css": ".SectionID {\nbackground-color:red\n}"
       }
+    },
+    "5191a6f7-87be-4d47-a428-dc5caaf00eec": {
+      "type": "collections-list-packery",
+      "blocks": {
+        "template--16797917544681__5191a6f7-87be-4d47-a428-dc5caaf00eec-1689137557c70ba15d-0": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "banarasi-silk-saree",
+            "image": "shopify:\/\/shop_images\/Banarasi-New.webp",
+            "col_dk": "3",
+            "col_tb": "6",
+            "col_mb": "6",
+            "collection_title": "BANARASI",
+            "collection_link": ""
+          }
+        },
+        "a970e50b-9893-45df-aea8-883933289a71": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "bishnupur-silk-saree",
+            "image": "shopify:\/\/shop_images\/Bishnupuri-Silk-New.jpg",
+            "col_dk": "3",
+            "col_tb": "6",
+            "col_mb": "6",
+            "collection_title": "BISHNUPURI SILK",
+            "collection_link": ""
+          }
+        },
+        "7291f4d5-d549-44fe-90d0-ec786333504a": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "ikat-silk-saree",
+            "image": "shopify:\/\/shop_images\/Ikkat-New.webp",
+            "col_dk": "3",
+            "col_tb": "6",
+            "col_mb": "6",
+            "collection_title": "IKKAT",
+            "collection_link": ""
+          }
+        },
+        "3fe07dc4-6f58-40f7-b3ec-243014320622": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "georgette-silk-saree",
+            "image": "shopify:\/\/shop_images\/Georgette-New.jpg",
+            "col_dk": "3",
+            "col_tb": "6",
+            "col_mb": "6",
+            "collection_title": "GEORGETTE",
+            "collection_link": ""
+          }
+        },
+        "574611da-ecdd-4334-9434-19a750148156": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "dhakai-jamdani-sarees",
+            "image": "shopify:\/\/shop_images\/Jamdani-New.webp",
+            "col_dk": "3",
+            "col_tb": "6",
+            "col_mb": "6",
+            "collection_title": "JAMDANI",
+            "collection_link": ""
+          }
+        },
+        "c949f50d-5f4e-4bb5-a004-d7844b99081f": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "kanchipuram-sarees",
+            "image": "shopify:\/\/shop_images\/Kanjeevaram-New.webp",
+            "col_dk": "3",
+            "col_tb": "6",
+            "col_mb": "6",
+            "collection_title": "KANJEEVARAM",
+            "collection_link": ""
+          }
+        },
+        "1e9dfb8d-4968-4623-a61f-b798d1f2f0ba": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "gadwal-silk-saree",
+            "image": "shopify:\/\/shop_images\/Gadwal-New.webp",
+            "col_dk": "3",
+            "col_tb": "6",
+            "col_mb": "6",
+            "collection_title": "GADWAL",
+            "collection_link": ""
+          }
+        },
+        "fbf52617-ed16-48e3-a986-f6359777454d": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "paithani-silk-saree",
+            "image": "shopify:\/\/shop_images\/Paithani-New.webp",
+            "col_dk": "3",
+            "col_tb": "6",
+            "col_mb": "6",
+            "collection_title": "PAITHANI",
+            "collection_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--16797917544681__5191a6f7-87be-4d47-a428-dc5caaf00eec-1689137557c70ba15d-0",
+        "a970e50b-9893-45df-aea8-883933289a71",
+        "7291f4d5-d549-44fe-90d0-ec786333504a",
+        "3fe07dc4-6f58-40f7-b3ec-243014320622",
+        "574611da-ecdd-4334-9434-19a750148156",
+        "c949f50d-5f4e-4bb5-a004-d7844b99081f",
+        "1e9dfb8d-4968-4623-a61f-b798d1f2f0ba",
+        "fbf52617-ed16-48e3-a986-f6359777454d"
+      ],
+      "settings": {
+        "design_heading": "2",
+        "heading_align": "t4s-text-center",
+        "top_heading": "<h2>Exclusive Designer Silk Saree Collections<\/h2>",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "collection_des": "1",
+        "title_cl": "#ffffff",
+        "title_cl_hover": "#222222",
+        "subtitle_cl": "#878787",
+        "count_cl": "#222222",
+        "border_cl": "#e5e5e5",
+        "collection_subtitle": "Products",
+        "open_link": "_self",
+        "space_bottom": 20,
+        "space_bottom_mb": 10,
+        "border": false,
+        "item_pd": 0,
+        "item_rd": 0,
+        "img_effect": "none",
+        "b_effect": "none",
+        "image_ratio": "ratio1_1",
+        "image_size": "cover",
+        "image_position": "7",
+        "space_h_item": "30",
+        "space_v_item": "30",
+        "space_h_item_mb": "10",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
     }
   },
   "order": [
@@ -1235,6 +1386,7 @@
     "164603686708691778",
     "16460368750174c54a",
     "1646209857bf69e76a",
-    "164620932069107a3a"
+    "164620932069107a3a",
+    "5191a6f7-87be-4d47-a428-dc5caaf00eec"
   ]
 }
