@@ -187,8 +187,8 @@
         "30594d23-d644-4653-9545-9ff769d2e6ab"
       ],
       "settings": {
-        "show_desc": false,
-        "position_desc": "2",
+        "show_desc": true,
+        "position_desc": "1",
         "product_des": "1",
         "show_vendor": false,
         "use_cdt": true,
@@ -201,7 +201,7 @@
         "enable_listing_default": false,
         "col_dk": "4",
         "col_tb": "2",
-        "col_mb": "2",
+        "col_mb": "1",
         "space_h_item": "30",
         "space_v_item": "30",
         "space_h_item_mb": "10",
