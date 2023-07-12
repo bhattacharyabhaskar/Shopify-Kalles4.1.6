@@ -280,64 +280,6 @@
               "padding_inner_mb": ""
             }
           },
-          "footer-10": {
-            "type": "bl_col",
-            "settings": {
-              "col_heading": "EMAIL SIGNUP",
-              "menu": "",
-              "menu_style": "1",
-              "col_dk": "3",
-              "col_tb": "6",
-              "col_mb": "12",
-              "content_align": "t4s-text-md-start",
-              "padding_inner": "5px,0,0,0",
-              "col_heading_mobile": "",
-              "content_align_mb": "t4s-text-start",
-              "padding_inner_mb": ""
-            }
-          },
-          "footer-11": {
-            "type": "custom_text",
-            "settings": {
-              "text": "Subscribe to our newsletter and get $10 USD off your first purchase",
-              "remove_br_tag": false,
-              "tag": "p",
-              "fontf": "inherit",
-              "text_cl": "#878787",
-              "text_fs": 14,
-              "text_lh": 24,
-              "text_fw": 400,
-              "text_ls": 0,
-              "font_italic": false,
-              "text_shadow": false,
-              "text_mgb": 18,
-              "hidden_mobile": false,
-              "text_fs_mb": 16,
-              "text_lh_mb": 0,
-              "text_ls_mb": 0,
-              "text_mgb_mobile": 18
-            }
-          },
-          "footer-12": {
-            "type": "newsletter",
-            "settings": {
-              "form_width": 0,
-              "form_width_mb": 0,
-              "newl_des": "1",
-              "news_align": "start",
-              "newl_size": "small",
-              "btn_icon": false,
-              "input_cl": "#878787",
-              "border_cl": "#000000",
-              "btn_cl": "#ffffff",
-              "btn_bg_cl": "#222222",
-              "btn_hover_cl": "#ffffff",
-              "btn_hover_bg_cl": "#56cfe1",
-              "hidden_mobile": false,
-              "mgb": 22,
-              "mgb_mb": 20
-            }
-          },
           "385c1474-1235-4a3d-b73c-9555b5f8dcfb": {
             "type": "image",
             "settings": {
@@ -406,9 +348,6 @@
           "footer-4",
           "footer-6",
           "footer-8",
-          "footer-10",
-          "footer-11",
-          "footer-12",
           "385c1474-1235-4a3d-b73c-9555b5f8dcfb",
           "33eb929e-a001-4d96-82a0-5aab1aaabaea",
           "9114b699-b551-43d2-a4a4-f127f3fb7ca6",
@@ -432,9 +371,9 @@
           "mgb_mb": 20,
           "text_fs": 14,
           "text_fw": 400,
-          "heading_cl": "#ffffff",
-          "text_cl": "#878787",
-          "link_cl": "#878787",
+          "heading_cl": "#ddd",
+          "text_cl": "#fff",
+          "link_cl": "#fff",
           "link_hover_cl": "#56cfe1",
           "border_cl": "#e6e6e6",
           "layout": "t4s-container-wrap",
