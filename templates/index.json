@@ -1355,100 +1355,105 @@
         "pd_mb": ""
       }
     },
-    "164620932069107a3a": {
-      "type": "shipping",
-      "disabled": true,
+    "64c9b235-9d18-46e5-ac3c-840dabd513f9": {
+      "type": "logo_list",
       "blocks": {
-        "164620932047c7965f-0": {
-          "type": "shipping",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-0": {
+          "type": "logo_item",
           "settings": {
-            "icon_themes": "car",
-            "icon": "las la-shipping-fast",
-            "title": "FREE SHIPPING",
-            "text": "<p>Free shipping on all US order or order above $100<\/p>",
-            "html": ""
+            "image": "shopify:\/\/shop_images\/Shipping-HOME.webp",
+            "url": ""
           }
         },
-        "164620932047c7965f-1": {
-          "type": "shipping",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-1": {
+          "type": "logo_item",
           "settings": {
-            "icon_themes": "help",
-            "icon": "las la-life-ring",
-            "title": "SUPPORT 24\/7",
-            "text": "<p>Contact us 24 hours a day, 7 days a week<\/p>",
-            "html": ""
+            "image": "shopify:\/\/shop_images\/Secured_7b150ab3-4d78-4acb-a42a-7e2d902be95d.webp",
+            "url": ""
           }
         },
-        "164620932047c7965f-2": {
-          "type": "shipping",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-2": {
+          "type": "logo_item",
           "settings": {
-            "icon_themes": "refesh",
-            "icon": "las la-undo-alt",
-            "title": "30 DAYS RETURN",
-            "text": "<p>Simply return it within 30 days for an exchange.<\/p>",
-            "html": ""
+            "image": "shopify:\/\/shop_images\/Silk-Mark-New-min_2d9904a7-4dbe-44e5-b1b8-83a999ac7b1e.webp",
+            "url": ""
           }
         },
-        "164620932047c7965f-3": {
-          "type": "shipping",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-3": {
+          "type": "logo_item",
           "settings": {
-            "icon_themes": "door-lock",
-            "icon": "las la-lock",
-            "title": "100% PAYMENT SECURE",
-            "text": "<p>We ensure secure payment with PEV<\/p>",
-            "html": ""
+            "image": "shopify:\/\/shop_images\/hand_woven.webp",
+            "url": ""
+          }
+        },
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-4": {
+          "type": "logo_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Stitching_08660442-1331-48af-978c-9b8fe7e889dd.webp",
+            "url": ""
+          }
+        },
+        "70e7a8e4-0f52-4131-839c-37088bb5a0bf": {
+          "type": "logo_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Service_db38927a-f7c4-49b9-ac55-90af6410ff85.webp",
+            "url": ""
           }
         }
       },
       "block_order": [
-        "164620932047c7965f-0",
-        "164620932047c7965f-1",
-        "164620932047c7965f-2",
-        "164620932047c7965f-3"
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-0",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-1",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-2",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-3",
+        "template--16797917544681__64c9b235-9d18-46e5-ac3c-840dabd513f9-1689140132cfad8378-4",
+        "70e7a8e4-0f52-4131-839c-37088bb5a0bf"
       ],
       "settings": {
-        "design_heading": "2",
+        "design_heading": "1",
         "heading_align": "t4s-text-center",
-        "top_heading": "",
-        "icon_heading": "gem",
+        "top_heading": "Why IndyVogue",
+        "icon_heading": "las la-gem",
         "top_subheading": "",
         "tophead_mb": 30,
-        "content_align": "text-start",
-        "align_vertical": false,
-        "design_padding": "1",
-        "source": "themes_icon",
-        "icon_des": "default",
-        "icon_size": "medium",
-        "col_dk": "4",
+        "img_effect": "none",
+        "b_effect": "none",
+        "open_link": "_self",
+        "layout_des": "2",
+        "click_image": "data-goto",
+        "nav_thumbs": true,
+        "col_dk": "6",
         "col_tb": "2",
-        "col_mb": "1",
-        "border": false,
-        "cl_bd": "#dddddd",
-        "cl_ic": "#9e9e9e",
-        "cl_hd": "#222222",
-        "cl_cot": "#878787",
-        "bg_item": "#ffffff",
-        "hd_fs": 16,
-        "hd_fw": 500,
-        "txt_fs": 13,
-        "space_h_item": "30",
-        "space_v_item": "30",
-        "space_h_item_mb": "30",
-        "space_v_item_mb": "20",
-        "carousel_mobile": true,
+        "col_mb": "2",
+        "space_item": "30",
+        "space_item_mb": "30",
+        "loop": true,
+        "au_time": 2.5,
+        "au_hover": true,
+        "nav_btn": false,
+        "btn_vi": "hover",
+        "btn_owl": "default",
+        "btn_shape": "none",
+        "btn_cl": "dark",
+        "btn_size": "small",
+        "btn_hidden_mobile": true,
+        "nav_dot": false,
+        "dot_owl": "default",
         "dots_cl": "dark",
         "dots_round": true,
+        "dots_space": 10,
+        "dots_hidden_mobile": false,
         "layout": "t4s-container-wrap",
         "cl_bg": "",
         "cl_bg_gradient": "",
-        "mg": "",
-        "pd": "55px,,25px,",
-        "mg_tb": ",,50px,",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
         "pd_tb": "",
-        "mg_mb": "",
-        "pd_mb": "55px,,25px,",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
         "use_cus_css": false,
-        "code_cus_css": ".SectionID {\nbackground-color:red\n}"
+        "code_cus_css": ""
       }
     }
   },
@@ -1462,6 +1467,6 @@
     "164603686708691778",
     "16460368750174c54a",
     "1646209857bf69e76a",
-    "164620932069107a3a"
+    "64c9b235-9d18-46e5-ac3c-840dabd513f9"
   ]
 }
