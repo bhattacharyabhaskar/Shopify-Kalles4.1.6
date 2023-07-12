@@ -1,0 +1,93 @@
+{%- liquid
+  assign social_icons = false
+  assign target = '_blank'
+  unless class_tooltip
+    assign class_tooltip = 'top'
+  endunless
+  unless follow_social
+    assign _share_permalink = product.url | default: article.url | default: page.url
+    assign _share_permalink2 = shop.url | append:_share_permalink
+    assign permalinkURL = share_permalink | default: _share_permalink2
+    unless share_title
+       assign share_title = product.title | default: article.title | default: page.title | default: shop.name
+    endunless
+    assign permaTitle = share_title | url_param_escape
+    unless share_image
+      assign share_image = product.featured_image | default: article.image | default: settings.share_image | default: page_image | default: settings.logo
+    endunless
+    assign permaImage = share_image | image_url: width: 1024, height: 1024
+  else
+    if settings.social_tiktok_link != blank or settings.social_soundcloud_link != blank or settings.social_behance_link != blank or settings.social_youtube_link != blank or settings.social_tumblr_link != blank or settings.social_pinterest_link != blank or settings.social_linkedin_link != blank or settings.social_dribbble_link != blank or settings.social_instagram_link != blank or settings.social_twitter_link != blank or settings.social_facebook_link != blank
+      assign social_icons = true
+    endif
+  endunless
+  if social_icons
+    assign socials = "social_facebook_link social_twitter_link social_instagram_link social_dribbble_link social_linkedin_link social_pinterest_link social_tumblr_link social_snapchat_link social_youtube_link social_vimeo_link social_behance_link social_soundcloud_link social_tiktok_link social_spotify_link" | split: ' '
+    assign socials_icon = "facebook twitter instagram dribbble linkedin pinterest tumblr snapchat youtube vimeo behance soundcloud tiktok spotify" | split: ' '
+    assign socials_txt = "socials.follow_fb;socials.follow_tw;socials.follow_it;socials.follow_dr;socials.follow_ld;socials.follow_pr;socials.follow_tu;socials.follow_sp;socials.follow_yt;socials.follow_vm;socials.follow_bh;socials.follow_sc;socials.follow_tt;socials.follow_sptify" | split: ';'  
+  endif -%}
+
+<div class="t4s-socials t4s-socials-style-{{ style }} t4s-socials-size-{{ size }} t4s-setts-color-{{ use_color_set }} t4s-row t4s-gx-md-{{ space_h_item }} t4s-gy-md-{{ space_v_item }} t4s-gx-{{ space_h_item_mb }} t4s-gy-{{ space_v_item_mb }}">
+  {%- unless follow_social -%}  
+    {%- if settings.share_facebook -%}
+    <div class="t4s-col-item t4s-col-auto">
+     <a title='{{ 'socials.share_fb' | t | escape }}' data-no-instant rel="noopener noreferrer nofollow" href="https://www.facebook.com/sharer/sharer.php?u={{ permalinkURL }}" target="{{ target }}" class="facebook" data-tooltip="{{ class_tooltip }}">
+        {%- render 'icon_socials',icon_name: 'facebook' -%} 
+     </a>
+    </div>
+    {%- endif -%}
+    {%- if settings.share_twitter -%}
+      <div class="t4s-col-item t4s-col-auto">
+        <a title='{{ 'socials.share_tw' | t | escape }}' data-no-instant rel="noopener noreferrer nofollow" href="http://twitter.com/share?text={{ permaTitle }}&amp;url={{ permalinkURL }}" target="{{ target }}" class="twitter" data-tooltip="{{ class_tooltip }}">
+            {%- render 'icon_socials',icon_name: 'twitter' -%} 
+        </a>
+      </div>
+    {%- endif -%}
+    {%- if permaImage != blank -%}
+      {%- if settings.share_pinterest -%}
+        <div class="t4s-col-item t4s-col-auto">
+          <a title='{{ 'socials.share_pr' | t | escape }}' data-no-instant rel="noopener noreferrer nofollow" href="http://pinterest.com/pin/create/button/?url={{ permalinkURL }}&amp;media=http:{{ permaImage }}&amp;description={{ permaTitle }}" target="{{ target }}" class="pinterest" data-tooltip="{{ class_tooltip }}">
+            {%- render 'icon_socials',icon_name: 'pinterest' -%} 
+          </a>
+        </div>
+      {%- endif -%}        
+      {%- if settings.share_tumblr -%}
+        <div class="t4s-col-item t4s-col-auto">
+          <a title='{{ 'socials.share_tu' | t | escape }}' data-no-instant rel="noopener noreferrer nofollow" data-content="http:{{ permaImage }}" href="//tumblr.com/widgets/share/tool?canonicalUrl={{ permalinkURL }}" target="{{ target }}" class="tumblr" data-tooltip="{{ class_tooltip }}">
+            {%- render 'icon_socials',icon_name: 'tumblr' -%} 
+          </a>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+      {%- if settings.share_telegram -%}
+        <div class="t4s-col-item t4s-col-auto">
+          <a title='{{ 'socials.share_tl' | t | escape }}' data-no-instant rel="nofollow" target="{{ target }}" class="telegram" href="https://telegram.me/share/url?url={{ permalinkURL }}" data-tooltip="{{ class_tooltip }}"> 
+             {%- render 'icon_socials',icon_name: 'telegram' -%} 
+          </a>
+        </div>
+      {%- endif -%}
+      {%- if settings.share_email -%}
+        <div class="t4s-col-item t4s-col-auto">
+          <a title='{{ 'socials.share_em' | t | escape }}' data-no-instant rel="noopener noreferrer nofollow" href="mailto:?subject={{ permaTitle }}&amp;body={{ permalinkURL }}" target="{{ target }}" class="email" data-tooltip="{{ class_tooltip }}">
+            {%- render 'icon_socials',icon_name: 'mail' -%} 
+          </a>
+        </div>
+      {%- endif -%}
+      {%- if settings.share_whatsapp -%}
+        <div class="t4s-col-item t4s-col-auto">
+          <a title='{{ 'socials.share_wa' | t | escape }}' data-no-instant rel="nofollow" target="{{ target }}" class="whatsapp" href="https://wa.me/?text={{ permaTitle }}&#x20;{{ permalinkURL }}" data-tooltip="{{ class_tooltip }}"> 
+             {%- render 'icon_socials',icon_name: 'whatsapp' -%} 
+          </a>
+        </div>
+      {%- endif -%}
+  {%- else -%}
+    {%- if social_icons -%}
+      {%- for social_link in socials -%} {% if settings[social_link] != blank -%}
+        <div class="t4s-col-item t4s-col-auto">
+          <a title='{{ socials_txt[forloop.index0] | t | escape }}' data-no-instant rel="noopener noreferrer nofollow" href="{{ settings[social_link] | escape }}" target="{{ target }}" class="{{ socials_icon[forloop.index0] }}" data-tooltip="{{ class_tooltip }}">{%- render 'icon_socials', icon_name: socials_icon[forloop.index0] -%} </a>
+        </div>
+      {%- endif -%} {% endfor -%}
+    {%- endif -%}
+  {%- endunless -%}
+</div>
+

@@ -1,0 +1,15 @@
+{%- assign image_fix = image_nt | image_tag -%}
+<div class="t4s-quote-wrap">
+  <div class="t4s-quote-texts t4s-rte">{{ bk_stts.content }}</div>
+  <div class="t4s-quote-infors">
+    {%- if bk_stts.image_avata -%}
+       {%- assign image = bk_stts.image_avata -%} 
+      <div {% if image.presentation.focal_point != '50.0% 50.0%' %} style="object-position: {{ image.presentation.focal_point }}"{% endif %} class="t4s-quote-avatar lazyloadt4s" data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2" style="background-image: url({{ image | image_url: width: 1 }};"></div>
+    {%- endif -%}
+    <div class="t4s-quote-au-rev">
+      <div class="t4s-quote-author">{{ bk_stts.title }}</div> 
+      {%- if bk_stts.pos != blank -%}<div class="t4s-quote-position">{{ bk_stts.pos }}</div>{%- endif -%} 
+       {%- render 'rating_star', rating: bk_stts.rating -%}
+    </div>
+  </div>
+</div>

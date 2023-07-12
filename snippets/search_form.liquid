@@ -1,0 +1,20 @@
+<form action="{{ routes.search_url }}" method="get" role="search" class="t4s-search-form t4s-search-page-form js_frm_search_none">
+  <div class="input-group input-group--nowrap">
+    <div class="input-group__field input-group__field--connected t4s-search-form__input-wrapper row no-gutters tl">
+         {%- if search_type and false -%}
+         <div class="frm_search_cat col-auto">
+             <select name="product_type">
+               <option value="*">{{ 'templates.search.all_cat' | t }}</option>
+               {%- for product_type in shop.types -%}{%- if product_type == blank %}{% continue -%}{% endif -%}<option value="{{ product_type }}"{% if search_pr_type == product_type %} selected="selected"{% endif %}>{{ product_type }}</option>{%- endfor -%}
+             </select>
+         </div>
+         {%- endif -%}
+         <input type="hidden" name="type" value="product">
+         <input type="hidden" name="options[unavailable_products]" value="{{ settings.unavailable_prs }}">
+         <input type="hidden" name="options[prefix]" value="last">
+         <input type="text" name="q" value="{{ search_terms }}" placeholder="{{ 'search.general.placeholder' | t }}" class="t4s-search-form__input js_iput_search col" />
+       <button type="reset" class="t4s-search-form__clear-action"><i class="las la-times"></i></button>
+     </div>
+     <button type="submit" class="t4s-search-form__connected-submit js_btn_search"><i class="las la-search"></i></button>
+  </div>
+</form>

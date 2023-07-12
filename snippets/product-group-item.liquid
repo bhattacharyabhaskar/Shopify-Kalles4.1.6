@@ -1,0 +1,29 @@
+{%- liquid 
+assign pr_url = product.url
+assign pid = product.id
+unless placeholder_img
+   assign placeholder_img = settings.placeholder_img
+endunless
+assign image = product.featured_media | default: placeholder_img
+ -%}
+
+<div class="t4s-product t4s-pr-grid t4s-col-12 t4s-pr-group t4s-pr-{{ pid }} {{ col }} t4s-col-item">
+	<div class="t4s-row t4s-product-wrapper">
+		<div class="t4s-col-item t4s-col t4s-product-img">
+			{%- if image != blank -%}
+				<a href="{{ pr_url }}">
+				    <div class="t4s_ratio" {{ imgatt }}style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1 }}">
+					    <img class="lazyloadt4s" loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200]" data-optimumx="2" data-sizes="auto" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+					    <span class="lazyloadt4s-loader"></span>
+					    <noscript><img loading="lazy" src="{{ image | image_url: width: 100 }}"  alt="{{ image.alt | escape }}"></noscript>
+					</div>
+			    </a>
+			{%- endif -%}
+		</div>
+		<div class="t4s-col-item t4s-col t4s-product-info">
+			<h3 class="t4s-widget__pr-title"><a data-pr-href href="{{ pr_url }}">{{ product.title }}</a></h3>
+      		{%- render 'product-price', class_price: 't4s-widget__pr-price', product: product, price_varies_style: price_varies_style, isGrouped: false -%}
+		</div>
+	</div>
+</div>
+ 

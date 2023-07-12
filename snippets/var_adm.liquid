@@ -1,0 +1,278 @@
+{%- assign search_url = routes.search_url -%}
+<div class="admin_t4_tools t4_tools_btns">
+  <button class="admin_t4_tools_btn"><i class="las la-tools"></i><i class="las la-times"></i></button>
+  <div class="admin_t4_tools__content">
+    <ul>
+      <li><a href="https://the4.gitbook.io/kalles-4.0/?locale=en" class="admin_t4_tools__item admin_t4_tools__item--separated" target="_blank"><i class="las la-book mr__5"></i>View documentation</a></li>
+      <li><a class="admin_t4_tools__item" href="{{ search_url }}/?view=config"><svg viewBox="0 0 24 24" class="admin_t4_tools__svg"><use xlink:href="#scl_adt4ld"></use></svg><i class="las la-search mr__5"></i>Go to configs page</a></li>
+      <li><a class="admin_t4_tools__item" href="{{ search_url }}"><svg viewBox="0 0 24 24" class="admin_t4_tools__svg"><use xlink:href="#scl_adt4ld"></use></svg><i class="las la-search mr__5"></i>Go to search page to config</a></li>
+      {%- if settings.wishlist_type != "0" and settings.wishlist_type != "3" -%}<li><a class="admin_t4_tools__item" href="{{ search_url }}/?view=wishlist"><svg viewBox="0 0 24 24" class="admin_t4_tools__svg"><use xlink:href="#scl_adt4ld"></use></svg><i class="lar la-heart mr__5"></i>Go to wishlist page to config</a></li>{% endif -%}
+      {%- if settings.enable_compe %}<li><a class="admin_t4_tools__item" href="{{ search_url }}/?view=compare"><svg viewBox="0 0 24 24" class="admin_t4_tools__svg"><use xlink:href="#scl_adt4ld"></use></svg><i class="las la-sync mr__5"></i>Go to compare page to config</a></li>{% endif -%}
+    </ul>
+  </div>
+</div>
+<div id="adgliconsymbols" class="hide t4s-d-none"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><symbol id="scl_adt4ld"><svg version="1.1" class="t4_L9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve"><path d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50" transform="rotate(65.9135 50 50)"><animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s" from="0 50 50" to="360 50 50" repeatCount="indefinite"></animateTransform></path></svg></div>
+<style>
+.t4_tools_btns {
+  position: fixed;
+  top: 35%;
+  right: 0;
+  z-index: 400;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  -webkit-transition: all .25s ease-in-out;
+  transition: all .25s ease-in-out;
+}
+.show_admin_t4_pp i,.admin_t4_tools_btn .la-times {
+  display: none;
+  opacity: 0;
+  transition: opacity 300ms;
+}
+.show_admin_t4_pp .la-times {display: inline-block;opacity: 1;}
+.t4_tools_btns.on_show {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+}
+.admin_t4_tools_btn {
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  height: 70px;
+  line-height: 1.2;
+  width: 80px;
+  -webkit-transition: transform .3s ease .4s, background-color .25s ease;
+  transition: transform .3s ease .4s, background-color .25s ease;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 800px;
+  -webkit-perspective: 800px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  border: 4px double #fff;
+  border-radius: 4px;
+  box-shadow: 0 5px 15px 0 rgba(0,0,0,0.15);
+  background-color: #008060;
+}
+.admin_t4_tools_btn:hover,.admin_t4_tools_btn:focus {
+  background-color: #004c3f;
+  color: #ffffff;
+  border-color: #fff;
+}
+.admin_t4_tools_btn i{font-size: 32px;}
+.admin_t4_tools__content {
+  padding: 0.5em 0;
+  position: absolute;
+  width: 356px;
+  top: 76px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #d2d5d9;
+  box-shadow: 0 5px 30px 5px rgb(66 71 76 / 10%);
+  display: none;
+  opacity: 0;
+  transition: opacity 300ms;
+}
+.admin_t4_tools__content>ul {
+  list-style: none;padding: 0;
+}
+.admin_t4_tools__item {
+  position: relative;
+  width: 100%;
+  white-space: unset;
+  text-align: left;
+  padding-top: 11.25px;
+  padding-bottom: 11.25px;
+  line-height: 1;
+  display: inline-block;
+  padding-left: 24px;
+  padding-right: 24px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: normal;
+  border: 1px solid transparent;
+  border-left: 3px solid;
+  border-left-color: transparent;
+  color: #42474c;color: #202223;
+  transition-property: border-color, fill;
+  transition-duration: 300ms;
+}
+.admin_t4_tools__item i {
+  font-size: 12px;
+  padding: 3px;
+  border: 1px solid rgba(201, 204, 207, 1);
+  border-radius: 2px;
+  margin-right: 7px;
+  background-color: #f4f6f8;
+  color: #5c5f62;
+}
+.admin_t4_tools__item:hover, .admin_t4_tools__item:focus {
+  border-left-color: #008060;
+  background-color: #f0f1f2;
+  color: #212326;
+}
+.admin_t4_tools__item--separated {
+  position: relative;
+}
+.admin_t4_tools__item--separated::after {
+  content: '';
+  position: absolute;
+  bottom: -1.625px;
+  border-bottom: 1px solid #d2d5d9;
+  left: calc(24px - 3px);
+  right: 24px;
+}
+svg.admin_t4_tools__svg {
+  width: 26px;
+  fill: #008060;
+  position: absolute;
+  left: 0;
+  top: 6px;
+  display: none;
+  opacity: 0;
+  transition: opacity 300ms;
+}
+.show_admin_t4_pp + .admin_t4_tools__content,.show_admin_t4_svg>svg.admin_t4_tools__svg {
+  display: block;
+  opacity: 1;
+}
+
+#alet_css_t4 {
+  font-size: 14px;
+  line-height: 1;
+  padding: 15px 10px;
+  border-radius: 3px;
+  background: rgba(0,0,0,.88);
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px 0 rgba(63,63,68,.15);
+  color: #fff;
+  max-width: 200px;
+  position: fixed;
+  right: 90px;
+  top: 46%;
+  margin-left: -100px;
+  opacity: 0;
+  transform: translateY(70px);
+  transition: transform .4s ease,opacity .4s ease;
+  pointer-events: none;
+  z-index: 500
+}
+#alet_css_t4.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+#purchase_codet4 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f2e0cf;
+  z-index: 100000;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  text-align: center;
+  padding: 5%;
+  background: #f4f6f8;
+  border: 1px solid #dfe3e8;
+  font-size: 16px;
+  color: #5c6ac4;
+  font-weight: 500;
+}
+#purchase_codet4 h2 {
+  font-weight: 700;
+  line-height: 1.1;
+  font-size: 40px;
+  margin: 0 0 10px;
+  color: #000639;
+}
+#purchase_codet4 a {
+  color: #222;
+}
+#purchase_codet4:not(.hidden):not(.hide) {
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+</style>
+<template id="t4s-temp-key-active">
+  <div class="content">
+    <h3>Welcome to Kalles 🎉 </h3>
+    <p>Follow these simple steps to activate your theme:</p>
+    <div class="step-1">
+      <h4>Step 1: Activate Kalles and start exploring new updates</h4>
+      <p id="res_codet4">Go to "Theme Settings" &gt; "Theme Activate" to activate theme</p>
+    </div>
+    <div class="step-2">
+      <h4>Step 2: Press SAVE from Theme Customize</h4>
+      <p id="res_codet5">From top right corner, click to SAVE button.</p> 
+    </div>
+    <p>👉 <a href="https://cdn.shopify.com/s/files/1/0616/9480/4174/files/active-theme.jpg?v=1655340006" target="_blank">See detailed guide here</a></p>
+    <div class="step-3">
+      <h4>Next step (highly recommend):</h4>
+      <h4>Install EComposer Page Builder - advanced customization tool for Kalles</h4>
+      <p>Why you need EComposer Page Builder?</p>
+      <ul>
+        <li>- Fully compatible with Kalles, custom any page/section with a live drag drop editor</li>
+        <li>- Save all page layouts built by EComposer in one place, no worries about theme updates</li>
+        <li>- Easily import and use any Custom Font for your pages</li>
+        <li>- Especially, only for Kalles users, we offer the Theme Partner Plan of this app (<strong>FREE Standard Plan for 6 months, save you $114</strong>).
+      </ul>
+      <p><strong>How to claim offer:</strong> Install EComposer <a rel="nofollow" href="https://apps.shopify.com/ecomposer?utm_source=kalles&amp;utm_medium=activate-kalles-4.0">HERE</a>. Then open chatbox icon in EComposer dashboard and leave a message with subject "<strong>Kalles+EComposer</strong>" to upgrade for free</p>
+    </div>
+  </div>
+  <style>
+    #purchase_codet4 {
+      text-align: left;
+      color: #333;
+    }
+    #purchase_codet4 li {
+      font-size: 13px;
+    }
+    #purchase_codet4 .install-app {
+      padding: 10px;
+      background: #5c6ac4;
+      margin-bottom: 30px;
+      display: inline-block;
+      color: #fff;
+      text-decoration: none;
+    }
+    .call-to-action {
+      text-align: left;
+    }
+    #purchase_codet4 a {
+      color: #5c6ac4;
+      position: relative;
+      text-decoration: underline;
+    }
+    section#purchase_codet4:after {
+      position: absolute;
+      content: "";
+      background: url(https://cdn.shopify.com/s/files/1/0643/8518/8060/files/bg-min_1_-min.jpg?v=1654738416);
+      width: 100%;
+      height: 100%;
+      opacity: 0.3;
+      background-size: cover;
+      z-index: -1;
+    }
+    .step-2 {
+      margin-top: 15px;
+    }
+  </style>
+</template>

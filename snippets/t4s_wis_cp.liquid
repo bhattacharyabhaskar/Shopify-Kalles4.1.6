@@ -1,0 +1,37 @@
+{%- liquid
+assign wishlist_mode = settings.wishlist_mode
+assign product_url   = product.url
+assign product_id    = product.id
+assign pr_handle     = product.handle
+unless disableTooltip
+ assign dataTooltip = ''
+else
+assign dataTooltip = '-no'
+endunless 
+ -%}
+
+{%- if bk_stts.enable_wishlist -%}
+
+   {%- if wishlist_mode == "1" -%}
+        <a href="{{ product_url }}" data-tooltip{{ dataTooltip }}="top" data-id="{{ product_id }}" rel="nofollow" class="t4s-product-form__btn t4s-pr-wishlist" data-action-wishlist><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-wis"></use></svg></span><span class="t4s-text-pr">{{ 'products.product.add_to_wishlist' | t }}</span></a>
+   
+   {%- elsif wishlist_mode == "2" and shop.customer_accounts_enabled -%}
+        
+        {%- if customer -%}
+            <a href="{{ product_url }}" data-tooltip{{ dataTooltip }}="top" data-id="{{ product_id }}" data-handle="{{ pr_handle }}" rel="nofollow" class="t4s-product-form__btn t4s-pr-wishlist" data-action-wishlist><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-wis"></use></svg></span><span class="t4s-text-pr">{{ 'products.product.add_to_wishlist' | t }}</span></a>
+        {%- else -%}
+            <a href="{{ routes.account_login_url }}" data-tooltip{{ dataTooltip }}="top" data-id="{{ product_id }}" rel="nofollow" class="t4s-product-form__btn t4s-pr-wishlist" data-action-wishlist-login><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-wis"></use></svg></span><span class="t4s-text-pr">{{ 'products.product.login_to_wishlist' | t }}</span></a>
+         {%- endif -%}
+
+   {%- elsif wishlist_mode == "3" and shop.customer_accounts_enabled -%}
+
+         {%- capture the_snippet_fave_icon %}{% render 'ssw-widget-faveicon' with product_id %}{% endcapture -%}
+         {%- unless the_snippet_fave_icon contains 'Liquid error' -%}<div class="t4s-product-form__btn t4s-pr-wishlist t4s-pr-growavewishlist">{{ the_snippet_fave_icon }}</div>{%- endunless -%}
+   
+   {%- endif -%}
+
+{%- endif -%}
+
+{%- if bk_stts.enable_compare and settings.enable_compe -%}
+   <a href="{{ product_url }}" data-tooltip{{ dataTooltip }}="top" data-id="{{ product_id }}" data-handle="{{ pr_handle }}" rel="nofollow" class="t4s-product-form__btn t4s-pr-compare" data-action-compare><span class="t4s-svg-pr-icon"><svg class="t4s-svg-cp" viewBox="0 0 24 24"><use xlink:href="#t4s-icon-cp"></use></svg></span><span class="t4s-text-pr">{{ 'products.product.compare' | t }}</span></a>
+{%- endif -%}

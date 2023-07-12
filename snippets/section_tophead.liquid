@@ -1,0 +1,34 @@
+{%- if se_stts.top_heading != blank or se_stts.top_subheading != blank -%}
+	{{ 'top-head.css' | asset_url | stylesheet_tag }}
+	<div class="t4s-top-heading t4s_des_title_{{ se_stts.design_heading }} {{ se_stts.heading_align }} {% if se_stts.head_btn_url != blank and se_stts.head_btn_label != blank %} t4s-heading-has-btn {%- endif -%}" style="--heading-height: {{ heading_height }}px;--tophead_mb: {{ se_stts.tophead_mb }}px;">
+		{%- if se_stts.top_heading != blank -%}
+		<div class="heading-testimonials-star ">
+		{% if se_stts.design_heading == "30" %}
+		<span class="heading-star t4s-d-block"><svg width="41" height="37" viewBox="0 0 41 37" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.5 28.2154L29.1905 26.0629L32.8214 37L20.5 28.2154ZM40.5 14.0786H25.2024L20.5 0L15.7976 14.0786H0.5L12.881 22.805L8.17857 36.8836L20.5595 28.1572L28.1786 22.805L40.5 14.0786Z" fill="#219653"/></svg></span>
+		{%endif %}
+		<h3 class="t4s-section-title t4s-title"><span>{{ se_stts.top_heading }}</span></h3>{%- endif -%}</div>
+		{% if se_stts.design_heading == "13" %}
+			<span class="heading-char t4s-d-block"><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="82" height="30" viewBox="0 0 82.000000 9.000000" preserveAspectRatio="xMidYMid meet"><g transform="translate(0.000000,9.000000) scale(0.050000,-0.050000)" fill="currentColor" stroke="none"> <path d="M20 161 c0 -10 17 -24 37 -30 21 -7 54 -30 73 -52 50 -54 142 -50 214 11 32 28 75 50 94 50 19 0 56 -22 82 -50 62 -66 157 -66 236 0 75 63 106 63 180 0 76 -64 152 -64 228 0 75 63 117 63 176 0 66 -70 160 -67 245 8 82 74 59 105 -26 34 -77 -65 -113 -65 -199 -2 -86 63 -141 63 -216 0 -75 -63 -113 -63 -188 0 -32 27 -82 50 -110 50 -27 0 -77 -22 -110 -50 -74 -63 -111 -63 -196 0 -37 28 -88 50 -112 50 -25 0 -72 -22 -104 -50 -33 -27 -75 -50 -94 -50 -19 0 -61 23 -94 50 -60 50 -116 66 -116 31z"/></g></svg></span>
+		{% endif %}
+		{%- if se_stts.design_heading == "6" -%}
+			<span class="t4s-cbl">
+			{%- if se_stts.icon_heading != blank -%}
+	            <i class="{{ se_stts.icon_heading }}"></i>
+	        {%- else -%}
+	        	<span></span>
+	        {%- endif -%}
+	        </span>
+		{%- endif -%}
+		{%- if se_stts.top_subheading != blank -%}<span class="t4s-section-des t4s-subtitle">{{ se_stts.top_subheading }}</span>{%- endif -%}
+		{%- if se_stts.head_btn_url != blank or se_stts.head_slide_btn -%}
+        <div class="t4s-head-btn">
+          {% if se_stts.head_btn_url != blank and se_stts.head_btn_label != blank %}
+            {{ 'button-style.css' | asset_url | stylesheet_tag }}
+            <a class="t4s-btn t4s-btn-base t4s-btn-style-{{ se_stts.head_btn_style }} t4s-btn-size-{{ se_stts.head_btn_size }} t4s-btn-icon-{{ se_stts.head_btn_icon }} t4s-btn-color-{{ se_stts.head_btn_cl }} t4s-btn-rounded-{{ se_stts.head_btn_rounded }} {% if se_stts.head_btn_style == 'default' or se_stts.head_btn_style == 'outline' %}t4s-btn-effect-{{ se_stts.head_btn_effect }}{% endif %}" href="{{ se_stts.head_btn_url }}">{{ se_stts.head_btn_label }}
+              {%- if se_stts.head_btn_icon -%}<svg class="t4s-btn-icon"><use xlink:href="#t4s-icon-btn"></use></svg>{%- endif -%}
+            </a>
+						{%- endif -%}
+        </div>
+      {%- endif -%}
+	</div>
+{%- endif -%}

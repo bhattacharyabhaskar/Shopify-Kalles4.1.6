@@ -1,0 +1,131 @@
+{% comment %}
+    Renders a list of product's price (regular, sale, unit)
+    Accompanies product forms and meant to be updated dynamically
+    Accepts:
+    - variant: {Object} Variant Liquid object (optional)
+    - product: {Object} Product Liquid object (optional)
+    - PR_no_pick: {Boolean} Product no pick (optional)
+    - type_sale: '1', '2' (optional)
+    - price_varies_style: {String} Product price varies (optional)
+    - style_inline: {CSS} Product price var css (optional)
+
+    Usage:
+    {%- render 'product-price-single', variant: current_variant, product: product, PR_no_pick:true -%}
+{% endcomment %}
+
+{%- liquid
+if variant.title and price_varies_style == '0'
+  assign price = variant.price
+  assign compare_at_price = variant.compare_at_price | default: price
+  assign available = variant.available
+elsif PR_no_pick or price_varies_style != '0'
+  assign price = product.price
+  assign compare_at_price = product.compare_at_price | default: price
+  assign available = product.available
+else
+  assign price = 1999
+  assign compare_at_price = 1999
+  assign available = true
+endif
+
+assign price_varies = product.price_varies
+if price_varies and settings.only_price_varies_stock and product.has_only_default_variant == false and product.available and price_varies_style != '0'
+   assign variants_price = product.variants | where: 'available', true | map: 'price' | compact | sort | uniq
+   if variants_price.size > 1
+      assign price     = variants_price | first
+      assign price_max = variants_price | last
+   else
+       assign price_varies     = false
+       assign variant          = product.first_available_variant
+       assign price            = variant.price
+       assign compare_at_price = variant.compare_at_price | default: price
+   endif
+endif
+
+assign on_sale = false 
+if compare_at_price > price
+   assign on_sale = true 
+endif
+
+assign cur_code_enabled = settings.currency_code_enabled
+assign saveAmountFixed = compare_at_price | minus: price
+
+if cur_code_enabled
+    assign money_price = price | money_with_currency
+    assign money_compare_at_price = compare_at_price | money_with_currency
+else
+    assign money_price = price | money
+    assign money_compare_at_price = compare_at_price | money
+endif
+assign variant_unit_price_measurement = variant.unit_price_measurement
+if price_varies and price_varies_style != '0'
+  assign isRangePrices = true
+  assign pr_no_pick_prices = false
+elsif price_varies and price_varies_style == '0' and PR_no_pick
+  assign isRangePrices = true
+  assign pr_no_pick_prices = true
+else
+  assign isRangePrices = false
+  assign pr_no_pick_prices = false
+endif -%}
+
+{%- capture sale_badge_html -%}
+  {%- if type_sale == '1' -%}
+    {%- assign save = saveAmountFixed | times: 100.0 | divided_by: compare_at_price | round %} <span class="t4s-badge-price">{{ 'products.badge.save_amount_2_html' | t: saved_amount: save }}</span>
+  
+  {%- elsif type_sale == '2' %}
+
+      {%- liquid 
+      if cur_code_enabled
+        assign priceFormatMoney = saveAmountFixed | money_with_currency
+      else 
+       assign priceFormatMoney = saveAmountFixed | money
+      endif %} <span class="t4s-badge-price">{{ 'products.badge.save_amount_fixed_2_html' | t: saved_amount: priceFormatMoney }}</span>
+
+  {%- endif -%}
+{%- endcapture -%}
+
+<div class="t4s-product-price"{%- if variant_unit_price_measurement == nil and isRangePrices == false or pr_no_pick_prices -%} data-pr-price data-product-price data-saletype="{{ type_sale }}"{% else %} data-product-unit-price{% endif %} {{ style_inline }}>
+   
+  {%- if isRangePrices -%}
+
+       {%- if price_varies_style == '1' -%}
+           
+            {%- liquid 
+            if cur_code_enabled
+             assign price_max = price_max | default: product.price_max | money_with_currency
+            else 
+             assign price_max = price_max | default: product.price_max | money
+            endif -%}
+            {%- if on_sale -%}<span class="t4s-price__sale">{{ money_price }} – {{ price_max }}</span>{% else %}{{ money_price }} – {{ price_max }}{% endif -%}
+
+          {%- elsif on_sale -%}
+
+          <del>{{ money_compare_at_price }}</del><ins>{{ 'products.product.from_price_html' | t: price_min: money_price, class: 't4s-price-from' }}</ins>
+
+          {%- else -%}
+          {{ 'products.product.from_price_html' | t: price_min: money_price, class: 't4s-price-from' }}
+          {%- endif -%}
+
+  {%- elsif variant_unit_price_measurement -%}
+      <span {% unless isRangePrices %} data-pr-price data-product-price data-saletype="{{ type_sale }}"{% endunless %}>
+      {%- if on_sale -%}<del>{{ money_compare_at_price }}</del> <ins>{{ money_price }}</ins>{{ sale_badge_html }}{%- else -%}{{ money_price }}{%- endif -%}
+      </span>
+      
+      {%- assign price_unit = variant.unit_price | money -%}
+      {%- capture unit_price_base_unit -%}
+        <span data-unit-base class="t4s-unit_base">
+         {%- if variant_unit_price_measurement -%}
+           {%- if variant_unit_price_measurement.reference_value != 1 -%}
+             {{- variant_unit_price_measurement.reference_value -}}
+           {%- endif -%} 
+           {{ variant_unit_price_measurement.reference_unit }}
+         {%- endif -%}
+        </span>
+      {%- endcapture -%}
+      <div class="t4s-price__unit"><span data-unit-price class="t4s-unit_price">{{ price_unit }}</span><span>/</span>{{- unit_price_base_unit -}}</div>
+
+  {%- elsif on_sale -%}<del>{{ money_compare_at_price }}</del> <ins>{{ money_price }}</ins>{{ sale_badge_html }}
+  {%- else -%}{{ money_price }}
+  {%- endif -%}
+</div>

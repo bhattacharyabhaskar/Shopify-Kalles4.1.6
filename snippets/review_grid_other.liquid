@@ -1,0 +1,48 @@
+<span class="stamped-product-reviews-badge" data-product-sku="{{ product.handle }}" data-id="{{ product.id }}" data-product-type="{{ product.type }}" data-product-title="{{ product.title }}"  style="display:block;">{{ product.metafields.stamped.badge }}</span>
+
+{%- comment -%}
+DOCUMENT https://docs.the4.co/kalles-4/theme-faqs/custom-review-app
+
+1. Judge.me Product Reviews 
+  Link app: https://apps.shopify.com/judgeme
+  Link install to theme: https://support.judge.me/support/solutions/articles/44001699621-judge-me-manual-installation-guide
+
+  Code install:
+
+  {%- render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: product -%}
+
+2. stamped.io 
+  Link app: https://apps.shopify.com/product-reviews-addon
+
+  Code install:
+
+  <span class="stamped-product-reviews-badge" data-product-sku="{{ product.handle }}" data-id="{{ product.id }}" data-product-type="{{ product.type }}" data-product-title="{{ product.title }}"  style="display:block;">{{ product.metafields.stamped.badge }}</span>
+
+3. Yotpo: Photo & Product Reviews 
+  Link app: https://apps.shopify.com/yotpo-social-reviews
+
+  Code install: 
+
+  <div class="yotpo bottomLine" style="display:inline-block" data-product-id="{{ product.id }}"> </div>
+
+4. rivyo-product-review 
+  Link app: https://apps.shopify.com/rivyo-product-review
+
+  <div class="wc_product_review_badge" data-handle="{{ product.handle }}" data-product_id="{{ product.id }}"></div>
+
+5. aliexpress-reviews-importer
+  Link app:
+
+  Code install:
+
+  <div class="shop-booster-content shop-booster-col-rat" id="shop-booster-pid-d-{{ product.id }}" ></div>
+
+6. Areviews - Reviews Importer 
+  Link app: https://apps.shopify.com/areviews-aliexpress
+  Link install to theme: https://areviewsapp.com/install/collectionRating
+
+  Code install:
+
+  <div class='areviews_product_item areviews_stars{{ product.id }}' data-product-id='{{ product.id }}'></div>
+
+{%- endcomment -%}

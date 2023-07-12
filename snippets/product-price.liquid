@@ -1,0 +1,102 @@
+{%- comment -%}
+    Renders a list of product's price (regular, sale, unit)
+    Accompanies product listings (collection page, search result) and not updated dynamically
+    Accepts:
+    - variant: {Object} Variant Liquid object (optional)
+    - product: {Object} Product Liquid object (optional)
+    - class_price {String} a string set name class price (optional)
+
+    Usage:
+    {%- render 'product-price', product: product -%}
+{%- endcomment -%}
+
+{%- liquid
+  if product.title
+    assign price            = product.price
+    assign compare_at_price = product.compare_at_price | default: price
+    assign variant          = product.variants.first
+  else
+    assign price            = 1999
+    assign compare_at_price = 1999
+  endif
+  assign cur_code_enabled = settings.currency_code_enabled
+
+   assign price_varies = product.price_varies
+   if price_varies and settings.only_price_varies_stock and product.has_only_default_variant == false and product.available
+       assign variants_price = product.variants | where: 'available', true | map: 'price' | compact | sort | uniq
+       if variants_price.size > 1
+          assign price     = variants_price | first
+          assign price_max = variants_price | last
+       else
+           assign price_varies     = false
+           assign variant          = product.first_available_variant
+           assign price            = variant.price
+           assign compare_at_price = variant.compare_at_price | default: price
+       endif
+   endif
+   assign variant_unit_price_measurement = variant.unit_price_measurement 
+
+  assign on_sale = false 
+  if compare_at_price > price
+     assign on_sale = true 
+  endif
+
+  if cur_code_enabled
+    assign money_price = price | money_with_currency
+    assign money_compare_at_price = compare_at_price | money_with_currency
+  else
+    assign money_price = price | money
+    assign money_compare_at_price = compare_at_price | money
+  endif -%}
+  
+<div class="{{ class_price | default: 't4s-product-price' }}"{%- if variant_unit_price_measurement == nil -%} data-pr-price data-product-price{% endif %}>
+   {%- if variant_unit_price_measurement -%}
+      <span data-pr-price data-product-price>
+         {%- liquid
+         assign price_unit = variant.unit_price | money
+         if cur_code_enabled
+            assign price_variant = variant.price | money_with_currency
+            assign price_compare = variant.compare_at_price | money_with_currency
+         else
+            assign price_variant = variant.price | money
+            assign price_compare = variant.compare_at_price | money
+         endif -%}
+      {%- if variant.compare_at_price > variant.price -%} <del>{{ price_compare }}</del><ins>{{ price_variant }}</ins>{%- else -%}{{ price_variant }}{%- endif -%}
+      </span>
+
+      {%- capture unit_price_base_unit -%}
+       <span data-unit-base class="t4s-unit_base">
+         {%- if variant_unit_price_measurement -%}
+           {%- if variant_unit_price_measurement.reference_value != 1 -%}
+             {{- variant_unit_price_measurement.reference_value -}}
+           {%- endif -%}
+           {{ variant_unit_price_measurement.reference_unit }}
+         {%- endif -%}
+       </span>
+      {%- endcapture -%}
+      <div class="t4s-price__unit"><span data-unit-price class="t4s-unit_price">{{ price_unit }}</span><span>/</span>{{- unit_price_base_unit -}}</div>
+   
+   {%- elsif price_varies -%}
+
+      {%- if price_varies_style == '1' -%}
+           
+            {%- liquid 
+            if cur_code_enabled
+             assign price_max = price_max | default: product.price_max | money_with_currency
+            else 
+             assign price_max = price_max | default: product.price_max | money
+            endif -%}
+            {%- if on_sale -%}<span class="t4s-price__sale">{{ money_price }} – {{ price_max }}</span>{% else %}{{ money_price }} – {{ price_max }}{% endif -%}
+
+          {%- elsif on_sale -%}
+
+          <del>{{ money_compare_at_price }}</del><ins>{{ 'products.product.from_price_html' | t: price_min: money_price, class: 't4s-price-from' }}</ins>
+
+          {%- else -%}
+          {{ 'products.product.from_price_html' | t: price_min: money_price, class: 't4s-price-from' }}
+          {%- endif -%}
+
+      {%- elsif on_sale -%}<del>{{ money_compare_at_price }}</del><ins>{{ money_price }}</ins>
+      {%- else -%}{{ money_price }}
+      {%- endif -%}
+</div>

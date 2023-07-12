@@ -1,0 +1,20 @@
+<div class="t4s-product-rating">
+{%- case app_review -%}            
+    {%- when '1' -%}
+       <div class="shopify-product-reviews-badge t4s-grid-rating" data-id="{{ product.id }}"></div>
+    {%- when '2' -%}
+       <div class="ryviu-collection t4s-grid-rating"><ryviu-widget-total collection=1 reviews_data="{{ product.metafields.ryviu.product_reviews_info | escape }}" product_id="{{ product.id }}" handle="{{ product.handle }}"></ryviu-widget-total></div>  
+    {%- when '3' -%}
+       <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }} t4s-grid-rating"></div>
+    {%- when '4' -%}
+       <div class="loox-rating t4s-grid-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+    {%- when '5' -%}
+        {%- capture the_snippet_review_avg %}{% render 'ssw-widget-avg-rate-listing', product: product %}{% endcapture -%}
+        {%- unless the_snippet_review_avg contains 'Liquid error' -%}{{ the_snippet_review_avg }}{%- endunless -%}
+    {%- when '7' -%}{%- render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: product -%}
+    {%- when '8' -%}
+      <div class="scm-reviews-rate t4s-grid-rating" data-rate-version2={{ product.metafields.scm_review_importer.reviewsData.reviewCountInfo | json }} data-product-id= {{ product.id }}></div>
+    {%- else -%}
+      <div class="t4s-grid-rating t4s-review__grid-other">{%- render 'review_grid_other', product: product -%}</div>
+{%- endcase -%}
+</div>
