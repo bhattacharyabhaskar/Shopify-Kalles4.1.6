@@ -196,7 +196,7 @@
         "image_size": "cover",
         "image_position": "8",
         "content_align": "center",
-        "limit": 50,
+        "limit": 24,
         "enable_listing": true,
         "enable_listing_default": false,
         "col_dk": "4",
