@@ -87,12 +87,11 @@
               "padding_inner_mb": ""
             }
           },
-          "b3c6ceca-2d54-4a14-b482-bb86cbf25f08": {
-            "type": "copyR",
+          "ecb22c95-5c1d-4434-8a21-bc45fb46f626": {
+            "type": "html",
             "settings": {
-              "text": "Copyright © [year] <span class=\"t4s-cp\">IndyVogue LLC<\/span> all rights reserved.",
-              "mgb": 0,
-              "mgb_mb": 0
+              "html_content": "<script src=\"https:\/\/reviewsonmywebsite.com\/js\/v2\/embed.js?id=8e7313fc946fd3d8c15c886f791a7ab8\"><\/script>",
+              "hidden_mobile": false
             }
           },
           "2c7437d6-7ea3-4ab2-94ca-79c07b08a0ec": {
@@ -103,6 +102,21 @@
               "hidden_mobile": false,
               "mgb": 20,
               "mgb_mb": 10
+            }
+          },
+          "b3c6ceca-2d54-4a14-b482-bb86cbf25f08": {
+            "type": "copyR",
+            "settings": {
+              "text": "Copyright © [year] <span class=\"t4s-cp\">IndyVogue LLC<\/span> all rights reserved.",
+              "mgb": 0,
+              "mgb_mb": 0
+            }
+          },
+          "052f5575-03c6-44a5-b474-d83050c83d1c": {
+            "type": "html",
+            "settings": {
+              "html_content": "<p>9724 Castle Pines Dr<br>Austin, TX 78717<br><\/p><p>Phone: <a href=\"tel:+19133784722\" target=\"_blank\" title=\"tel:+19133784722\">+19133784722<\/a>(9:00 AM - 10:00 PM CST)<\/p><p>Email: <a href=\"mailto:sumanab@indyvogue.com\" target=\"_blank\" title=\"mailto:sumanab@indyvogue.com\">sumanab@indyvogue.com<\/a><\/p>",
+              "hidden_mobile": false
             }
           },
           "47f5eb4c-1063-495d-bfc4-a54c62d219aa": {
@@ -119,21 +133,15 @@
               "content_align_mb": "t4s-text-center",
               "padding_inner_mb": ""
             }
-          },
-          "ecb22c95-5c1d-4434-8a21-bc45fb46f626": {
-            "type": "html",
-            "settings": {
-              "html_content": "<script src=\"https:\/\/reviewsonmywebsite.com\/js\/v2\/embed.js?id=8e7313fc946fd3d8c15c886f791a7ab8\"><\/script>",
-              "hidden_mobile": false
-            }
           }
         },
         "block_order": [
           "2433b4f1-5bdc-49a9-ba42-a51f4eb6d8e3",
-          "b3c6ceca-2d54-4a14-b482-bb86cbf25f08",
+          "ecb22c95-5c1d-4434-8a21-bc45fb46f626",
           "2c7437d6-7ea3-4ab2-94ca-79c07b08a0ec",
-          "47f5eb4c-1063-495d-bfc4-a54c62d219aa",
-          "ecb22c95-5c1d-4434-8a21-bc45fb46f626"
+          "b3c6ceca-2d54-4a14-b482-bb86cbf25f08",
+          "052f5575-03c6-44a5-b474-d83050c83d1c",
+          "47f5eb4c-1063-495d-bfc4-a54c62d219aa"
         ],
         "settings": {
           "hidden_bottombar": false,
