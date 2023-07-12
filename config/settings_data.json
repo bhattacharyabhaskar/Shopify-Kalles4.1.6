@@ -536,7 +536,7 @@
             "settings": {
               "show_currency": true,
               "show_language": false,
-              "use_location": true,
+              "use_location": false,
               "txt_location": "Location",
               "url_location": "shopify:\/\/blogs\/lingeries\/5-best-swimsuits-for-big-busts",
               "open_link": "_self",
