@@ -1273,7 +1273,7 @@
               "item_rd": 0,
               "img_effect": "zoom",
               "b_effect": "none",
-              "image_ratio": "rationt",
+              "image_ratio": "ratio2_1",
               "image_size": "cover",
               "image_position": "8",
               "collection_link": "",
@@ -1300,7 +1300,7 @@
               "item_rd": 0,
               "img_effect": "none",
               "b_effect": "none",
-              "image_ratio": "rationt",
+              "image_ratio": "ratio2_1",
               "image_size": "cover",
               "image_position": "8",
               "collection_link": "",
@@ -2404,7 +2404,7 @@
               "title": "Silk Mark Certified",
               "color": "#b7499b",
               "cl_gradient": "",
-              "color_txt": "#fff"
+              "color_txt": "#ffffff"
             }
           },
           "30da99be-8891-4593-91d3-e386adf1b7a8": {
@@ -2422,7 +2422,7 @@
               "title": "Hand Embroidery",
               "color": "#ec0101",
               "cl_gradient": "",
-              "color_txt": "#fff"
+              "color_txt": "#ffffff"
             }
           },
           "238fa7e5-0377-43d8-91b3-2c50fc6fbedd": {
@@ -2431,7 +2431,7 @@
               "title": "FREE BLOUSE STITCHING",
               "color": "#222222",
               "cl_gradient": "",
-              "color_txt": "#fff"
+              "color_txt": "#ffffff"
             }
           }
         },
