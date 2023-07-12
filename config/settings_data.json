@@ -77,10 +77,10 @@
             "settings": {
               "col_heading": "",
               "menu": "",
-              "col_dk": "7",
-              "col_tb": "6",
+              "col_dk": "12",
+              "col_tb": "12",
               "col_mb": "12",
-              "content_align": "t4s-text-md-start",
+              "content_align": "t4s-text-md-center",
               "padding_inner": "",
               "col_heading_mobile": "",
               "content_align_mb": "t4s-text-center",
