@@ -56,7 +56,11 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
       {%- assign escaped_page_title = page_title | escape -%}
       {%- unless escaped_page_title contains shop.name %} &ndash; {{ shop.name }}{%- endunless -%}
     {%- endcapture -%}
-    <title>{{ seo_title | strip }}</title>
+      {%- if template == 'product'-%}
+        <title>Buy {{ product.title | escape }} At IndyVogue</title>
+      {%- else -%}
+        <title>{{ seo_title | strip }}</title>
+      {%- endif -%}    
     <meta name="description" content="{{ page_description | default: shop.description | default: shop.name | escape }}">
     {%- else -%}
     <title>{{ 'list_collections.meta_title' | t | escape }}</title><meta name="description" content="{{ 'list_collections.meta_description' | t | escape }}">
