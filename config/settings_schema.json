@@ -1,0 +1,2631 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Kalles",
+    "theme_version": "4.1.6",
+    "theme_author": "The4",
+    "theme_documentation_url": "https:\/\/the4.gitbook.io\/kalles-4.0\/",
+    "theme_support_url": "https:\/\/support.the4.co\/"
+  },
+  {
+    "name": "Theme active",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Start your business journey with Kalles"
+      },
+      {
+        "type": "text",
+        "id": "purchase_code",
+        "label": "Purchase code"
+      },
+      {
+        "type": "paragraph",
+        "content": "[Where is my purchase code](https:\/\/help.market.envato.com\/hc\/en-us\/articles\/202822600-Where-Is-My-Purchase-Code-) [Buy a new license](https:\/\/bit.ly\/3lST9WX) [Get EComposer Page Builder for Free (only The4'users)](https:\/\/apps.shopify.com\/ecomposer?utm_source=TF&utm_medium=Kalles-des-EC-banner)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use Kalles and explore all the tools and services you need to start, run, and grow your business. We know that Kalles will make your life easier by improving your workflow. With the tools that Kalles gives you, you will realize your true design potential without the need to know any coding. We would be glad if you help us to improve our theme, installation process or documentation."
+      }
+    ]
+  },
+  {
+    "name": "Dear customers!",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "[The4 Studio](https:\/\/the4.co\/) is an experienced web development team that loves to deliver impressive and well-designed Shopify themes. All of our themes are easy to install and customize, so you can start your own web-site in just a few minutes. Our dedicated support team will provide you with fast answers if you have any questions concerning the theme setup or configuration."
+      },
+      {
+        "type": "paragraph",
+        "content": "If you are facing a problems with installation, please visit our [documentation page](https:\/\/the4.gitbook.io\/kalles-4.0\/) to find answers to many of the commonly asked questions. You can also [create a new ticket](https:\/\/support.the4.co) and we will help you as soon as possible. If you discover any technical issues, or find ways to improve our theme, installation process, or documentation, please message us at any time. Thanks for buying my theme!"
+      },
+      {
+        "type": "paragraph",
+        "content": "Our #1 priority is you, the end-user, and we show this by providing you with the most professional world-class theme support available anywhere. Start today, and build a the website of your dreams together with us!"
+      },
+      {
+        "type": "paragraph",
+        "content": "[Free Course: Build a Shopify Store](https:\/\/webdesign.tutsplus.com\/courses\/how-to-create-an-online-store-with-shopify)"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "header",
+        "content": "+ Site width"
+      },
+      {
+        "type": "select",
+        "id": "general_layout",
+        "options": [
+          {
+            "value": "full_width",
+            "label": "Full width"
+          },
+          {
+            "value": "boxed",
+            "label": "Boxed"
+          },
+          {
+            "value": "contentFull",
+            "label": "Content full width"
+          },
+          {
+            "value": "wide",
+            "label": "Wide (1600 px)"
+          },
+          {
+            "value": "custom",
+            "label": "Custom Width"
+          }
+        ],
+        "label": "Site width: ",
+        "default": "full_width",
+        "info": "You can make your content wrapper boxed or full width"
+      },
+      {
+        "type": "range",
+        "id": "cus_w_bd",
+        "min": 1200,
+        "max": 1700,
+        "step": 5,
+        "unit": "px",
+        "label": "Custom Width:",
+        "info": "Ony active when enable Boxed or Custom Width",
+        "default": 1420
+      },
+      {
+        "type": "header",
+        "content": "+ Site background"
+      },
+      {
+        "type": "color",
+        "id": "body_bg",
+        "label": "Select Color",
+        "default": "#fff"
+      },
+      {
+        "type": "image_picker",
+        "id": "body_bg_image",
+        "label": "Background image",
+        "info": "Set background image only for boxed layout"
+      },
+      {
+        "type": "select",
+        "id": "body_bg_repeat",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "no-repeat",
+            "label": "No Repeat"
+          },
+          {
+            "value": "repeat",
+            "label": "Repeat All"
+          },
+          {
+            "value": "repeat-x",
+            "label": "Repeat Horizontally"
+          },
+          {
+            "value": "repeat-y",
+            "label": "Repeat Vertically"
+          },
+          {
+            "value": "inherit",
+            "label": "Inherit"
+          }
+        ],
+        "label": "Background Repeat [Learn More](https:\/\/w3schools.com\/cssref\/pr_background-repeat.asp)",
+        "default": "default"
+      },
+      {
+        "type": "select",
+        "id": "body_bg_size",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "inherit",
+            "label": "Inherit"
+          },
+          {
+            "value": "cover",
+            "label": "Cover"
+          },
+          {
+            "value": "contain",
+            "label": "Contain"
+          }
+        ],
+        "label": "Background Size [Learn More](https:\/\/w3schools.com\/cssref\/css3_pr_background-size.asp)",
+        "default": "default"
+      },
+      {
+        "type": "select",
+        "id": "body_bg_attachment",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "fixed",
+            "label": "Fixed"
+          },
+          {
+            "value": "scroll",
+            "label": "Scroll"
+          },
+          {
+            "value": "inherit",
+            "label": "Inherit"
+          }
+        ],
+        "label": "Background Attachment [Learn More](https:\/\/w3schools.com\/cssref\/pr_background-attachment.asp)",
+        "default": "default"
+      },
+      {
+        "type": "select",
+        "id": "body_bg_position",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "left top",
+            "label": "Left Top"
+          },
+          {
+            "value": "left center",
+            "label": "Left Center"
+          },
+          {
+            "value": "left bottom",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "center_ op",
+            "label": "Center Top"
+          },
+          {
+            "value": "center center",
+            "label": "Center Center"
+          },
+          {
+            "value": "center bottom",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Background Position [Learn More](https:\/\/w3schools.com\/cssref\/pr_background-position.asp)",
+        "default": "default"
+      }
+    ]
+  },
+  {
+    "name": "General",
+    "settings": [
+      {
+        "type": "header",
+        "content": "+ Meta keywords for homepage(SEO)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Recommend app: [AVADA SEO](https://apps.shopify.com/avada-seo-suite?utm_source=The4&utm_medium=inapp&utm_campaign=partnership)"
+      },
+      {
+        "type": "textarea",
+        "id": "home_keywords",
+        "label": "Keywords for homepage",
+        "default": "Kalles shopify, Fastest, Ajax Shop, Minimal, Lazyload",
+        "info": "Define keywords for search engines."
+      },
+      {
+        "type": "text",
+        "id": "shop_author",
+        "label": "Author for shop",
+        "default": "The4",
+        "info": "Define the author of a Shop."
+      },
+      {
+        "type": "header",
+        "content": "+ Shop"
+      },
+      {
+        "type": "text",
+        "id": "global_acc",
+        "label": "General instagram access token [learn more](https:\/\/kalles-docs.the4.co\/installation\/how-to-get-instagram-access-token)"
+      },
+      {
+        "type": "paragraph",
+        "content": "NOTE: Via GraphQL API (General Instagram Access Token) Long-lived tokens are valid for 60 days. You will have to manually regenerate your access token."
+      },
+      {
+        "type": "select",
+        "id": "use_rtl",
+        "label": "RTL mode:",
+        "default": "3",
+        "options": [
+          {
+            "value": "0",
+            "label": "Disable"
+          },
+          {
+            "value": "1",
+            "label": "Enable"
+          },
+          {
+            "value": "3",
+            "label": "Only enable with 'List RTL Default'"
+          },
+          {
+            "value": "2",
+            "label": "Only enable with 'List RTL Custom'"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": "List RTL Default: ar; dv; ha; he; ku; fa; ur; ug; ps; yi"
+      },
+      {
+        "type": "textarea",
+        "id": "list_rtl",
+        "label": "List RTL Custom language iso code:",
+        "default": "ar; ha; he; ur; ug",
+        "info": "Separate your language codes with a ';'. Only working when selected 'Only enable with List RTL'"
+      },
+      {
+        "type": "paragraph",
+        "content": "List RTL language iso code: ar (Arabic); dv : (Dhivehi,Maldivian); ha : (Hausa); he : (Hebrew); ku : (Kurdish\/Sorani); fa : (Persian\/Farsi); ur : (Urdu); ps : (Pashto); yi : (Yiddish)"
+      },
+      {
+        "type": "header",
+        "content": "+ Email Marketing"
+      },
+      {
+        "type": "radio",
+        "id": "platform_email",
+        "label": "Platform email marketing",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "Default"
+          },
+          {
+            "value": "2",
+            "label": "Omnisend [install here](https:\/\/apps.shopify.com\/omnisend\/?ref=the4)"
+          },
+          {
+            "value": "3",
+            "label": "Klaviyo [install here](https:\/\/apps.shopify.com\/klaviyo-email-marketing\/?ref=the4)"
+          },
+          {
+            "value": "4",
+            "label": "Mailchimp"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": "+ Default, Any customers who sign up will have an account created for them in Shopify. [View customers](\/admin\/customers?query=&accepts_marketing=1)"
+      },
+      {
+        "type": "paragraph",
+        "content": "+ Klaviyo"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_list_id",
+        "label": "Klaviyo list ID [Find a List ID](https:\/\/help.klaviyo.com\/hc\/en-us\/articles\/115005078647-Find-a-List-ID)"
+      },
+      {
+        "type": "paragraph",
+        "content": "[Why are my newsletter subscribers not being added to my list?](https:\/\/help.klaviyo.com\/hc\/en-us\/articles\/360028366831-FAQ-Why-are-my-newsletter-subscribers-not-being-added-to-my-list)"
+      },
+      {
+        "type": "checkbox",
+        "id": "ajax_klaviyo",
+        "label": "Enable ajax Klaviyo subscribe form?",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "+ MailChimp"
+      },
+      {
+        "type": "text",
+        "id": "action_mailchimp",
+        "label": "MailChimp form action URL [Learn More](https:\/\/wiki.the4.co\/?manual_kb=updated-get-mailchimp-action-url)"
+      },
+      {
+        "type": "checkbox",
+        "id": "ajax_mailChimp",
+        "label": "Enable ajax mailChimp subscribe form",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "+ Agree checkbox"
+      },
+      {
+        "type": "checkbox",
+        "id": "checkbox_mail",
+        "label": "Enable 'Agree to terms and conditions' checkbox",
+        "info": "Agree to terms and conditions newsletter (GDPR compliant)",
+        "default": false
+      },
+      {
+        "type": "page",
+        "id": "link_mail",
+        "label": "Terms and conditions page:"
+      },
+      {
+        "type": "header",
+        "content": "+ Aspect Ratio Customs"
+      },
+      {
+        "type": "image_picker",
+        "id": "c_1",
+        "label": "Ratio Custom 1:"
+      },
+      {
+        "type": "image_picker",
+        "id": "c_2",
+        "label": "Ratio Custom 2:"
+      },
+      {
+        "type": "image_picker",
+        "id": "c_3",
+        "label": "Ratio Custom 3:"
+      },
+      {
+        "type": "image_picker",
+        "id": "c_4",
+        "label": "Ratio Custom 4:"
+      },
+      {
+        "type": "header",
+        "content": "+ Countdown timezone",
+        "info": "Use to display a countdown accordingly to the you set timezone no matter the local time your computer is."
+      },
+      {
+        "type": "text",
+        "id": "timezone",
+        "label": "General timezone:",
+        "placeholder": "America\/Chicago",
+        "info": "[Get a name your timezone.](https:\/\/en.wikipedia.org\/wiki\/List_of_tz_database_time_zones)"
+      }
+    ]
+  },
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "select",
+        "id": "header_design",
+        "options": [
+          {
+            "value": "inline",
+            "label": "Header inline"
+          },
+          {
+            "value": "sidebar",
+            "label": "Header sidebar"
+          },
+          {
+            "value": "categories",
+            "label": "header with categories menu"
+          },
+          {
+            "value": "bottom",
+            "label": "Header menu in bottom"
+          },
+          {
+            "value": "vertical",
+            "label": "Header vertical"
+          }
+        ],
+        "label": "Header design",
+        "default": "inline"
+      },
+      {
+        "type": "header",
+        "content": "+ Logo"
+      },
+      {
+        "type": "text",
+        "id": "logo_svg",
+        "label": "Logo SVG",
+        "info": "Copy link svg upload files. [Get link svg](https:\/\/cdn.shopify.com\/s\/files\/1\/0332\/6420\/5963\/files\/copy_link_svg.jpg?v=1647428667)"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo (required)",
+        "info": "Upload image: png, jpg or gif file"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Custom logo width",
+        "min": 50,
+        "max": 350,
+        "step": 5,
+        "unit": "px",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "+ Logo sticky"
+      },
+      {
+        "type": "image_picker",
+        "id": "logos",
+        "label": "Logo sticky (option)",
+        "info": "Upload image: png, jpg or gif file"
+      },
+      {
+        "type": "range",
+        "id": "logos_width",
+        "label": "Custom logo sticky width",
+        "min": 50,
+        "max": 350,
+        "step": 5,
+        "unit": "px",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "+ Logo Mobile"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_mb",
+        "label": "Logo Mobile (option)",
+        "info": "Upload image: png, jpg or gif file"
+      },
+      {
+        "type": "range",
+        "id": "logo_mb_width",
+        "label": "Custom logo mobile width",
+        "min": 50,
+        "max": 350,
+        "step": 5,
+        "unit": "px",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "+ Logo Transparent"
+      },
+      {
+        "type": "paragraph",
+        "content": "Tip: Logo Transparent only active when you enable header transparent, only show on homepage"
+      },
+      {
+        "type": "text",
+        "id": "logo_tr_svg",
+        "label": "Logo SVG Transparent",
+        "info": "Copy link svg upload filess. [Get link svg](https:\/\/cdn.shopify.com\/s\/files\/1\/0332\/6420\/5963\/files\/copy_link_svg.jpg?v=1647428667)"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_tr",
+        "label": "Logo Transparent",
+        "info": "Upload image: png, jpg or gif file"
+      },
+      {
+        "type": "range",
+        "id": "logo_tr_width",
+        "label": "Custom logo transparent width",
+        "min": 50,
+        "max": 350,
+        "step": 5,
+        "unit": "px",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Header Mobile:"
+      },
+      {
+        "type": "select",
+        "id": "mobile_nav_type",
+        "options": [
+          {
+            "value": "1",
+            "label": "Only mobile"
+          },
+          {
+            "value": "2",
+            "label": "Only categories"
+          },
+          {
+            "value": "3",
+            "label": "Mobile, categories"
+          },
+          {
+            "value": "4",
+            "label": "Categories, mobile"
+          }
+        ],
+        "label": "Header mobile show",
+        "default": "3"
+      },
+      {
+        "type": "checkbox",
+        "id": "only_icon",
+        "label": "Only click icon?",
+        "info": "Only click icon to show submenu.",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "+ General"
+      },
+      {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading",
+        "default": "#222222"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Body text",
+        "default": "#878787"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Primary",
+        "default": "#56cfe1"
+      },
+      {
+        "type": "color",
+        "id": "secondary_color",
+        "label": "Secondary",
+        "default": "#222"
+      },
+      /*{
+        "type": "color",
+        "id": "loading_bar_color",
+        "label": "Loading Bar",
+        "default": "#00BADB"
+      },*/
+      {
+        "type": "color",
+        "id": "border_color",
+        "label": "Lines and border",
+        "default": "#ddd"
+      },
+      {
+        "type": "color",
+        "id": "border_primary_color",
+        "label": "Lines and borders primary",
+        "default": "#333"
+      },
+      {
+        "type": "color",
+        "id": "price_primary",
+        "label": "Price primary color",
+        "default": "#ec0101"
+      },
+      {
+        "type": "color",
+        "id": "price_secondary",
+        "label": "Price secondary color",
+        "default": "#878787"
+      },
+      {
+        "type": "header",
+        "content": "+ Links, Buttons"
+      },
+      {
+        "type": "color",
+        "id": "link_color",
+        "label": "Link color",
+        "default": "#878787"
+      },
+      {
+        "type": "color",
+        "id": "link_color_hover",
+        "label": "Link color hover",
+        "default": "#56cfe1"
+      },
+      {
+        "type": "color",
+        "id": "btn_bg",
+        "label": "Button background",
+        "default": "#222"
+      },
+      {
+        "type": "color",
+        "id": "btn_color",
+        "label": "Button color",
+        "default": "#fff"
+      },
+      {
+        "type": "header",
+        "content": "+ Lazyload Icon"
+      },
+      {
+        "type": "color",
+        "id": "cl_lazyload",
+        "label": "Color Icon Lazyload",
+        "default": "#56cfe1"
+      },
+      {
+        "type": "color",
+        "id": "bg_lazyload",
+        "label": "Background Color Lazyload",
+        "default": "#f5f5f5"
+      },
+      {
+        "type": "paragraph",
+        "content": "—————————————————"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_cus_lz",
+        "label": "Use custom icon lazyload",
+        "default": false
+      },
+      {
+        "type": "image_picker",
+        "id": "cus_lz",
+        "label": "Custom icon lazyload",
+        "info": "Upload image: png, jpg or gif file"
+      },
+      {
+        "type": "range",
+        "id": "size_cus_lz",
+        "min": 30,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "label": "Custom size icon lazyload",
+        "default": 60
+      },
+      {
+        "type": "header",
+        "content": "+ Tooltip"
+      },
+      {
+        "type": "color",
+        "id": "bg_tooltip",
+        "label": "Background color",
+        "default": "#383838"
+      },
+      {
+        "type": "color",
+        "id": "cl_tooltip",
+        "label": "Color",
+        "default": "#fff"
+      },
+      {
+        "type": "header",
+        "content": "+ Swatch product"
+      },
+      {
+        "type": "color",
+        "id": "sw_primary",
+        "label": "Primary color",
+        "default": "#333"
+      },
+      {
+        "type": "color",
+        "id": "sw_secondary",
+        "label": "Secondary color",
+        "default": "#878787"
+      },
+      {
+        "type": "color",
+        "id": "sw_border",
+        "label": "Border color",
+        "default": "#ddd"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "+ Font source"
+      },
+      {
+        "type": "select",
+        "id": "font_source",
+        "options": [
+          {
+            "value": "1",
+            "label": "Shopify"
+          },
+          {
+            "value": "2",
+            "label": "Google"
+          }
+        ],
+        "label": "From:"
+      },
+      {
+        "type": "header",
+        "content": "+ Shopify Font Settings"
+      },
+      {
+        "type": "paragraph",
+        "content": "Selecting a different font can affect the speed of your store. [Learn more about system fonts.](https:\/\/help.shopify.com\/en\/manual\/online-store\/os\/store-speed\/improving-speed#fonts)"
+      },
+      {
+        "type": "font_picker",
+        "id": "fnt_fm_sp1",
+        "label": "Font Family #1",
+        "default": "poppins_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "fnt_fm_sp2",
+        "label": "Font Family #2",
+        "default": "poppins_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "fnt_fm_sp3",
+        "label": "Font Family #3",
+        "default": "poppins_n4"
+      },
+      {
+        "type": "header",
+        "content": "+ Google Font Settings [Get name your google](https:\/\/fonts.google.com\/)"
+      },
+      {
+        "type": "text",
+        "id": "fnt_fm_gg1",
+        "label": "Font Family #1",
+        "default": "Poppins"
+      },
+      {
+        "type": "text",
+        "id": "fnt_fm_gg2",
+        "label": "Font Family #2",
+        "default": "Poppins"
+      },
+      {
+        "type": "text",
+        "id": "fnt_fm_gg3",
+        "label": "Font Family #3",
+        "default": "Poppins"
+      },
+      {
+        "type": "header",
+        "content": "+ Body Font Settings"
+      },
+      {
+        "type": "select",
+        "id": "bd_ffamily",
+        "label": "Body Font Family",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "Font Family #1"
+          },
+          {
+            "value": "2",
+            "label": "Font Family #2"
+          },
+          {
+            "value": "3",
+            "label": "Font Family #3"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "bd_fsize",
+        "min": 10,
+        "max": 20,
+        "step": 0.5,
+        "label": "Font size",
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "bd_fweight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Font weight",
+        "default": 400
+      },
+      {
+        "type": "range",
+        "id": "bd_lheight",
+        "label": "Line height",
+        "default": 1.7,
+        "min": 1,
+        "max": 2,
+        "step": 0.1
+      },
+      {
+        "type": "number",
+        "id": "bd_lspacing",
+        "label": "Letter spacing (in pixel)",
+        "info": "set is '0' use to default",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "+ Heading Font Settings"
+      },
+      {
+        "type": "select",
+        "id": "hd_ffamily",
+        "label": "Heading Font Family",
+        "default": "2",
+        "options": [
+          {
+            "value": "1",
+            "label": "Font Family #1"
+          },
+          {
+            "value": "2",
+            "label": "Font Family #2"
+          },
+          {
+            "value": "3",
+            "label": "Font Family #3"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "fs_h1",
+        "min": 0,
+        "max": 50,
+        "step": 0.5,
+        "label": "Font size Heading 1",
+        "unit": "px",
+        "default": 37
+      },
+      {
+        "type": "range",
+        "id": "fs_h2",
+        "min": 0,
+        "max": 50,
+        "step": 0.5,
+        "label": "Font size Heading 2",
+        "unit": "px",
+        "default": 29
+      },
+      {
+        "type": "range",
+        "id": "fs_h3",
+        "min": 0,
+        "max": 50,
+        "step": 0.5,
+        "label": "Font size Heading 3",
+        "unit": "px",
+        "default": 23
+      },
+      {
+        "type": "range",
+        "id": "fs_h4",
+        "min": 0,
+        "max": 50,
+        "step": 0.5,
+        "label": "Font size Heading 4",
+        "unit": "px",
+        "default": 18
+      },
+      {
+        "type": "range",
+        "id": "fs_h5",
+        "min": 1,
+        "max": 50,
+        "step": 0.5,
+        "label": "Font size Heading 5",
+        "unit": "px",
+        "default": 17
+      },
+      {
+        "type": "range",
+        "id": "fs_h6",
+        "min": 1,
+        "max": 50,
+        "step": 0.5,
+        "label": "Font size Heading 6",
+        "unit": "px",
+        "default": 15.5
+      },
+      {
+        "type": "range",
+        "id": "hd_fweight",
+        "min": 300,
+        "max": 800,
+        "step": 100,
+        "label": "Font weight",
+        "default": 600
+      },
+      {
+        "type": "range",
+        "id": "hd_lheight",
+        "label": "Line height",
+        "default": 1.4,
+        "min": 1,
+        "max": 2,
+        "step": 0.1
+      },
+      {
+        "type": "number",
+        "id": "hd_lspacing",
+        "label": "Letter spacing (in pixel)",
+        "info": "set is '0' use to default",
+        "default": 0
+      }
+    ]
+  },
+  {
+    "name": "General Product",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "atc_ajax_enable",
+        "label": "Enable ajax add to cart",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "only_price_varies_stock",
+        "label": "Only show price varies of variants available",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "+ Wishlist"
+      },
+      {
+        "type": "radio",
+        "id": "wishlist_mode",
+        "options": [
+          {
+            "value": "0",
+            "label": "Disable"
+          },
+          {
+            "value": "1",
+            "label": "Enable wishlist local"
+          },
+          {
+            "value": "2",
+            "label": "Enable wishlist account (The4 Toolkit app) [install here](https:\/\/apps.shopify.com\/the4-wishlist-compare?utm_source=the4&utm_medium=theme)"
+          },
+          {
+            "value": "3",
+            "label": "Enable growave wishlist [install here](https:\/\/growave.io\/?ref=henry_pham)"
+          }
+        ],
+        "label": "Wishlist mode",
+        "default": "1"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_css_wis",
+        "label": "Enable override css wishlist app",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "wis_atc_added",
+        "options": [
+          {
+            "value": "1",
+            "label": "Go to page wishlist"
+          },
+          {
+            "value": "2",
+            "label": "Remove from wishlist"
+          }
+        ],
+        "label": "Action when people click added wishlist:",
+        "default": "1"
+      },
+      {
+        "type": "header",
+        "content": "+ Compare"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_compe",
+        "label": "Enable compare",
+        "info": "Max products compare: 6",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "+ Reviews"
+      },
+      {
+        "type": "radio",
+        "id": "app_review",
+        "options": [
+          {
+            "value": "1",
+            "label": "Shopify reviews [install here](https:\/\/apps.shopify.com\/product-reviews)"
+          },
+          {
+            "value": "2",
+            "label": "Ryviu app [install here](https:\/\/www.ryviu.com\/?rel=3in5hrqs)"
+          },
+          {
+            "value": "3",
+            "label": "Alireviews app [install here](https:\/\/fireapps.io\/shopify-apps\/ali-reviews?utm_campaign=The4&utm_source=theme_editor)"
+          },
+          {
+            "value": "4",
+            "label": "Loox photo reviews [install here](https:\/\/loox.io\/app\/The4)"
+          },
+          {
+            "value": "5",
+            "label": "Growave reviews [install here](https:\/\/growave.io\/?ref=henry_pham)"
+          },
+          {
+            "value": "8",
+            "label": "LAI product aliExpress reviews [install here](https:\/\/apps.shopify.com\/lai-reviews?utm_source=the4&utm_medium=theme&utm_campaign=partnership&utm_content=dashboard-page)"
+          },
+          {
+            "value": "7",
+            "label": "Judgeme reviews [install here](https:\/\/apps.shopify.com\/judgeme)"
+          },
+          {
+            "value": "6",
+            "label": "Other app [Instructions here](https:\/\/docs.the4.co\/kalles-4\/theme-faqs\/custom-review-app)"
+          }
+        ],
+        "label": "Reviews app",
+        "default": "1"
+      },
+      {
+        "type": "header",
+        "content": "+ Badges"
+      },
+      {
+        "type": "select",
+        "id": "badge_shape",
+        "options": [
+          {
+            "value": "1",
+            "label": "Rounded"
+          },
+          {
+            "value": "2",
+            "label": "Rectangular"
+          },
+          {
+            "value": "3",
+            "label": "Slightly round"
+          }
+        ],
+        "label": "Badge shape",
+        "default": "2"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_sale_badge",
+        "label": "Use sale badge",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "label_sale_style",
+        "options": [
+          {
+            "value": "1",
+            "label": "Text label"
+          },
+          {
+            "value": "2",
+            "label": "Percentage label"
+          }
+        ],
+        "label": "Sale badge display style",
+        "default": "1"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_new_badge",
+        "label": "Use new badge",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "new_day_added",
+        "min": 1,
+        "max": 60,
+        "step": 1,
+        "unit": "day",
+        "label": "Show products added in the past x days:",
+        "default": 10
+      },
+      {
+        "type": "checkbox",
+        "id": "use_soldout_badge",
+        "label": "Use sold out badge",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_preorder_badge",
+        "label": "Use pre order badge",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_custom_badge",
+        "label": "Use custom badge",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Badge colors"
+      },
+      {
+        "type": "color",
+        "id": "sale_badge_color",
+        "label": "Sale badge",
+        "default": "#ff4e00"
+      },
+      {
+        "type": "color",
+        "id": "new_badge_color",
+        "label": "New badge",
+        "default": "#109533"
+      },
+      {
+        "type": "color",
+        "id": "preorder_badge_color",
+        "label": "Pre order badge",
+        "default": "#0774d7"
+      },
+      {
+        "type": "color",
+        "id": "soldout_badge_color",
+        "label": "Soldout Badge",
+        "default": "#999999"
+      },
+      {
+        "type": "color",
+        "id": "custom_badge_color",
+        "label": "Custom Badge",
+        "default": "#00A500"
+      },
+      {
+        "type": "header",
+        "content": "+ Style swatch color"
+      },
+      {
+        "type": "textarea",
+        "id": "color_ck",
+        "label": "Enter option name you want has style swatch color",
+        "info": "Default: Color, Colors, Couleur, Coloure"
+      },
+      {
+        "type": "header",
+        "content": "+ Placeholder"
+      },
+      {
+        "type": "image_picker",
+        "id": "placeholder_img",
+        "label": "Placeholder for product no image"
+      },
+      {
+        "type": "header",
+        "content": "+ Vendor, type link"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_link_vendor",
+        "label": "Use collection link on vendor",
+        "info": "Allow removing 'vendor' in URL '\/collection\/vendor'. Note: Only active if exist a collection has the name same as the vendor of the product. [Learn more](https:\/\/docs.the4.co\/kalles-4\/theme-faqs\/how-to-remove-vendor-in-the-url-of-the-collection)",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "use_link_type",
+        "label": "Use collection link on type",
+        "info": "Allow removing 'type' in URL '\/collection\/type'. Note: Only active if exist a collection has the name same as the type of the product. [Learn more](https:\/\/docs.the4.co\/kalles-4\/theme-faqs\/how-to-remove-vendor-in-the-url-of-the-collection)",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Product Items",
+    "settings": [
+      {
+        "type": "select",
+        "id": "price_varies_style",
+        "options": [
+          {
+            "value": "1",
+            "label": "$39.00 – $59.00"
+          },
+          {
+            "value": "2",
+            "label": "From $39.00"
+          }
+        ],
+        "label": "Price varies style",
+        "default": "1"
+      },
+      {
+        "type": "checkbox",
+        "id": "within_cat",
+        "label": "Enable 'product url has link collection'",
+        "info": "Creates a collection-aware product URL by prepending \/collections\/collection-handle to a product URL, where collection-handle is the handle of the collection that is currently being viewed.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_quickview",
+        "label": "Enable quick view",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "type_qv",
+        "options": [
+          {
+            "value": "1",
+            "label": "Hidden Sidebar"
+          },
+          {
+            "value": "2",
+            "label": "Popup Center"
+          }
+        ],
+        "label": "Quick view type",
+        "default": "2"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_quickshop",
+        "label": "Enable quick shop",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_rating",
+        "label": "Enable rating",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_atc",
+        "label": "Enable add to cart, select option, quick shop",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_qty",
+        "label": "Enable quantity selector",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "pr_border_style",
+        "options": [
+          {
+            "value": "1",
+            "label": "None"
+          },
+          {
+            "value": "2",
+            "label": "In image"
+          },
+          {
+            "value": "3",
+            "label": "In grid"
+          }
+        ],
+        "label": "Bordered style",
+        "info": "add borders between the products in your grid",
+        "default": "1"
+      },
+      {
+        "type": "paragraph",
+        "content": "+ COLOR SWATCHES"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_pr_color",
+        "label": "Enable color swatches",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "swatch_color_style",
+        "options": [
+          {
+            "value": "1",
+            "label": "Square"
+          },
+          {
+            "value": "2",
+            "label": "circle"
+          }
+        ],
+        "label": "Swatch style",
+        "default": "2"
+      },
+      {
+        "type": "select",
+        "id": "swatch_item_style",
+        "options": [
+          {
+            "value": "1",
+            "label": "Color"
+          },
+          {
+            "value": "2",
+            "label": "Image variant"
+          }
+        ],
+        "label": "Swatch item style"
+      },
+      {
+        "type": "select",
+        "id": "show_color_type",
+        "options": [
+          {
+            "value": "1",
+            "label": "All color"
+          },
+          {
+            "value": "2",
+            "label": "Only color available"
+          }
+        ],
+        "label": "Show type:"
+      },
+      {
+        "type": "checkbox",
+        "id": "sw_limit",
+        "label": "Enable swatch limit",
+        "info": "If you have too many swatches, it will grow into more than one lines, which is not desirable. Instead, we'd like to only show one line only, and show a '+X' if there are too many swatches",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "sw_num",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "label": "Maximum color swatches to show",
+        "info": "Set 0 to use responsive auto number. Only works when swatch limit is enabled.",
+        "default": 0
+      },
+      {
+        "type": "select",
+        "id": "sw_click",
+        "options": [
+          {
+            "value": "1",
+            "label": "Go to product page"
+          },
+          {
+            "value": "2",
+            "label": "Expand all color"
+          }
+        ],
+        "label": "Action click swatch '+X':"
+      },
+      {
+        "type": "paragraph",
+        "content": "+ SIZE LIST"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_pr_size",
+        "label": "Enable size list",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "pr_size_pos",
+        "options": [
+          {
+            "value": "1",
+            "label": "Above image"
+          },
+          {
+            "value": "2",
+            "label": "Below info"
+          }
+        ],
+        "label": "Size list position",
+        "default": "1"
+      },
+      {
+        "type": "select",
+        "id": "show_size_type",
+        "options": [
+          {
+            "value": "1",
+            "label": "All size"
+          },
+          {
+            "value": "2",
+            "label": "Only size available"
+          }
+        ],
+        "label": "Show type:"
+      },
+      {
+        "type": "textarea",
+        "id": "size_ck",
+        "label": "Enter variant name you want show size list",
+        "info": "Default: size,sizes,Größe"
+      },
+      {
+        "type": "paragraph",
+        "content": "+ PRODUCT IMAGES"
+      },
+      {
+        "type": "select",
+        "id": "show_img",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          },
+          {
+            "value": "2",
+            "label": "2"
+          }
+        ],
+        "label": "Maximum images to show",
+        "default": "2"
+      },
+      {
+        "type": "select",
+        "id": "pr_img_effect",
+        "options": [
+          {
+            "value": "0",
+            "label": "No animation"
+          },
+          {
+            "value": "1",
+            "label": "Opacity"
+          },
+          {
+            "value": "2",
+            "label": "Zoom"
+          },
+          {
+            "value": "3",
+            "label": "Move bottom"
+          },
+          {
+            "value": "4",
+            "label": "Flip card"
+          },
+          {
+            "value": "5",
+            "label": "Rotate zoom"
+          }
+        ],
+        "label": "Image hover effects",
+        "info": "Effects not working when has only one image: opacity, move bottom",
+        "default": "2"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_eff_img1",
+        "label": "Enable image hover effects for first image",
+        "info": "Only working with effects: zoom, rotate zoom",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_shadow_round_img",
+        "label": "Enable image shadow, round",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_pr_ellipsis",
+        "label": "The longer titles instead of occupying more lines stops at the first line adding ”...” at the end",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Product Single",
+    "settings": [
+      {
+        "type": "select",
+        "id": "pr_curent",
+        "label": "Variant picker",
+        "default": "3",
+        "options": [
+          {
+            "value": "1",
+            "label": "No Pick"
+          },
+          {
+            "value": "2",
+            "label": "Pick first variant"
+          },
+          {
+            "value": "3",
+            "label": "Pick first available variant"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "use_group_media",
+        "label": "Use group media",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_first_media",
+        "label": "Show first media",
+        "info": "Show first media until customers hand-pick a variant",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "use_change_variant_by_img",
+        "label": "Use select variants by change image on slide",
+        "info": "Normally, variants are selected from a swatch. You might want your customers to be able to select a product variant by change a variant image. *Only active on layout has slider in product page.",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_his",
+        "label": "Enable historyState",
+        "info": "Update history state for product deeplinking shopify. It’s possible to create a deep-link directly to a specific variant by adding a query string to a product page URL. You can achieve this by appending the ?variant= query parameter to the URL of the product, along with the ID of the variant. Not working when Product variant is No Pick.",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "use_incoming_mess",
+        "label": "Use incoming message",
+        "info": "Use incoming stock transfer message when sold out.",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "date_in",
+        "label": "Date incoming format",
+        "info": "Date demo: 09\/04\/1994 (date\/month\/year)",
+        "default": "%d\/%m\/%Y",
+        "options": [
+          {
+            "value": "%B %d, %Y",
+            "label": "April 09, 1994 - MMM dd, yyyy"
+          },
+          {
+            "value": "%d\/%m\/%y",
+            "label": "09\/04\/94 - dd\/MM\/yy"
+          },
+          {
+            "value": "%d\/%m\/%Y",
+            "label": "09\/04\/1994 - dd\/MM\/yyyy"
+          },
+          {
+            "value": "%e\/%m\/%Y",
+            "label": "9\/04\/1994 - d\/MM\/yyyy"
+          },
+          {
+            "value": "%b %y",
+            "label": "Apr 94 - MMM yy"
+          },
+          {
+            "value": "%b %d",
+            "label": "Apr 09 - MMM dd"
+          },
+          {
+            "value": "%m\/%d\/%Y",
+            "label": "04\/09\/1994 - MM\/dd\/yyyy"
+          },
+          {
+            "value": "%A %d\/%m\/%Y",
+            "label": "Tuesday 09\/04\/1994 - aa dd\/MM\/yyyy"
+          },
+          {
+            "value": "%a %d\/%m\/%Y",
+            "label": "Tue 09\/04\/1994 - a dd\/MM\/yyyy"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "variant_remove",
+        "label": "Variant sold out, unavailable swatches",
+        "info": "Removing the variants that are sold out, unavailable.",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "Only remove variants unavailable"
+          },
+          {
+            "value": "2",
+            "label": "Remove variants sold out, unavailable"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "use_notify_me",
+        "label": "Use a back in stock notification form",
+        "info": "When a customer submits the back in stock notification form for a sold out product, you will receive an email to the email address you have set up in the admin to be [your Customer email.](\/\/help.shopify.com\/assets\/manual\/customize\/customer-email-03cea16d2eb80d21ad80f8dc559ea5bc1ae4ce9f2b19d6cb83711f1e6c2b63bb.jpg)",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "With a back in stock notification form, customers can let you know if they want to be informed when a sold out product becomes available again. When a customer uses the form to submit their email address, you will be sent information about the product that they are interested in. When more stock becomes available, you can let the customer know."
+      },
+      {
+        "type": "header",
+        "content": "+ Product social sharing options"
+      },
+      {
+        "type": "select",
+        "id": "share_source",
+        "label": "Share source",
+        "options": [
+          {
+            "value": "1",
+            "label": "Default"
+          },
+          {
+            "value": "3",
+            "label": "Growave social sharing"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "paragraph",
+        "content": "[Growave ‑ Reviews, Loyalty ++by Growave](https:\/\/growave.io\/?ref=henry_pham)"
+      },
+      {
+        "type": "paragraph",
+        "content": "+ Metafield product countdown, Countdown to the end sale date will be shown. Be sure you have set final date of the product sale price. Namespace and key metafield: theme.countdown"
+      },
+      {
+        "type": "paragraph",
+        "content": "+ Namespace and key metafield External\/Affiliate button title: theme.external_title"
+      },
+      {
+        "type": "paragraph",
+        "content": "+ Namespace and key metafield External\/Affiliate button link: theme.external_link"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_ajax_enable",
+        "label": "Enable automatic cart updates",
+        "info": "Updates the cart as soon as customer changes are made",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "min_qty",
+        "label": "Min quantity cart",
+        "info": " Minimum quantity value in cart page\/cart sidebar. For example, if you set the value to 1, the user cannot reduce it to 0.",
+        "options": [
+          {
+            "value": "0",
+            "label": "0"
+          },
+          {
+            "value": "1",
+            "label": "1"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "edit_item",
+        "label": "Edit item mode:",
+        "options": [
+          {
+            "value": "0",
+            "label": "Replace old item"
+          },
+          {
+            "value": "1",
+            "label": "Add new item"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "after_action_atc",
+        "label": "Action when an item is added to the cart success",
+        "info": "Not working on cart page",
+        "options": [
+          {
+            "value": "0",
+            "label": "No action. Stay on the current page"
+          },
+          {
+            "value": "3",
+            "label": "Show drawer cart"
+          },
+          {
+            "value": "4",
+            "label": "Go to cart page"
+          },
+          {
+            "value": "5",
+            "label": "Go to checkout page"
+          }
+        ],
+        "default": "3"
+      },
+      {
+        "type": "header",
+        "content": "+ Mini cart"
+      },
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Mini cart type",
+        "default": "drawer",
+        "info": "Not working on cart page",
+        "options": [
+          {
+            "value": "disable",
+            "label": "Disable"
+          },
+          {
+            "value": "drawer",
+            "label": "Drawer"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "+ Free shipping minimum amount"
+      },
+      {
+        "type": "paragraph",
+        "content": "Free shipping minimum amount needs to be set up as a product."
+      },
+      {
+        "type": "product",
+        "id": "free_ship_pr",
+        "label": "Product shipping amount",
+        "info": "Make sure that you have properly configured your [shipping rates](https:\/\/help.shopify.com\/en\/manual\/shipping\/setting-up-and-managing-your-shipping\/setting-up-shipping-rates)."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_confetti",
+        "label": "Enable confetti when got free shipping",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_shipbar",
+        "label": "Enable free shipping bar",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "des_shipbar",
+        "default": "0",
+        "options": [
+          {
+            "value": "0",
+            "label": "#0 - Normal"
+          },
+          {
+            "value": "1",
+            "label": "#1 - Leaf"
+          },
+          {
+            "value": "2",
+            "label": "#2 - Overlap"
+          },
+          {
+            "value": "3",
+            "label": "#3 - Food"
+          },
+          {
+            "value": "4",
+            "label": "#4 - Bars"
+          },
+          {
+            "value": "5",
+            "label": "#5 - Lines"
+          },
+          {
+            "value": "6",
+            "label": "#6 - Wiggle"
+          },
+          {
+            "value": "7",
+            "label": "#7 - Dots"
+          },
+          {
+            "value": "8",
+            "label": "#8 - Circuit"
+          },
+          {
+            "value": "9",
+            "label": "#9 - Aztec"
+          },
+          {
+            "value": "10",
+            "label": "#10 - Bees"
+          },
+          {
+            "value": "11",
+            "label": "#11 - Clouds"
+          },
+          {
+            "value": "12",
+            "label": "#12 - Stripes"
+          },
+          {
+            "value": "13",
+            "label": "#13 - Crosses"
+          },
+          {
+            "value": "14",
+            "label": "#14 - Jupiter"
+          },
+          {
+            "value": "15",
+            "label": "#15 - Piano"
+          },
+          {
+            "value": "16",
+            "label": "#16 - Dominos"
+          },
+          {
+            "value": "17",
+            "label": "#17 - Pie"
+          },
+          {
+            "value": "18",
+            "label": "#18 - Floor"
+          },
+          {
+            "value": "19",
+            "label": "#19 - Bubbles"
+          },
+          {
+            "value": "20",
+            "label": "#20 - TicTac"
+          },
+          {
+            "value": "21",
+            "label": "#21 - ZigZag"
+          }
+        ],
+        "label": "Design free shipping bar"
+      },
+      {
+        "type": "range",
+        "id": "des_shipbar_per_1",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Free shipping bar less #1",
+        "default": 25
+      },
+      {
+        "type": "color",
+        "id": "des_shipbar_cl_1",
+        "label": "Free shipping color #1",
+        "default": "#EB001B"
+      },
+      {
+        "type": "range",
+        "id": "des_shipbar_per_2",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Free shipping bar less #2",
+        "default": 50
+      },
+      {
+        "type": "color",
+        "id": "des_shipbar_cl_2",
+        "label": "Free shipping color #2",
+        "default": "#e0b252"
+      },
+      {
+        "type": "range",
+        "id": "des_shipbar_per_3",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Free shipping bar less #3",
+        "default": 75
+      },
+      {
+        "type": "color",
+        "id": "des_shipbar_cl_3",
+        "label": "Free shipping color #3",
+        "default": "#23b2c7"
+      },
+      {
+        "type": "color",
+        "id": "des_shipbar_cl_4",
+        "label": "Free shipping color #4",
+        "default": "#428445"
+      },
+      {
+        "type": "header",
+        "content": "+ Gift wrap"
+      },
+      {
+        "type": "product",
+        "id": "gift_wrap_pr",
+        "label": "Product Gift wrap",
+        "info": "Gift wrap needs to be set up as a product."
+      },
+      {
+        "type": "header",
+        "content": "+ Taxes and shipping info",
+        "info": "Add a link Taxes and shipping info"
+      },
+      {
+        "type": "page",
+        "id": "link_ship",
+        "label": "Taxes and shipping info (optional)"
+      },
+      {
+        "type": "header",
+        "content": "+ Terms and conditions checkbox",
+        "info": "Add a link Terms and conditions"
+      },
+      {
+        "type": "page",
+        "id": "link_conditions",
+        "label": "Terms and conditions link (optional)"
+      }
+    ]
+  },
+  {
+    "name": "Other settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "+ My Account Page"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_privacy_policy",
+        "label": "Show privacy policy (GDPR compliant)",
+        "default": false
+      },
+      {
+        "type": "page",
+        "id": "privacy_policy_link",
+        "label": "Privacy policys page"
+      },
+      {
+        "type": "checkbox",
+        "id": "login_side",
+        "label": "Enable login sidebar widget",
+        "default": true
+      },
+      {
+        "type": "url",
+        "id": "return_login",
+        "label": "Which page to show",
+        "info": "Choose which page to show when customers log in to your online store."
+      },
+      {
+        "type": "paragraph",
+        "content": "—————————————————"
+      },
+      {
+        "type": "checkbox",
+        "id": "growave_social_login",
+        "label": "Enable Social Login?"
+      },
+      {
+        "type": "paragraph",
+        "content": "To give your customers an easy way to create an account and gain a loyal customer base install [Growave](https:\/\/growave.io\/?ref=henry_pham) that offers Social Login, Social Sharing, Instagram, Loyalty and Rewards, Reviews, Wishlist "
+      },
+      {
+        "type": "paragraph",
+        "content": "—————————————————"
+      },
+      {
+        "type": "select",
+        "id": "btn_arrow",
+        "info": "Choose style of arrow for all button",
+        "options": [
+          {
+            "value": "default",
+            "label": "Long arrow"
+          },
+          {
+            "value": "short_arrow",
+            "label": "Short arrow"
+          }
+        ],
+        "label": "Button arrow",
+        "default": "default"
+      }
+    ]
+  },
+  {
+    "name": "Search",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "filter_type_search",
+        "label": "Search by product type",
+        "info": "Filter search results with product type",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "only_search_prs",
+        "label": "Search only products",
+        "info": "Only returns products in the search results",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "unavailable_prs",
+        "options": [
+          {
+            "value": "hide",
+            "label": "Be hidden"
+          },
+          {
+            "value": "show",
+            "label": "Always show"
+          },
+          {
+            "value": "last",
+            "label": "Show last"
+          }
+        ],
+        "label": "Sold out products should...",
+        "default": "last"
+      },
+      {
+        "type": "paragraph",
+        "content": "Specifies whether to display results for unavailable products. The three possible options are show, hide, and last. Set to last to display unavailable products below other matching results. Set to hide to exclude unavailable products from the search results."
+      },
+      {
+        "type": "header",
+        "content": "+ Search suggest products"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_search_suggest",
+        "label": "Show suggest products",
+        "default": false
+      },
+      {
+        "id": "search_prs_suggest",
+        "type": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "header",
+        "content": "+ Search hot key"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_search_hotkey",
+        "label": "Show search hot key",
+        "default": false
+      },
+      {
+        "type": "textarea",
+        "id": "list_hotkey",
+        "placeholder": "Women, Men, New",
+        "label": "Enter list hot key",
+        "info": "Separate by a comma."
+      }
+    ]
+  },
+  {
+    "name": "Language, Currency",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Language selector",
+        "info": "To add a language, go to your [language settings.](\/admin\/settings\/languages)"
+      },
+      {
+        "type": "paragraph",
+        "content": "[Learn more about selling in multiple languages](https:\/\/help.shopify.com\/en\/manual\/cross-border\/multilingual-online-store)"
+      },
+      {
+        "type": "paragraph",
+        "content": "To work on translations, install a translations app that's compatible with selling in multiple languages. [Visit the Shopify App Store](https:\/\/apps.shopify.com\/collections\/apps-for-store-languages)"
+      },
+      {
+        "type": "select",
+        "id": "lang_pos",
+        "label": "Language drawer",
+        "options": [
+          {
+            "value": "0",
+            "label": "Disable"
+          },
+          {
+            "value": "1",
+            "label": "All screen"
+          },
+          {
+            "value": "2",
+            "label": "Only desktop"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Currency format"
+      },
+      {
+        "type": "checkbox",
+        "id": "currency_code_enabled",
+        "label": "Show currency codes",
+        "default": false
+      },
+      {
+        "type": "paragraph",
+        "content": "Cart and checkout prices always show currency codes. Example: $1.00 USD."
+      },
+      {
+        "type": "header",
+        "content": "Currency Config"
+      },
+      {
+        "type": "checkbox",
+        "id": "auto_currency",
+        "label": "Enable Customer Geolocation",
+        "default": true,
+        "info": " Boost up your sales by showing your prices in the Visitor's Currency! When a customer goes to your store, your store chooses the currency to use based on the geolocation of their IP address. The prices in your storefront and checkout convert immediately to that currency. If a customer's location uses a currency that isn't supported by your store, then the store's currency is used. For example, your store currency is USD and you accept USD, EUR, and YEN. When a customer from Brazil visits your store, they see prices in USD (your store's currency) because you don't accept payments in BRL."
+      },
+      {
+        "type": "select",
+        "id": "currency_type",
+        "label": "+ Source:",
+        "options": [
+          {
+            "value": "1",
+            "label": "Multiple Currencies By Shopify"
+          },
+          {
+            "value": "2",
+            "label": "Multiple Currencies By The4"
+          }
+        ],
+        "default": "2"
+      },
+      {
+        "type": "checkbox",
+        "id": "flag_currency",
+        "label": "Show country flag",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "size_currency",
+        "label": "Flag size",
+        "options": [
+          {
+            "value": "sm",
+            "label": "Small"
+          },
+          {
+            "value": "md",
+            "label": "Medium"
+          }
+        ],
+        "default": "md"
+      },
+      {
+        "type": "select",
+        "id": "currency_pos",
+        "label": "Currency drawer",
+        "options": [
+          {
+            "value": "0",
+            "label": "Disable"
+          },
+          {
+            "value": "1",
+            "label": "All screen"
+          },
+          {
+            "value": "2",
+            "label": "Only desktop"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "+ Multiple Currencies By Shopify"
+      },
+      {
+        "type": "paragraph",
+        "content": "This feature is only available for stores using Shopify Payments. Multi currency checkout page. My See [Can I use Shopify Payments?](https:\/\/help.shopify.com\/en\/manual\/payments\/shopify-payments\/shopify-payments-requirements#can-I-use-shopify-payments) for a list of supported countries. [Learn more about multi-currency here](https:\/\/help.shopify.com\/en\/manual\/payments\/shopify-payments\/multi-currency)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Your customers can pay for their orders and receive refunds in their local currency. [Enabling your store to sell in multiple currencies](https:\/\/help.shopify.com\/manual\/payments\/multi-currency\/setup)."
+      },
+      {
+        "type": "paragraph",
+        "content": "To add a currency, go to your [payment settings.](\/admin\/settings\/payments)"
+      },
+      {
+        "type": "header",
+        "content": "+ Multiple Currencies By The4"
+      },
+      {
+        "type": "paragraph",
+        "content": "Even though prices are displayed in different currencies, orders will still be processed in your store's currency."
+      },
+      {
+        "type": "paragraph",
+        "content": "To offer multiple currencies on your online store, you must first [edit your store's currency formatting](https:\/\/kalles-docs.the4.co\/theme-settings\/currency-converter-plus#1-2-follow-by-the4)."
+      },
+      {
+        "type": "textarea",
+        "id": "supported_currencies",
+        "label": "Supported currencies",
+        "default": "EUR - EUR | USD - USD | GBP - GBP",
+        "placeholder": "EUR - Euro | USD - US Dollar | GBP - British Pound",
+        "info": "Use the country's ISO [currency code](http:\/\/www.xe.com\/iso4217.php). Separate your currency codes with a '|'."
+      },
+      {
+        "type": "paragraph",
+        "content": "+ Price Configuration"
+      },
+      {
+        "type": "checkbox",
+        "id": "round_currency",
+        "label": "Round converted amounts",
+        "info": "eg: $9.9 ==> $10",
+        "default": false
+      },
+      {
+        "type": "paragraph",
+        "content": "+ Extra Features"
+      },
+      {
+        "type": "checkbox",
+        "id": "notify_currency",
+        "label": "Checkout currency notification",
+        "default": true,
+        "info": "This notification will appear on the cart page,shopping cart widget. It is meant to inform your customers that Shopify only allows them to Checkout in your shop's main currency."
+      },
+      {
+        "type": "textarea",
+        "id": "mess_currency",
+        "label": "Currency notification text:",
+        "info": "[original_currency], [current_currency] is is the variable name will automatically be replaced you must not change.",
+        "default": "All charges are billed in [original_currency]. While the content of your cart is currently displayed in [current_currency], the checkout will use [original_currency] at the most current exchange rate."
+      },
+      {
+        "type": "checkbox",
+        "id": "hover_currency",
+        "label": "Enable original price on hover",
+        "default": false,
+        "info": "If your customer hovers over the converted prices he will still be able to see the price in your shop's main currency."
+      }
+    ]
+  },
+  {
+    "name": "Custom CSS, JS",
+    "settings": [
+      {
+        "type": "header",
+        "content": "+ Bootstrap CSS"
+      },
+      {
+        "type": "checkbox",
+        "id": "bootstrap_css",
+        "label": "Use bootstrap CSS",
+        "info": "When you need to include Bootstrap 5 CSS. But it will affect the speed of your store. [Document Bootstrap 5](https:\/\/getbootstrap.com\/docs\/5.2\/layout\/grid\/)",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "+ Colors CSS"
+      },
+      {
+        "type": "checkbox",
+        "id": "colors_css",
+        "label": "Use colors custom css",
+        "info": "Please add your code into colors.css file",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "+ Custom CSS"
+      },
+      {
+        "type": "checkbox",
+        "id": "custom_css_t4s",
+        "label": "Use custom css",
+        "default": false
+      },
+      {
+        "type": "textarea",
+        "id": "global_css",
+        "label": "Global custom css",
+        "placeholder": "Enter global css code"
+      },
+      {
+        "type": "textarea",
+        "id": "desktop_css",
+        "label": "Custom css for only desktop",
+        "placeholder": "Enter css code for only desktop"
+      },
+      {
+        "type": "textarea",
+        "id": "tablet_mobile_css",
+        "label": "Custom css for tablet, mobile",
+        "placeholder": "Enter css code for tablet, mobile"
+      },
+      {
+        "type": "textarea",
+        "id": "tablet_css",
+        "label": "Custom css for only tablet",
+        "placeholder": "Enter css code for only tablet"
+      },
+      {
+        "type": "textarea",
+        "id": "mobile_css",
+        "label": "Custom css for only mobile",
+        "placeholder": "Enter css code for only mobile"
+      },
+      {
+        "type": "header",
+        "content": "+ Custom JS"
+      },
+      {
+        "type": "paragraph",
+        "content": "[Instructions to custom js](https:\/\/kalles-docs.the4.co\/theme-settings\/custom-css-js)"
+      },
+      {
+        "type": "checkbox",
+        "id": "t4s_custom_js",
+        "label": "Use custom js",
+        "info": "Please add your code into custom.js file",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      /*{
+        "type": "header",
+        "content": "Social sharing image"
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Image",
+        "info": "Shown when sharing a link on social media. [Learn more](https:\/\/help.shopify.com\/en\/manual\/using-themes\/troubleshooting\/showing-social-media-thumbnail-images\/) about image thumbnails."
+      },*/
+      {
+        "type": "header",
+        "content": "Social sharing options"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Share on Facebook",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Tweet on Twitter",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_pinterest",
+        "label": "Pin on Pinterest",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_tumblr",
+        "label": "Pin on Tumblr",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "share_email",
+        "label": "Share on Email",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_telegram",
+        "label": "Share on Telegram",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_whatsapp",
+        "label": "Share on WhatsApp",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "info": "https:\/\/facebook.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter",
+        "info": "https:\/\/twitter.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "https:\/\/instagram.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_dribbble_link",
+        "label": "Dribbble",
+        "info": "https:\/\/dribbble.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin_link",
+        "label": "Linkedin",
+        "info": "https:\/\/www.linkedin.com\/company\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "info": "https:\/\/pinterest.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr",
+        "info": "https:\/\/www.tumblr.com"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat",
+        "info": "https:\/\/www.snapchat.com\/add\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube",
+        "info": "https:\/\/www.youtube.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo",
+        "info": "https:\/\/vimeo.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_behance_link",
+        "label": "Behance",
+        "info": "https:\/\/www.behance.net\/gallery\/62806021\/Shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_soundcloud_link",
+        "label": "Soundcloud",
+        "info": "https:\/\/soundcloud.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "Tiktok",
+        "info": "https:\/\/tiktok.com\/@shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_spotify_link",
+        "label": "Spotify"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== Favicon image"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Upload image: png, ico, Will be scaled down to 32 x 32px"
+      },
+      {
+        "type": "header",
+        "content": "== Favicon retina image"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon_apple",
+        "label": "Favicon retina image",
+        "info": "Upload image: png, ico, Will be scaled down to 152 x 152px"
+      }
+    ]
+  }
+]

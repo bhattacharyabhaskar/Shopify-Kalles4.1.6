@@ -1,0 +1,64 @@
+<script>window.isConfigPageAdm = true</script>
+{%- liquid
+assign page_type = request.page_type
+assign enable_quickview = settings.enable_quickview 
+assign enable_quickshop = settings.enable_quickshop
+if page_type == 'page' and page.template_suffix == 't4sindex' and settings.header_design == 'E-Commerce'
+assign is_page_index = true
+else
+assign is_page_index = false
+endif
+if settings.header_design != 'sidebar'
+section 'mega-menu'
+endif
+assign mobile_nav_type = settings.mobile_nav_type -%}
+<link rel="stylesheet" href="{{ 'mobile_nav.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<div id="t4s-menu-drawer" class="t4s-drawer t4s-drawer__left t4s-dn{% if is_page_index %} t4s-page-index-{{page.id}}{% endif %}" aria-hidden="true">
+ {%- if mobile_nav_type == '1' or mobile_nav_type == '2' -%}
+ <div class="t4s-drawer__header"><span>{% if mobile_nav_type == '1' %}{%- assign navActive = 'is--active' -%}{{ 'general.mobile_menu.menu' | t }}{% else %}{%- assign catActive = 'is--active' -%}{{ 'general.mobile_menu.categories' | t }}{% endif %}</span></div>
+ {%- else -%}
+  
+  {%- liquid
+     if mobile_nav_type == '3'
+        assign navActive = 'is--active'
+        assign catActive = ''
+     else 
+        assign order1 = 't4s-order-2'
+        assign order2 = 't4s-order-1'
+        assign navActive = ''
+        assign catActive = 'is--active'
+     endif -%}
+  <div data-tab-mb-nav class="t4s-drawer__header t4s-mb-nav__tabs t4s-rows t4s-g-0 t4s-row-cols-2 t4s-text-center">
+     <div data-tab-mb-item class="t4s-mb-tab__title t4s-col-item t4s-pr t4s-d-flex t4s-align-items-center t4s-justify-content-center {{order1}} {{navActive}}" data-id="#shopify-mb_nav"><span class="t4s-d-block t4s-truncate">{{ 'general.mobile_menu.menu' | t }}</span></div>
+     <div data-tab-mb-item class="t4s-mb-tab__title t4s-col-item t4s-pr t4s-d-flex t4s-align-items-center t4s-justify-content-center {{order2}} {{catActive}}" data-id="#shopify-mb_cat"><span class="t4s-d-block t4s-truncate">{{ 'general.mobile_menu.categories' | t }}</span></div>
+  </div>
+ {%- endif -%}
+ <div data-tab-mb-content id="shopify-mb_nav" class="t4s-mb-tab__content {{navActive}}">{% unless is_page_index %}{%- section 'mb_nav' -%}{% endunless %}</div><div data-tab-mb-content id="shopify-mb_cat" class="t4s-mb-tab__content {{catActive}}">{% unless is_page_index %}{%- section 'mb_cat' -%}{% endunless %}</div>
+</div>
+<button class="t4s-drawer-menu__close t4s-pe-none t4s-op-0 t4s-pf" data-drawer-close aria-label="{{'general.mobile_menu.close' | t}}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button>
+
+{%- liquid
+if page_type != 'cart' and settings.cart_type != 'disable'
+section 'mini_cart'
+endif
+if enable_quickview
+section 'main-qv'
+endif
+if enable_quickshop
+section 'main-qs'
+endif
+unless customer or settings.login_side == false
+   section 'login-sidebar'
+endunless
+section 'popups'
+section 'extras'
+
+section 'pr_item_config'
+section 'title_config'
+section 'btn_config'
+section 'slider_config'
+section 't4s_custom_color' -%}
+
+<style>.t4s-section-admn-fixed { position: fixed;top: 100px;pointer-events: none; z-index: -1;opacity: 0; }.t4s-section-admn2-fixed { position: fixed;top: 100px;z-index: 468; }</style>
+<style>.t4s-section-config.t4s-section-admn-fixed {position: static;top: auto;pointer-events: auto;z-index: auto;opacity: 1;}</style>

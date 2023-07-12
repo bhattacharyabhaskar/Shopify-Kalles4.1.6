@@ -1,0 +1,23 @@
+{%- liquid
+ layout none
+ assign mobile_nav_type = settings.mobile_nav_type -%}
+
+  {%- if mobile_nav_type == '1' or mobile_nav_type == '2' -%}
+  <div class="t4s-drawer__header"><span>{% if mobile_nav_type == '1' %}{%- assign navActive = 'is--active' -%}{{ 'general.mobile_menu.menu' | t }}{% else %}{%- assign catActive = 'is--active' -%}{{ 'general.mobile_menu.categories' | t }}{% endif %}</span></div>
+  {%- else -%}
+   
+   {%- if mobile_nav_type == '3' -%}
+    {%- assign navActive = 'is--active' -%}
+    {%- assign catActive = '' -%}
+   {%- else -%}
+    {%- assign order1 = 't4s-order-2' -%}
+    {%- assign order2 = 't4s-order-1' -%}
+    {%- assign navActive = '' -%}
+    {%- assign catActive = 'is--active' -%}
+   {%- endif -%}
+   <div data-tab-mb-nav class="t4s-drawer__header t4s-mb-nav__tabs t4s-rows t4s-g-0 t4s-row-cols-2 t4s-text-center">
+      <div data-tab-mb-item class="t4s-mb-tab__title t4s-col-item t4s-pr t4s-d-flex t4s-align-items-center t4s-justify-content-center {{ order1 }} {{ navActive }}" data-id="#shopify-mb_nav"><span class="t4s-d-block t4s-truncate">{{ 'general.mobile_menu.menu' | t }}</span></div>
+      <div data-tab-mb-item class="t4s-mb-tab__title t4s-col-item t4s-pr t4s-d-flex t4s-align-items-center t4s-justify-content-center {{ order2 }} {{ catActive }}" data-id="#shopify-mb_cat"><span class="t4s-d-block t4s-truncate">{{ 'general.mobile_menu.categories' | t }}</span></div>
+   </div>
+  {%- endif -%}
+  <div data-tab-mb-content id="shopify-mb_nav" class="t4s-mb-tab__content {{ navActive }}">{%- section 'mb_nav' -%}</div><div data-tab-mb-content id="shopify-mb_cat" class="t4s-mb-tab__content {{ catActive }}">{%- section 'mb_cat' -%}</div>

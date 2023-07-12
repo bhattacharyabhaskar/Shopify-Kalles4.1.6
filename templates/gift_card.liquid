@@ -1,0 +1,279 @@
+{% layout none %}
+
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.body_bg }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.favicon != blank %}<link rel="shortcut icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}"><link id="t4s-favico" rel="apple-touch-icon-precomposed" type="image/png" sizes="152x152" href="{{ settings.favicon | image_url: width: 152, height: 152 }}">{% endif -%}
+
+    {%- unless settings.type_header_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    {%- assign formatted_initial_value = gift_card.initial_value | money_without_trailing_zeros | strip_html -%}
+
+    <title>{{ 'gift_cards.issued.title' | t: value: formatted_initial_value, shop: shop.name }}</title>
+
+    <meta name="description" content="{{ 'gift_cards.issued.subtext' | t }}">
+
+    {{ content_for_header }}
+
+    {%- liquid
+      assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
+      assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
+      assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+   %}
+    {%- liquid
+        assign font_source = settings.font_source 
+        assign cl_lazyload = '#ffffff'
+        assign cHVyY2hh    = 'cHVyY2hhc2VfY29kZQ==' | base64_url_safe_decode
+        assign pr_overlay  = settings.pr_overlay | divided_by: 100.0
+        assign accent_lightness     = settings.accent_color | color_extract: 'lightness'
+     -%}
+
+      {%- if font_source == '2' -%}
+        {%- liquid 
+        assign fm_gg1 = settings.fnt_fm_gg1
+        assign fm_gg2 = settings.fnt_fm_gg2 | default: fm_gg1
+        assign fm_gg3 = settings.fnt_fm_gg3 | default: fm_gg1 -%}
+
+        {%- capture font_var -%}
+          {{ fm_gg1 | strip | replace: ' ', '+' }}:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i
+          {%- if fm_gg1 != fm_gg2 -%}|{{ fm_gg2 | strip | replace: ' ', '+' }}:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i{%- endif -%}
+          {%- if fm_gg3 != fm_gg1 and fm_gg3 != fm_gg2 -%}|{{ fm_gg3 | strip | replace: ' ', '+' }}:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i{%- endif -%}
+        {%- endcapture -%}
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={{ font_var }}&display=swap" media="print" onload="this.media='all'">
+
+      {%- else -%}
+        
+        {%- assign font_1 = settings.fnt_fm_sp1 -%}
+        {%- assign font_2 = settings.fnt_fm_sp2 | default: font_1 -%}
+        {%- assign font_3 = settings.fnt_fm_sp3 | default: font_1 -%}
+        {%- unless font_1.system? -%}
+          <link rel="preload" as="font" href="{{ font_1 | font_url }}" type="font/woff2" crossorigin>
+        {%- endunless -%}
+        {%- unless font_2.system? -%}
+          <link rel="preload" as="font" href="{{ font_1 | font_url }}" type="font/woff2" crossorigin>
+        {%- endunless -%}
+        {%- unless font_3.system? -%}
+          <link rel="preload" as="font" href="{{ font_1 | font_url }}" type="font/woff2" crossorigin>
+        {%- endunless -%}
+      {%- endif -%}
+
+    {%- style -%}
+
+
+      {%- if font_source == '1' -%}
+
+        {%- assign cl_flz = 'h1, h2, h3, h4, h5, h6, .f__mont, .f_heading, .h3, ' -%}
+        {%- assign fm_sp1 = font_1.family -%}
+        {%- assign fm_sp2 = font_2.family -%}
+        {%- assign fm_sp3 = font_3.family -%}
+       
+        {%- capture t4s_font_fm1 -%}{{ fm_sp1 }}, {{ font_1.fallback_families }};{%- endcapture -%}
+        {%- assign t4s_font_fm2 = t4s_font_fm1 -%}{%- assign t4s_font_fm3 = t4s_font_fm1 -%}
+
+        {%- for variant in font_1.variants -%}{{ variant | font_face: font_display: 'swap' }}{%- endfor -%}
+
+        {%- if fm_sp2 != fm_sp1 -%}
+          {%- capture t4s_font_fm2 -%}{{ fm_sp2 }}, {{ font_2.fallback_families }};{%- endcapture -%}
+          {%- for variant in font_2.variants -%}{{ variant | font_face: font_display: 'swap' }}{%- endfor -%}
+        {%- endif -%}
+
+        {%- if fm_sp3 != fm_sp1 -%}
+          {%- capture t4s_font_fm3 -%}{{ fm_sp3 }}, {{ font_3.fallback_families }};{%- endcapture -%}
+          {{- font_3 | font_face: font_display: 'swap' -}}
+        {%- endif -%}
+
+      {%- else -%}
+      
+        {%- assign cl_flz = '' -%}
+        {%- assign t4s_font_fm1 = fm_gg1 -%}
+        {%- assign t4s_font_fm2 = fm_gg2 -%}
+        {%- assign t4s_font_fm3 = fm_gg3 -%}
+
+      {%- endif -%}
+
+      {{ settings.type_body_font | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ body_font_italic | font_face: font_display: 'swap' }}
+      {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+      {{ settings.type_header_font | font_face: font_display: 'swap' }}
+
+      :root {
+        --page-width: {{ settings.cus_w_bd | divided_by: 10 }}rem;
+        --font-family-1   : {{ t4s_font_fm1 }};
+        --font-family-2   : {{ t4s_font_fm2 }};
+        --font-family-3   : {{ t4s_font_fm3 }};
+        --font-body-family   : {% if settings.bd_ffamily == '1' %}{{ t4s_font_fm1 }}{% elsif settings.bd_ffamily == '2' %}{{ t4s_font_fm2 }}{% else %}{{ t4s_font_fm3 }}{% endif %};
+        --font-heading-family: {% if settings.hd_ffamily == '1' %}{{ t4s_font_fm1 }}{% elsif settings.hd_ffamily == '2' %}{{ t4s_font_fm2 }}{% else %}{{ t4s_font_fm3 }}{% endif %};
+
+        --font-body-style: {{ settings.type_body_font.style }};
+        --font-body-weight: {{ settings.type_body_font.weight }};
+
+        --font-heading-style: {{ settings.type_header_font.style }};
+        --font-heading-weight: {{ settings.type_header_font.weight }};
+
+        --font-body-scale: 1.0;
+        --font-heading-scale: 1.0;
+
+        --primary-price-color : {{ settings.price_primary }};
+
+        --color-base-text: {{ settings.text_color.red }}, {{ settings.text_color.green }}, {{ settings.text_color.blue }};
+        --color-base-background-1: {{ settings.body_bg.red }}, {{ settings.body_bg.green }}, {{ settings.body_bg.blue }};
+        --color-base-background-2: {{ settings.body_bg.red }}, {{ settings.body_bg.green }}, {{ settings.body_bg.blue }};
+        --color-base-solid-button-labels: {{ settings.btn_bg.red }}, {{ settings.btn_bg.green }}, {{ settings.btn_bg.blue }};
+        --color-base-outline-button-labels: {{ settings.link_color.red }}, {{ settings.link_color.green }}, {{ settings.link_color.blue }};
+        --color-base-accent-1: {{ settings.accent_color.red }}, {{ settings.accent_color.green }}, {{ settings.accent_color.blue }};
+        --color-base-accent-2: {{ settings.accent_color.red }}, {{ settings.accent_color.green }}, {{ settings.accent_color.blue }};
+        --secondary-color    : {{ settings.secondary_color }};
+
+        --t4s-success-color  : #428445;
+        --buttons-radius: 40px;
+       {%- liquid 
+       assign sale_badge_lightness     = settings.sale_badge_color | color_extract: 'lightness'
+       assign soldout_badge_lightness  = settings.soldout_badge_color | color_extract: 'lightness' %}
+
+        --sale-badge-background    : {{ settings.sale_badge_color }};
+        --sale-badge-color         : {% if sale_badge_lightness < 85 %}#fff{% else %}#222{% endif %};
+        --soldout-badge-background : {{ settings.soldout_badge_color }};
+        --soldout-badge-color      : {% if soldout_badge_lightness < 85 %}#fff{% else %}#222{% endif %};
+
+        {%- assign accent_lightness = settings.accent_color | color_extract: 'lightness' -%}
+        --accent-text-color  : {% if accent_lightness < 85 %}#fff{% else %}#222{% endif %};
+
+        --gradient-base-background-1: {% if settings.gradient_background_1 != blank %}{{ settings.gradient_background_1 }}{% else %}{{ settings.body_bg }}{% endif %};
+      }
+    {%- endstyle -%}
+
+    {%- unless settings.type_body_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+    {%- unless settings.type_header_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+
+    {{ 'template-giftcard.css' | asset_url | stylesheet_tag }}
+  </head>
+
+  <body class="gradient">
+    <header class="gift-card__title">
+      <span class="h2">{{ shop.name }}</span>
+      <h1 class="gift-card__heading">{{ 'gift_cards.issued.subtext' | t }}</h1>
+      <div class="gift-card__price">
+        <p>
+          {% if settings.currency_code_enabled %}
+            {{ gift_card.initial_value | money_with_currency }}
+          {% else %}
+            {{ gift_card.initial_value | money }}
+          {% endif %}
+        </p>
+        {%- assign gift_card_expiry_date = gift_card.expires_on | date: "%d/%m/%y" -%}
+        {%- if gift_card.enabled == false or gift_card.expired -%}
+          <p class="gift-card__label badge">{{ 'gift_cards.issued.expired' | t: expiry: gift_card_expiry_date }}</p>
+        {%- endif -%}
+        {%- if gift_card.expired != true and gift_card.expires_on and gift_card.enabled -%}
+          <p class="gift-card__label badge badge--sold_out">{{ 'gift_cards.issued.active' | t: expiry: gift_card_expiry_date }}</p>
+        {%- endif -%}
+      </div>
+
+      {% if settings.currency_code_enabled %}
+        {%- assign gift_card_balance = gift_card.balance | money_with_currency -%}
+      {% else %}
+        {%- assign gift_card_balance = gift_card.balance | money -%}
+      {% endif %}
+      {%- if gift_card.balance != gift_card.initial_value -%}
+        <p class="gift-card__label caption-large">{{ 'gift_cards.issued.remaining_html' | t: balance: gift_card_balance }}</p>
+      {%- endif -%}
+    </header>
+
+    <main class="gift-card">
+      <div class="gift-card__image-wrapper">
+        <img src="{{ 'gift-card/card.svg' | shopify_asset_url }}" alt="" class="gift-card__image" height="{{ 570 | divided_by: 1.5 }}" width="570" loading="lazy">
+      </div>
+      <div class="gift-card__information">
+        {%- assign formatted_initial_value = gift_card.initial_value | money_without_trailing_zeros: gift_card.currency -%}
+        {%- assign formatted_initial_value_stripped = formatted_initial_value | strip_html -%}
+        {{ 'gift_cards.issued.redeem_html' | t: value: formatted_initial_value_stripped }}
+      </div>
+      <div class="gift-card__qr-code" data-identifier="{{ gift_card.qr_identifier }}"></div>
+      <div class="gift-card__information">
+        <input
+          type="text"
+          class="gift-card__number"
+          value="{{ gift_card.code | format_code }}"
+          aria-label="{{ 'gift_cards.issued.gift_card_code' | t }}"
+          readonly
+        >
+        <div class="gift-card__copy-code">
+          <button class="link gift-card__copy-link">{{ 'gift_cards.issued.copy_code' | t }}</button>
+          <span class="gift-card__copy-success form__message" role="status"></span>
+          <template>
+            {%- render 'icon-success' -%}{{ 'gift_cards.issued.copy_code_success' | t }}
+          </template>
+        </div>
+        {%- if gift_card.pass_url -%}
+          <a href="{{ gift_card.pass_url }}" class="gift_card__apple-wallet">
+            <img src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" width="120" height="40" alt="{{ 'gift_cards.issued.add_to_apple_wallet' | t }}" loading="lazy">
+          </a>
+        {%- endif -%}
+        <div class="gift-card__buttons no-print">
+          <a
+            href="{{ shop.url }}"
+            class="button t4s-shop_link"
+            target="_blank"
+            rel="noopener"
+            aria-describedby="a11y-new-window-message"
+          >
+            {{ 'gift_cards.issued.shop_link' | t }}
+          </a>
+          <button
+            class="button button--secondary"
+            onclick="window.print();"
+          >
+            {{ 'gift_cards.issued.print' | t }}
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <div hidden>
+      <span id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</span>
+    </div>
+  </body>
+</html>
+
+<script>
+  var string = { qrImageAlt: {{ 'gift_cards.issued.qr_image_alt' | t | json }} };
+  document.addEventListener('DOMContentLoaded', function() {
+   new QRCode( document.querySelector('.gift-card__qr-code'), {
+    text: document.querySelector('.gift-card__qr-code').dataset.identifier,
+    width: 120,
+    height: 120,
+    imageAltText: string.qrImageAlt
+    });
+  });
+
+  var template = document.getElementsByTagName("template")[0];
+  var clonedTemplate = template.content.cloneNode(true);
+
+  var isMessageDisplayed = false
+  document
+  .querySelector('.gift-card__copy-link')
+  .addEventListener('click', () => {
+    navigator.clipboard.writeText(document.querySelector('.gift-card__number').value).then(function () {
+      if (!isMessageDisplayed) {
+        document.querySelector('.gift-card__copy-success').appendChild(clonedTemplate);
+        isMessageDisplayed = true
+      }
+    });
+  });
+</script>
