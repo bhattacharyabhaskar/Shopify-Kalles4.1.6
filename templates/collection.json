@@ -207,7 +207,7 @@
         "space_h_item_mb": "10",
         "space_v_item_mb": "10",
         "layout_des": "1",
-        "use_pagination": "load-more",
+        "use_pagination": "default",
         "enable_bar_lm": true,
         "btn_icon": false,
         "button_style": "outline",
