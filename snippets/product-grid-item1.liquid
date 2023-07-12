@@ -121,6 +121,8 @@ endif -%}
          {%- if product.vendor.size > 0 and show_vendor -%}{% if use_link_vendor %}{% assign pr_vendor_handle = product.vendor | handle %}{% assign collection_vendor = collections[pr_vendor_handle] %}{% endif %}<div class="t4s-product-vendor"><a href="{% if use_link_vendor and collection_vendor.url != blank %}{{ collection_vendor.url }}{% else %}{{ product.vendor | url_for_vendor }}{% endif %}">{{ product.vendor }}</a></div>{%- endif -%}
          <h3 class="t4s-product-title"><a data-pr-href href="{{ pr_url }}">{{ product.title }}</a></h3>
          {%- render 'product-price', product: product, price_varies_style: price_varies_style, type: 'card', isGrouped: isGrouped -%}
+        <div class="grid_vendor">SKU: {{ product.variants.first.sku }}</div>
+
          {%- if enable_rating %}{%- render 'product-rating', product: product, app_review: app_review -%}{% endif -%}
         {%- if show_list_btns -%}
          {%- assign description_excerpt = product.metafields.theme.description_excerpt -%}
