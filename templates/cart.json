@@ -61,7 +61,7 @@
             "url": "shopify:\/\/collections\/buy-silk-mark-certified-saree",
             "btn_icon": false,
             "button_style": "default",
-            "btn_cl": "custom1",
+            "btn_cl": "primary",
             "button_effect": "fade"
           }
         },
