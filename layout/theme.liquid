@@ -131,6 +131,7 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
     <script src="{{ 'unique.js' | asset_url }}" defer="defer"></script>
   {% include 'adroll' %}
   {% include 'limoniapps-discountninja-body' %}
+  {%- render 'footer-app-block' -%}
   {{ 'wnw-optimization-3.0.js' | asset_url | script_tag }}                
 </body>
 </html>
