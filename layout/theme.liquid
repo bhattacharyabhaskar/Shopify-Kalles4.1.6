@@ -31,7 +31,6 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
         <meta name="robots" content="noindex, nofollow">
     {% endif %}
         {% if template contains 'index' %}
-            {% render 'homepage-critical-css' %}
             {% render 'organization-schema' %}
         {% elsif template contains 'collection' %}
             {% render 'breadcrumb-schema-collection' %}
