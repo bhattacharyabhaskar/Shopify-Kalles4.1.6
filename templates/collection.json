@@ -209,6 +209,23 @@
         "sidebar_pd": 15
       }
     },
+    "9aef6043-2b56-4e08-ab6f-903c181b414c": {
+      "type": "custom-html",
+      "settings": {
+        "code": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #fff;color: #fff;\">\n<div data-romw-token=\"SuXYREMYz4nTRed4TUFHciHAwv1qXhpiEuFE4aGRGxvvhK3AdI\"><\/div>\n<\/div>",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "946f4bb4-1903-4ea5-b3fb-6391c47840dd": {
       "type": "custom-liquid",
       "settings": {
@@ -245,6 +262,7 @@
     "heading_template",
     "main",
     "sidebar",
+    "9aef6043-2b56-4e08-ab6f-903c181b414c",
     "946f4bb4-1903-4ea5-b3fb-6391c47840dd",
     "e7202abf-1953-45a6-941a-f453d2add145"
   ]
