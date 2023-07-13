@@ -97,8 +97,8 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
 
     {%- render 'meta-tags', t_name: t_name -%}
     
-    <script data-src="{{ 'lazysizes.min.js' | asset_url }}" type="lazyload2"></script>
-    <script data-src="{{ 'global.min.js' | asset_url }}" type="lazyload2"></script>
+     <script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script>
+    <script src="{{ 'global.min.js' | asset_url }}" defer="defer"></script>
     {{ content_for_header }}
     {%- render 'head_assets', t_name: t_name, isRTL: isRTL -%}
     {% render 'gsf-conversion-pixels' %}
