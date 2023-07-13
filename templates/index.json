@@ -704,7 +704,6 @@
     },
     "7fed8a43-3022-4e84-b1b2-e0cbb415d702": {
       "type": "image_text",
-      "disabled": true,
       "blocks": {
         "template--16798341333225__7fed8a43-3022-4e84-b1b2-e0cbb415d702-1689262321cccf9b93-1": {
           "type": "bl_text",
@@ -760,7 +759,6 @@
     },
     "8dd3e86e-0721-4d8e-b449-6936c3b0e0ab": {
       "type": "custom-html",
-      "disabled": true,
       "settings": {
         "code": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #fff;color: #fff;\">\n<div data-romw-token=\"SuXYREMYz4nTRed4TUFHciHAwv1qXhpiEuFE4aGRGxvvhK3AdI\"><\/div>\n<\/div>",
         "layout": "t4s-container-wrap",
