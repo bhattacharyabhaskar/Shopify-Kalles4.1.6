@@ -51,6 +51,7 @@
     "notify_currency": true,
     "hover_currency": false,
     "colors_css": true,
+    "custom_css_t4s": true,
     "share_tumblr": true,
     "share_telegram": true,
     "share_whatsapp": false,
