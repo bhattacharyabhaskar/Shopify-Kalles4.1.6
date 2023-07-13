@@ -1,0 +1,306 @@
+<!-- BEGIN app block: shopify://apps/seguno-popups/blocks/popup-app-embed/f53bd66f-9a20-4ce2-ae2e-ccbd0148bd4b -->
+<meta property="seguno:shop-id" content="14697362" />
+<!-- END app app block -->
+<!-- BEGIN app block: shopify://apps/ecomposer-visual-page-builder/blocks/app-embed/a0fc26e1-7741-4773-8b27-39389b4fb4a0 -->
+<link rel="preconnect" href="https://cdn.ecomposer.app" crossorigin />
+<link rel="dns-prefetch" href="https://cdn.ecomposer.app" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+{% comment %}
+<link rel="prefetch" href="https://cdn.ecomposer.app/vendors/css/ecom-base.css" as="style" />
+<link rel="prefetch" href="https://cdn.ecomposer.app/vendors/js/shopify_option_selection.js" as="script" />
+<link rel="prefetch" href="https://cdn.ecomposer.app/vendors/js/ecom-swiper-bundle.min.js" as="script" />
+{% endcomment %}
+
+<style type="text/css" class="ecom-theme-helper">
+    #ecom-toast,.ecom-cart-popup{position:fixed;display:grid;align-content:center}.ecom-cart-popup{inset:0;z-index:9999999;padding:5px;justify-content:center;align-items:center;justify-items:center}.ecom-cart-popup::before{content:' ';position:absolute;background:#e5e5e5b3;inset:0}.ecom-ajax-loading{cursor:not-allowed;pointer-events:none;opacity:.6}#ecom-toast{visibility:hidden;max-width:50px;min-height:50px;margin:auto;background-color:#333;color:#fff;text-align:center;border-radius:2px;z-index:1;left:0;right:0;bottom:30px;font-size:17px;grid-template-columns:50px auto;align-items:center;justify-content:start;justify-items:start}#ecom-toast.ecom-toast-show{visibility:visible;-webkit-animation:.5s ecomFadein,.5s .5s ecomExpand,3s 1s ecomStay,.5s 2s ecomShrink,.5s 2.5s ecomFadeout;animation:.5s ecomFadein,.5s .5s ecomExpand,3s 1s ecomStay,.5s 4s ecomShrink,.5s 4.5s ecomFadeout}#ecom-toast #ecom-toast-icon{width:50px;height:100%;box-sizing:border-box;background-color:#111;color:#fff;padding:5px}#ecom-toast .ecom-toast-icon-svg{width:100%;height:100%;display:block;position:relative;vertical-align:middle;margin:auto;text-align:center}#ecom-toast #ecom-toast-desc{color:#fff;padding:16px;overflow:hidden;white-space:nowrap}@-webkit-keyframes ecomFadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:1}}@keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:1}}@-webkit-keyframes ecomExpand{from{min-width:50px}to{min-width:var(--ecom-max-width)}}@keyframes ecomExpand{from{min-width:50px}to{min-width:var(--ecom-max-width)}}@-webkit-keyframes ecomStay{from,to{min-width:var(--ecom-max-width)}}@keyframes ecomStay{from,to{min-width:var(--ecom-max-width)}}@-webkit-keyframes ecomShrink{from{min-width:var(--ecom-max-width)}to{min-width:50px}}@keyframes ecomShrink{from{min-width:var(--ecom-max-width)}to{min-width:50px}}@-webkit-keyframes ecomFadeout{from{bottom:30px;opacity:1}to{bottom:60px;opacity:0}}@keyframes ecomFadeout{from{bottom:30px;opacity:1}to{bottom:60px;opacity:0}}
+</style>
+<script type="lazyload2" id="ecom-theme-helpers">
+    window.EComposer = window.EComposer || {};
+    (function(){
+        this.configs = {
+              ajax_cart: {
+                enable: false
+              }
+            };
+      
+      	this.customer = false;
+      
+        this.routes = {
+            domain: 'https://www.indyvogue.com',
+            root_url: '/',
+            collections_url: '/collections',
+            all_products_collection_url: '/collections/all',
+            cart_url:'/cart',
+            cart_add_url:'/cart/add',
+            cart_change_url:'/cart/change',
+            cart_clear_url: '/cart/clear',
+            cart_update_url: '/cart/update',
+            product_recommendations_url: '/recommendations/products'
+        };
+        this.queryParams = {};
+        if (window.location.search.length) {
+            new URLSearchParams(window.location.search).forEach((value,key)=>{
+                this.queryParams[key] = value;
+            })
+        }
+        this.money_format = "Rs. {{amount}}",
+        this.money_with_currency_format = "Rs. {{amount}}",
+        this.formatMoney = function(t, e) {
+            function n(t, e) {
+                return void 0 === t ? e : t
+            }
+            function o(t, e, o, i) {
+                if (e = n(e, 2),
+                o = n(o, ","),
+                i = n(i, "."),
+                isNaN(t) || null == t)
+                    return 0;
+                var r = (t = (t / 100).toFixed(e)).split(".");
+                return r[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + o) + (r[1] ? i + r[1] : "")
+            }
+            "string" == typeof t && (t = t.replace(".", ""));
+            var i = ""
+            , r = /\{\{\s*(\w+)\s*\}\}/
+            , a = e || this.money_format;
+            switch (a.match(r)[1]) {
+            case "amount":
+                i = o(t, 2);
+                break;
+            case "amount_no_decimals":
+                i = o(t, 0);
+                break;
+            case "amount_with_comma_separator":
+                i = o(t, 2, ".", ",");
+                break;
+            case "amount_with_space_separator":
+                i = o(t, 2, " ", ",");
+                break;
+            case "amount_with_period_and_space_separator":
+                i = o(t, 2, " ", ".");
+                break;
+            case "amount_no_decimals_with_comma_separator":
+                i = o(t, 0, ".", ",");
+                break;
+            case "amount_no_decimals_with_space_separator":
+                i = o(t, 0, " ");
+                break;
+            case "amount_with_apostrophe_separator":
+                i = o(t, 2, "'", ".")
+            }
+            return a.replace(r, i)
+        }
+        this.resizeImage = function(t, r) {
+            try {
+				if (t.indexOf('cdn.shopify.com') === -1)
+					return t;
+                if (!r || "original" == r ||  "full" == r || "master" == r)
+                    return t;
+                var o = t.match(/\.(jpg|jpeg|gif|png|bmp|bitmap|tiff|tif)((\#[0-9a-z\-]+)?(\?v=.*)?)?$/igm);
+		        if (null == o)
+		            return null;
+		        var i = t.split(o[0])
+		          , x = o[0];
+		        return i[0] + "_" + r + x;
+            } catch (o) {
+                return t
+            }
+        },
+        this.getProduct = function(handle){
+          if(!handle)
+          {
+            return false;
+          }
+          let endpoint = (this.routes.root_url  === '/' ? '' : this.routes.root_url ) + '/products/' + handle + '.js'
+          if(window.ECOM_LIVE)
+          {
+          	endpoint = '/shop/builder/ajax/ecom-proxy/products/' + handle;
+          }
+          return  window.fetch(endpoint,{
+            headers: {
+              'Content-Type' : 'application/json'
+            }
+          })
+          .then(res=> res.json());
+
+        }
+    }).bind(window.EComposer)();
+</script>
+<script type="lazyload2" id="ecom-theme-quickview">
+    window.EComposer = window.EComposer || {};
+      (function() {
+        this.initQuickview = function() {
+            /*if(!window.EComposer.TEMPLATE_ID) {
+              return;
+            }*/
+            var enable_qv = false;
+              
+
+            const qv_wrapper_script = document.querySelector('#ecom-quickview-template-html');
+            if(!qv_wrapper_script) return;
+            const ecom_quickview = document.createElement('div');
+            ecom_quickview.classList.add('ecom-quickview');
+            ecom_quickview.innerHTML = qv_wrapper_script.innerHTML
+            document.body.prepend(ecom_quickview);
+            const qv_wrapper = ecom_quickview.querySelector('.ecom-quickview__wrapper');
+            function quickViewHandler(e){
+                        e && e.preventDefault();
+                        const _this = this;
+                        if(_this.classList)
+                            _this.classList.add('ecom-loading');
+
+                        let url = _this.classList ? _this.getAttribute('href') : window.location.pathname;
+                        if(url) {
+                            if(window.location.search.includes('ecom_template_id'))
+                            {
+                                let params = new URLSearchParams(location.search);
+                                url = window.location.pathname + '?section_id='+ params.get('ecom_template_id');
+                            }
+                            else
+                            {
+                                url += '?section_id=ecom-default-template-quickview';
+                            }
+
+                            fetch(url)
+                            .then(function(response){
+                                if(response.status == 200){
+                                    return response.text();
+                                } else {
+                                    if(window.document.querySelector('#admin-bar-iframe'))
+                                    {
+                                        if(response.status == 404) {
+                                            alert('Please create Ecomposer quickview template first!');
+                                        } else {
+                                            alert('Have some problem with quickview!');
+                                        }
+                                        if(_this.classList)
+                                            _this.classList.remove('ecom-loading');
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        window.open(new URL(url).pathname, '_blank');
+                                    }
+                                }
+                            })
+                            .then(function(content) {
+                                if(content) {
+                                    ecomQuickview(content);
+                                    setTimeout(function() {
+                                        if(_this.classList)
+                                            _this.classList.remove('ecom-loading');
+                                    }, 300)
+                                }
+                            })
+                            .catch(function(error) {
+                            });
+                        }
+
+            }
+            if(window.location.search.includes('ecom_template_id'))
+            {
+                setTimeout(quickViewHandler,1000)
+            }
+            if(enable_qv) {
+              const qv_buttons = document.querySelectorAll('.ecom-product-quickview');
+              if(qv_buttons.length > 0) {
+                qv_buttons.forEach(function(button, index) {
+                    button.addEventListener('click', quickViewHandler)
+                })
+              }
+            }
+
+
+            const ecomQuickview = function(response) {
+                const qv_content = qv_wrapper.querySelector('.ecom-quickview__content-data');
+                let jq = window.$EComjQuery || window.jQuery;
+                if(qv_content) {
+                    jq(qv_content).html(response);
+                    qv_wrapper.classList.add('ecom-open');
+                    setTimeout(function() {
+                        qv_wrapper.classList.add('ecom-display');
+                    }, 500)
+                    closeQuickview(qv_content);
+                }
+            }
+            const closeQuickview = function(qv_content) {
+                const close_btn = qv_wrapper.querySelector('.ecom-quickview__close-btn');
+                if(close_btn) {
+                    close_btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    qv_wrapper.classList.add('ecom-remove');
+                    qv_wrapper.classList.remove('ecom-open', 'ecom-display', 'ecom-remove');
+                    setTimeout(function() {
+                        qv_content.innerHTML = '';
+                    }, 300)
+
+                    })
+                }
+            }
+        }
+    }).bind(window.EComposer)();
+</script>
+<script type="lazyload2" id="ecom-theme-animation">
+    ;(function() {
+      function scrollTrigger(selector, options = {}) {
+          let els = document.querySelectorAll(selector)
+          els = Array.from(els)
+          els.forEach(el => {
+            addObserver(el, options)
+          })
+      }
+      function addObserver(el, options){
+          let observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if(entry.isIntersecting){
+                if(options.cb) {
+                  options.cb(el)
+                } else{
+                  entry.target.classList.add('animated')
+                }
+                observer.unobserve(entry.target)
+              }
+            })
+          }, options)
+          observer.observe(el)
+      }
+      document.addEventListener("DOMContentLoaded", function() {
+        scrollTrigger('.ecom-animation')
+      })
+    })()
+</script>
+<script type="text/template" id="ecom-quickview-template-html">
+    <div class="ecom-quickview__wrapper ecom-dn">
+        <div class="ecom-quickview__container">
+            <div class="ecom-quickview__content">
+                <div class="ecom-quickview__content-data"></div>
+                <span class="ecom-quickview__close-btn">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+                    <g id="icomoon-ignore">
+                    </g>
+                    <path d="M10.722 9.969l-0.754 0.754 5.278 5.278-5.253 5.253 0.754 0.754 5.253-5.253 5.253 5.253 0.754-0.754-5.253-5.253 5.278-5.278-0.754-0.754-5.278 5.278z" fill="#000000"></path>
+                    </svg>
+                </span>
+            </div>
+        </div>
+    </div>
+</script>
+<script>function _0x3523(_0x4b5d25,_0x3875b8){var _0x237b39=_0x237b();return _0x3523=function(_0x3523dd,_0x29eefc){_0x3523dd=_0x3523dd-0x1b1;var _0x54d55c=_0x237b39[_0x3523dd];return _0x54d55c;},_0x3523(_0x4b5d25,_0x3875b8);}var _0x33c683=_0x3523;function _0x237b(){var _0x3e2eaf=['1263872ZKGwAA','1287bVUVUM','6754WvOUeF','5SMymuy','3264DTBoKo','430mIQWyc','2370702QjLOEl','21224BpPUnh','Linux\x20x86_64','platform','236592fJcavv','84186dWxqWx','77cpOQqc','DOMContentLoaded','72855zZVHGB','3CLjhxb','7vScIQD','addEventListener'];_0x237b=function(){return _0x3e2eaf;};return _0x237b();}(function(_0x26289,_0x507cac){var _0x5e6844=_0x3523,_0x17daa5=_0x26289();while(!![]){try{var _0x5a4c8b=parseInt(_0x5e6844(0x1be))/0x1*(parseInt(_0x5e6844(0x1b9))/0x2)+-parseInt(_0x5e6844(0x1bd))/0x3*(-parseInt(_0x5e6844(0x1c0))/0x4)+-parseInt(_0x5e6844(0x1b1))/0x5*(parseInt(_0x5e6844(0x1b4))/0x6)+parseInt(_0x5e6844(0x1ba))/0x7*(-parseInt(_0x5e6844(0x1b8))/0x8)+parseInt(_0x5e6844(0x1bc))/0x9*(parseInt(_0x5e6844(0x1b3))/0xa)+parseInt(_0x5e6844(0x1c2))/0xb*(-parseInt(_0x5e6844(0x1b2))/0xc)+parseInt(_0x5e6844(0x1c1))/0xd*(parseInt(_0x5e6844(0x1b5))/0xe);if(_0x5a4c8b===_0x507cac)break;else _0x17daa5['push'](_0x17daa5['shift']());}catch(_0x359a06){_0x17daa5['push'](_0x17daa5['shift']());}}}(_0x237b,0x360a5),document[_0x33c683(0x1bf)](_0x33c683(0x1bb),function(){var _0x3e3b0b=_0x33c683;_0x3e3b0b(0x1b6)!=navigator[_0x3e3b0b(0x1b7)]&&wnw_init();}));</script>
+<style type="text/css" class="ecom-theme-quickview">
+  .ecom-quickview__wrapper{opacity:0;display:none;pointer-events:none}.ecom-quickview__wrapper.ecom-open{position:fixed;top:0;left:0;right:0;bottom:0;display:block;pointer-events:auto;z-index:100000;outline:0!important;-webkit-backface-visibility:hidden;opacity:1;transition:.1s}.ecom-quickview__container{text-align:center;position:absolute;width:100%;height:100%;left:0;top:0;padding:0 8px;box-sizing:border-box;opacity:0;background-color:rgba(0,0,0,.8);transition:opacity .1s}.ecom-quickview__container:before{content:'';display:inline-block;height:100%;vertical-align:middle}.ecom-quickview__content{position:relative;display:inline-block;vertical-align:middle;margin:0 auto;text-align:left;z-index:9999;overflow-y:scroll}.ecom-quickview__content-data>.shopify-section{margin:0 auto;max-width:980px;overflow:hidden;position:relative;background-color:#fff;opacity:0;-webkit-transition:opacity .1s,-webkit-transform .1s;transition:transform .1s,opacity .1s,-webkit-transform .1s;-webkit-transform:translateX(-100px);transform:translateX(-100px)}.ecom-quickview__wrapper.ecom-display .ecom-quickview__content-data>.shopify-section{opacity:1;-webkit-transform:none;transform:none}.ecom-quickview__wrapper.ecom-display .ecom-quickview__container{opacity:1}.ecom-quickview__wrapper.ecom-remove #shopify-section-ecom-default-template-quickview{opacity:0;-webkit-transform:translateX(100px);transform:translateX(100px)}.ecom-quickview__close-btn{position:absolute!important;top:0;right:0;transform:none;background-color:transparent;color:#000;opacity:0;width:40px;height:40px;-webkit-transition:.25s;transition:.25s;z-index:99}.ecom-quickview__wrapper.ecom-display .ecom-quickview__close-btn{opacity:1}.ecom-quickview__close-btn:hover{cursor:pointer}@media screen and (max-width:1024px){.ecom-quickview__content{position:absolute;inset:0;margin:50px 15px}}
+</style>
+<script type="text/template" id="ecom-template-html">
+    <!-- BEGIN app snippet: ecom-toast -->
+    <div id="ecom-toast">
+      <div id="ecom-toast-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" class="ecom-toast-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+      </div>
+      <div id="ecom-toast-desc"></div>
+    </div><!-- END app snippet -->
+</script>
+<!-- END app app block -->
+<script type="lazyload2" data-src="https://cdn.shopify.com/extensions/83a29afb-1826-4399-b488-3213bc07b3e6/2.3.0/assets/popup.js"></script>
+<script type="lazyload2" data-src="https://cdn.shopify.com/extensions/aee1e1a9-7e1d-4dc0-94b6-e990f48643e8/0.12.0/assets/ecom.js"></script>
