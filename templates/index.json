@@ -704,6 +704,7 @@
     },
     "7fed8a43-3022-4e84-b1b2-e0cbb415d702": {
       "type": "image_text",
+      "disabled": true,
       "blocks": {
         "template--16798341333225__7fed8a43-3022-4e84-b1b2-e0cbb415d702-1689262321cccf9b93-1": {
           "type": "bl_text",
