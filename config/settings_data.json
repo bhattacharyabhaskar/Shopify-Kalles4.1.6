@@ -2575,12 +2575,6 @@
           "color-secondary": "#343434"
         }
       },
-      "6468128024931565999": {
-        "type": "shopify:\/\/apps\/seguno-popups\/blocks\/popup-app-embed\/f53bd66f-9a20-4ce2-ae2e-ccbd0148bd4b",
-        "disabled": false,
-        "settings": {
-        }
-      },
       "7456567658179156570": {
         "type": "shopify:\/\/apps\/adroll-advertising-marketing\/blocks\/adroll-pixel\/c60853ed-1adb-4359-83ae-4ed43ed0b559",
         "disabled": false,
@@ -2590,6 +2584,12 @@
       },
       "6143736321357441667": {
         "type": "shopify:\/\/apps\/tidio-live-chat-chatbots\/blocks\/app-embed\/1002274d-fb18-4939-98f6-5f05a8deeadc",
+        "disabled": true,
+        "settings": {
+        }
+      },
+      "6468128024931565999": {
+        "type": "shopify:\/\/apps\/seguno-popups\/blocks\/popup-app-embed\/f53bd66f-9a20-4ce2-ae2e-ccbd0148bd4b",
         "disabled": true,
         "settings": {
         }
