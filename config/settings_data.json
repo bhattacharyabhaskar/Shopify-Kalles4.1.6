@@ -50,6 +50,7 @@
     "round_currency": false,
     "notify_currency": true,
     "hover_currency": false,
+    "colors_css": true,
     "share_tumblr": true,
     "share_telegram": true,
     "share_whatsapp": false,
