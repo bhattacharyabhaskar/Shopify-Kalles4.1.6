@@ -330,7 +330,7 @@
             "open_link": "_self",
             "btn_icon": false,
             "button_style": "default",
-            "btn_size": "large",
+            "btn_size": "medium",
             "btn_cl": "primary",
             "button_effect": "default"
           }
