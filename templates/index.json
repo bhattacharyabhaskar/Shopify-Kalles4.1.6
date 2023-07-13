@@ -745,7 +745,7 @@
             "subhd_color": "#222222",
             "hd_color": "#109533",
             "des_color": "#878787",
-            "use_shadow": false,
+            "use_shadow": true,
             "button_label": "SEE ALL REVIEWS",
             "button_link": "shopify:\/\/pages\/indyvogue-reviews",
             "open_link": "_self",
