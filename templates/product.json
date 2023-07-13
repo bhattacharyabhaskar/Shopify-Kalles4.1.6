@@ -433,6 +433,125 @@
         "mg_mb": ",,30px,",
         "pd_mb": ""
       }
+    },
+    "af2448f8-7fd7-4ede-8634-e6c4fe9fd383": {
+      "type": "custom-section",
+      "blocks": {
+        "template--16798339956969__af2448f8-7fd7-4ede-8634-e6c4fe9fd383-1689264634bf3aea28-0": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_tb": "6",
+            "col_mb": "12",
+            "align_vertical": false,
+            "content_align": "center",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "30px,,30px",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_cl": "#d2a2a2"
+          }
+        },
+        "template--16798339956969__af2448f8-7fd7-4ede-8634-e6c4fe9fd383-1689264634bf3aea28-1": {
+          "type": "custom_text",
+          "settings": {
+            "text": "LOOKBOOK 2023",
+            "remove_br_tag": false,
+            "tag": "p",
+            "fontf": "inherit",
+            "text_cl": "#000000",
+            "text_fs": 24,
+            "text_lh": 0,
+            "text_fw": 500,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 5,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        }
+      },
+      "block_order": [
+        "template--16798339956969__af2448f8-7fd7-4ede-8634-e6c4fe9fd383-1689264634bf3aea28-0",
+        "template--16798339956969__af2448f8-7fd7-4ede-8634-e6c4fe9fd383-1689264634bf3aea28-1"
+      ],
+      "settings": {
+        "space_h_item": "30",
+        "space_v_item": "30",
+        "space_h_item_mb": "10",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": ",,50px,",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
+    "e6339de8-e574-4b99-aef3-e865a8846c44": {
+      "type": "image_text",
+      "blocks": {
+        "template--16798339956969__e6339de8-e574-4b99-aef3-e865a8846c44-1689262321cccf9b93-1": {
+          "type": "bl_text",
+          "settings": {
+            "col_dk": "12",
+            "col_tb": "12",
+            "text_size": "40,15",
+            "txt_align": "center",
+            "sub_heading": "",
+            "heading": "Image with text",
+            "text": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "subhd_color": "#222222",
+            "hd_color": "#222222",
+            "des_color": "#878787",
+            "use_shadow": false,
+            "button_label": "Button label",
+            "button_link": "",
+            "open_link": "_blank",
+            "btn_icon": false,
+            "button_style": "default",
+            "btn_size": "large",
+            "btn_cl": "dark",
+            "button_effect": "default"
+          }
+        }
+      },
+      "block_order": [
+        "template--16798339956969__e6339de8-e574-4b99-aef3-e865a8846c44-1689262321cccf9b93-1"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "space_h_item": "20",
+        "space_v_item": "10",
+        "space_h_item_mb": "20",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
     }
   },
   "order": [
@@ -441,6 +560,8 @@
     "sidebar",
     "aa9c88a6-8567-4fa6-a48d-c5ae3146568a",
     "product-recommendations",
-    "recently-viewed-products"
+    "recently-viewed-products",
+    "af2448f8-7fd7-4ede-8634-e6c4fe9fd383",
+    "e6339de8-e574-4b99-aef3-e865a8846c44"
   ]
 }
