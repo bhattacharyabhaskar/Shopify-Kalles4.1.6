@@ -729,6 +729,61 @@
         "code_cus_css": ""
       }
     },
+    "7fed8a43-3022-4e84-b1b2-e0cbb415d702": {
+      "type": "image_text",
+      "blocks": {
+        "template--16798341333225__7fed8a43-3022-4e84-b1b2-e0cbb415d702-1689262321cccf9b93-1": {
+          "type": "bl_text",
+          "settings": {
+            "col_dk": "12",
+            "col_tb": "6",
+            "text_size": "40,15",
+            "txt_align": "center",
+            "sub_heading": "",
+            "heading": "<h3>Overall rating 4.9 ⭐ based on 634 reviews<\/h3>",
+            "text": "",
+            "subhd_color": "#222222",
+            "hd_color": "#222222",
+            "des_color": "#878787",
+            "use_shadow": false,
+            "button_label": "Button label",
+            "button_link": "",
+            "open_link": "_blank",
+            "btn_icon": false,
+            "button_style": "default",
+            "btn_size": "large",
+            "btn_cl": "dark",
+            "button_effect": "default"
+          }
+        }
+      },
+      "block_order": [
+        "template--16798341333225__7fed8a43-3022-4e84-b1b2-e0cbb415d702-1689262321cccf9b93-1"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "space_h_item": "20",
+        "space_v_item": "10",
+        "space_h_item_mb": "20",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "26382323-7252-4034-b118-7cb122427896": {
       "type": "custom-section",
       "blocks": {
@@ -1291,7 +1346,7 @@
       "settings": {
         "design_heading": "2",
         "heading_align": "t4s-text-center",
-        "top_heading": "LATES FROM BLOG",
+        "top_heading": "LATEST FROM BLOG",
         "bt_lb": "Button label",
         "icon_heading": "gem",
         "top_subheading": "The freshest and most exciting news",
@@ -1401,6 +1456,7 @@
     "5191a6f7-87be-4d47-a428-dc5caaf00eec",
     "16891370800f9466c8",
     "a4e2486e-e568-49b0-9746-ba905b89c43a",
+    "7fed8a43-3022-4e84-b1b2-e0cbb415d702",
     "26382323-7252-4034-b118-7cb122427896",
     "8dd3e86e-0721-4d8e-b449-6936c3b0e0ab",
     "f6a88b53-9e01-4022-8e9c-59b339b7418a",
