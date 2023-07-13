@@ -374,6 +374,61 @@
         "pd": "",
         "mg_tb": "",
         "pd_tb": "",
+        "mg_mb": ",,10px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
+    "3893cede-c6bc-4b9e-893f-c712036a34d8": {
+      "type": "image_text",
+      "blocks": {
+        "395617e6-2313-44f5-be62-b3e654244cd8": {
+          "type": "bl_text",
+          "settings": {
+            "col_dk": "12",
+            "col_tb": "12",
+            "text_size": "40,15",
+            "txt_align": "center",
+            "sub_heading": "",
+            "heading": "",
+            "text": "",
+            "subhd_color": "#222222",
+            "hd_color": "#222222",
+            "des_color": "#878787",
+            "use_shadow": false,
+            "button_label": "SEE ALL REVIEWS",
+            "button_link": "shopify:\/\/pages\/indyvogue-reviews",
+            "open_link": "_self",
+            "btn_icon": false,
+            "button_style": "default",
+            "btn_size": "large",
+            "btn_cl": "dark",
+            "button_effect": "default"
+          }
+        }
+      },
+      "block_order": [
+        "395617e6-2313-44f5-be62-b3e654244cd8"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "space_h_item": "20",
+        "space_v_item": "10",
+        "space_h_item_mb": "20",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": "",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
         "mg_mb": ",,30px,",
         "pd_mb": "",
         "use_cus_css": false,
@@ -496,6 +551,7 @@
     "sidebar",
     "e6339de8-e574-4b99-aef3-e865a8846c44",
     "aa9c88a6-8567-4fa6-a48d-c5ae3146568a",
+    "3893cede-c6bc-4b9e-893f-c712036a34d8",
     "product-recommendations",
     "recently-viewed-products"
   ]
