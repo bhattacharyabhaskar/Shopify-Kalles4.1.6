@@ -93,7 +93,7 @@
           "ecb22c95-5c1d-4434-8a21-bc45fb46f626": {
             "type": "html",
             "settings": {
-              "html_content": "<script src=\"https:\/\/reviewsonmywebsite.com\/js\/v2\/embed.js?id=8e7313fc946fd3d8c15c886f791a7ab8\"><\/script>",
+              "html_content": "<script type=\"lazyload2\" src=\"https:\/\/reviewsonmywebsite.com\/js\/v2\/embed.js?id=8e7313fc946fd3d8c15c886f791a7ab8\"><\/script>",
               "hidden_mobile": false
             }
           },
