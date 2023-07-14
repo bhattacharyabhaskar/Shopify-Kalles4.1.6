@@ -52,9 +52,30 @@
             "show_type": false,
             "show_sku": true,
             "show_barcode": false,
-            "show_available": true,
+            "show_available": false,
             "show_category": false,
             "show_tags": false
+          }
+        },
+        "f0e9fb6e-5340-4437-8984-17dbf6011e85": {
+          "type": "inventory_qty",
+          "settings": {
+            "icon": "1",
+            "icon_name": "",
+            "ani": "none",
+            "stock": "3",
+            "qty": 10,
+            "total_items": 100,
+            "stock_from": 12,
+            "stock_to": 20,
+            "al": "center",
+            "mess": "ONLY [stock_number] LEFT IN STOCK.",
+            "size": 16,
+            "progress": false,
+            "wbar": 100,
+            "stock_bg_process": "#f76b6a",
+            "bgten": "#ec0101",
+            "stock_bg": "#ffe8e8"
           }
         },
         "form": {
@@ -82,7 +103,7 @@
             "compare_color": "#222222",
             "compare_color_hover": "#56cfe1",
             "compare_color_active": "#222222",
-            "show_dynamic_checkout": false,
+            "show_dynamic_checkout": true,
             "btn_txt2": "3",
             "button_color_payment": "dark",
             "product_list": [
@@ -163,6 +184,7 @@
         "3d510fb3-d237-4c85-a593-2baa34875186",
         "price_review",
         "meta",
+        "f0e9fb6e-5340-4437-8984-17dbf6011e85",
         "form",
         "23551ebc-3be1-40d6-81b2-30f03478cccb",
         "33ac43b4-4e60-4c85-a131-cff713232f38",
@@ -176,7 +198,7 @@
       "settings": {
         "pr_layout": "default",
         "enable_sticky_info": true,
-        "media_layout": "thumbnails_left",
+        "media_layout": "thumbnails_bottom",
         "media_size": "medium",
         "thumb_lr_size": "medium",
         "image_ratio": "ratioadapt",

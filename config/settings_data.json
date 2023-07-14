@@ -20,11 +20,19 @@
     "fnt_fm_gg2": "Poppins",
     "fnt_fm_gg3": "Libre Baskerville",
     "hd_ffamily": "1",
+    "fs_h1": 29,
+    "fs_h2": 23,
+    "fs_h3": 20.5,
+    "fs_h4": 17.5,
+    "fs_h5": 14,
+    "fs_h6": 12.5,
     "enable_compe": true,
     "app_review": "2",
     "badge_shape": "3",
     "label_sale_style": "1",
-    "use_new_badge": false,
+    "use_new_badge": true,
+    "new_day_added": 40,
+    "use_preorder_badge": false,
     "price_varies_style": "2",
     "type_qv": "2",
     "show_qty": false,
@@ -40,8 +48,9 @@
     "variant_remove": "2",
     "use_notify_me": false,
     "share_source": "1",
+    "free_ship_pr": "rajasthani-marwar-choker-necklace-set",
     "gift_wrap_pr": "gift-wrap",
-    "filter_type_search": true,
+    "filter_type_search": false,
     "unavailable_prs": "hide",
     "show_search_suggest": true,
     "search_prs_suggest": "women",
@@ -850,7 +859,7 @@
           "layout": "logo_left",
           "full_header": true,
           "height": 70,
-          "arrow": false,
+          "arrow": true,
           "align": "center",
           "hover": "hover_sideup",
           "enable_active": false,
@@ -868,7 +877,7 @@
           "bg_hc": "#000000",
           "cl_hc": "#ffffff",
           "sticky_header": true,
-          "scroll_header": true,
+          "scroll_header": false,
           "bgnavst": "#ffffff",
           "opnavst": 100,
           "clnavst": "#222222",
@@ -1883,10 +1892,10 @@
               "color_mode": "color is-sw-cl__round",
               "enable_fit_ratio_img": false,
               "color_size": "medium",
-              "show_qty": true,
-              "enable_wishlist": true,
-              "enable_compare": true,
-              "btn_atc_full": false,
+              "show_qty": false,
+              "enable_wishlist": false,
+              "enable_compare": false,
+              "btn_atc_full": true,
               "pr_btn_round": 40,
               "ani": "t4s-ani-tada",
               "time": 6,
@@ -1915,20 +1924,6 @@
               ]
             }
           },
-          "main-qv-4": {
-            "type": "size_delivery_ask",
-            "settings": {
-              "size_chart": "3",
-              "pos_sizeg": "1",
-              "sc_type": "1",
-              "page": "size-chart",
-              "size_ck": "",
-              "delivery": true,
-              "page_dr": "delivery-return",
-              "ask": true,
-              "phone": true
-            }
-          },
           "main-qv-5": {
             "type": "meta",
             "settings": {
@@ -1937,15 +1932,15 @@
               "show_type": false,
               "show_sku": true,
               "show_barcode": false,
-              "show_available": true,
-              "show_category": true,
-              "show_tags": true
+              "show_available": false,
+              "show_category": false,
+              "show_tags": false
             }
           },
           "main-qv-6": {
             "type": "social",
             "settings": {
-              "socials_align": "start",
+              "socials_align": "center",
               "social_mode": "2",
               "social_style": "1",
               "social_size": "extra_small",
@@ -1965,7 +1960,6 @@
           "main-qv-1",
           "main-qv-2",
           "main-qv-3",
-          "main-qv-4",
           "main-qv-5",
           "main-qv-6"
         ],
