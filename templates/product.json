@@ -82,7 +82,7 @@
             "compare_color": "#222222",
             "compare_color_hover": "#56cfe1",
             "compare_color_active": "#222222",
-            "show_dynamic_checkout": false,
+            "show_dynamic_checkout": true,
             "btn_txt2": "3",
             "button_color_payment": "dark",
             "product_list": [
