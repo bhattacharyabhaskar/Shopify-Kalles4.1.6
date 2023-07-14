@@ -2590,7 +2590,7 @@
       },
       "14417550493701535262": {
         "type": "shopify:\/\/apps\/discount-ninja\/blocks\/discountninja-app-embed-latest\/b9a933ba-e276-459f-a4bf-3571d5a1e81c",
-        "disabled": true,
+        "disabled": false,
         "settings": {
         }
       }
