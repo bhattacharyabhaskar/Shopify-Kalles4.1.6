@@ -12,6 +12,8 @@
     "logo_mb_width": 95,
     "logo_tr": "shopify:\/\/shop_images\/header-logo-01.png",
     "logo_tr_width": 95,
+    "mobile_nav_type": "1",
+    "accent_color": "#b7499b",
     "font_source": "2",
     "fnt_fm_sp2": "poppins_n4",
     "fnt_fm_sp3": "libre_baskerville_n4",
@@ -50,6 +52,8 @@
     "round_currency": false,
     "notify_currency": true,
     "hover_currency": false,
+    "colors_css": true,
+    "custom_css_t4s": true,
     "share_tumblr": true,
     "share_telegram": true,
     "share_whatsapp": false,
@@ -2208,7 +2212,8 @@
               "cus_cl": false,
               "cl": "#ec0101",
               "lb": "",
-              "lb_cl": "#00BADB",
+              "lb_cl": "#00badb",
+              "pos_sub": "right-start",
               "wid": "cus",
               "cus_wid": 1200,
               "id": 1,
@@ -2226,7 +2231,8 @@
               "cus_cl": false,
               "cl": "#ec0101",
               "lb": "",
-              "lb_cl": "#00BADB",
+              "lb_cl": "#00badb",
+              "pos_sub": "right-start",
               "wid": "cus",
               "cus_wid": 1200,
               "id": 1,
@@ -2258,7 +2264,8 @@
               "cus_cl": false,
               "cl": "#ec0101",
               "lb": "",
-              "lb_cl": ""
+              "lb_cl": "",
+              "pos_sub": "right-start"
             }
           }
         },
@@ -2277,6 +2284,7 @@
           "clnav": "#222222",
           "clnav_hover": "#56cfe1",
           "h_icon": "kalles",
+          "hover_icon": "2",
           "show_search": true,
           "show_acc": true,
           "show_wis": true,
@@ -2285,6 +2293,7 @@
           "cl_hc": "#ffffff",
           "source": "2",
           "txt": "<p>Welcome to our store!<\/p>",
+          "enable_active": false,
           "h_navmb": 62,
           "fm_nav": "1",
           "fs_nav": 14,
@@ -2569,12 +2578,6 @@
           "color-secondary": "#343434"
         }
       },
-      "6468128024931565999": {
-        "type": "shopify:\/\/apps\/seguno-popups\/blocks\/popup-app-embed\/f53bd66f-9a20-4ce2-ae2e-ccbd0148bd4b",
-        "disabled": false,
-        "settings": {
-        }
-      },
       "7456567658179156570": {
         "type": "shopify:\/\/apps\/adroll-advertising-marketing\/blocks\/adroll-pixel\/c60853ed-1adb-4359-83ae-4ed43ed0b559",
         "disabled": false,
@@ -2584,7 +2587,13 @@
       },
       "6143736321357441667": {
         "type": "shopify:\/\/apps\/tidio-live-chat-chatbots\/blocks\/app-embed\/1002274d-fb18-4939-98f6-5f05a8deeadc",
-        "disabled": false,
+        "disabled": true,
+        "settings": {
+        }
+      },
+      "6468128024931565999": {
+        "type": "shopify:\/\/apps\/seguno-popups\/blocks\/popup-app-embed\/f53bd66f-9a20-4ce2-ae2e-ccbd0148bd4b",
+        "disabled": true,
         "settings": {
         }
       },
