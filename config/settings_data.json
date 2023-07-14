@@ -12,6 +12,7 @@
     "logo_mb_width": 95,
     "logo_tr": "shopify:\/\/shop_images\/header-logo-01.png",
     "logo_tr_width": 95,
+    "mobile_nav_type": "1",
     "accent_color": "#b7499b",
     "font_source": "2",
     "fnt_fm_sp2": "poppins_n4",
@@ -2211,7 +2212,8 @@
               "cus_cl": false,
               "cl": "#ec0101",
               "lb": "",
-              "lb_cl": "#00BADB",
+              "lb_cl": "#00badb",
+              "pos_sub": "right-start",
               "wid": "cus",
               "cus_wid": 1200,
               "id": 1,
@@ -2229,7 +2231,8 @@
               "cus_cl": false,
               "cl": "#ec0101",
               "lb": "",
-              "lb_cl": "#00BADB",
+              "lb_cl": "#00badb",
+              "pos_sub": "right-start",
               "wid": "cus",
               "cus_wid": 1200,
               "id": 1,
@@ -2261,7 +2264,8 @@
               "cus_cl": false,
               "cl": "#ec0101",
               "lb": "",
-              "lb_cl": ""
+              "lb_cl": "",
+              "pos_sub": "right-start"
             }
           }
         },
@@ -2280,6 +2284,7 @@
           "clnav": "#222222",
           "clnav_hover": "#56cfe1",
           "h_icon": "kalles",
+          "hover_icon": "2",
           "show_search": true,
           "show_acc": true,
           "show_wis": true,
@@ -2288,6 +2293,7 @@
           "cl_hc": "#ffffff",
           "source": "2",
           "txt": "<p>Welcome to our store!<\/p>",
+          "enable_active": false,
           "h_navmb": 62,
           "fm_nav": "1",
           "fs_nav": 14,
