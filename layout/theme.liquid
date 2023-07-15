@@ -26,6 +26,8 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
 {%- endcapture -%}
 <html class="{{ class_html }} no-js" lang="{{ iso_code }}"{% if isRTL %} dir="rtl"{% endif %}>
   <head>{% render 'website-schema' %}
+  <link rel="preload" as="script" href="https://reviewsonmywebsite.com/js/v2/embed.js?id=8e7313fc946fd3d8c15c886f791a7ab8">
+  <link rel="preload" as="script" href="https://reviewsonmywebsite.com/js/embedLoader.js?id=03d30ab029f3709eb7ee597570569e34">
   {% include 'shop-sheriff-amp' %}
     {% if handle contains 'saraswati-puja-collection' or  handle contains 'valentines-day-collection' or  handle contains 'all' %}
         <meta name="robots" content="noindex, nofollow">
