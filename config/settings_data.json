@@ -59,7 +59,7 @@
     "currency_type": "1",
     "size_currency": "sm",
     "round_currency": false,
-    "notify_currency": true,
+    "notify_currency": false,
     "hover_currency": false,
     "colors_css": true,
     "custom_css_t4s": true,
