@@ -83,6 +83,7 @@
 {%- if request.design_mode -%}
 <link rel="stylesheet" href="{{ 'mini-cart.css' | asset_url }}" media="print" onload="this.media='all'">
 <div data-cart-wrapper id="t4s-mini_cart" data-ccount="{{ ccount }}" class="t4s-drawer t4s-drawer__right t4s-dn" aria-hidden="true">
+</div>
 {%- endif -%}
 
    <div class="t4s-drawer__header"><span>{{ 'cart.mini_cart.title' | t }}</span><button class="t4s-drawer__close" data-drawer-close aria-label="{{ 'cart.mini_cart.close_cart' | t }}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button></div>
@@ -199,7 +200,6 @@
 
          {%- unless se_style == '1' and se_pos == '1' %}{{- html_btn -}}{% endunless -%}
 
-        {%- if se_stts.enable_pr %}<div class="t4s-when-cart-emty" data-cart-upsell-options='{ "baseurl":"{{ routes.product_recommendations_url }}", "limit":5, "product_id":{{ cart.items.first.product_id | default: 19041994 }}, "section_id": "mini_cart_upsell" }'></div>{% endif -%}
 
       </div>
       </div>
@@ -383,7 +383,7 @@
      </div>
    </div>
    {%- endif -%}
-
+{%- if se_stts.enable_pr %}<div class="t4s-when-cart-emty" data-cart-upsell-options='{ "baseurl":"{{ routes.product_recommendations_url }}", "limit":5, "product_id":{{ cart.items.first.product_id | default: 19041994 }}, "section_id": "mini_cart_upsell" }'></div>{% endif -%}
 {%- if request.design_mode %}</div>{% endif -%}
 
 {%- schema -%}
