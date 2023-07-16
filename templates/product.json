@@ -232,9 +232,7 @@
         "tabs_layout_fix": "default",
         "bg": "#f6f6f8",
         "bg_mb": "#ffffff",
-        "product_list": [
-
-        ],
+        "product_list": "{{ product.metafields.theme.fbt.value }}",
         "sticky_mode": "2",
         "sticky_show": "2",
         "sticky_layout_mb": "minimal",
