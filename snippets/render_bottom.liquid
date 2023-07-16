@@ -235,11 +235,7 @@ endif -%}
   
   {%- if settings.enable_atc -%}<a href="#t4s_pr_url" data-atc-selector data-tooltip="" data-id="id_nt_94" rel="nofollow" class="t4s-pr-item-btn t4s-pr-addtocart" dat-qty="1"><span class="t4s-svg-pr-icon"><svg viewBox="0 0 24 24"><use xlink:href="#t4s-icon-atc"></use></svg></span><span class="t4s-text-pr">{{ 'products.product.add_to_cart' | t }}</span></a>{% endif %}[split_t4snt]
   {%- if settings.show_qty -%}
-  <div data-quantity-wrapper class="t4s-quantity-wrapper t4s-quantity-pr-item"> 
-    <button data-quantity-selector data-decrease-qty type="button" class="t4s-quantity-selector is--minus"><svg focusable="false" class="icon icon--minus" viewBox="0 0 10 2" role="presentation"><path d="M10 0v2H0V0z" fill="currentColor"></path></svg></button>
-    <input data-quantity-value type="number" class="t4s-quantity-input" step="1" min="1" max="9999" name="quantity" value="1" size="4" pattern="[0-9]*" inputmode="numeric">
-    <button data-quantity-selector data-increase-qty type="button" class="t4s-quantity-selector is--plus"><svg focusable="false" class="icon icon--plus" viewBox="0 0 10 10" role="presentation"><path d="M6 4h4v2H6v4H4V6H0V4h4V0h2v4z" fill="currentColor" fill-rule="evenodd"></path></svg></button>
-  </div>
+ 
   {%- endif -%}
 </template>
 <template id="t4s_temp_modal">
