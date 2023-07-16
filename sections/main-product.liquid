@@ -728,9 +728,10 @@ endif -%}
   <aside data-sidebar-content class="t4s-col-item t4s-col-12 t4s-col-lg-3 t4s-sidebar t4s-dn"><div class="t4s-loading--bg"></div></aside>
 </div>
 </div>
-{%- render 'FBT' -%}
 
 {%- if tabs_position == 'external' %}{% render 'product_tabs', product: product, se_stts: se_stts, seBlocks: seBlocks, idTabDes: idTabDes, idTabReview: idTabReview, isProductDefault: isProductDefault %}{% endif -%}
+
+{%- render 'FBT' -%}
 
 <template data-icons-thumb>
   <svg class="t4s-d-none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
