@@ -857,7 +857,7 @@
           "9a73cf8b-993e-4dbe-9f11-6e990bfb91c0"
         ],
         "custom_css": [
-          ".t4s-btn {display: inline-flex; justify-content: center; align-items: center; position: relative; z-index: 2; overflow: hidden; line-height: 1; transition: .3s ease-in-out; color: #c61111; background-color: var(--btn-background); border-color: var(--btn-border); font-weight: var(--btn-fw); border-radius: var(--btn-radius); font-size: var(--btn-fs); letter-spacing: var(--btn-ls); height: var(--btn-mh); padding: var(--btn-pd-lr); margin-bottom: var(--mgb);}"
+
         ],
         "settings": {
           "layout": "logo_left",
