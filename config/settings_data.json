@@ -63,7 +63,7 @@
     "hover_currency": false,
     "colors_css": true,
     "custom_css_t4s": true,
-    "t4s_custom_js": true,
+    "t4s_custom_js": false,
     "share_tumblr": true,
     "share_telegram": true,
     "share_whatsapp": false,
