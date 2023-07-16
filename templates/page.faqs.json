@@ -1,1 +1,211 @@
-{"sections":{"heading":{"type":"heading-template","blocks":{"ba0c8e30-c11a-4ab7-97c4-4acc1a053a3e":{"type":"1","settings":{"heading":"FAQ","fontf":"inherit","text_cl":"#fff","text_fs":20,"text_lh":20,"text_fw":500,"text_ls":0,"font_italic":false,"font_uppercase":false,"text_shadow":false,"text_mgb":15,"hidden_mobile":false,"text_fs_mb":20,"text_lh_mb":20,"text_ls_mb":0,"text_mgb_mobile":10}},"ceaf2fff-8462-4040-83d5-7f7019d65b8d":{"type":"3","settings":{"breadcrumb_color":"#f2f2f2","brc_mgb":5}}},"block_order":["ba0c8e30-c11a-4ab7-97c4-4acc1a053a3e","ceaf2fff-8462-4040-83d5-7f7019d65b8d"],"settings":{"image":"shopify:\/\/shop_images\/bg-heading.jpg","parallax":false,"color":"#000000","overlay":54,"padding":50,"paddingmb":50,"mg_b":70,"mg_bmb":50,"content_align":"t4s-text-center","bg_pos":"center center","bg_repeat":"no-repeat","bg_size":"cover","use_cus_css":false,"code_cus_css":".SectionID {\nbackground-color:red\n}"}},"main":{"type":"main-page","disabled":true,"settings":{"layout":"t4s-container-wrap","cl_bg":"","cl_bg_gradient":"","mg":"60px,,60px,","pd":"","mg_mb":",,30px,","pd_mb":""}},"sidebar-page":{"type":"sidebar-page","disabled":true,"blocks":{"f69681ed-b75e-42de-be58-fdf73b3b7e08":{"type":"blog_cate","settings":{"title":"Blog categories","cat_link_list":"","count":true}}},"block_order":["f69681ed-b75e-42de-be58-fdf73b3b7e08"],"settings":{"enable_drawer":false,"space":50,"size":"medium","br_style":"none","brcolor":"#222222","sidebar_bdr":5,"sidebar_pd":10}},"165214825814e830e7":{"type":"accordion","blocks":{"1652148258305a99c1-0":{"type":"accor_item","settings":{"icon":"none","content":"<p>No, you don’t need to. You can make purchases and check out as a guest everytime.<\/p><p>However, by setting up an account with us, it will allow you to order without having to enter your details every time you shop with us. You can sign up right now, or you can first start shopping and create your account before you check out at the shopping cart page.<\/p>"}},"1652148258305a99c1-1":{"type":"accor_item","settings":{"icon":"none","content":"<p>Please click on “Login\/Register” followed by ‘Create An Account’ and fill in your personal particulars.<\/p>"}},"1652148258305a99c1-2":{"type":"accor_item","settings":{"icon":"none","content":"<p>Shop for the items you want and add it to your shopping cart. When you have finished, you can proceed to your shopping cart and check out. Check and ensure that all information is correct before confirming your purchases and payment.<\/p>"}},"0c4e86da-f870-4d3c-abce-b988cae18d6c":{"type":"accor_item","settings":{"icon":"none","content":"<p>We accept payments via Paypal and all major credit and debit cards such as Mastercard, VISA and American Express.<\/p>"}},"cb973ab0-b192-4c97-b7ba-6b8acbf93e5f":{"type":"accor_item","settings":{"icon":"none","content":"<p>Unfortunately we are unable to cancel an order once it has been placed. This will allow us to pack your orders efficiently and to minimize errors. It is advisable to check your order before placing it.<\/p>"}},"f9fbcebb-a809-4cca-8806-c102d1de1c0b":{"type":"accor_item","settings":{"icon":"none","content":"<p>Unfortunately we are unable to cancel an order once it has been placed. This will allow us to pack your orders efficiently and to minimize errors. It is advisable to check your order before placing it.<\/p>"}},"9aa601e3-a39f-431e-aaa9-de35ae6945fb":{"type":"accor_item","settings":{"icon":"none","content":"<p>After you have placed your order, you will receive an acknowledgement e-mail from us to confirm that your orders have been received. However, do note that orders will only be shipped when your credit card payment has been approved and billing and delivery address is verified. Alternatively, you may check the status of your order in “My Account” if you are a registered user.<\/p>"}},"15f6d610-63c6-4503-8a7f-4a1774dcf9ed":{"type":"accor_item","settings":{"icon":"none","content":"<p>You will be able to add the items as long as it is available. There could be an instance where the item is in someone else’s shopping cart hence the status of the items is reflected as “Temporarily Unavailable”.<\/p>"}}},"block_order":["1652148258305a99c1-0","1652148258305a99c1-1","1652148258305a99c1-2","0c4e86da-f870-4d3c-abce-b988cae18d6c","cb973ab0-b192-4c97-b7ba-6b8acbf93e5f","f9fbcebb-a809-4cca-8806-c102d1de1c0b","9aa601e3-a39f-431e-aaa9-de35ae6945fb","15f6d610-63c6-4503-8a7f-4a1774dcf9ed"],"settings":{"design_heading":"1","heading_align":"t4s-text-center","top_heading":"","icon_heading":"las la-gem","top_subheading":"","tophead_mb":30,"accor_des":"1","title_cl":"#222","bg_title_cl":"#f6f6f8","title_active_cl":"#000","bg_title_active_cl":"#f6f6f8","content_cl":"#878787","bg_content_cl":"#fff","content_align":"t4s-text-start","layout":"t4s-container-wrap","custom_width":1000,"cl_bg":"","cl_bg_gradient":"","mg":",,80px,","pd":"","mg_mb":",,30px,","pd_mb":"","use_cus_css":false,"code_cus_css":".SectionID {\nbackground-color:red\n}"}}},"order":["heading","main","sidebar-page","165214825814e830e7"]}
+{
+  "sections": {
+    "heading": {
+      "type": "heading-template",
+      "blocks": {
+        "18952756-58af-4afa-a0cc-b1b54300fb8b": {
+          "type": "1",
+          "settings": {
+            "heading": "",
+            "fontf": "inherit",
+            "text_cl": "#ffffff",
+            "text_fs": 20,
+            "text_lh": 20,
+            "text_fw": 500,
+            "text_ls": 0,
+            "font_italic": false,
+            "font_uppercase": false,
+            "text_shadow": false,
+            "text_mgb": 15,
+            "hidden_mobile": false,
+            "text_fs_mb": 20,
+            "text_lh_mb": 20,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        },
+        "cc993342-0dd0-41d6-a6c4-a5f3c87e6f96": {
+          "type": "3",
+          "settings": {
+            "breadcrumb_color": "#f2f2f2",
+            "brc_mgb": 5
+          }
+        }
+      },
+      "block_order": [
+        "18952756-58af-4afa-a0cc-b1b54300fb8b",
+        "cc993342-0dd0-41d6-a6c4-a5f3c87e6f96"
+      ],
+      "settings": {
+        "use_specify_image": true,
+        "parallax": false,
+        "color": "#000000",
+        "overlay": 54,
+        "padding": 50,
+        "paddingmb": 50,
+        "mg_b": 50,
+        "mg_bmb": 50,
+        "content_align": "t4s-text-center",
+        "bg_pos": "center center",
+        "bg_repeat": "no-repeat",
+        "bg_size": "cover",
+        "use_cus_css": false,
+        "code_cus_css": ".SectionID {\nbackground-color:red\n}"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": "60px,,60px,",
+        "pd": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": ""
+      }
+    },
+    "1664666048ac34643e": {
+      "type": "accordion",
+      "blocks": {
+        "1664666048e3b0bbc6-0": {
+          "type": "accor_item",
+          "settings": {
+            "icon": "question_mark",
+            "title": "Where does IndyVogue ship the items from?",
+            "content": "<p>IndyVogue has fulfillment centers in Kolkata, West Bengal(India) and Austin, TX(USA). The Kolkata fulfillment center is managed by IndyVogue Fashions Private Limited which is responsible for shipping & handling of all items. Depending upon what you buy, items will get shipped from either of these 2 fulfillment centers.<\/p>"
+          }
+        },
+        "1664666048e3b0bbc6-1": {
+          "type": "accor_item",
+          "settings": {
+            "icon": "question_mark",
+            "title": "Which are the countries that you ship your items to?",
+            "content": "<p>Currently, we ship our items the following countries - North America: United States, Canada. Europe: Austria, Belgium, France, Germany, Ireland, Italy, Netherlands, Norway, Sweden, Switzerland & United Kingdom. Australia<\/p>"
+          }
+        },
+        "1664666048e3b0bbc6-2": {
+          "type": "accor_item",
+          "settings": {
+            "icon": "question_mark",
+            "title": "I just bought a saree from your site but now I cannot see it under the saree section anymore. Where did it go?",
+            "content": "<p>Once an item is sold(we only keep one piece of each item), is removed from the main collection. But you can always search for the items with the SKU number OR title and it will show up.<\/p>"
+          }
+        },
+        "33034a5b-e3dc-4d74-b0af-8a47dead76cc": {
+          "type": "accor_item",
+          "settings": {
+            "icon": "question_mark",
+            "title": "I want to buy a saree from IndyVogue and also would like to get a blouse stitched. How do I give you the measurements?",
+            "content": "<p>Good question. All Sarees that have the option of getting blouse stitched has a variant called \"Saree & Stitched Designer Blouse\". Please choose the same and place your order. Once an order is placed with a stitched blouse option, the order confirmation email will contain a link to fill up the Blouse measurement form. Please fill up that form and submit to us. Please note that sometimes this email might end up in your spam \/ junk mail folder. Make sure you check that.<\/p>"
+          }
+        },
+        "9d6de179-9f31-411d-b2d6-741e8fa009d2": {
+          "type": "accor_item",
+          "settings": {
+            "icon": "question_mark",
+            "title": "How do I know the status of my order?",
+            "content": "<p>We will send you email communication once the status of an order changes. You will receive an Order Confirmation Email, a blouse measurement form(optional, if you have chosen designer blouse option), a shipping confirmation email with the tracking number. Also, feel free to email us at sales.indyvogye@gmail.com OR call\/whatsapp at +1 913 579 2118 (9 AM to 10:30 PM CST)<\/p>"
+          }
+        },
+        "bf704eda-378c-4728-b18b-dad77fba7afb": {
+          "type": "accor_item",
+          "settings": {
+            "icon": "question_mark",
+            "title": "I really like your saree but don't want to pay by paypal or credit card. Is there a way to still get it?",
+            "content": "<p>Sure, just call \/ whatapp us at +19135792118 or email at sumanab@indyvogue.com and we will be happy to take care of it. Also, we have added a new Payment method in the checkout called \"Pay by Bank Deposit\" specifically for patrons like you. Use that payment method to complete your online order and we will keep the item on hold for you for upto 12 hours for you to complete the order.<\/p>"
+          }
+        },
+        "9d532e59-38bf-4a59-9793-3891e8149be3": {
+          "type": "accor_item",
+          "settings": {
+            "icon": "question_mark",
+            "title": "Will the saree look exactly like in the picture?",
+            "content": "<p>Good question.....the saree will \"look\" exactly like the picture as this is the same saree for which the picture was taken. As far as color is concerned, we take the picture in day light. And as you know, the same saree under different lightning conditions might look different. Till date, the only comment we have heard from people is \"The actual Saree looks better than the picture\" !!!! It seems that we need to get better at photography. :-)<\/p>"
+          }
+        },
+        "4e636e12-4df8-41e7-a332-771d8695bf1d": {
+          "type": "accor_item",
+          "settings": {
+            "icon": "question_mark",
+            "title": "How are you going to get my blouse measurements?",
+            "content": "<p>When you order with us and select the option \"Saree & Stitched Designer Blouse\", the order confirmation email will contain a link to a \"Blouse Measurement Form\" where you can select the designs and fill your measurements. Once you submit the form, we will receive your measurements.<\/p>"
+          }
+        },
+        "b4806231-143f-49bd-b669-a3a4495e374c": {
+          "type": "accor_item",
+          "settings": {
+            "icon": "question_mark",
+            "title": "Can I select the design of the blouse that Sonakshi wore? I do not see that in your form.",
+            "content": "<p>Of course you can. In the case if you want to get a design of the blouse that is not in our form, call \/ whatsapp at +1 913 378 4722 & we can discuss and confirm the design.<\/p>"
+          }
+        },
+        "ffa800c3-c4f6-485b-bac8-c526da8f6e37": {
+          "type": "accor_item",
+          "settings": {
+            "icon": "question_mark",
+            "title": "Can I get additional discount on SALE items?",
+            "content": "<p>Unfortunately we cannot give any additional discounts on the SALE items as the prices for those items are already at its lowest. Discount \/ Promo Codes only apply to Full Priced \/ Non-Sale Items.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "1664666048e3b0bbc6-0",
+        "1664666048e3b0bbc6-1",
+        "1664666048e3b0bbc6-2",
+        "33034a5b-e3dc-4d74-b0af-8a47dead76cc",
+        "9d6de179-9f31-411d-b2d6-741e8fa009d2",
+        "bf704eda-378c-4728-b18b-dad77fba7afb",
+        "9d532e59-38bf-4a59-9793-3891e8149be3",
+        "4e636e12-4df8-41e7-a332-771d8695bf1d",
+        "b4806231-143f-49bd-b669-a3a4495e374c",
+        "ffa800c3-c4f6-485b-bac8-c526da8f6e37"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "ALL YOU NEED TO KNOW, AND MORE !!!!",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "accor_des": "1",
+        "title_cl": "#222",
+        "bg_title_cl": "#f6f6f8",
+        "title_active_cl": "#000",
+        "bg_title_active_cl": "#f6f6f8",
+        "content_cl": "#878787",
+        "bg_content_cl": "#fff",
+        "content_align": "t4s-text-start",
+        "layout": "t4s-container-wrap",
+        "custom_width": 1000,
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
+    "sidebar-page": {
+      "type": "sidebar-page",
+      "disabled": true,
+      "settings": {
+        "enable_drawer": true,
+        "space": 50,
+        "size": "medium",
+        "br_style": "none",
+        "brcolor": "#222222",
+        "sidebar_bdr": 5,
+        "sidebar_pd": 10
+      }
+    }
+  },
+  "order": [
+    "heading",
+    "main",
+    "1664666048ac34643e",
+    "sidebar-page"
+  ]
+}
