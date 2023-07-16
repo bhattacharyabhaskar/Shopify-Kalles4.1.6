@@ -292,6 +292,15 @@
       </div>
    </form>
 
+   {%- if se_stts.enable_note -%}
+   <div class="t4s-mini_cart-tool__content is--note t4s-pe-none">             
+      <label for="CartSpecialInstructions" class="t4s-d-block"><span class="t4s-txt_add_note {{ style_add }}">{{ 'cart.tool.note' | t }}</span><span class="t4s-txt_edit_note {{ style_edit }}">{{ 'cart.tool.edit_note' | t }}</span></label>
+      <textarea name="note" data-opend-focus id="CartSpecialInstructions" placeholder="{{ 'cart.tool.placeholder_note' | t }}">{{ cart.note }}</textarea>
+      <p><button type="button" data-cart-tool_close class="t4s-mini_cart-tool__primary">{{ 'cart.tool.save' | t }}</button></p>
+      <p><button type="button" data-cart-tool_close class="t4s-mini_cart-tool__back">{{ 'cart.tool.cancel' | t }}</button></p>
+   </div>
+   {%- endif -%}
+
    {%- if se_stts.enable_rates %}{% assign idShip = 'mini_cart' -%}
    <div class="t4s-mini_cart-tool__content is--rates t4s-pe-none">
       <div class="t4s-mini_cart-tool__wrap" data-estimate-shipping-wrap data-id="{{ idShip }}">
@@ -371,14 +380,6 @@
           <button type="button" data-cart-tool_close class="t4s-mini_cart-tool__back">{{ 'cart.tool.cancel' | t }}</button>
         </div>
      </div>
-   </div>
-   {%- endif -%}
-   {%- if se_stts.enable_note -%}
-   <div class="t4s-mini_cart-tool__content is--note t4s-pe-none">             
-      <label for="CartSpecialInstructions" class="t4s-d-block"><span class="t4s-txt_add_note {{ style_add }}">{{ 'cart.tool.note' | t }}</span><span class="t4s-txt_edit_note {{ style_edit }}">{{ 'cart.tool.edit_note' | t }}</span></label>
-      <textarea name="note" data-opend-focus id="CartSpecialInstructions" placeholder="{{ 'cart.tool.placeholder_note' | t }}">{{ cart.note }}</textarea>
-      <p><button type="button" data-cart-tool_close class="t4s-mini_cart-tool__primary">{{ 'cart.tool.save' | t }}</button></p>
-      <p><button type="button" data-cart-tool_close class="t4s-mini_cart-tool__back">{{ 'cart.tool.cancel' | t }}</button></p>
    </div>
    {%- endif -%}
 {%- if se_stts.enable_pr %}<div class="t4s-when-cart-emty" data-cart-upsell-options='{ "baseurl":"{{ routes.product_recommendations_url }}", "limit":5, "product_id":{{ cart.items.first.product_id | default: 19041994 }}, "section_id": "mini_cart_upsell" }'></div>{% endif -%}
