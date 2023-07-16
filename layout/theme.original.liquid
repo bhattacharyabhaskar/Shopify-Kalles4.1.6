@@ -25,32 +25,12 @@
 t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_color_style_{{ settings.swatch_color_style }} pr_border_style_{{ settings.pr_border_style }} pr_img_effect_{{ settings.pr_img_effect }} enable_eff_img1_{{ settings.enable_eff_img1 }} badge_shape_{{ settings.badge_shape }} css_for_wis_app_{{ settings.enable_css_wis }}{% if settings.use_cus_lz and settings.cus_lz %} t4s-lzcus-true{% endif %} shadow_round_img_{{ settings.enable_shadow_round_img }} t4s-header__{{ settings.header_design }} is-remove-unavai-{{ settings.variant_remove }} t4_compare_{{ settings.enable_compe }}{% if settings.type_qv == '1' %} t4s-sidebar-qv{% endif %} t4s-cart-count-{{ cart.item_count }} t4s-pr-ellipsis-{{ settings.enable_pr_ellipsis }}
 {%- endcapture -%}
 <html class="{{ class_html }} no-js" lang="{{ iso_code }}"{% if isRTL %} dir="rtl"{% endif %}>
-  <head>{% render 'website-schema' %}
- 
-  {% include 'shop-sheriff-amp' %}
-    {% if handle contains 'saraswati-puja-collection' or  handle contains 'valentines-day-collection' or  handle contains 'all' %}
-        <meta name="robots" content="noindex, nofollow">
-    {% endif %}
-        {% if template contains 'index' %}
-            {% render 'organization-schema' %}
-        {% elsif template contains 'collection' %}
-            {% render 'breadcrumb-schema-collection' %}
-        {% elsif template contains 'product' %}
-            {% render 'breadcrumb-schema-product' %}
-        {% elsif template contains 'article' %}
-            {% render 'article-schema' %}
-        {% else %}
-        {% endif %}
-
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="theme-color" content="{{ settings.body_bg }}">
-      {% if template contains 'collection' %}
-          <link rel="canonical" href="{{ shop.url }}{{ collection.url }}" />
-          {% else %}
-          <link rel="canonical" href="{{ canonical_url }}" />
-      {% endif %}    
+    <link rel="canonical" href="{{ canonical_url }}">
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     
     {%- if settings.favicon != blank %}<link rel="shortcut icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">{% endif -%}
@@ -68,46 +48,20 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
       {%- assign escaped_page_title = page_title | escape -%}
       {%- unless escaped_page_title contains shop.name %} &ndash; {{ shop.name }}{%- endunless -%}
     {%- endcapture -%}
-        {%- if template == 'product'-%}
-          <title>Buy {{ product.title | escape }} At IndyVogue</title>
-        {%- else -%}
-          <title>{{ seo_title | strip }}</title>
-        {%- endif -%}
-        {% if product.type == 'Saree' %}
-            {% if product.metafields.mm-google-shopping.custom_label_0 != blank %}
-                  {% assign input_arr = product.metafields.saree.new_work | split:"," %}
-                  {% for item in input_arr %}
-                      {% if item contains 'Hand Woven' %}
-                          {%- assign work_hand = 'is Hand Woven and '-%}
-                      {%-endif-%} 
-                  {% endfor %}
-                  {%- assign work_type = product.metafields.saree.new_work | replace:'[', '' | replace:']','' | replace:'"', '' | replace:'Hand Woven,', '' | replace:'Hand Woven', '' | replace:',', ', '-%}
-                  {% if work_type == blank %}
-                     <meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }}is perfect for special occasions. Free shipping and easy returns are available! ">
-                  {%- else -%}
-                     <meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }} features {{work_type}} and is perfect for special occasions. Free shipping and easy returns are available! ">
-                  {%-endif-%}
-
-            {%-endif-%}
-                    {%- else -%}
-                 <meta name="description" content="{{ page_description | default:shop.description | default: shop.name | escape }}">
-        {%-endif-%}
+    <title>{{ seo_title | strip }}</title>
+    <meta name="description" content="{{ page_description | default: shop.description | default: shop.name | escape }}">
     {%- else -%}
     <title>{{ 'list_collections.meta_title' | t | escape }}</title><meta name="description" content="{{ 'list_collections.meta_description' | t | escape }}">
     {%- endif -%}
 
     {%- render 'meta-tags', t_name: t_name -%}
-
-
+    
     <script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer="defer"></script>
     {{ content_for_header }}
     {%- render 'head_assets', t_name: t_name, isRTL: isRTL -%}
-    {% render 'gsf-conversion-pixels' %}
-                    
-{% render 'limoniapps-discountninja-header' %}{%- if product -%}{%- assign discountninjaproduct = product -%}{%- endif -%}{%- if collection -%}{%- assign discountninjacollection = collection -%}{%- endif -%}
-
-</head>
+    
+  </head>
 
   <body class="template-{{ request.page_type | handle }} {{ class_lazy }}"{% if body_img != blank %} data-bgset="{{ body_img | image_url: width: 1 }}" data-optimumx="2" data-sizes="auto"{% endif -%}>{% if isRTL %}<script type="text/javascript" id="t4s-flicker-fix">// Flicker fix.</script>{% endif -%}
     <a class="skip-to-content-link visually-hidden" href="#MainContent">{{ "accessibility.skip_to_text" | t }}</a>
@@ -131,10 +85,5 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
       </ul>
     {%- render 'render_bottom' -%}
     <script src="{{ 'unique.js' | asset_url }}" defer="defer"></script>
-  {% include 'adroll' %}
-  {% render 'app-block' %}
-  {%- render 'footer-app-block' -%}
-  {% include 'limoniapps-discountninja-body' %}
-  {{ 'wnw-optimization-3.0.js' | asset_url | script_tag }}                
-</body>
+  </body>
 </html>
