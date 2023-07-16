@@ -68,7 +68,7 @@
             "total_items": 100,
             "stock_from": 12,
             "stock_to": 20,
-            "al": "center",
+            "al": "start",
             "mess": "ONLY [stock_number] LEFT IN STOCK.",
             "size": 16,
             "progress": false,
