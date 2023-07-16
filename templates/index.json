@@ -964,6 +964,22 @@
         "code_cus_css": ".SectionID {\nbackground-color:red\n}"
       }
     },
+    "7115357e-70b0-41ee-8b75-62e9c650852f": {
+      "type": "line",
+      "settings": {
+        "line_style": "solid",
+        "line_width": 100,
+        "line_height": 4,
+        "line_cl": "#b7499b",
+        "line_pos": "t4s-text-center",
+        "layout": "t4s-container-fluid",
+        "mg": "",
+        "mg_tb": "",
+        "mg_mb": ",,10px,",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "16891370800f9466c8": {
       "type": "apps",
       "blocks": {
@@ -991,216 +1007,20 @@
       "settings": {
       }
     },
-    "16460362229768af39": {
-      "type": "banner",
-      "disabled": true,
-      "blocks": {
-        "164603622209bd8d44-0": {
-          "type": "b_item",
-          "settings": {
-            "custom_dk": true,
-            "height_dk": 600,
-            "custom_tb": true,
-            "height_tb": 400,
-            "custom_mb": true,
-            "height_mb": 300,
-            "b_link": "",
-            "open_link": "_self",
-            "img_effect": "rotate",
-            "b_effect": "none",
-            "col_dk": "6",
-            "col_tb": "6",
-            "col_mb": "12",
-            "content_align": "center",
-            "content_align_mobile": "center",
-            "content_width": "auto",
-            "cv_pos": 50,
-            "ch_pos": 50,
-            "cv_pos_mb": 50,
-            "ch_pos_mb": 50,
-            "bg_overlay": "#000000",
-            "bg_opacity": 0,
-            "bg_content_bl": false,
-            "bg_content_cl": "#ffffff",
-            "bg_content_op": 50,
-            "content_pd_tb": 20,
-            "content_pd_lr": 20,
-            "content_pd_tb_mb": 10,
-            "content_pd_lr_mb": 10,
-            "border_bl": false,
-            "br_color": "#222222",
-            "br_bg": "#ffffff",
-            "br_opacity": 50,
-            "br_style": "solid",
-            "br_pd": 20,
-            "br_pd_mb": 10,
-            "time_animation": 1,
-            "animation_delay": 40
-          }
-        },
-        "164603622209bd8d44-1": {
-          "type": "custom_text",
-          "settings": {
-            "text": "LOOKBOOK 2023",
-            "remove_br_tag": false,
-            "tag": "p",
-            "fontf": "inherit",
-            "text_cl": "#ffffff",
-            "text_fs": 24,
-            "text_lh": 24,
-            "text_fw": 500,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "text_mgb": 5,
-            "hidden_mobile": false,
-            "text_fs_mb": 24,
-            "text_lh_mb": 24,
-            "text_ls_mb": 0,
-            "text_mgb_mobile": 5,
-            "animation": "fadeInDownBig"
-          }
-        },
-        "164603622209bd8d44-2": {
-          "type": "custom_text",
-          "settings": {
-            "text": "MAKE LOVE THIS LOOK",
-            "remove_br_tag": false,
-            "tag": "p",
-            "fontf": "inherit",
-            "text_cl": "#ffffff",
-            "text_fs": 14,
-            "text_lh": 24,
-            "text_fw": 600,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "text_mgb": 5,
-            "hidden_mobile": false,
-            "text_fs_mb": 14,
-            "text_lh_mb": 24,
-            "text_ls_mb": 0,
-            "text_mgb_mobile": 10,
-            "animation": "fadeInDownBig"
-          }
-        },
-        "164603622209bd8d44-3": {
-          "type": "b_item",
-          "settings": {
-            "custom_dk": true,
-            "height_dk": 600,
-            "custom_tb": true,
-            "height_tb": 400,
-            "custom_mb": true,
-            "height_mb": 300,
-            "b_link": "",
-            "open_link": "_self",
-            "img_effect": "translateToTop",
-            "b_effect": "none",
-            "col_dk": "6",
-            "col_tb": "6",
-            "col_mb": "12",
-            "content_align": "center",
-            "content_align_mobile": "center",
-            "content_width": "auto",
-            "cv_pos": 50,
-            "ch_pos": 50,
-            "cv_pos_mb": 50,
-            "ch_pos_mb": 50,
-            "bg_overlay": "#000000",
-            "bg_opacity": 0,
-            "bg_content_bl": false,
-            "bg_content_cl": "#ffffff",
-            "bg_content_op": 50,
-            "content_pd_tb": 20,
-            "content_pd_lr": 20,
-            "content_pd_tb_mb": 10,
-            "content_pd_lr_mb": 10,
-            "border_bl": false,
-            "br_color": "#222222",
-            "br_bg": "#ffffff",
-            "br_opacity": 50,
-            "br_style": "solid",
-            "br_pd": 20,
-            "br_pd_mb": 10,
-            "time_animation": 1,
-            "animation_delay": 40
-          }
-        },
-        "164603622209bd8d44-4": {
-          "type": "custom_text",
-          "settings": {
-            "text": "SUMMER SALE",
-            "remove_br_tag": false,
-            "tag": "p",
-            "fontf": "inherit",
-            "text_cl": "#ffffff",
-            "text_fs": 18,
-            "text_lh": 24,
-            "text_fw": 500,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "text_mgb": 5,
-            "hidden_mobile": false,
-            "text_fs_mb": 18,
-            "text_lh_mb": 24,
-            "text_ls_mb": 0,
-            "text_mgb_mobile": 5,
-            "animation": "fadeInUpBig"
-          }
-        },
-        "164603622209bd8d44-5": {
-          "type": "custom_text",
-          "settings": {
-            "text": "UP TO 70%",
-            "remove_br_tag": false,
-            "tag": "p",
-            "fontf": "inherit",
-            "text_cl": "#ffffff",
-            "text_fs": 50,
-            "text_lh": 50,
-            "text_fw": 600,
-            "text_ls": 0,
-            "font_italic": false,
-            "text_shadow": false,
-            "text_mgb": 0,
-            "hidden_mobile": false,
-            "text_fs_mb": 50,
-            "text_lh_mb": 50,
-            "text_ls_mb": 0,
-            "text_mgb_mobile": 0,
-            "animation": "fadeInUpBig"
-          }
-        }
-      },
-      "block_order": [
-        "164603622209bd8d44-0",
-        "164603622209bd8d44-1",
-        "164603622209bd8d44-2",
-        "164603622209bd8d44-3",
-        "164603622209bd8d44-4",
-        "164603622209bd8d44-5"
-      ],
+    "0903cace-37ad-4ba1-a677-9f8ca4e64ba8": {
+      "type": "line",
       "settings": {
-        "image_ratio": "ratioadapt",
-        "image_size": "cover",
-        "image_position": "8",
-        "space_h_item": "30",
-        "space_v_item": "30",
-        "space_h_item_mb": "10",
-        "space_v_item_mb": "10",
-        "layout": "t4s-container-wrap",
-        "cl_bg": "",
-        "cl_bg_gradient": "",
-        "mg": ",,110px,",
-        "pd": "",
+        "line_style": "solid",
+        "line_width": 100,
+        "line_height": 4,
+        "line_cl": "#b7499b",
+        "line_pos": "t4s-text-center",
+        "layout": "t4s-container-fluid",
+        "mg": "",
         "mg_tb": "",
-        "pd_tb": "",
-        "mg_mb": ",,30px,",
-        "pd_mb": "",
+        "mg_mb": ",,10px,",
         "use_cus_css": false,
-        "code_cus_css": ".SectionID {\nbackground-color:red\n}"
+        "code_cus_css": ""
       }
     },
     "164603686708691778": {
@@ -1404,7 +1224,7 @@
         "code_cus_css": ".SectionID {\nbackground-color:red\n}"
       }
     },
-    "7115357e-70b0-41ee-8b75-62e9c650852f": {
+    "c3fa360b-f182-472b-8c1e-540d83da9b7d": {
       "type": "line",
       "settings": {
         "line_style": "solid",
@@ -1465,12 +1285,13 @@
     "8dd3e86e-0721-4d8e-b449-6936c3b0e0ab",
     "f6a88b53-9e01-4022-8e9c-59b339b7418a",
     "1646035317ea8b6928",
+    "7115357e-70b0-41ee-8b75-62e9c650852f",
     "16891370800f9466c8",
-    "16460362229768af39",
+    "0903cace-37ad-4ba1-a677-9f8ca4e64ba8",
     "164603686708691778",
     "4be22e8d-8382-4e7f-a16a-74266764ecf0",
     "16460368750174c54a",
-    "7115357e-70b0-41ee-8b75-62e9c650852f",
+    "c3fa360b-f182-472b-8c1e-540d83da9b7d",
     "16891733191dfe92fe"
   ]
 }
