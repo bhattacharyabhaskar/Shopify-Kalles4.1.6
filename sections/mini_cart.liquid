@@ -83,7 +83,6 @@
 {%- if request.design_mode -%}
 <link rel="stylesheet" href="{{ 'mini-cart.css' | asset_url }}" media="print" onload="this.media='all'">
 <div data-cart-wrapper id="t4s-mini_cart" data-ccount="{{ ccount }}" class="t4s-drawer t4s-drawer__right t4s-dn" aria-hidden="true">
-</div>
 {%- endif -%}
 
    <div class="t4s-drawer__header"><span>{{ 'cart.mini_cart.title' | t }}</span><button class="t4s-drawer__close" data-drawer-close aria-label="{{ 'cart.mini_cart.close_cart' | t }}"><svg class="t4s-iconsvg-close" role="presentation" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg></button></div>
