@@ -26,7 +26,7 @@
     "fs_h4": 17.5,
     "fs_h5": 14,
     "fs_h6": 12.5,
-    "enable_compe": true,
+    "enable_compe": false,
     "app_review": "2",
     "badge_shape": "3",
     "label_sale_style": "1",
@@ -40,6 +40,7 @@
     "enable_pr_color": true,
     "swatch_item_style": "1",
     "show_color_type": "1",
+    "enable_pr_size": false,
     "pr_img_effect": "2",
     "pr_curent": "3",
     "use_group_media": true,
@@ -1909,11 +1910,24 @@
               "price_sale_color": "#ec0101"
             }
           },
+          "main-qv-5": {
+            "type": "meta",
+            "settings": {
+              "show_options": true,
+              "show_vendor": false,
+              "show_type": false,
+              "show_sku": true,
+              "show_barcode": false,
+              "show_available": false,
+              "show_category": false,
+              "show_tags": false
+            }
+          },
           "main-qv-2": {
             "type": "description",
             "settings": {
-              "des": "2",
-              "text": "<p>Go kalles this summer with this vintage navy and white striped v-neck t-shirt from the Nike. Perfect for pairing with denim and white kicks for a stylish kalles vibe.<\/p>",
+              "des": "1",
+              "text": "",
               "length": 31
             }
           },
@@ -1956,19 +1970,6 @@
               ]
             }
           },
-          "main-qv-5": {
-            "type": "meta",
-            "settings": {
-              "show_options": true,
-              "show_vendor": false,
-              "show_type": false,
-              "show_sku": true,
-              "show_barcode": false,
-              "show_available": false,
-              "show_category": false,
-              "show_tags": false
-            }
-          },
           "main-qv-6": {
             "type": "social",
             "settings": {
@@ -1990,15 +1991,15 @@
         "block_order": [
           "main-qv-0",
           "main-qv-1",
+          "main-qv-5",
           "main-qv-2",
           "main-qv-3",
-          "main-qv-5",
           "main-qv-6"
         ],
         "settings": {
-          "demo_pr": "",
+          "demo_pr": "dual-tone-purple-and-magenta-color-handloom-mashru-banarasi-silk-saree",
           "image_ratio": "ratioadapt",
-          "image_size": "cover",
+          "image_size": "contain",
           "image_position": "8",
           "enable_video_looping": false,
           "enable_video_muting": true,
