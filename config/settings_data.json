@@ -1611,6 +1611,32 @@
               "icon": "las la-chair"
             }
           },
+          "9d76ee89-e002-4817-9473-7327e10dd0fe": {
+            "type": "menu",
+            "settings": {
+              "title": "KNOW US",
+              "url": "",
+              "open_link": "_self",
+              "menu": "header-knowus",
+              "lb": "",
+              "lb_cl": "",
+              "icons_op": "0",
+              "icon": "las la-chair"
+            }
+          },
+          "9de86ca0-8b19-4270-a90c-f26de4cdb94b": {
+            "type": "menu",
+            "settings": {
+              "title": "BLOGS",
+              "url": "shopify:\/\/blogs\/indyvogue-fashion-center",
+              "open_link": "_self",
+              "menu": "",
+              "lb": "",
+              "lb_cl": "",
+              "icons_op": "0",
+              "icon": "las la-chair"
+            }
+          },
           "mb_nav-4": {
             "type": "wis",
             "disabled": true,
@@ -1655,6 +1681,8 @@
           "mb_nav-3",
           "9f6ec576-ef05-4623-888d-961266e378bc",
           "e671750b-c70a-4f04-9f60-ec74c7a5ede7",
+          "9d76ee89-e002-4817-9473-7327e10dd0fe",
+          "9de86ca0-8b19-4270-a90c-f26de4cdb94b",
           "mb_nav-4",
           "mb_nav-5",
           "mb_nav-6",
