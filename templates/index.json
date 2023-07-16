@@ -1267,6 +1267,70 @@
         "code_cus_css": ".SectionID {\nbackground-color:red\n}"
       }
     },
+    "4be22e8d-8382-4e7f-a16a-74266764ecf0": {
+      "type": "featured-collection",
+      "settings": {
+        "design_heading": "2",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "collection": "designer-bags",
+        "product_des": "1",
+        "show_vendor": false,
+        "use_cdt": false,
+        "image_ratio": "rationt",
+        "image_size": "cover",
+        "image_position": "8",
+        "content_align": "center",
+        "limit": 8,
+        "col_dk": "4",
+        "col_tb": "2",
+        "col_mb": "2",
+        "space_h_item": "30",
+        "space_v_item": "30",
+        "space_h_item_mb": "10",
+        "space_v_item_mb": "10",
+        "layout_des": "1",
+        "loop": true,
+        "au_time": 0,
+        "au_hover": true,
+        "nav_btn": true,
+        "btns_pos": "default",
+        "btn_vi": "hover",
+        "btn_owl": "default",
+        "btn_shape": "none",
+        "btn_cl": "dark",
+        "btn_size": "small",
+        "btn_hidden_mobile": false,
+        "nav_dot": true,
+        "dot_owl": "default",
+        "dots_cl": "dark",
+        "dots_round": false,
+        "dots_space": 10,
+        "dots_hidden_mobile": false,
+        "use_pagination": "none",
+        "enable_bar_lm": false,
+        "btn_icon": false,
+        "button_style": "default",
+        "btns_size": "medium",
+        "btns_cl": "default",
+        "button_effect": "fade",
+        "btn_pos": "t4s-text-center",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,85px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,25px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ".SectionID {\nbackground-color:red\n}"
+      }
+    },
     "16460368750174c54a": {
       "type": "blog-post",
       "settings": {
@@ -1276,7 +1340,7 @@
         "bt_lb": "Button label",
         "icon_heading": "gem",
         "top_subheading": "The freshest and most exciting news",
-        "tophead_mb": 30,
+        "tophead_mb": 10,
         "blog": "indyvogue-fashion-center",
         "post_des": "1",
         "show_cate": false,
@@ -1340,6 +1404,22 @@
         "code_cus_css": ".SectionID {\nbackground-color:red\n}"
       }
     },
+    "7115357e-70b0-41ee-8b75-62e9c650852f": {
+      "type": "line",
+      "settings": {
+        "line_style": "solid",
+        "line_width": 100,
+        "line_height": 4,
+        "line_cl": "#b7499b",
+        "line_pos": "t4s-text-center",
+        "layout": "t4s-container-wrap",
+        "mg": "",
+        "mg_tb": "",
+        "mg_mb": ",,10px,",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "16891733191dfe92fe": {
       "type": "apps",
       "blocks": {
@@ -1388,7 +1468,9 @@
     "16891370800f9466c8",
     "16460362229768af39",
     "164603686708691778",
+    "4be22e8d-8382-4e7f-a16a-74266764ecf0",
     "16460368750174c54a",
+    "7115357e-70b0-41ee-8b75-62e9c650852f",
     "16891733191dfe92fe"
   ]
 }
