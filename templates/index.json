@@ -716,47 +716,6 @@
         "code_cus_css": ""
       }
     },
-    "a4e2486e-e568-49b0-9746-ba905b89c43a": {
-      "type": "our_mission",
-      "blocks": {
-        "template--16797917544681__a4e2486e-e568-49b0-9746-ba905b89c43a-168914100225a9ea64-0": {
-          "type": "om_item",
-          "settings": {
-            "heading": "Designer Silk Sarees - IndyVogue",
-            "content": "IndyVogue is an Indian ethnic fashion boutique that specializes in selling exquisite Silk Mark certified hand-woven sarees online in Banarasi, Jamdani, Linen, Kanjeevaram, Handloom as well as exclusive Designer Blouses with Jewelry for all your needs. Our sarees are made from the finest quality silk and are hand-woven by skilled artisans, ensuring that each piece is unique and of the highest quality. Our collection features a wide range of styles and designs, from traditional to contemporary, so you can find the perfect saree for any occasion. We are dedicated to promoting the beauty and heritage of Indian handloom silk and strive to provide our customers with the best shopping experience possible. Shop with us and add a touch of elegance and sophistication to your wardrobe with our exquisite Silk Mark certified hand-woven sarees.",
-            "text_align": "center",
-            "col_tb": "12",
-            "col_mb": "12"
-          }
-        }
-      },
-      "block_order": [
-        "template--16797917544681__a4e2486e-e568-49b0-9746-ba905b89c43a-168914100225a9ea64-0"
-      ],
-      "settings": {
-        "design_heading": "1",
-        "heading_align": "t4s-text-center",
-        "top_heading": "",
-        "icon_heading": "las la-gem",
-        "top_subheading": "",
-        "tophead_mb": 30,
-        "space_h_item": "30",
-        "space_v_item": "30",
-        "space_h_item_mb": "10",
-        "space_v_item_mb": "10",
-        "layout": "t4s-container-wrap",
-        "cl_bg": "",
-        "cl_bg_gradient": "",
-        "mg": ",,50px,",
-        "pd": "",
-        "mg_tb": "",
-        "pd_tb": "",
-        "mg_mb": ",,30px,",
-        "pd_mb": "",
-        "use_cus_css": false,
-        "code_cus_css": ""
-      }
-    },
     "835ab488-1465-44fa-8de3-643823d73e05": {
       "type": "image_text",
       "blocks": {
@@ -774,7 +733,7 @@
             "hd_color": "#222222",
             "des_color": "#878787",
             "use_shadow": false,
-            "button_label": "SEE ALL REVIEWS",
+            "button_label": "",
             "button_link": "shopify:\/\/pages\/indyvogue-reviews",
             "open_link": "_self",
             "btn_icon": false,
@@ -816,6 +775,102 @@
       "type": "custom-html",
       "settings": {
         "code": "<div class=\"t4s-text-center\" style=\"padding: 15px 0;background-color: #fff;color: #fff;\">\n<div data-romw-token=\"SuXYREMYz4nTRed4TUFHciHAwv1qXhpiEuFE4aGRGxvvhK3AdI\"><\/div>\n<\/div>",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,20px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,10px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
+    "2bd3b239-8ad0-4208-9001-30abb6971686": {
+      "type": "image_text",
+      "blocks": {
+        "438dfc1e-afa7-4826-a0f2-0f1862519557": {
+          "type": "bl_text",
+          "settings": {
+            "col_dk": "12",
+            "col_tb": "12",
+            "text_size": "40,15",
+            "txt_align": "center",
+            "sub_heading": "",
+            "heading": "",
+            "text": "",
+            "subhd_color": "#222222",
+            "hd_color": "#222222",
+            "des_color": "#878787",
+            "use_shadow": false,
+            "button_label": "SEE ALL REVIEWS",
+            "button_link": "shopify:\/\/pages\/indyvogue-reviews",
+            "open_link": "_self",
+            "btn_icon": false,
+            "button_style": "default",
+            "btn_size": "medium",
+            "btn_cl": "primary",
+            "button_effect": "default"
+          }
+        }
+      },
+      "block_order": [
+        "438dfc1e-afa7-4826-a0f2-0f1862519557"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "space_h_item": "20",
+        "space_v_item": "10",
+        "space_h_item_mb": "20",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px",
+        "pd": "",
+        "mg_tb": ",,30px",
+        "pd_tb": ",,20px",
+        "mg_mb": "",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
+    "a4e2486e-e568-49b0-9746-ba905b89c43a": {
+      "type": "our_mission",
+      "blocks": {
+        "template--16797917544681__a4e2486e-e568-49b0-9746-ba905b89c43a-168914100225a9ea64-0": {
+          "type": "om_item",
+          "settings": {
+            "heading": "Designer Silk Sarees - IndyVogue",
+            "content": "IndyVogue is an Indian ethnic fashion boutique that specializes in selling exquisite Silk Mark certified hand-woven sarees online in Banarasi, Jamdani, Linen, Kanjeevaram, Handloom as well as exclusive Designer Blouses with Jewelry for all your needs. Our sarees are made from the finest quality silk and are hand-woven by skilled artisans, ensuring that each piece is unique and of the highest quality. Our collection features a wide range of styles and designs, from traditional to contemporary, so you can find the perfect saree for any occasion. We are dedicated to promoting the beauty and heritage of Indian handloom silk and strive to provide our customers with the best shopping experience possible. Shop with us and add a touch of elegance and sophistication to your wardrobe with our exquisite Silk Mark certified hand-woven sarees.",
+            "text_align": "center",
+            "col_tb": "12",
+            "col_mb": "12"
+          }
+        }
+      },
+      "block_order": [
+        "template--16797917544681__a4e2486e-e568-49b0-9746-ba905b89c43a-168914100225a9ea64-0"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "space_h_item": "30",
+        "space_v_item": "30",
+        "space_h_item_mb": "10",
+        "space_v_item_mb": "10",
         "layout": "t4s-container-wrap",
         "cl_bg": "",
         "cl_bg_gradient": "",
@@ -1304,9 +1359,10 @@
     "64c9b235-9d18-46e5-ac3c-840dabd513f9",
     "5191a6f7-87be-4d47-a428-dc5caaf00eec",
     "7fed8a43-3022-4e84-b1b2-e0cbb415d702",
-    "a4e2486e-e568-49b0-9746-ba905b89c43a",
     "835ab488-1465-44fa-8de3-643823d73e05",
     "8dd3e86e-0721-4d8e-b449-6936c3b0e0ab",
+    "2bd3b239-8ad0-4208-9001-30abb6971686",
+    "a4e2486e-e568-49b0-9746-ba905b89c43a",
     "f6a88b53-9e01-4022-8e9c-59b339b7418a",
     "1646035317ea8b6928",
     "16891370800f9466c8",
