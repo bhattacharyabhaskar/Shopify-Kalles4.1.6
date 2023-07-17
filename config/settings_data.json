@@ -811,7 +811,7 @@
             "type": "mega",
             "settings": {
               "title": "Sale",
-              "url": "shopify:\/\/collections",
+              "url": "shopify:\/\/collections\/sale",
               "open_link": "_self",
               "icon": "",
               "cus_cl": false,
