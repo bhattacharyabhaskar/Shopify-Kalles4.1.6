@@ -415,7 +415,7 @@
           "footer-8": {
             "type": "bl_col",
             "settings": {
-              "col_heading": "ACCESSORY",
+              "col_heading": "ACCESSORIES",
               "menu": "accessories",
               "menu_style": "1",
               "col_dk": "15",
@@ -1106,7 +1106,7 @@
           "fw_pr": 500,
           "lh_pr": 20,
           "ls_pr": 0,
-          "size_price_pr": 14,
+          "size_price_pr": 16,
           "fw_price_pr": 400,
           "space_img_content": 15,
           "space_elements": 0,
@@ -1115,7 +1115,7 @@
           "pr_btn_round": 40,
           "pr_title_color": "#222222",
           "pr_title_color_hover": "#56cfe1",
-          "price_color": "#003300",
+          "price_color": "#b7499b",
           "price_color_second": "#696969",
           "price_sale_color": "#ec0101",
           "vendors_color": "#878787",
