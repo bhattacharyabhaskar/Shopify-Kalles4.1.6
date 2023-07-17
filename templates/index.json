@@ -809,7 +809,7 @@
             "button_label": "SEE ALL REVIEWS",
             "button_link": "shopify:\/\/pages\/indyvogue-reviews",
             "open_link": "_self",
-            "btn_icon": false,
+            "btn_icon": true,
             "button_style": "default",
             "btn_size": "medium",
             "btn_cl": "primary",
