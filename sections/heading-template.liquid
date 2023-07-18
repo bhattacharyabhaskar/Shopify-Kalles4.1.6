@@ -23,7 +23,7 @@
   {% if se_stts.parallax == true %}data-parallax-t4strue{% endif %}
   {%- if image != blank -%}
   style="background-image:url({{ image | image_url: width: 1024 }})"
-  data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1" {%- endif -%}
+  data-sizes="auto"  data-optimumx="1" {%- endif -%}
   {% render 'style_heading', se_stts: se_stts %}>   
     {%- case page_type -%}
       {%- when 'blog' -%}
