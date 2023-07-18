@@ -2605,13 +2605,6 @@
           "color-secondary": "#343434"
         }
       },
-      "7456567658179156570": {
-        "type": "shopify:\/\/apps\/adroll-advertising-marketing\/blocks\/adroll-pixel\/c60853ed-1adb-4359-83ae-4ed43ed0b559",
-        "disabled": false,
-        "settings": {
-          "enable_email_capture": true
-        }
-      },
       "6143736321357441667": {
         "type": "shopify:\/\/apps\/tidio-live-chat-chatbots\/blocks\/app-embed\/1002274d-fb18-4939-98f6-5f05a8deeadc",
         "disabled": true,
@@ -2628,6 +2621,13 @@
         "type": "shopify:\/\/apps\/discount-ninja\/blocks\/discountninja-app-embed-latest\/b9a933ba-e276-459f-a4bf-3571d5a1e81c",
         "disabled": false,
         "settings": {
+        }
+      },
+      "7456567658179156570": {
+        "type": "shopify:\/\/apps\/adroll-advertising-marketing\/blocks\/adroll-pixel\/c60853ed-1adb-4359-83ae-4ed43ed0b559",
+        "disabled": true,
+        "settings": {
+          "enable_email_capture": true
         }
       }
     }
