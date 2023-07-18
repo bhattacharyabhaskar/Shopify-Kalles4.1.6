@@ -49,7 +49,14 @@ assign img_alt = img_alt | escape
 <div data-product-single-media-wrapper data-main-slide class="{{ class_col }}t4s-col-12 t4s-col-item t4s-product__media-item {{ isMediaHidden }}{% if variant_images contains media.src %} t4s-product__media-item--variant{% endif %}" data-media-id="{{ media.id }}" data-nt-media-id="{{ se_id }}-{{ media.id }}" data-media-type="{{ media.media_type }}" data-grname="{{ grname | escape }}" data-grpvl="{{ grpvl | escape }}">
 	<div data-t4s-gallery--open class="t4s_ratio t4s-product__media{{ class_pswp_disable }}" {{ imgatt }}style="--aspect-ratioapt:{{ image.aspect_ratio }};--mw-media:{{ image.width }}px">
 		<noscript>{{ image | image_url: width: image_size | image_tag: widths: '288, 576, 750, 1100, 1500', alt: img_alt, class: 't4s-img-noscript', loading: 'lazy', sizes: '(min-width: 1500px) 1500px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</noscript>
-	   <img data-master="{{ image | image_url }}" class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ img_alt }}">
+	   <img data-master="{{ image | image_url }}"
+         class="lazyloadt4sed t4s-lz--fadeIn lazy2 lazy3"
+         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  
+          data-src="{{- image | img_url: '720x' -}}"
+          data-mobsrc="{{- image | img_url: '360x' -}}" 
+         data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]"
+         data-optimumx="2" data-sizes="auto"
+         width="{{ image.width }}" height="{{ image.height }}" alt="{{ img_alt }}">
 	   <span class="lazyloadt4s-loader"></span>
 	</div>
 </div>
@@ -58,7 +65,14 @@ assign img_alt = img_alt | escape
 	<div class="t4s-pr">
 		<div class="t4s_ratio t4s-product__media" {{ imgatt }}style="--aspect-ratioapt:{{ media.aspect_ratio | default: 1 }};--mw-media:100%">
 			<noscript>{{ image | image_url: width: image_size | image_tag: widths: '288, 576, 750, 1100, 1500', alt: img_alt, class: 't4s-img-noscript', loading: 'lazy', sizes: '(min-width: 1500px) 1500px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</noscript>
-		   <img data-master="{{ image | image_url }}" class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ img_alt }}">
+		   <img data-master="{{ image | image_url }}"
+              class="lazyloadt4sed t4s-lz--fadeIn lazy2 lazy3"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  
+              data-src="{{- image | img_url: '720x' -}}"
+              data-mobsrc="{{- image | img_url: '360x' -}}" 
+             data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]"
+             data-optimumx="2" data-sizes="auto"
+             width="{{ image.width }}" height="{{ image.height }}" alt="{{ img_alt }}">
 		   <span class="lazyloadt4s-loader"></span>
 		</div>
 		<template class="t4s-d-none">
