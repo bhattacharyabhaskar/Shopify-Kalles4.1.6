@@ -21,7 +21,7 @@
 <div class="header-banner
   {% if se_stts.parallax == true %}t4s-parallax t4s-parallax-bg{% endif %}lazyloadt4s"
   {% if se_stts.parallax == true %}data-parallax-t4strue{% endif %}
-  style="background-image:url ({{ image | image_url: width: 1024 }})"
+  style="background-image:url({{ image | image_url: width: 1024 }})"
   {%- if image != blank -%} data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1" {%- endif -%}
   {% render 'style_heading', se_stts: se_stts %}>   
     {%- case page_type -%}
