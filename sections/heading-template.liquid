@@ -18,13 +18,7 @@
   assign general_block = false 
  -%}  
 {{ 'heading-template.css' | asset_url | stylesheet_tag }} 
-<div class="header-banner
-  {% if se_stts.parallax == true %}t4s-parallax t4s-parallax-bg{% endif %}lazyloadt4s"
-  {% if se_stts.parallax == true %}data-parallax-t4strue{% endif %}
-  {%- if image != blank -%}
-  style="background-image:url({{ image | image_url: width: 1024 }})"
-  data-sizes="auto"  data-optimumx="1" {%- endif -%}
-  {% render 'style_heading', se_stts: se_stts %}>   
+<div class="header-banner {% if se_stts.parallax == true %}t4s-parallax t4s-parallax-bg{% endif %} lazyloadt4s" {% if se_stts.parallax == true %}data-parallax-t4strue{% endif %} {%- if image != blank -%} data-bgset="{{ image | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1" {%- endif -%} {% render 'style_heading', se_stts: se_stts %}>   
     {%- case page_type -%}
       {%- when 'blog' -%}
           {%- render 'heading_blog', se_stts: se_stts, se_bks: se_bks -%}
