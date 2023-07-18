@@ -2586,25 +2586,6 @@
 
     ],
     "blocks": {
-      "16510219240223340300": {
-        "type": "shopify:\/\/apps\/whatmore-shoppable-videos\/blocks\/app-embed\/20db8a72-315a-4364-8885-64219ee48303",
-        "disabled": false,
-        "settings": {
-          "ui-theme": "round",
-          "minimized_video_position": "right",
-          "horizontal-padding": 5,
-          "vertical-padding": 150,
-          "app-size": 50,
-          "minimized_video_position_landscape": "right",
-          "horizontal-padding-landscape": 5,
-          "vertical-padding-landscape": 150,
-          "app-size-landscape": 50,
-          "video-title": "",
-          "use-variant": "false",
-          "primary-font": "sans-serif",
-          "color-secondary": "#343434"
-        }
-      },
       "6143736321357441667": {
         "type": "shopify:\/\/apps\/tidio-live-chat-chatbots\/blocks\/app-embed\/1002274d-fb18-4939-98f6-5f05a8deeadc",
         "disabled": true,
@@ -2628,6 +2609,25 @@
         "type": "shopify:\/\/apps\/discount-ninja\/blocks\/discountninja-app-embed-latest\/b9a933ba-e276-459f-a4bf-3571d5a1e81c",
         "disabled": true,
         "settings": {
+        }
+      },
+      "16510219240223340300": {
+        "type": "shopify:\/\/apps\/whatmore-shoppable-videos\/blocks\/app-embed\/20db8a72-315a-4364-8885-64219ee48303",
+        "disabled": true,
+        "settings": {
+          "ui-theme": "round",
+          "minimized_video_position": "right",
+          "horizontal-padding": 5,
+          "vertical-padding": 150,
+          "app-size": 50,
+          "minimized_video_position_landscape": "right",
+          "horizontal-padding-landscape": 5,
+          "vertical-padding-landscape": 150,
+          "app-size-landscape": 50,
+          "video-title": "",
+          "use-variant": "false",
+          "primary-font": "sans-serif",
+          "color-secondary": "#343434"
         }
       }
     }
