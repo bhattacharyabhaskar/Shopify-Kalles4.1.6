@@ -267,8 +267,8 @@ endif -%}
                        data-optimumx="2"
                        data-sizes="auto"
                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  
-            		   data-src="{{- preview_image | img_url: '720x' -}}"
-                       data-mobsrc="{{- preview_image | img_url: '360x' -}}" 
+            		   data-src="{{- image | img_url: '720x' -}}"
+                       data-mobsrc="{{- image | img_url: '360x' -}}" 
                        width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}"><span class="lazyloadt4s-loader"></span>
                     </div>
                   </div>
