@@ -1,0 +1,454 @@
+{
+  "sections": {
+    "heading": {
+      "type": "heading-template",
+      "settings": {
+        "use_specify_image": true,
+        "parallax": false,
+        "color": "#000000",
+        "overlay": 54,
+        "padding": 50,
+        "paddingmb": 50,
+        "mg_b": 50,
+        "mg_bmb": 50,
+        "content_align": "t4s-text-center",
+        "bg_pos": "center center",
+        "bg_repeat": "no-repeat",
+        "bg_size": "cover",
+        "use_cus_css": false,
+        "code_cus_css": ".SectionID {\nbackground-color:red\n}"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": "60px,,60px,",
+        "pd": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": ""
+      }
+    },
+    "sidebar-page": {
+      "type": "sidebar-page",
+      "disabled": true,
+      "blocks": {
+        "f69681ed-b75e-42de-be58-fdf73b3b7e08": {
+          "type": "blog_cate",
+          "settings": {
+            "title": "Blog categories",
+            "cat_link_list": "",
+            "count": true
+          }
+        }
+      },
+      "block_order": [
+        "f69681ed-b75e-42de-be58-fdf73b3b7e08"
+      ],
+      "settings": {
+        "enable_drawer": false,
+        "space": 50,
+        "size": "medium",
+        "br_style": "none",
+        "brcolor": "#222222",
+        "sidebar_bdr": 5,
+        "sidebar_pd": 10
+      }
+    },
+    "7edd2a43-4fa4-47f3-91a5-dfe08b4829e7": {
+      "type": "hero_image",
+      "settings": {
+        "se_height": "t4s_ratioadapt",
+        "custom_dk": true,
+        "height_dk": 600,
+        "custom_tb": true,
+        "height_tb": 400,
+        "custom_mb": true,
+        "height_mb": 250,
+        "image": "shopify:\/\/shop_images\/0408-LiveTrunkShow-Desk.png",
+        "parallax": false,
+        "image_position": "0",
+        "link_img1": "",
+        "open_link": "_blank",
+        "text_align": "center",
+        "text_align_mb": "center",
+        "content_width": "auto",
+        "cv_pos": 50,
+        "ch_pos": 50,
+        "cv_pos_mb": 50,
+        "ch_pos_mb": 50,
+        "bg_overlay": "#000000",
+        "bg_opacity": 0,
+        "bg_content_cl": "#ffffff",
+        "bg_content_op": 0,
+        "content_pd_tb": 15,
+        "content_pd_lr": 15,
+        "content_pd_tb_mb": 10,
+        "content_pd_lr_mb": 10,
+        "border_bl": false,
+        "br_color": "#222222",
+        "br_bg": "#ffffff",
+        "br_opacity": 50,
+        "br_style": "solid",
+        "br_pd": 20,
+        "br_pd_mb": 10,
+        "time_animation": 1,
+        "animation_delay": 40,
+        "layout": "t4s-container-fluid",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
+    "6835a66f-3bb2-47e3-bda7-6cfc84438336": {
+      "type": "countdown",
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "Coming Soon",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "date": "2023\/04\/7 20:30:0",
+        "cdt_des": "1",
+        "cdt_size": "medium",
+        "box_bdr": 18,
+        "bd_width": 0,
+        "space_item": 10,
+        "number_cl": "#ffffff",
+        "text_cl": "#000000",
+        "border_cl": "#000000",
+        "bg_cl": "#000000",
+        "content_align": "t4s-text-center",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
+    "521a954b-a737-41de-ad0d-1a05da3b3cba": {
+      "type": "custom-section",
+      "blocks": {
+        "bfdbd820-63a6-424f-9cf6-1fdbcd3a51e1": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_tb": "6",
+            "col_mb": "12",
+            "align_vertical": false,
+            "content_align": "center",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "30px,,30px",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_image": "shopify:\/\/shop_images\/BG-New.jpg",
+            "bg_cl": "#ffffff"
+          }
+        },
+        "71a918f8-481a-4600-8016-d2a540bd7ffb": {
+          "type": "html",
+          "settings": {
+            "html_content": "<iframe src=\"https:\/\/www.facebook.com\/plugins\/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2FIndyVogue%2Fvideos%2F1394723134659825%2F&amp;show_text=true&amp;width=267&amp;t=0\" width=\"267\" height=\"591\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\" allow=\"autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share\"><\/iframe>",
+            "hidden_mobile": false
+          }
+        },
+        "ebdf5fc5-d9c8-4a2e-a831-d204179ccb1c": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Facebook Live  - April 7, 2023",
+            "remove_br_tag": false,
+            "fontf": "inherit",
+            "text_cl": "#111111",
+            "text_fs": 24,
+            "text_lh": 0,
+            "text_fw": 500,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 15,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        },
+        "770cc36e-2013-43fe-8abb-76960aa630cd": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Watch the recording",
+            "remove_br_tag": false,
+            "fontf": "inherit",
+            "text_cl": "#111111",
+            "text_fs": 20,
+            "text_lh": 0,
+            "text_fw": 400,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 15,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        },
+        "template--16729386909929__521a954b-a737-41de-ad0d-1a05da3b3cba-1679150922f09fdada-3": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_tb": "6",
+            "col_mb": "12",
+            "align_vertical": false,
+            "content_align": "center",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "30px,,30px",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_image": "shopify:\/\/shop_images\/canary-yellow-color-jamdani-saree-4.webp",
+            "bg_cl": "#d2a2a2"
+          }
+        },
+        "74c07c6f-f108-4ea1-9c54-9dc072ae81a9": {
+          "type": "html",
+          "settings": {
+            "html_content": "<iframe src=\"https:\/\/www.facebook.com\/plugins\/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2FIndyVogue%2Fvideos%2F130601706647468%2F&amp;show_text=true&amp;width=267&amp;t=0\" width=\"267\" height=\"591\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\" allow=\"autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share\"><\/iframe>",
+            "hidden_mobile": false
+          }
+        },
+        "ba25d4e4-e768-41d3-b280-8731b94f6c76": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Facebook Live - March 31, 2023",
+            "remove_br_tag": false,
+            "fontf": "inherit",
+            "text_cl": "#000000",
+            "text_fs": 24,
+            "text_lh": 0,
+            "text_fw": 500,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 5,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        },
+        "8d5841e5-766d-4edc-a6be-eac39b11ad8d": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Watch the recording",
+            "remove_br_tag": false,
+            "fontf": "inherit",
+            "text_cl": "#000000",
+            "text_fs": 20,
+            "text_lh": 24,
+            "text_fw": 400,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 15,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        },
+        "5ab01bfb-d944-4083-aea1-13a61caf4b46": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_tb": "6",
+            "col_mb": "12",
+            "align_vertical": false,
+            "content_align": "center",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_image": "shopify:\/\/shop_images\/F64F94B0-3A60.jpg",
+            "bg_cl": "#ffffff"
+          }
+        },
+        "c139d90d-8f63-4586-8ea0-605ca7eeea20": {
+          "type": "html",
+          "settings": {
+            "html_content": "<iframe src=\"https:\/\/www.facebook.com\/plugins\/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2FIndyVogue%2Fvideos%2F741939867434998%2F&amp;show_text=true&amp;width=267&amp;t=0\" width=\"267\" height=\"591\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\" allow=\"autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share\"><\/iframe>",
+            "hidden_mobile": false
+          }
+        },
+        "f1e09062-3cc3-4d91-a359-b0de1339f943": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Facebook Live - March 24, 2023",
+            "remove_br_tag": false,
+            "fontf": "inherit",
+            "text_cl": "#ffffff",
+            "text_fs": 24,
+            "text_lh": 0,
+            "text_fw": 500,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 15,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        },
+        "template--16729386909929__521a954b-a737-41de-ad0d-1a05da3b3cba-1679150922f09fdada-2": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Watch the recording",
+            "remove_br_tag": false,
+            "fontf": "inherit",
+            "text_cl": "#ffffff",
+            "text_fs": 20,
+            "text_lh": 24,
+            "text_fw": 400,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 0,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        },
+        "template--16729386909929__521a954b-a737-41de-ad0d-1a05da3b3cba-1679150922f09fdada-0": {
+          "type": "bl_col",
+          "settings": {
+            "col_dk": "6",
+            "col_tb": "6",
+            "col_mb": "12",
+            "align_vertical": false,
+            "content_align": "center",
+            "content_align_tablet": "center",
+            "content_align_mobile": "center",
+            "padding_inner": "30px,,30px",
+            "padding_inner_tb": "",
+            "padding_inner_mb": "",
+            "bg_image": "shopify:\/\/shop_images\/deep-ash-color-pure-ikat-silk-saree-4.jpg",
+            "bg_cl": "#d2a2a2"
+          }
+        },
+        "271b1421-409c-4694-b8ad-005bd59734de": {
+          "type": "html",
+          "settings": {
+            "html_content": "<iframe src=\"https:\/\/www.facebook.com\/plugins\/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2FIndyVogue%2Fvideos%2F1674652909658872%2F&amp;show_text=true&amp;width=267&amp;t=0\" width=\"267\" height=\"591\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\" allow=\"autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share\"><\/iframe>",
+            "hidden_mobile": false
+          }
+        },
+        "template--16729386909929__521a954b-a737-41de-ad0d-1a05da3b3cba-1679150922f09fdada-1": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Facebook Live - March 17, 2023",
+            "remove_br_tag": false,
+            "fontf": "inherit",
+            "text_cl": "#ffffff",
+            "text_fs": 24,
+            "text_lh": 0,
+            "text_fw": 500,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 5,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        },
+        "178891e9-e830-4e80-b132-67f64271334a": {
+          "type": "custom_text",
+          "settings": {
+            "text": "Watch the recording",
+            "remove_br_tag": false,
+            "fontf": "inherit",
+            "text_cl": "#ffffff",
+            "text_fs": 20,
+            "text_lh": 0,
+            "text_fw": 400,
+            "text_ls": 0,
+            "font_italic": false,
+            "text_shadow": false,
+            "text_mgb": 15,
+            "hidden_mobile": false,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
+            "text_ls_mb": 0,
+            "text_mgb_mobile": 10
+          }
+        }
+      },
+      "block_order": [
+        "bfdbd820-63a6-424f-9cf6-1fdbcd3a51e1",
+        "71a918f8-481a-4600-8016-d2a540bd7ffb",
+        "ebdf5fc5-d9c8-4a2e-a831-d204179ccb1c",
+        "770cc36e-2013-43fe-8abb-76960aa630cd",
+        "template--16729386909929__521a954b-a737-41de-ad0d-1a05da3b3cba-1679150922f09fdada-3",
+        "74c07c6f-f108-4ea1-9c54-9dc072ae81a9",
+        "ba25d4e4-e768-41d3-b280-8731b94f6c76",
+        "8d5841e5-766d-4edc-a6be-eac39b11ad8d",
+        "5ab01bfb-d944-4083-aea1-13a61caf4b46",
+        "c139d90d-8f63-4586-8ea0-605ca7eeea20",
+        "f1e09062-3cc3-4d91-a359-b0de1339f943",
+        "template--16729386909929__521a954b-a737-41de-ad0d-1a05da3b3cba-1679150922f09fdada-2",
+        "template--16729386909929__521a954b-a737-41de-ad0d-1a05da3b3cba-1679150922f09fdada-0",
+        "271b1421-409c-4694-b8ad-005bd59734de",
+        "template--16729386909929__521a954b-a737-41de-ad0d-1a05da3b3cba-1679150922f09fdada-1",
+        "178891e9-e830-4e80-b132-67f64271334a"
+      ],
+      "settings": {
+        "space_h_item": "30",
+        "space_v_item": "30",
+        "space_h_item_mb": "10",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": ",,50px,",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    }
+  },
+  "order": [
+    "heading",
+    "main",
+    "sidebar-page",
+    "7edd2a43-4fa4-47f3-91a5-dfe08b4829e7",
+    "6835a66f-3bb2-47e3-bda7-6cfc84438336",
+    "521a954b-a737-41de-ad0d-1a05da3b3cba"
+  ]
+}
