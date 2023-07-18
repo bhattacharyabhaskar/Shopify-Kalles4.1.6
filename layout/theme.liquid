@@ -126,14 +126,7 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
       {% include 'analyzify-gtm-body' %}
 
       <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
-        
-            {%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
-            	{{ content_for_layout }}
-            {%- else -%}
-            	{% capture content_for_layout2 %}{{ content_for_layout }}{% endcapture %}
-            	{{ content_for_layout2 | replace: '<script src="', '<script type="lazyload2" data-src="'  }}
-            {%- endif -%}
-                    
+        {{ content_for_layout }}         
       </main>
 
       <footer id="t4s-footer">
