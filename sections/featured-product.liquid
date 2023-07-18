@@ -256,7 +256,7 @@
                 {%- if image != blank -%}
                 <div class="t4s-product__no_media t4s-pr">
                   <div data-t4s-gallery data-t4s-thumb-false data-main-media class="t4s-product__media-item t4s_{{ image_ratio }} t4s_position_{{ se_stts.image_position }} t4s_{{ se_stts.image_size }}">
-                    <div data-t4s-gallery--open data-media-type="image" class="t4s_ratio t4s-product__media{{ class_pswp_disable }}" {{ imgatt }}style="--aspect-ratioapt:{{ image.aspect_ratio }};--mw-media:{{ image.width }}px">
+                    <div data-t4s-gallery--open data-media-type="image" class="t4s_ratio t4s-product__media3333333333333333333{{ class_pswp_disable }}" {{ imgatt }}style="--aspect-ratioapt:{{ image.aspect_ratio }};--mw-media:{{ image.width }}px">
                       <noscript>{{ image | image_url: width: 1500 | image_tag: widths: '288, 576, 750, 1100, 1500', class: 't4s-img-noscript', loading: 'lazy', sizes: '(min-width: 1500px) 1500px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</noscript>
                       <img data-master="{{ image | image_url }}" class="lazyloadt4s t4s-lz--fadeIn" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="{% render 'img_svg', w: image.width, h: image.height %}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}"><span class="lazyloadt4s-loader"></span>
                     </div>
