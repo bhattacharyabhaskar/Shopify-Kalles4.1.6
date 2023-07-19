@@ -2632,7 +2632,7 @@
       },
       "942670587456160541": {
         "type": "shopify:\/\/apps\/discount-ninja\/blocks\/discountninja-app-embed-stable\/b9a933ba-e276-459f-a4bf-3571d5a1e81c",
-        "disabled": false,
+        "disabled": true,
         "settings": {
         }
       }
