@@ -2619,7 +2619,7 @@
       },
       "16510219240223340300": {
         "type": "shopify:\/\/apps\/whatmore-shoppable-videos\/blocks\/app-embed\/20db8a72-315a-4364-8885-64219ee48303",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "ui-theme": "round",
           "minimized_video_position": "right",
