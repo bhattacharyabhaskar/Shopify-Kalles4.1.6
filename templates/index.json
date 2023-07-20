@@ -1082,7 +1082,7 @@
           "type": "shopify:\/\/apps\/whatmore-shoppable-videos\/blocks\/app-block\/20db8a72-315a-4364-8885-64219ee48303",
           "settings": {
             "heading": "Watch and Buy!",
-            "template-type": "template-a",
+            "template-type": "template-b",
             "show-views": "show",
             "ui-theme": "round",
             "color-primary": "#343434",
