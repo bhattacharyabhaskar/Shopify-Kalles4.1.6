@@ -1,142 +1,164 @@
 <!doctype html>
 {%- liquid
-  assign t_name     = request.page_type
-  assign iso_code   = request.locale.iso_code
-  assign use_rtl    = settings.use_rtl
-  if use_rtl == '3'
-    assign lis_rtl  = 'ar; dv; ha; he; ku; fa; ur; ug; ps; yi'
-    assign iso_code_ck = iso_code | split: '-' | first
-  else 
-    assign lis_rtl = settings.list_rtl
-    assign iso_code_ck = iso_code
-  endif
-  if use_rtl == '1'
-    assign isRTL = true
-  elsif lis_rtl contains iso_code_ck and use_rtl == '2' or use_rtl == '3'
-    assign isRTL = true
-  else
-    assign isRTL = false
-  endif
-  assign body_img = settings.body_bg_image
-  if body_img != blank and settings.general_layout == 'boxed'
-    assign class_lazy = 'lazyloadt4s'
-  endif -%}
-{%- capture class_html -%}
-t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_color_style_{{ settings.swatch_color_style }} pr_border_style_{{ settings.pr_border_style }} pr_img_effect_{{ settings.pr_img_effect }} enable_eff_img1_{{ settings.enable_eff_img1 }} badge_shape_{{ settings.badge_shape }} css_for_wis_app_{{ settings.enable_css_wis }}{% if settings.use_cus_lz and settings.cus_lz %} t4s-lzcus-true{% endif %} shadow_round_img_{{ settings.enable_shadow_round_img }} t4s-header__{{ settings.header_design }} is-remove-unavai-{{ settings.variant_remove }} t4_compare_{{ settings.enable_compe }}{% if settings.type_qv == '1' %} t4s-sidebar-qv{% endif %} t4s-cart-count-{{ cart.item_count }} t4s-pr-ellipsis-{{ settings.enable_pr_ellipsis }}
-{%- endcapture -%}
+assign t_name     = request.page_type
+assign iso_code   = request.locale.iso_code
+assign use_rtl    = settings.use_rtl
+if use_rtl == '3'
+	assign lis_rtl  = 'ar; dv; ha; he; ku; fa; ur; ug; ps; yi'
+	assign iso_code_ck = iso_code | split: '-' | first
+else 
+	assign lis_rtl = settings.list_rtl
+	assign iso_code_ck = iso_code
+endif
+if use_rtl == '1'
+	assign isRTL = true
+elsif lis_rtl contains iso_code_ck and use_rtl == '2' or use_rtl == '3'
+	assign isRTL = true
+else
+	assign isRTL = false
+endif
+assign body_img = settings.body_bg_image
+if body_img != blank and settings.general_layout == 'boxed'
+	assign class_lazy = 'lazyloadt4s'
+endif -%}
+{%- capture class_html -%}t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_color_style_{{ settings.swatch_color_style }} pr_border_style_{{ settings.pr_border_style }} pr_img_effect_{{ settings.pr_img_effect }} enable_eff_img1_{{ settings.enable_eff_img1 }} badge_shape_{{ settings.badge_shape }} css_for_wis_app_{{ settings.enable_css_wis }}{% if settings.use_cus_lz and settings.cus_lz %} t4s-lzcus-true{% endif %} shadow_round_img_{{ settings.enable_shadow_round_img }} t4s-header__{{ settings.header_design }} is-remove-unavai-{{ settings.variant_remove }} t4_compare_{{ settings.enable_compe }}{% if settings.type_qv == '1' %} t4s-sidebar-qv{% endif %} t4s-cart-count-{{ cart.item_count }} t4s-pr-ellipsis-{{ settings.enable_pr_ellipsis }}{%- endcapture -%}
 <html class="{{ class_html }} no-js" lang="{{ iso_code }}"{% if isRTL %} dir="rtl"{% endif %}>
-  <head>{% render 'website-schema' %}
- 
-  {% include 'shop-sheriff-amp' %}
-    {% if handle contains 'saraswati-puja-collection' or  handle contains 'valentines-day-collection' or  handle contains 'all' %}
-        <meta name="robots" content="noindex, nofollow">
-    {% endif %}
-        {% if template contains 'index' %}
-            {% render 'organization-schema' %}
-        {% elsif template contains 'collection' %}
-            {% render 'breadcrumb-schema-collection' %}
-        {% elsif template contains 'product' %}
-            {% render 'breadcrumb-schema-product' %}
-        {% elsif template contains 'article' %}
-            {% render 'article-schema' %}
-        {% else %}
-        {% endif %}
+	<head>
+		{% render 'website-schema' %}
+		{% include 'shop-sheriff-amp' %}
+		{% if handle contains 'saraswati-puja-collection' or  handle contains 'valentines-day-collection' or  handle contains 'all' %}
+			<meta name="robots" content="noindex, nofollow">
+		{% endif %}
+		{% if template contains 'index' %}
+			{% render 'organization-schema' %}
+		{% elsif template contains 'collection' %}
+			{% render 'breadcrumb-schema-collection' %}
+		{% elsif template contains 'product' %}
+			{% render 'breadcrumb-schema-product' %}
+		{% elsif template contains 'article' %}
+			{% render 'article-schema' %}
+		{% else %}
+		{% endif %}
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="theme-color" content="{{ settings.body_bg }}">
-      {% if template contains 'collection' %}
-          <link rel="canonical" href="{{ shop.url }}{{ collection.url }}" />
-          {% else %}
-          <link rel="canonical" href="{{ canonical_url }}" />
-      {% endif %}    
-    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    
-    {%- if settings.favicon != blank %}<link rel="shortcut icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">{% endif -%}
-    {%- if settings.favicon_apple != blank %}<link rel="apple-touch-icon-precomposed" type="image/png" sizes="152x152" href="{{ settings.favicon_apple | image_url: width: 152 }}">{% endif -%}
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="theme-color" content="{{ settings.body_bg }}">
+		{% if template contains 'collection' %}
+			<link rel="canonical" href="{{ shop.url }}{{ collection.url }}" />
+		{% else %}
+			<link rel="canonical" href="{{ canonical_url }}" />
+		{% endif %}    
+		<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
-    {%- if settings.font_source == '1' and settings.fnt_fm_sp1.system? == false or settings.fnt_fm_sp2.system? == false or settings.fnt_fm_sp3.system? == false -%}
-      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-    {%- endif -%}
-    
-    {%- if t_name != 'list-collections' -%}
-    {%- capture seo_title -%}
-      {%- if template == 'search' and search.performed == true -%}{{ 'search.general.heading' | t: count: search.results_count }}: {{ 'search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}{%- elsif template == 'search.wishlist' %}{{ 'wishlist_page.meta' | t }}{%- elsif template == 'search.compare' %}{{ 'compare_page.meta' | t }}{%- else -%}{{ page_title }}{%- endif -%}
-      {%- if current_tags -%}{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}{%- endif -%}
-      {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{%- endif -%}
-      {%- assign escaped_page_title = page_title | escape -%}
-      {%- unless escaped_page_title contains shop.name %} &ndash; {{ shop.name }}{%- endunless -%}
-    {%- endcapture -%}
-        {%- if template == 'product'-%}
-          <title>Buy {{ product.title | escape }} At IndyVogue</title>
-        {%- else -%}
-          <title>{{ seo_title | strip }}</title>
-        {%- endif -%}
-        {% if product.type == 'Saree' %}
-            {% if product.metafields.mm-google-shopping.custom_label_0 != blank %}
-                  {% assign input_arr = product.metafields.saree.new_work | split:"," %}
-                  {% for item in input_arr %}
-                      {% if item contains 'Hand Woven' %}
-                          {%- assign work_hand = 'is Hand Woven and '-%}
-                      {%-endif-%} 
-                  {% endfor %}
-                  {%- assign work_type = product.metafields.saree.new_work | replace:'[', '' | replace:']','' | replace:'"', '' | replace:'Hand Woven,', '' | replace:'Hand Woven', '' | replace:',', ', '-%}
-                  {% if work_type == blank %}
-                     <meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }}is perfect for special occasions. Free shipping and easy returns are available! ">
-                  {%- else -%}
-                     <meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }} features {{work_type}} and is perfect for special occasions. Free shipping and easy returns are available! ">
-                  {%-endif-%}
+		{%- if settings.favicon != blank %}
+			<link rel="shortcut icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
+		{% endif -%}
+		{%- if settings.favicon_apple != blank %}
+			<link rel="apple-touch-icon-precomposed" type="image/png" sizes="152x152" href="{{ settings.favicon_apple | image_url: width: 152 }}">
+		{% endif -%}
+		{%- if settings.font_source == '1' and settings.fnt_fm_sp1.system? == false or settings.fnt_fm_sp2.system? == false or settings.fnt_fm_sp3.system? == false -%}
+			<link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+		{%- endif -%}
+		{%- if t_name != 'list-collections' -%}
+			{%- capture seo_title -%}
+				{%- if template == 'search' and search.performed == true -%}
+					{{ 'search.general.heading' | t: count: search.results_count }}: {{ 'search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}
+				{%- elsif template == 'search.wishlist' %}
+					{{ 'wishlist_page.meta' | t }}
+				{%- elsif template == 'search.compare' %}
+					{{ 'compare_page.meta' | t }}
+				{%- else -%}
+					{{ page_title }}
+				{%- endif -%}
+				{%- if current_tags -%}
+					{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+				{%- endif -%}
+				{%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{%- endif -%}
+				{%- assign escaped_page_title = page_title | escape -%}
+				{%- unless escaped_page_title contains shop.name %} &ndash; {{ shop.name }}{%- endunless -%}
+			{%- endcapture -%}
+			{%- if template == 'product'-%}
+				<title>Buy {{ product.title | escape }} At IndyVogue</title>
+			{%- else -%}
+				<title>{{ seo_title | strip }}</title>
+			{%- endif -%}
+			{% if product.type == 'Saree' %}
+				{% if product.metafields.mm-google-shopping.custom_label_0 != blank %}
+					{% assign input_arr = product.metafields.saree.new_work | split:"," %}
+					{% for item in input_arr %}
+						{% if item contains 'Hand Woven' %}
+							{%- assign work_hand = 'is Hand Woven and '-%}
+						{%-endif-%} 
+					{% endfor %}
+					{%- assign work_type = product.metafields.saree.new_work | replace:'[', '' | replace:']','' | replace:'"', '' | replace:'Hand Woven,', '' | replace:'Hand Woven', '' | replace:',', ', '-%}
+					{% if work_type == blank %}
+						<meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }}is perfect for special occasions. Free shipping and easy returns are available! ">
+					{%- else -%}
+						<meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }} features {{work_type}} and is perfect for special occasions. Free shipping and easy returns are available! ">
+					{%-endif-%}
+				{%-endif-%}
+			{%- else -%}
+				<meta name="description" content="{{ page_description | default:shop.description | default: shop.name | escape }}">
+			{%-endif-%}
+		{%- else -%}
+			<title>{{ 'list_collections.meta_title' | t | escape }}</title>
+			<meta name="description" content="{{ 'list_collections.meta_description' | t | escape }}">
+		{%- endif -%}
+		{%- render 'meta-tags', t_name: t_name -%}
+		<script data-src="{{ 'lazysizes.min.js' | asset_url }}" type="lazyload2"></script>
+		<script data-src="{{ 'global.min.js' | asset_url }}" type="lazyload2"></script>
 
-            {%-endif-%}
-                    {%- else -%}
-                 <meta name="description" content="{{ page_description | default:shop.description | default: shop.name | escape }}">
-        {%-endif-%}
-    {%- else -%}
-    <title>{{ 'list_collections.meta_title' | t | escape }}</title><meta name="description" content="{{ 'list_collections.meta_description' | t | escape }}">
-    {%- endif -%}
+		{%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+			{{ content_for_header }}
+		{%- else -%}
+			{% capture content_for_header2 %}{{ content_for_header }}{% endcapture %}
+			{{ content_for_header2 | replace: ' defer="defer" ', ' type="lazyload2" ' | replace: " src=", " data-src=" | replace: "window.addEventListener('load', asyncLoad, false);", "window.addEventListener('wnw_load', asyncLoad, false);" | replace: "DOMContentLoaded", "DOMContentLoaded2" | replace: "addEventListener('load', prefetchAssets);", "addEventListener('wnw_load', prefetchAssets);" }}
+			<script>var trekkie=[];trekkie.integrations=!0;window.BOOMR={},window.BOOMR.version=true;</script>
+		{%- endif -%}
 
-    {%- render 'meta-tags', t_name: t_name -%}
+		{%- render 'head_assets', t_name: t_name, isRTL: isRTL -%}
+		{% render 'gsf-conversion-pixels' %}
+		{% render 'limoniapps-discountninja-header' %}
+		{%- if product -%}
+			{%- assign discountninjaproduct = product -%}
+		{%- endif -%}
+		{%- if collection -%}
+			{%- assign discountninjacollection = collection -%}
+		{%- endif -%}
+		{% render 'app-block' %}
+		{% render 'custom-css' %}
+	</head>
+	<body class="template-{{ request.page_type | handle }} {{ class_lazy }}"{% if body_img != blank %} data-bgset="{{ body_img | image_url: width: 1 }}" data-optimumx="2" data-sizes="auto"{% endif -%}>
+		{% if isRTL %}
+			<script type="text/javascript" id="t4s-flicker-fix">// Flicker fix.</script>
+		{% endif -%}
+		<a class="skip-to-content-link visually-hidden" href="#MainContent">{{ "accessibility.skip_to_text" | t }}</a>
+		<div class="t4s-close-overlay t4s-op-0"></div>
+		<div class="t4s-website-wrapper">
+			{%- render 'header', t_name: t_name -%}
+			{% include 'analyzify-gtm-body' %}
+			<main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">{{ content_for_layout }}</main>
+			<footer id="t4s-footer">
+				{%- section 'footer' -%}
+				{%- section 'bottom-bar' -%}
+			</footer>
+		</div>
+		<ul hidden class="t4s-d-none">
+			<li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
+		</ul>
+		{%- render 'render_bottom' -%}
+		<script src="{{ 'unique.js' | asset_url }}" defer="defer"></script>
+		{% include 'adroll' %}
+		{%- render 'footer-app-block' -%}
 
+		{% if template contains "cart" %}
+			{%- render 'app-cart' -%}
+		{% else %}
+			{% render 'limoniapps-app-block' %}
+		{% endif %}
 
-    <script data-src="{{ 'lazysizes.min.js' | asset_url }}" type="lazyload2"></script>
-    <script data-src="{{ 'global.min.js' | asset_url }}" type="lazyload2"></script>
-   
-    {{ content_for_header }}
-    {%- render 'head_assets', t_name: t_name, isRTL: isRTL -%}
-    {% render 'gsf-conversion-pixels' %}
-                    
-{% render 'limoniapps-discountninja-header' %}{%- if product -%}{%- assign discountninjaproduct = product -%}{%- endif -%}{%- if collection -%}{%- assign discountninjacollection = collection -%}{%- endif -%}
-
-</head>
-
-  <body class="template-{{ request.page_type | handle }} {{ class_lazy }}"{% if body_img != blank %} data-bgset="{{ body_img | image_url: width: 1 }}" data-optimumx="2" data-sizes="auto"{% endif -%}>{% if isRTL %}<script type="text/javascript" id="t4s-flicker-fix">// Flicker fix.</script>{% endif -%}
-    <a class="skip-to-content-link visually-hidden" href="#MainContent">{{ "accessibility.skip_to_text" | t }}</a>
-    <div class="t4s-close-overlay t4s-op-0"></div>
-
-    <div class="t4s-website-wrapper">
-      {%- render 'header', t_name: t_name -%}
-      {% include 'analyzify-gtm-body' %}
-
-      <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
-        {{ content_for_layout }}
-      </main>
-
-      <footer id="t4s-footer">
-        {%- section 'footer' -%}
-        {%- section 'bottom-bar' -%}
-      </footer>
-    </div>
-
-      <ul hidden class="t4s-d-none">
-        <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
-      </ul>
-    {%- render 'render_bottom' -%}
-    <script src="{{ 'unique.js' | asset_url }}" defer="defer"></script>
-  {% include 'adroll' %}
-  {% render 'app-block' %}
-  {%- render 'footer-app-block' -%}
-  {% include 'limoniapps-discountninja-body' %}
-  {{ 'wnw-optimization-3.0.js' | asset_url | script_tag }}                
-</body>
+		{% include 'limoniapps-discountninja-body' %}
+		{{ 'wnw-optimization-3.0.js' | asset_url | script_tag }}                
+	</body>
 </html>

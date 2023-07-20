@@ -39,7 +39,9 @@
     {%- endunless -%}
   {%- endif -%}
 
-  {{- 'base.css' | asset_url | stylesheet_tag: preload: true -}}
+  
+  <link data-href="{{- 'base.css' | asset_url -}}" rel="stylesheet" />
+  {% render 'base-css' %}
   {%- if isRTL %}{{- 'theme_rtl.css' | asset_url | stylesheet_tag: preload: true -}}{% endif -%}
   {%- if settings.bootstrap_css %}{{- 'bootstrap.min.css' | asset_url | stylesheet_tag -}}{% endif -%}
 
