@@ -24,7 +24,7 @@
             {%- assign getIMG = img | remove_first: "cust4__" -%}
             {%- assign image = images[getIMG] -%}
             {%- if image == blank %}{% continue %}{% endif -%}
-            <img class="lazyloadt4s" src="https://cdn.shopify.com/s/assets/payment_icons/generic-dfdcaf09b6731ca14dd7441354c0ad8bc934184eb15ae1fda6a6b9e307675485.svg" data-src="{{ image | image_url: width: 100 }}" alt="{{ image.alt | escape }}" />
+            <img class="lazyloadt4s" src="https://cdn.shopify.com/s/assets/payment_icons/generic-dfdcaf09b6731ca14dd7441354c0ad8bc934184eb15ae1fda6a6b9e307675485.svg" data-src="{{ image | image_url: width: 100 }}" alt="{{ image.alt | escape }}" width="60" height="20"/>
         {%- else -%}
             <img class="lazyloadt4s" src="https://cdn.shopify.com/s/assets/payment_icons/generic-dfdcaf09b6731ca14dd7441354c0ad8bc934184eb15ae1fda6a6b9e307675485.svg" data-src="{{ img | payment_type_img_url }}" alt="{{ img | replace: '_', ' ' }}" width="60" height="20"/>
         {%- endif -%}
