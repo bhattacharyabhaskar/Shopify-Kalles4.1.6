@@ -1871,7 +1871,7 @@
         "settings": {
           "style": "2",
           "pos": "2",
-          "enable_pr": true,
+          "enable_pr": false,
           "enable_calc_ship": false,
           "enable_note": true,
           "enable_rates": false,
