@@ -198,6 +198,7 @@
          </div>
 
          {%- unless se_style == '1' and se_pos == '1' %}{{- html_btn -}}{% endunless -%}
+        {%- if se_stts.enable_pr %}<div class="t4s-when-cart-emty" data-cart-upsell-options='{ "baseurl":"{{ routes.product_recommendations_url }}", "limit":5, "product_id":{{ cart.items.first.product_id | default: 19041994 }}, "section_id": "mini_cart_upsell" }'></div>{% endif -%}
 
 
       </div>
@@ -382,7 +383,6 @@
      </div>
    </div>
    {%- endif -%}
-{%- if se_stts.enable_pr %}<div class="t4s-when-cart-emty" data-cart-upsell-options='{ "baseurl":"{{ routes.product_recommendations_url }}", "limit":5, "product_id":{{ cart.items.first.product_id | default: 19041994 }}, "section_id": "mini_cart_upsell" }'></div>{% endif -%}
 
 {%- if request.design_mode %}</div>{% endif -%}
 
