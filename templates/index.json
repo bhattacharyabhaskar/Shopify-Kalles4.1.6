@@ -832,6 +832,18 @@
     "f6a88b53-9e01-4022-8e9c-59b339b7418a": {
       "type": "collections-list-packery",
       "blocks": {
+        "ba186da2-acbf-49b1-a89b-1047f2f61c38": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "sale",
+            "image": "shopify:\/\/shop_images\/Sale-category.webp",
+            "col_dk": "12",
+            "col_tb": "12",
+            "col_mb": "12",
+            "collection_title": "SUMMER SALE",
+            "collection_link": ""
+          }
+        },
         "14735ca4-ae36-4059-aa20-0dfab1c82882": {
           "type": "collection_item",
           "settings": {
@@ -906,6 +918,7 @@
         }
       },
       "block_order": [
+        "ba186da2-acbf-49b1-a89b-1047f2f61c38",
         "14735ca4-ae36-4059-aa20-0dfab1c82882",
         "4b740f62-abcc-45b8-ae67-28fe046f10a1",
         "7bf15f36-fb70-458f-a8a8-ed8697a5c404",
