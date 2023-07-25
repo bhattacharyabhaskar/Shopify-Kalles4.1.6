@@ -1341,6 +1341,21 @@
       ],
       "settings": {
       }
+    },
+    "ad26c05a-2460-4e8f-a4b2-102863a5fb1c": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": ""
+      }
     }
   },
   "order": [
@@ -1359,6 +1374,7 @@
     "4be22e8d-8382-4e7f-a16a-74266764ecf0",
     "16460368750174c54a",
     "c3fa360b-f182-472b-8c1e-540d83da9b7d",
-    "16891733191dfe92fe"
+    "16891733191dfe92fe",
+    "ad26c05a-2460-4e8f-a4b2-102863a5fb1c"
   ]
 }
