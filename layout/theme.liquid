@@ -89,13 +89,13 @@ endif -%}
 					{% for item in input_arr %}
 						{% if item contains 'Hand Woven' %}
 							{%- assign work_hand = 'is Hand Woven and '-%}
-						{%-endif-%} 
+						{%-endif-%}
 					{% endfor %}
 					{%- assign work_type = product.metafields.saree.new_work | replace:'[', '' | replace:']','' | replace:'"', '' | replace:'Hand Woven,', '' | replace:'Hand Woven', '' | replace:',', ', '-%}
 					{% if work_type == blank %}
-						<meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }}is perfect for special occasions. Free shipping and easy returns are available! ">
+						<meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }}is perfect for special occasions. Free shipping and easy returns are available!">
 					{%- else -%}
-						<meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }} features {{work_type}} and is perfect for special occasions. Free shipping and easy returns are available! ">
+						<meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }} features {{work_type}} and is perfect for special occasions. Free shipping and easy returns are available!">
 					{%-endif-%}
 				{%-endif-%}
 			{%- else -%}
