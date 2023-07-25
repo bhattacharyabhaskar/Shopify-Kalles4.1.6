@@ -89,7 +89,7 @@ endif -%}
 					{% for item in input_arr %}
 						{% if item contains 'Hand Woven' %}
 							{%- assign work_hand = 'is Hand Woven and '-%}
-						{%-endif-%} 
+						{%-endif-%}
 					{% endfor %}
 					{%- assign work_type = product.metafields.saree.new_work | replace:'[', '' | replace:']','' | replace:'"', '' | replace:'Hand Woven,', '' | replace:'Hand Woven', '' | replace:',', ', '-%}
 					{% if work_type == blank %}
@@ -159,6 +159,6 @@ endif -%}
 		{% endif %}
 
 		{% include 'limoniapps-discountninja-body' %}
-		{{ 'wnw-optimization-3.0.js' | asset_url | script_tag }}                
+		{{ 'wnw-optimization-3.0.js' | asset_url | script_tag }}
 	</body>
 </html>
