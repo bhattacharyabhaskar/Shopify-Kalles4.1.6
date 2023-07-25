@@ -45,10 +45,10 @@ endif -%}
 		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height, minimum-scale=1.0, maximum-scale=1.0">
 		<meta name="theme-color" content="{{ settings.body_bg }}">
 		{% if template contains 'collection' %}
-			<link rel="canonical" href="{{ shop.url }}{{ collection.url }}" />
+			<link rel="canonical" href="{{ shop.url }}{{ collection.url }}">
 		{% else %}
-			<link rel="canonical" href="{{ canonical_url }}" />
-		{% endif %}    
+			<link rel="canonical" href="{{ canonical_url }}">
+		{% endif %}
 		<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
 		{%- if settings.favicon != blank %}
