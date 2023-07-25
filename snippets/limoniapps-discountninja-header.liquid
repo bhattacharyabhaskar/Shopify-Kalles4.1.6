@@ -6,7 +6,7 @@ Do not modify or remove this snippet, we reserve the right to overwrite it at an
 {% comment %}
 Add css to the head
 {% endcomment %}
-<link rel="preload" href="{{ 'limoniapps-discountninja.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" data-href="{{ 'limoniapps-discountninja.css' | asset_url }}">
 <noscript><link rel="stylesheet" href="{{ 'limoniapps-discountninja.css' | asset_url }}"></noscript>
 
 {% comment %}
