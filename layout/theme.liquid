@@ -128,7 +128,8 @@ endif -%}
 		{%- endif -%}
 		{% render 'app-block' %}
 		{% render 'custom-css' %}
-	</head>
+	{% include 'analyzify-gtm-body' %}
+</head>
 	<body class="template-{{ request.page_type | handle }} {{ class_lazy }}"{% if body_img != blank %} data-bgset="{{ body_img | image_url: width: 1 }}" data-optimumx="2" data-sizes="auto"{% endif -%}>
 		{% if isRTL %}
 			<script type="text/javascript" id="t4s-flicker-fix">// Flicker fix.</script>

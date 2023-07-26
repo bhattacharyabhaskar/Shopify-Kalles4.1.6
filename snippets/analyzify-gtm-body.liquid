@@ -1,0 +1,955 @@
+<!-- Added with Analyzify V3.0 - Jul 26, 2023 12:54 pm -->
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{ shop.metafields.gtm.tracking_id }}');</script>
+<!-- End Google Tag Manager -->
+
+<script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    window.analyzify = {
+        pageFly: false, // Set this to true if you are using PageFly in your website
+        send_unhashed_email: false, // Set this to true if you would like to collect unhashed email address of logged in users.
+        g_feed_region: 'US', // Change this if your Google Ads feed is in another region
+        analyzify_version: '3.0', // Analyzify version information
+        version: '3.0', // Analyzify version installed to this store
+        logging: false, // Enable this to see Analyzify logs in console
+        logs: [],  // An array to store log messages
+        stopAtLog: false, // Set this to true if you want to use a debugger while logging
+        //Modify the following button attributes if you do not see any ee_addToCart datalayer event when you click add to cart button in any product detail page.
+        addtocart_btn_attributes: {
+            "name": ["add-to-cart", "add"],
+            "data-add-to-cart-text": ["Add to Cart"],
+            "class": ["button-add", "add-to-cart", "add_to_cart", "buttonAddtoCart", "product-form__add-to-cart", "gtmatc", "product-form__cart-submit", "AddToCartText", "AddToCart", "AddToCart-product-template", "product__add-to-cart"],
+            "id": ["AddToCart"]
+        },
+        wishlist_btn_attributes: {
+            "class": ["test-wishlist"]
+        },
+        //Modify the following element attribute if you see that quantity being pushed to datalayer is wrong when you try to add the a product to the cart with more than 1 as quantity.
+        product_quantity:{
+            "name": ["quantity"]
+        },
+        //Modify the following button attributes if you do not see any ee_removeFromCart datalayer event when you remove any item from the cart in the cart page.
+        removefromcart_btn_attributes: {
+            "data-remove-item": ["cart-template"],
+            "data-cart-remove": ["Remove"],
+            "aria-label": ["Remove"],
+            "class": ["cart__remove-btn", "cart__remove", "cart__removee", "cart-item__remove", "item-remove"],
+            "id": [],
+            "href": ["/cart/change?id=", "/cart/change?line="]
+        },
+        //Modify the following button attributes if you do not see ee_checkout datalayer event when you click "checkout" button in the cart page or cart drawer.
+        checkout_btn_attributes: {
+            "name": ["checkout"],
+            "class": ["checkout-btn", "upcart-checkout-button", "cart__submit"],
+            "href": ["/checkout"]
+        },
+        //Modify the following button attributes if you do not see any ee_productClick datalayer event when you click to a product in collection pages.
+        collection_prod_click_attributes: {
+            "href": ["/products/"],
+            "class": ["boost-pfs-addtocart-select-options"]
+        },
+        //Modify the following button attributes if you do not see any ee_addToCart datalayer event when you click add to cart button in any collection pages.
+        collection_atc_attributes: {
+            "class": ["hit-buy-button", "product-form__cart-submit", "spf-product__form-btn-addtocart", "add-to-cart", "boost-pfs-addtocart-btn"],
+            "type": ["submit"],
+            "aria-label": ["Add to cart"]
+        },
+        //Modify the following button attributes if you do not see any ee_productClick datalayer event when you click to a product in search result pages.
+        search_prod_click_attributes: {
+            "href": ["/products/"]
+        },
+        //In this section, we are adding eventListeners for add-to-cart functionality for stores using customizable products with relevant applications.
+        global_atc_functions: ["pplrAddToCartCompleted"],
+        rebuy_atc_rfc: false,
+    };
+
+    analyzify.log = function(t) {
+        if (window.analyzify.logging && t != null) {
+            console.log(`** Analyzify Logger: ${typeof t === 'object' ? '\n' : ''}`, t);
+            analyzify.logs.push(t);
+            if (analyzify.stopAtLog) {
+                debugger;
+            }
+        }
+    };
+
+    window.analyzify.Initialize = function() {
+        window.analyzify.loadScript = function(callback) {
+            callback();
+        }
+
+        window.analyzify.AppStart = function(){
+
+            const detectedCart = {{ cart | json }};
+            const detectedCurrency = detectedCart.currency;
+
+            {% assign template_name = template.name %}
+
+            const sh_info_obj = {
+                event: 'sh_info',
+                page_type: {{ template_name | replace: 'index', 'homepage' | default: 'other' | capitalize | json }},
+                page_currency: detectedCurrency,
+                user: {
+                    type: {% if customer %}'member',{% else %}'visitor',{% endif %}
+                    {% if customer %}
+                    id: `{{ customer.id | remove: "'" | remove: '"' }}`,
+                    last_order: '{{ customer.last_order.created_at | date: "%B %d, %Y %I:%M%p" }}',
+                    orders_count: '{{ customer.orders_count }}',
+                    total_spent: '{{ customer.total_spent | money_without_currency }}',
+                    email_sha256: '{{ customer.email | sha256 }}',
+                    email_sha1: '{{ customer.email | sha1 }}',
+                    email: (analyzify.send_unhashed_email === true) ? '{{ customer.email }}' : null,
+                    {% endif %}
+                }
+            }
+
+            window.dataLayer.push(sh_info_obj);
+
+            window.analyzify.GetClickedProductPosition = function(elementHref, sku){
+                if(sku != ''){
+                    {% for product in collection.products %}
+                    var collectionProductsSku = `{{ product.selected_or_first_available_variant.sku | remove: "'" | remove: '"' }}`;
+                    if(sku == collectionProductsSku) {return {{ forloop.index }} ;}
+                    {% endfor %}
+                    return 0;
+                }else{
+                    var elementIndex = -1
+                    collectionProductsElements = document.querySelectorAll('main a[href*="/products/"]');
+
+                    let hrefValues = [];
+                    let uniqueCollectionProductsElements = [];
+                    
+                    collectionProductsElements.forEach((element) => {
+                      let href = element.getAttribute('href');
+                      if (!hrefValues.includes(href)) {
+                        uniqueCollectionProductsElements.push(element);
+                        hrefValues.push(href);
+                      }
+                    });
+  
+                    uniqueCollectionProductsElements.forEach(function(element,index){
+                        if (element.href.includes(elementHref)) {elementIndex = index + 1};
+                    });
+                    return elementIndex
+                }
+            }
+
+            {% case template_name %}
+            {% when 'collection' %}
+            const collectionAllProducts = {{ collection.products | json }};
+            const collectionTitle = `{{ collection.title | remove: "'" | remove: '"' }}`;
+            const collectionId = '{{ collection.id }}';
+            const collectionHandle = "{{ collection.handle | remove: "'" | remove: '"' }}";
+            let collectionProductsBrand = [];
+            let collectionProductsType = [];
+            let collectionProductsSku = [];
+            let collectionProductsName = [];
+            let collectionProductsHandle = [];
+            let collectionProductsId = [];
+            let collectionProductsPrice = [];
+            let collectionProductsPosition = []; // we need to talk about, this data can be taken from DOM only (filter ON/OFF)
+            let collectionGproductId = [];
+            let collectionVariantId = [];
+            let collectionVariantTitle = [];
+            {% when 'search' %}
+            const searchTerm = '{{ search.terms }}';
+            const searchResults = parseInt('{{ search.results_count }}');
+            const searchResultsJson = {{ search.results | json }};
+            let searchProductsBrand = [];
+            let searchProductsType = [];
+            let searchProductsSku = [];
+            let searchProductsNames = [];
+            let searchProductsHandles = [];
+            let searchProductsIds = [];
+            let searchProductsPrices = [];
+            let searchProductsPosition = [];
+            let searchGproductId = [];
+            let searchVariantId = [];
+            let searchVariantTitle = [];
+            {% when 'product' %}
+            const productJson = {{ product | json }};
+            const productName = `{{ product.title | remove: "'" | remove: '"' }}`;
+            const productHandle = `{{ product.handle | remove: "'" | remove: '"' }}`;
+            const productId = '{{ product.id }}';
+            const productPrice = Number.parseFloat({{ product.variants.first.price | times: 0.01 }});
+            const productBrand = `{{ product.vendor | remove: "'" | remove: '"' }}`;
+            const productType = `{{ product.type | remove: "'" | remove: '"' }}`;
+            const productSku = `{{ product.selected_or_first_available_variant.sku | remove: "'" | remove: '"' }}`;
+            const collectionTitle = `{{ product.collections.last.title | remove: "'" | remove: '"' }}`;
+            const collectionId = `{{ product.collections.last.id | remove: "'" | remove: '"' }}`;
+            const collectionHandle = "{{ product.collections.last.handle | remove: "'" | remove: '"' }}";
+            {% when 'cart' %}
+            {% endcase %}
+
+            window.analyzify.CollectionPageHandle = function(){
+                {{collection.products | json}}.forEach((product, i) => {
+                  collectionProductsBrand.push(product.vendor);
+                  collectionProductsType.push(product.type);
+                  collectionProductsSku.push(product.variants[0].sku);
+                  collectionProductsName.push(product.title);
+                  collectionProductsHandle.push(product.handle);
+                  collectionProductsId.push(product.id);
+                  collectionProductsPrice.push(Number.parseFloat(product.variants[0].price * 0.01));
+                  collectionProductsPosition.push(i + 1);
+                  collectionGproductId.push(`shopify_${analyzify.g_feed_region}_${ product.id }_${ product.variants[0].id }`);
+                  collectionVariantId.push(product.variants[0].id);
+                  collectionVariantTitle.push(product.variants[0].title);
+                });
+
+                window.dataLayer.push({
+                    event: 'ee_productImpression',
+                    category_name: collectionTitle,
+                    category_id: collectionId,
+                    category_handle: collectionHandle,
+                    product_brand: collectionProductsBrand,
+                    product_type: collectionProductsType,
+                    product_sku: collectionProductsSku,
+                    product_name: collectionProductsName,
+                    product_handle: collectionProductsHandle,
+                    product_id: collectionProductsId,
+                    product_price: collectionProductsPrice,
+                    currency: detectedCurrency,
+                    product_position: collectionProductsPosition,
+                    g_product_id: collectionGproductId,
+                    variant_id: collectionVariantId,
+                    variant_title: collectionVariantTitle
+                });
+            }
+
+            window.analyzify.SearchPageHandle = function(){
+                {{search.results | json}}.forEach((product, i) => {
+                  if(product.title){
+                    searchProductsBrand.push(product.vendor);
+                    searchProductsType.push(product.type);
+                    searchProductsSku.push(product.variants[0].sku);
+                    searchProductsNames.push(product.title);
+                    searchProductsHandles.push(product.handle);
+                    searchProductsIds.push(product.id);
+                    searchProductsPrices.push(Number.parseFloat(product.variants[0].price * 0.01));
+                    searchProductsPosition.push(i + 1);
+                    searchGproductId.push(`shopify_${analyzify.g_feed_region}_${ product.id }_${ product.variants[0].id }`);
+                    searchVariantId.push(product.variants[0].id);
+                    searchVariantTitle.push(product.variants[0].title);
+                  } else {
+                    searchProductsBrand.push(null);
+                    searchProductsType.push(null);
+                    searchProductsSku.push(null);
+                    searchProductsNames.push(null);
+                    searchProductsHandles.push(null);
+                    searchProductsIds.push(null);
+                    searchProductsPrices.push(null);
+                    searchProductsPosition.push(i + 1);
+                    searchGproductId.push(null);
+                    searchVariantId.push(null);
+                    searchVariantTitle.push(null);
+                  }
+                });
+      
+                window.dataLayer.push({
+                    event: 'searchListInfo',
+                    page_type: 'search',
+                    search_term: searchTerm,
+                    search_results: searchResults,
+                    product_brand: searchProductsBrand,
+                    product_type: searchProductsType,
+                    product_sku: searchProductsSku,
+                    product_name: searchProductsNames,
+                    product_handle: searchProductsHandles,
+                    product_id: searchProductsIds,
+                    product_price: searchProductsPrices,
+                    currency: detectedCurrency,
+                    product_position: searchProductsPosition,
+                    product_list_id: 'search',
+                    product_list_name: 'Search',
+                    g_product_id: searchGproductId,
+                    variant_id: searchVariantId,
+                    variant_title: searchVariantTitle
+                });
+            }
+
+            window.analyzify.ProductPageHandle = function() {
+                const gProductId = `shopify_${analyzify.g_feed_region}_${productId}_{{ product.selected_variant.id | default: product.variants[0].id }}`;
+                const variantId = '{{ product.selected_variant.id | default: product.variants[0].id }}';
+                const variantTitle = `{{ product.selected_or_first_available_variant.title | remove: "'" | remove: '"' }}`;
+
+                window.dataLayer.push({
+                    event: 'ee_productDetail',
+                    product_id: productId,
+                    product_name: productName,
+                    product_handle: productHandle,
+                    product_type: productType,
+                    product_brand: productBrand,
+                    product_sku: productSku,
+                    product_price: Number.parseFloat(productPrice),
+                    currency: detectedCurrency,
+                    category_id: collectionId,
+                    category_name: collectionTitle,
+                    category_handle: collectionHandle,
+                    g_product_id: gProductId,
+                    variant_id: variantId,
+                    variant_title: variantTitle
+                });
+            };
+
+            var cartItemsJson = {{ cart | json }};
+
+            window.analyzify.cartPageHandle = async function() {
+                try {
+                    const cartItems = await fetch('/cart.js').then(response => response.json());
+                    const {
+                      items: cartItemsJson
+                    } = cartItems;
+                    const cartItemsName = cartItemsJson.map(item => item.product_title);
+                    const cartItemsHandle = cartItemsJson.map(item => item.handle);
+                    const cartItemsBrand = cartItemsJson.map(item => item.vendor);
+                    const cartItemsType = cartItemsJson.map(item => item.product_type);
+                    const cartItemsSku = cartItemsJson.map(item => item.sku);
+                    const cartItemsId = cartItemsJson.map(item => item.product_id);
+                    const cartItemsVariantId = cartItemsJson.map(item => item.variant_id);
+                    const cartItemsVariantTitle = cartItemsJson.map(item => item.variant_title);
+                    const cartItemsPrice = cartItemsJson.map(item => parseFloat(item.price / 100));
+                    const cartItemsQuantity = cartItemsJson.map(item => item.quantity);
+                    const cartTotalValue = Number.parseFloat(cartItems.total_price) / 100;
+                    const cartTotalQuantity = Number.parseFloat(cartItems.item_count);
+                    const cartGProductIds = cartItemsJson.map(item => `shopify_${analyzify.g_feed_region}_${item.product_id}_${item.variant_id}`);
+
+                    window.dataLayer.push({
+                        event: 'ee_cartView',
+                        page_type: 'cart',
+                        product_id: cartItemsId,
+                        product_name: cartItemsName,
+                        product_handle: cartItemsHandle,
+                        product_type: cartItemsType,
+                        product_brand: cartItemsBrand,
+                        product_sku: cartItemsSku,
+                        product_list_id: 'cart',
+                        product_list_name: 'Cart',
+                        variant_id: cartItemsVariantId,
+                        variant_title: cartItemsVariantTitle,
+                        product_price: cartItemsPrice,
+                        currency: detectedCurrency,
+                        quantity: cartItemsQuantity,
+                        totalValue: cartTotalValue,
+                        totalQuantity: cartTotalQuantity,
+                        g_product_id: cartGProductIds
+                    });
+                } catch (error) {
+                    analyzify.error(error);
+                }
+            };
+
+            // Define an array to store found elements
+            let foundElements = [];
+            let foundAtcElementForms = [];
+            var foundBoostElements = [];
+
+            // Define a function to find an element in a given path array using the provided attribute object
+            window.findElemInPath = function(pathArray, attributeObj) {
+                let buttonFound = null;
+                
+                // Check if the path array is defined
+                if (pathArray) {
+                    // Loop through the path array
+                    for (let i = 0; i < pathArray.length; i++) {
+                    // Loop through the attribute object
+                    for (const attribute in attributeObj) {
+                        if (attributeObj.hasOwnProperty(attribute)) {
+                        const attributeName = attribute;
+                        const attributeValues = attributeObj[attribute];
+                        
+                        // Check if the current path element has the current attribute
+                        if (pathArray[i].hasAttribute !== undefined && pathArray[i].hasAttribute(attributeName) === true) {
+                            // Loop through the attribute values
+                            attributeValues.forEach(function(selectedValue) {
+                            // Check if the current path element's attribute contains the selected value
+                            if (pathArray[i].getAttribute(attributeName).indexOf(selectedValue) > -1) {
+                                analyzify.log(`${selectedValue} found in ${attributeName} attribute list.`);
+                                buttonFound = pathArray[i];
+                                foundElements.push(pathArray[i]);
+                                foundAtcElementForms.push(pathArray[i].closest("form[action='/cart/add']"));
+                                foundBoostElements.push(pathArray[i].closest(".boost-pfs-filter-product-item"));
+                            }
+                            });
+                        }
+                        }
+                    }
+                    }
+                }
+                
+                // Return the found button
+                return buttonFound;
+            }
+
+
+            document.addEventListener('click', (event) => {
+                let path = event.path || (event.composedPath && event.composedPath());
+                foundElements = [];
+                foundAtcElementForms = [];
+                foundBoostElements = [];
+              
+                const checkout_elem = window.findElemInPath(path, analyzify.checkout_btn_attributes);
+                const rfc_elem = window.findElemInPath(path, analyzify.removefromcart_btn_attributes);
+                {% case template_name %}
+                {%- when 'product' -%}
+                const atc_elem = window.findElemInPath(path, analyzify.addtocart_btn_attributes);
+                const wishlist_elem = window.findElemInPath(path, analyzify.wishlist_btn_attributes);
+                {% when 'collection' %}
+                const col_prod_click_elem = window.findElemInPath(path, analyzify.collection_prod_click_attributes);
+                const coll_atc_elem = window.findElemInPath(path, analyzify.collection_atc_attributes);
+                {% when 'search' %}
+                const search_prod_click_elem = window.findElemInPath(path, analyzify.search_prod_click_attributes);
+                {% endcase %}
+
+                if (checkout_elem !== null) {
+                    analyzify.checkoutEventFunc();
+                }else if(rfc_elem !== null) {
+                    analyzify.rfcEventFunc();
+                }
+                {%- case template_name -%}
+                {%- when 'product' -%}
+                else if(atc_elem == null && analyzify.global_atc_functions.length) {
+                  analyzify.global_atc_functions.forEach(function(fname){
+                      window.addEventListener(fname , function(e) {
+                        analyzify.atcEventFunc();
+                        analyzify.log("customized product added")
+                        analyzify.log(e)
+                        window.e = e;
+                      })
+                  });
+                }
+                else if(atc_elem !== null) {
+                    analyzify.atcEventFunc();
+                } else if (wishlist_elem !== null) {
+                    analyzify.wishlistEventFunc();
+                }
+                {%- when 'collection' -%}
+                else if(col_prod_click_elem !== null){
+                    analyzify.colProdClickFunc();
+                }else if(coll_atc_elem !== null) {
+                    analyzify.collAtcEventFunc();
+                }
+                {%- when 'search' -%}
+                else if(search_prod_click_elem !== null){
+                    analyzify.searchProdClickFunc();
+                }
+                {%- endcase -%}
+                else{
+                    analyzify.log('The clicked button/link was not a addtocart, removefromcart or checkout button.');
+                    analyzify.log(event);
+                }
+            });
+
+            if (analyzify.rebuy_atc_rfc) {
+                const addToCartHandler = (event) => {
+                    let item = event.detail.item;
+                    let productData = {
+                    event: 'ee_addToCart',
+                    product_name: item.product_title,
+                    product_handle: item.handle,
+                    product_id: item.product_id,
+                    product_price: Number.parseFloat(item.price / 100),
+                    currency: detectedCurrency,
+                    product_brand: item.vendor,
+                    product_type: item.product_type,
+                    quantity: item.quantity,
+                    variant_id: item.variant_id,
+                    variant_title: item.variant_title,
+                    product_sku: item.sku,
+                    g_product_id: `shopify_${analyzify.g_feed_region}_${item.product_id}_${item.variant_id}`
+                    };
+                    window.dataLayer.push(productData);
+                };
+
+                const removeFromCartHandler = (event) => {
+                    let item = event.detail.product;
+                    let productData = {
+                    event: 'ee_removeFromCart',
+                    product_name: item.product_title,
+                    product_handle: item.handle,
+                    product_id: item.product_id,
+                    product_price: Number.parseFloat(item.price / 100),
+                    currency: detectedCurrency,
+                    product_brand: item.vendor,
+                    product_type: item.product_type,
+                    quantity: item.quantity,
+                    variant_id: item.variant_id,
+                    variant_title: item.variant_title,
+                    product_sku: item.sku,
+                    g_product_id: `shopify_${analyzify.g_feed_region}_${item.product_id}_${item.variant_id}`
+                    };
+                    window.dataLayer.push(productData);
+                };
+
+                document.addEventListener('rebuy:cart.add', addToCartHandler);
+                document.addEventListener('rebuy:smartcart.product-removed', removeFromCartHandler);
+            }
+
+            window.analyzify.checkoutEventFunc = async () => {
+              try {
+                const cartItems = await fetch('/cart.js').then(response => response.json());
+                const {
+                  items: cartItemsJson
+                } = cartItems;
+                const cartItemsName = cartItemsJson.map(item => item.product_title);
+                const cartItemsHandle = cartItemsJson.map(item => item.handle);
+                const cartItemsBrand = cartItemsJson.map(item => item.vendor);
+                const cartItemsType = cartItemsJson.map(item => item.product_type);
+                const cartItemsSku = cartItemsJson.map(item => item.sku);
+                const cartItemsId = cartItemsJson.map(item => item.product_id);
+                const cartItemsVariantId = cartItemsJson.map(item => item.variant_id);
+                const cartItemsVariantTitle = cartItemsJson.map(item => item.variant_title);
+                const cartItemsPrice = cartItemsJson.map(item => parseFloat(item.price / 100));
+                const cartItemsQuantity = cartItemsJson.map(item => item.quantity);
+                const cartTotalValue = Number.parseFloat(cartItems.total_price) / 100;
+                const cartTotalQuantity = Number.parseFloat(cartItems.item_count);
+                const cartGProductIds = cartItemsJson.map(item => `shopify_${analyzify.g_feed_region}_${item.product_id}_${item.variant_id}`);
+                window.dataLayer.push({
+                  event: 'ee_checkout',
+                  page_type: 'cart',
+                  product_id: cartItemsId,
+                  product_name: cartItemsName,
+                  product_handle: cartItemsHandle,
+                  product_brand: cartItemsBrand,
+                  product_type: cartItemsType,
+                  product_sku: cartItemsSku,
+                  variant_id: cartItemsVariantId,
+                  variant_title: cartItemsVariantTitle,
+                  product_price: cartItemsPrice,
+                  currency: detectedCurrency,
+                  quantity: cartItemsQuantity,
+                  totalValue: cartTotalValue,
+                  totalQuantity: cartTotalQuantity,
+                  g_product_id: cartGProductIds
+                });
+              } catch (error) {
+                analyzify.error(error);
+              }
+            };
+
+            window.analyzify.rfcEventFunc = async () => {
+                const removedItem = [];
+                const possibleIDs = [];
+                const formElement = foundElements[0];
+                const cartItems = await fetch('/cart.js').then(response => response.json());
+                const {
+                  items: cartItemsJson
+                } = cartItems;
+                if(formElement){
+                    if(formElement.getAttribute('href')) {
+                        if(formElement.getAttribute('href').includes('/cart/change?line=')){
+                            const productCartOrder_1 = formElement.getAttribute('href').split('change?line=')[1];
+                            const productCartOrder = productCartOrder_1.split('&quantity')[0];
+                            for (let i = 0; i < cartItems.items.length; i++) {
+                                if( i + 1 ==  productCartOrder){
+                                    removedItem.push(cartItems.items[i]);
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (!removedItem.length) {
+                        const attrValues = formElement
+                            .getAttributeNames()
+                            .map(name => formElement.getAttribute(name));
+                        attrValues.forEach((formElement) => {
+                            if(formElement.match(/([0-9]+)/g)){
+                                possibleIDs.push(formElement.match(/([0-9]+)/g));
+                            }
+                        });
+                        possibleIDs.forEach((possibleID) => {
+                            possibleID.forEach((id) => {
+                                cartItems.items.filter(function(product) {
+                                    if (product.variant_id == Number(id)){
+                                        removedItem.push(product);
+                                    }
+                                });
+                            })
+                        })
+                    }
+                    if(removedItem[0]) {
+                        window.dataLayer.push({
+                            event: 'ee_removeFromCart',
+                            product_id : removedItem[0].product_id,
+                            product_name: removedItem[0].product_title,
+                            product_handle: removedItem[0].handle,
+                            product_sku: removedItem[0].sku,
+                            product_type: removedItem[0].product_type,
+                            variant_id : removedItem[0].id,
+                            variant_title: removedItem[0].variant_title,
+                            product_price: Number.parseFloat(removedItem[0].price / 100),
+                            currency: detectedCurrency,
+                            product_brand: removedItem[0].vendor,
+                            quantity: removedItem[0].quantity
+                        });
+                        analyzify.log('Product ee_removeFromCart==>', window.dataLayer);
+                    } else{
+                        analyzify.log('Removed element not found');
+                    }
+                }
+            }
+
+
+            {% case template_name %}
+            {% when 'product' %}
+            window.onload = function() {
+              if (analyzify.pageFly) {
+                const element = document.querySelector('[data-pf-type="ProductATC"]');
+                element.onclick = analyzify.atcEventFunc;
+              }
+            };
+            {% endcase %}
+            
+            window.onload = function () {
+              const templateName = '{{ template.name }}';
+              let = templateTrue = false;
+              if (templateName == "index" || templateName == "page") {
+                templateTrue = true;
+              }
+              
+              if (window.__shgProductInits && templateTrue) {
+                const shogunAllProds = window.__shgProductInits;
+                const shogunHeadingElement = document.querySelector(".shogun-heading-component h1");
+                const shogunProductAllClass = "shg-product";
+                const shogunProductBtnClass = "shg-product-atc-btn-wrapper";
+                const productBtns = document.querySelectorAll("." + shogunProductBtnClass);
+                
+                const pageUrl = window.location.href;
+                let collectionTitle = "Homepage";
+                let collectionHandle = "Homepage";
+                let atcSent = false;
+                
+                if (pageUrl.indexOf("pages/") !== -1) {
+                  if (shogunHeadingElement) {
+                    collectionTitle = shogunHeadingElement.textContent.trim();
+                  }
+                  collectionHandle = pageUrl.substring(pageUrl.indexOf("pages/") + "pages/".length);
+                }
+
+                const prodElements = document.querySelectorAll("." + shogunProductAllClass);
+                const idArray = [];
+                
+                prodElements.forEach((element) => {
+                  idArray.push(element.id);
+                });
+                
+                const listedProds = shogunAllProds.filter((product) => idArray.includes(product.uuid));
+
+                window.dataLayer.push({
+                    event: 'ee_productImpression',
+                    category_title: collectionTitle,
+                    category_handle: collectionHandle,
+                    listedProds
+                });
+                
+                document.addEventListener('click', function(event) {
+                  const clickedElement = event.target;
+                  let shgProductId = null;
+                  let parentElement = clickedElement.parentNode;
+
+                  while (parentElement && !shgProductId) {
+                    if (parentElement.classList && parentElement.classList.contains(shogunProductAllClass)) {
+                      shgProductId = parentElement.id;
+                    }
+                    parentElement = parentElement.parentNode;
+                  }
+                  
+                  if (clickedElement.closest("." + shogunProductBtnClass)) {
+                    if (shgProductId && atcSent == false) {
+                      atcSent = true;
+              
+                      const clickedProduct = shogunAllProds.find((product) => product.uuid === shgProductId);
+              
+                      const dataLayerObj = {
+                        event: "ee_addToCart",
+                        category_title: collectionTitle,
+                        category_handle: collectionHandle,
+                        clickedProduct
+                      };
+              
+                      window.dataLayer.push(dataLayerObj);
+
+                      setInterval(function() {
+                        atcSent = false;
+                      }, 1000);
+                    }
+                  } else {
+                    if (shgProductId) {
+                      const clickedProduct = shogunAllProds.find((product) => product.uuid === shgProductId);
+                      
+                      const dataLayerObj = {
+                        event: "ee_productClick",
+                        category_title: collectionTitle,
+                        category_handle: collectionHandle,
+                        clickedProduct
+                      };
+              
+                      window.dataLayer.push(dataLayerObj);
+                    }
+                  }
+                });
+              }
+            };
+
+            window.analyzify.atcEventFunc = function() {
+              const formElement = foundAtcElementForms[0];
+              let variantInput = '{{ product.selected_or_first_available_variant.id }}';
+              let productPrice = 0;
+              let variantSku = '';
+              let variantName = '';
+            
+              if (!analyzify.pageFly && formElement) {
+                const formVariantInput = Array.from(formElement.elements).find(item => item.name === 'id');
+                variantInput = formVariantInput ? formVariantInput.value : variantInput;
+              } else {
+                const initialUrl = window.location.href;
+                variantInput = initialUrl.includes('variant=') ? initialUrl.split('variant=')[1] : variantInput;
+              }
+            
+              for (let i = 0; i < productJson.variants.length; i++) {
+                if (productJson.variants[i].id == variantInput) {
+                  productPrice = productJson.variants[i].price;
+                  variantSku = productJson.variants[i].sku;
+                  variantName = productJson.variants[i].public_title || productJson.variants[i].title;
+                  break;
+                }
+              }
+            
+              const foundQty = [];
+              const findQty = (attrObj) => {
+                foundQty.length = 0;
+                for (const [key, value] of Object.entries(attrObj)) {
+                  const qtyEl = document.querySelector(`[${key}="${value}"]`);
+                  if (qtyEl && qtyEl.value) {
+                    foundQty.push(qtyEl.value);
+                  }
+                }
+              };
+            
+              findQty(analyzify.product_quantity);
+              const prodQty = foundQty.length > 0 ? foundQty[0] : 1;
+            
+              window.dataLayer.push({
+                event: 'ee_addToCart',
+                product_name: productName,
+                product_handle: productHandle,
+                product_id: productId,
+                product_price: Number.parseFloat(productPrice / 100),
+                currency: detectedCurrency,
+                product_brand: productBrand,
+                product_type: productType,
+                category_id: collectionId,
+                category_title: collectionTitle,
+                category_handle: collectionHandle,
+                quantity: Number(prodQty),
+                variant_id: variantInput,
+                variant_title: variantName,
+                product_sku: variantSku,
+                g_product_id: `shopify_${analyzify.g_feed_region}_${productId}_${variantInput}`
+              });
+            
+              analyzify.log('Product ee_addToCart==>');
+              analyzify.log(window.dataLayer);
+            };
+
+            window.analyzify.wishlistEventFunc = function(){
+                const initialUrl = window.location.href;
+                let variantInput = '{{ product.selected_or_first_available_variant.id }}';
+
+                if (initialUrl.includes('variant=')) {
+                  variantInput = initialUrl.split('variant=')[1];
+                }
+
+                const selectedVariant = productJson.variants.find(variant => variant.id === variantInput);
+                const {
+                  price: productPrice,
+                  sku: variantSku,
+                  public_title: variantName = '',
+                } = selectedVariant || {};
+
+                window.dataLayer.push({
+                    event: 'ee_addToWishlist',
+                    product_id: productId,
+                    product_name: productName,
+                    product_handle: productHandle,
+                    product_type: productType,
+                    product_brand: productBrand,
+                    product_sku: productSku,
+                    product_price: Number.parseFloat(productPrice),
+                    currency: detectedCurrency,
+                    category_id: collectionId,
+                    category_name: collectionTitle,
+                    category_handle: collectionHandle,
+                    g_product_id: `shopify_${analyzify.g_feed_region}_${productId}_{{ product.selected_variant.id | default: product.variants[0].id }}`,
+                    variant_id: '{{ product.selected_variant.id | default: product.variants[0].id }}',
+                    variant_title: `{{ product.selected_or_first_available_variant.title | remove: "'" | remove: '"' }}`
+                });
+                analyzify.log('Product ee_addToWishlist==>');
+                analyzify.log(window.dataLayer);
+            }
+
+            window.analyzify.collAtcEventFunc = function() {
+                const formElement = foundAtcElementForms[0];
+
+                if (!formElement) {
+                    return analyzify.log('Parent form element not found for quick view atc');
+                }
+
+                const productId = formElement.querySelector('.pid')?.value;
+                const possibleIDs = formElement.getAttributeNames()
+                    .flatMap(name => formElement.getAttribute(name).match(/([0-9]+)/g))
+                    .filter(Boolean);
+
+                const addedProduct = collectionAllProducts.find(product => {
+                    if (productId && product.id === Number(productId)) {
+                        return true;
+                    }
+                    return possibleIDs.includes(product.id.toString());
+                });
+
+                if (!addedProduct) {
+                    return analyzify.log('Parent form element found but product id did not match');
+                }
+
+                const variant = addedProduct.variants[0];
+                const productData = {
+                    event: 'ee_addToCart',
+                    product_name: addedProduct.title,
+                    product_handle: addedProduct.handle,
+                    product_id: addedProduct.id.toString(),
+                    product_price: Number.parseFloat(variant.price / 100),
+                    product_brand: addedProduct.vendor,
+                    currency: detectedCurrency,
+                    product_type: addedProduct.type,
+                    category_id: collectionId,
+                    category_title: collectionTitle,
+                    category_handle: collectionHandle,
+                    variant_id: variant.id,
+                    variant_title: variant.public_title || variant.title,
+                    product_sku: variant.sku,
+                    g_product_id: `shopify_${analyzify.g_feed_region}_${addedProduct.id.toString()}_${variant.id}`,
+                };
+
+                window.dataLayer.push({
+                    productData
+                });
+
+                analyzify.log('Product ee_addToCart ==>');
+                analyzify.log(window.dataLayer);
+            };
+
+
+            window.analyzify.colProdClickFunc = function() {
+              function clickedEvent(foundProd) {
+                window.dataLayer.push({
+                  event: 'ee_productClick',
+                  product_id: foundProd.id.toString(),
+                  product_name: foundProd.title,
+                  product_handle: foundProd.handle,
+                  product_type: foundProd.type,
+                  product_sku: foundProd.variants[0].sku,
+                  product_brand: foundProd.vendor,
+                  product_price: Number.parseFloat(foundProd.price / 100),
+                  category_id: collectionId,
+                  category_name: collectionTitle,
+                  category_handle: collectionHandle,
+                  currency: detectedCurrency,
+                  product_position: analyzify.GetClickedProductPosition(href, foundProd.variants[0].sku),
+                  variant_id: foundProd.variants[0].id,
+                  variant_title: foundProd.variants[0].title
+                });
+              }
+
+              if (foundElements[0].hasAttribute('href')) {
+                var href = foundElements[0].getAttribute('href');
+                if (href.includes('/products/')) {
+                  var handle = href.split('/products/')[1].split('?')[0];
+                  var clickedProduct = collectionAllProducts.find(function(product) {
+                    return product.handle === handle;
+                  });
+                  if (!clickedProduct) {
+                    return analyzify.log('Clicked product does not found in collection product list');
+                  }
+                  clickedEvent(clickedProduct);
+                } else {
+                  analyzify.log('Found element`s href does not include a product handle.');
+                }
+              } else if (foundBoostElements[0].hasAttribute('data-id')) {
+                var prodId = Number(foundBoostElements[0].getAttribute('data-id'));
+                var clickedProduct = collectionAllProducts.find(function(product) {
+                  return product.id === prodId;
+                });
+                if (!clickedProduct) {
+                  return analyzify.log('Clicked product does not found in collection product list');
+                }
+                clickedEvent(clickedProduct);
+              } else {
+                analyzify.log('Found element does not have an href or data-id attribute.');
+              }
+            };
+
+            window.analyzify.searchProdClickFunc = function(){
+                if(foundElements[0].hasAttribute('href')){
+                    var href = foundElements[0].getAttribute('href');
+                    if(href.includes('/products/')){
+                        var handle_0 = href.split('/products/')[1];
+                        var handle = handle_0.split('?')[0];
+
+                        var prodPosition;
+                      
+                        {{search.results | json}}.forEach((product, i) => {
+                          if(handle == product.handle){
+                            prodPosition = i + 1;
+                          }
+                        });
+                      
+                        var clickedProduct = searchResultsJson.filter(function(product) {
+                            return product.handle === handle;
+                        });
+
+                        if (clickedProduct.length == 0 ) return analyzify.log('Clicked product does not found in search product list');
+                        window.dataLayer.push({
+                            event: 'ee_productClick',
+                            product_id : clickedProduct[0].id,
+                            product_name: clickedProduct[0].title,
+                            product_handle: clickedProduct[0].handle,
+                            product_type: clickedProduct[0].type,
+                            product_sku: clickedProduct[0].variants[0].sku,
+                            product_price: parseFloat(clickedProduct[0].price / 100),
+                            currency: detectedCurrency,
+                            product_brand: clickedProduct[0].vendor,
+                            product_position: prodPosition,
+                            variant_id: clickedProduct[0].variants[0].id,
+                            variant_title: clickedProduct[0].variants[0].title
+                        });
+                    } else {
+                        analyzify.log('Found element`s href does not include an product handle.')
+                    }
+                } else {
+                    analyzify.log('Found element does not have an href attribute.')
+                }
+            }
+
+            {% case template_name %}
+            {% when 'collection' %}
+            analyzify.CollectionPageHandle();
+            {% when 'search' %}
+            analyzify.SearchPageHandle();
+            {% when 'product' %}
+            analyzify.ProductPageHandle();
+            {% when 'cart' %}
+            analyzify.cartPageHandle();
+            {% endcase %}
+
+        }
+    }
+
+    analyzify.Initialize();
+    analyzify.loadScript(function() {
+        analyzify.AppStart();
+    });
+</script>
