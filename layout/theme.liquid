@@ -24,6 +24,42 @@ endif -%}
 {%- capture class_html -%}t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_color_style_{{ settings.swatch_color_style }} pr_border_style_{{ settings.pr_border_style }} pr_img_effect_{{ settings.pr_img_effect }} enable_eff_img1_{{ settings.enable_eff_img1 }} badge_shape_{{ settings.badge_shape }} css_for_wis_app_{{ settings.enable_css_wis }}{% if settings.use_cus_lz and settings.cus_lz %} t4s-lzcus-true{% endif %} shadow_round_img_{{ settings.enable_shadow_round_img }} t4s-header__{{ settings.header_design }} is-remove-unavai-{{ settings.variant_remove }} t4_compare_{{ settings.enable_compe }}{% if settings.type_qv == '1' %} t4s-sidebar-qv{% endif %} t4s-cart-count-{{ cart.item_count }} t4s-pr-ellipsis-{{ settings.enable_pr_ellipsis }}{%- endcapture -%}
 <html class="{{ class_html }} no-js" lang="{{ iso_code }}"{% if isRTL %} dir="rtl"{% endif %}>
 	<head>
+      <!-- Google Consent Mode -->
+<script data-cookieconsent="ignore">
+window.dataLayer = window.dataLayer || [];
+
+function gtag() {
+	dataLayer.push(arguments);
+}
+
+gtag("consent", "default", {
+
+	ad_storage: "denied",
+	analytics_storage: "denied",
+	functionality_storage: "denied",
+	personalization_storage: "denied",
+	security_storage: "granted",
+	wait_for_update: 2000,
+
+});
+
+gtag("set", "ads_data_redaction", true);
+</script>
+<!-- End Google Consent Mode -->
+  
+<!-- Google Tag Manager -->
+<script data-cookieconsent="ignore">
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TXQ7TSM');
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- CookieBot Installation -->
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="9dde7be0-f98d-4b0b-be6e-ce14953638c1" data-blockingmode="auto" type="text/javascript"></script>
+<!-- End CookieBot Installation -->
 		{% render 'website-schema' %}
 		{% include 'shop-sheriff-amp' %}
 		{% if handle contains 'saraswati-puja-collection' or  handle contains 'valentines-day-collection' or  handle contains 'all' %}
