@@ -21,7 +21,7 @@
       {%- if fm_gg3 != fm_gg1 and fm_gg3 != fm_gg2 -%}|{{ fm_gg3 | strip | replace: ' ', '+' }}:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i{%- endif -%}
     {%- endcapture -%}
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={{ font_var }}&display=swap" media="print" onload="this.media='all'">
+    <link rel="stylesheet" data-href="https://fonts.googleapis.com/css?family={{ font_var }}&display=swap">
 
   {%- else -%}
     
@@ -39,13 +39,12 @@
     {%- endunless -%}
   {%- endif -%}
 
-  
-  <link data-href="{{- 'base.css' | asset_url -}}" rel="stylesheet" />
+  <link data-href="{{- 'base.css' | asset_url -}}" rel="stylesheet">
   {% render 'base-css' %}
   {%- if isRTL %}{{- 'theme_rtl.css' | asset_url | stylesheet_tag: preload: true -}}{% endif -%}
   {%- if settings.bootstrap_css %}{{- 'bootstrap.min.css' | asset_url | stylesheet_tag -}}{% endif -%}
 
-  {%- style -%}
+<style>
 
     {%- if font_source == '1' -%}
 
@@ -271,31 +270,27 @@
         display: none;
       }
     {%- endif -%}
-  {%- endstyle -%}
-
- <script>
- const t4sXMLHttpRequest = window.XMLHttpRequest, documentElementT4s = document.documentElement; documentElementT4s.className = documentElementT4s.className.replace('no-js', 'js');function loadImageT4s(_this) { _this.classList.add('lazyloadt4sed')};
-  {%- comment -%}// We do a quick detection of some features (we could use Modernizr but for so little...){%- endcomment -%}
-  (function() { const matchMediaHoverT4s = (window.matchMedia('(-moz-touch-enabled: 1), (hover: none)')).matches; documentElementT4s.className += ((window.CSS && window.CSS.supports('(position: sticky) or (position: -webkit-sticky)')) ? ' t4sp-sticky' : ' t4sp-no-sticky'); documentElementT4s.className += matchMediaHoverT4s ? ' t4sp-no-hover' : ' t4sp-hover'; {% comment -%} This code is done to force reload the page when the back button is hit (which allows to fix stale data on cart, for instance){% endcomment %}window.onpageshow = function() { if (performance.navigation.type === 2) {document.dispatchEvent(new CustomEvent('cart:refresh'))} }; if (!matchMediaHoverT4s && window.width > 1024) { document.addEventListener('mousemove', function(evt) { documentElementT4s.classList.replace('t4sp-no-hover','t4sp-hover'); document.dispatchEvent(new CustomEvent('theme:hover')); }, {once : true} ); } }());{%- if request.design_mode -%}var VGhlbWVOYW1lVDQ = 'a2FsbGVz', cHVyY2hh = {{ settings[cHVyY2hh] | default: '' | base64_encode | json }}, U2hvcE1lb1Q0 = {{ shop.email | default: 'no_email' | base64_encode | json }};{%- endif -%}
+</style>
+<script>
+    const t4sXMLHttpRequest = window.XMLHttpRequest, documentElementT4s = document.documentElement; documentElementT4s.className = documentElementT4s.className.replace('no-js', 'js');function loadImageT4s(_this) { _this.classList.add('lazyloadt4sed')};
+    {%- comment -%}// We do a quick detection of some features (we could use Modernizr but for so little...){%- endcomment -%}
+    (function() { const matchMediaHoverT4s = (window.matchMedia('(-moz-touch-enabled: 1), (hover: none)')).matches; documentElementT4s.className += ((window.CSS && window.CSS.supports('(position: sticky) or (position: -webkit-sticky)')) ? ' t4sp-sticky' : ' t4sp-no-sticky'); documentElementT4s.className += matchMediaHoverT4s ? ' t4sp-no-hover' : ' t4sp-hover'; {% comment -%} This code is done to force reload the page when the back button is hit (which allows to fix stale data on cart, for instance){% endcomment %}window.onpageshow = function() { if (performance.navigation.type === 2) {document.dispatchEvent(new CustomEvent('cart:refresh'))} }; if (!matchMediaHoverT4s && window.width > 1024) { document.addEventListener('mousemove', function(evt) { documentElementT4s.classList.replace('t4sp-no-hover','t4sp-hover'); document.dispatchEvent(new CustomEvent('theme:hover')); }, {once : true} ); } }());{%- if request.design_mode -%}var VGhlbWVOYW1lVDQ = 'a2FsbGVz', cHVyY2hh = {{ settings[cHVyY2hh] | default: '' | base64_encode | json }}, U2hvcE1lb1Q0 = {{ shop.email | default: 'no_email' | base64_encode | json }};{%- endif -%}
 </script>
-
 {%- if settings.wishlist_mode == "3" -%}
 <style>
-.t4s-product-form__btn .faves-count {
-    position: absolute;
-}
-
-.t4s-site-nav__icon a.ssw-link-fave-menu {
-    position: relative;
-}
-.t4s-site-nav__icons i.ssw-icon-heart-o, 
-.t4s-site-nav__icons i.ssw-icon-heart {
-    font-size: 20px;
-}
-
-.t4s-site-nav__icon .ssw-counter-fave-menu {
-    position: absolute;
-    opacity: 0;
-}
+    .t4s-product-form__btn .faves-count {
+        position: absolute;
+    }
+    .t4s-site-nav__icon a.ssw-link-fave-menu {
+        position: relative;
+    }
+    .t4s-site-nav__icons i.ssw-icon-heart-o, 
+    .t4s-site-nav__icons i.ssw-icon-heart {
+        font-size: 20px;
+    }
+    .t4s-site-nav__icon .ssw-counter-fave-menu {
+        position: absolute;
+        opacity: 0;
+    }
 </style>
 {%- endif -%}

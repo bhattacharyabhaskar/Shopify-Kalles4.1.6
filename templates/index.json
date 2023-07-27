@@ -1088,6 +1088,21 @@
         "code_cus_css": ".SectionID {\nbackground-color:red\n}"
       }
     },
+    "6fa2a571-8c33-48d3-b207-645884732a87": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div id=\"shopify-section-template--16800073777385__1689875848e5ba0736\" class=\"shopify-section\">\n\t<div id=\"shopify-block-46ce02b8-d788-40b0-a314-72fe60c80124\" class=\"shopify-block shopify-app-block\">\n\t\t<div class=\"whatmore-base\">\n\t\t\t<div id=\"whatmoreShopId\" data=\"14697362\"><\/div>\n\t\t\t<div id=\"whatmoreHeading\" data=\"Watch and Buy!\"><\/div>\n\t\t\t<div id=\"whatmorePrimaryColor\" data=\"#343434\"><\/div>\n\t\t\t<div id=\"whatmoreSecondaryColor\" data=\"#343434\"><\/div>\n\t\t\t<div id=\"whatmoreTitleFontSize\" data=\"40\"><\/div>\n\t\t\t<div id=\"whatmoreLandscapePadding\" data=\"40\"><\/div>\n\t\t\t<div id=\"whatmoreTopBottomPadding\" data=\"20\"><\/div>\n\t\t\t<div id=\"whatmoreVideoTileSize\" data=\"80\"><\/div>\n\t\t\t<style data-shopify><\/style>\n\t\t\t<div id=\"whatmoreTitleFont\" data=\"whatmoreTitleFontFamily\"><\/div>\n\t\t\t<style data-shopify><\/style>\n\t\t\t<div id=\"whatmorePrimaryFont\" data=\"whatmorePrimaryFontFamily\"><\/div>\n\t\t\t<div id=\"whatmoreShowViews\" data=\"show\"><\/div>\n\t\t\t<div id=\"whatmoreUITheme\" data=\"round\"><\/div>\n\t\t\t<div class=\"whatmore-template-type\" data=\"template-a\"><\/div>\n\t\t\t<div id=\"whatmoreIsInDesignMode\" data='false'><\/div>\n\t\t\t<div class=\"whatmore-render-root\"><\/div>\n\t\t<\/div>\n\t<\/div>\n<\/div>",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": ""
+      }
+    },
     "164603686708691778": {
       "type": "featured-collection",
       "settings": {
@@ -1305,39 +1320,19 @@
         "code_cus_css": ""
       }
     },
-    "16891733191dfe92fe": {
-      "type": "apps",
-      "blocks": {
-        "199a191d-03f8-4543-b439-90e80c21a434": {
-          "type": "shopify:\/\/apps\/seguno-email-marketing\/blocks\/newsletter_form\/db65571f-fa4d-473d-baa2-283a96dc76bc",
-          "settings": {
-            "heading": "Subscribe & Save",
-            "subheading": "<p>Subscribe to our NewsLetter and get <strong>$10 USD Off*<\/strong> your purchase. Get the latest & greatest update on New Arrivals, Promotions and lots more.<\/p><p><em>*Cannot be combined with other promotions. <\/em><a href=\"\/pages\/current-offers-and-promotions\" title=\"Current Offers and Promotions\"><em>Click here for details<\/em><\/a><em>.<\/em><\/p>",
-            "show_first_name": false,
-            "show_last_name": false,
-            "show_permission_checkbox": true,
-            "tags": "newsletter",
-            "return_to": "shopify:\/\/collections\/buy-silk-mark-certified-saree",
-            "label_first_name": "First name",
-            "placeholder_first_name": "",
-            "label_last_name": "Last name",
-            "placeholder_last_name": "",
-            "label_email": "Email",
-            "placeholder_email": "email@email.com",
-            "label_permission": "<p>I agree to receive marketing emails from IndyVogue.<\/p>",
-            "label_subscribe": "Subscribe",
-            "success_message": "Thanks for subscribing",
-            "background_color": "#ffffff",
-            "text_color": "#1a1b18",
-            "button_background_color": "#b7499b",
-            "button_text_color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "199a191d-03f8-4543-b439-90e80c21a434"
-      ],
+    "ad26c05a-2460-4e8f-a4b2-102863a5fb1c": {
+      "type": "custom-liquid",
       "settings": {
+        "custom_liquid": "<div id=\"shopify-section-template--16800073777385__16891733191dfe92fe\" class=\"shopify-section\">\n\t<div id=\"shopify-block-199a191d-03f8-4543-b439-90e80c21a434\" class=\"shopify-block shopify-app-block\">\n\t\t<div class=\"__seguno-newsletter-form\" style=\"--color-background: 255, 255, 255;--color-foreground: 26, 27, 24;--color-button: 183, 73, 155;--color-button-text: 255, 255, 255;\">\n\t\t\t<h2 class=\"h1 __seguno-newsletter-form-heading\">Subscribe & Save<\/h2>\n\t\t\t<div class=\"__seguno-newsletter-form-subheading\">\n\t\t\t\t<p>Subscribe to our NewsLetter and get <strong>$10 USD Off*<\/strong> your purchase. Get the latest & greatest update on New Arrivals, Promotions and lots more.<\/p>\n\t\t\t\t<p><em>*Cannot be combined with other promotions. <\/em><a href=\"\/pages\/current-offers-and-promotions\" title=\"Current Offers and Promotions\"><em>Click here for details<\/em><\/a><em>.<\/em><\/p>\n\t\t\t<\/div>\n\t\t\t<form method=\"post\" action=\"\/contact#__seguno_contact_form--199a191d-03f8-4543-b439-90e80c21a434\" id=\"__seguno_contact_form--199a191d-03f8-4543-b439-90e80c21a434\" accept-charset=\"UTF-8\" class=\"__seguno-contact-form\">\n\t\t\t\t<input type=\"hidden\" name=\"form_type\" value=\"customer\">\n\t\t\t\t<input type=\"hidden\" name=\"utf8\" value=\"✓\">\n\t\t\t\t<input type=\"hidden\" name=\"return_to\" value=\"\/collections\/buy-silk-mark-certified-saree\">\n\t\t\t\t<input type=\"hidden\" name=\"contact[tags]\" value=\"newsletter\">\n\t\t\t\t<div class=\"__seguno-newsletter-field\">\n\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t<input id=\"SegunoNewsletterForm-email--199a191d-03f8-4543-b439-90e80c21a434\" type=\"email\"\n\t\t\t\t\t\t\tname=\"contact[email]\" class=\"field__input\" value=\"\" aria-required=\"true\" autocorrect=\"off\"\n\t\t\t\t\t\t\tautocapitalize=\"off\" autocomplete=\"email\" placeholder=\"email@email.com\" required>\n\t\t\t\t\t\t<label class=\"field__label\"\n\t\t\t\t\t\t\tfor=\"SegunoNewsletterForm-email--199a191d-03f8-4543-b439-90e80c21a434\">\n\t\t\t\t\t\t\tEmail\n\t\t\t\t\t\t<\/label>\n\t\t\t\t\t<\/div>\n\t\t\t\t<\/div>\n\t\t\t\t<div class=\"__seguno-newsletter-field\">\n\t\t\t\t\t<div class=\"checkbox-field\">\n\t\t\t\t\t\t<label for=\"SegunoNewsletterForm-permission--199a191d-03f8-4543-b439-90e80c21a434\"\n\t\t\t\t\t\t\tclass=\"__seguno-permission-field\">\n\t\t\t\t\t\t\t<input id=\"SegunoNewsletterForm-permission--199a191d-03f8-4543-b439-90e80c21a434\"\n\t\t\t\t\t\t\t\ttype=\"checkbox\" class=\"field__checkbox __seguno-newsletter-permission-checkbox\">\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<p>I agree to receive marketing emails from IndyVogue.<\/p>\n\t\t\t\t\t\t\t<\/div>\n\t\t\t\t\t\t<\/label>\n\t\t\t\t\t<\/div>\n\t\t\t\t<\/div>\n\t\t\t\t<button type=\"submit\" class=\"button\" id=\"SegunoNewsletterForm-submit--199a191d-03f8-4543-b439-90e80c21a434\" name=\"commit\" disabled>Subscribe<\/button>\n\t\t\t<\/form>\n\t\t<\/div>\n\t<\/div>\n<\/div>",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": ""
       }
     }
   },
@@ -1353,10 +1348,11 @@
     "3f5c976c-6a8f-4fc3-b6c3-a866aeb2513b",
     "f6a88b53-9e01-4022-8e9c-59b339b7418a",
     "1646035317ea8b6928",
+    "6fa2a571-8c33-48d3-b207-645884732a87",
     "164603686708691778",
     "4be22e8d-8382-4e7f-a16a-74266764ecf0",
     "16460368750174c54a",
     "c3fa360b-f182-472b-8c1e-540d83da9b7d",
-    "16891733191dfe92fe"
+    "ad26c05a-2460-4e8f-a4b2-102863a5fb1c"
   ]
 }

@@ -129,9 +129,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 					{% endfor %}
 					{%- assign work_type = product.metafields.saree.new_work | replace:'[', '' | replace:']','' | replace:'"', '' | replace:'Hand Woven,', '' | replace:'Hand Woven', '' | replace:',', ', '-%}
 					{% if work_type == blank %}
-						<meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }}is perfect for special occasions. Free shipping and easy returns are available! ">
+						<meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }}is perfect for special occasions. Free shipping and easy returns are available!">
 					{%- else -%}
-						<meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }} features {{work_type}} and is perfect for special occasions. Free shipping and easy returns are available! ">
+						<meta name="description" content="Explore {{ product.title | escape }} online and add a touch of elegance to your wardrobe. This {{product.metafields.mm-google-shopping.custom_label_0}} saree {{ work_hand }} features {{work_type}} and is perfect for special occasions. Free shipping and easy returns are available!">
 					{%-endif-%}
 				{%-endif-%}
 			{%- else -%}
@@ -262,7 +262,7 @@ window.checkifloaded('window.hasOwnProperty("Shopify") == true', function() {
 			<li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
 		</ul>
 		{%- render 'render_bottom' -%}
-		<script src="{{ 'unique.js' | asset_url }}" defer="defer"></script>
+		<script type="lazyload2" data-src="{{ 'unique.js' | asset_url }}"></script>
 		{% include 'adroll' %}
 		{%- render 'footer-app-block' -%}
 
