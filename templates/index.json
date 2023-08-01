@@ -1285,7 +1285,7 @@
         "line_height": 4,
         "line_cl": "#b7499b",
         "line_pos": "t4s-text-center",
-        "layout": "t4s-container-wrap",
+        "layout": "t4s-container-fluid",
         "mg": "",
         "mg_tb": "",
         "mg_mb": ",,10px,",
