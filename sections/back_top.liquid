@@ -1,3 +1,8 @@
+{% if template contains "index" or template contains "collection" or template contains "product" %}
+	
+{% else %}
+	<style>#t4s-backToTop{right:40px;bottom:55px;cursor:pointer;pointer-events:none;opacity:0;visibility:hidden;transition:.25s;position:fixed;z-index:100;transition:.4s ease 0s;width:45px;height:45px;text-align:center;line-height:45px;font-size:35px;border-radius:3px;background:#fff;color:#878787;display:inline-flex;align-items:center;justify-content:center;pointer-events:auto;transition:.4s;box-shadow:0 0 3px #0003}#t4s-backToTop.t4s-progress_bar_true{height:50px;width:50px;line-height:50px}#t4s-backToTop.is--show{opacity:1;visibility:visible;z-index:193}#t4s-backToTop svg{width:12px}#t4s-backToTop.t4s-back-to-top__design2{line-height:42px;border:2px solid var(--t4s-dark-color);box-shadow:none;border-radius:0;color:var(--t4s-dark-color)}#t4s-backToTop:hover,#t4s-backToTop.t4s-back-to-top__design2:hover{background-color:var(--accent-color);border-color:var(--accent-color);color:var(--t4s-light-color)}#t4s-backToTop .t4s-circle--inner{display:inline-flex;align-items:center;justify-content:center}#t4s-backToTop .t4s-circle-css{position:absolute;width:100%;height:100%;border-radius:3px}#t4s-backToTop.t4s-back-to-top__design1 .t4s-circle--inner,#t4s-backToTop.t4s-back-to-top__design1 .t4s-circle--bg{border-radius:2px}#t4s-backToTop.t4s-back-to-top__design2 .t4s-circle-css{border-radius:0}#t4s-backToTop.t4s-progress_bar_true,#t4s-backToTop.t4s-progress_bar_true:hover{border:none;color:var(--cricle-active)}.t4sp-hover #t4s-backToTop.t4s-progress_bar_true:hover svg{-webkit-animation:move_on_top .5s ease-in-out forwards;animation:move_on_top .5s ease-in-out forwards}@keyframes move_on_top{0%{transform:translateY(0)}25%{opacity:0;transform:translateY(-100%)}50%{opacity:0;transform:translateY(100%)}75%{opacity:1;transform:translateY(0)}}@media (max-width: 1024px){#t4s-backToTop{right:15px}#t4s-backToTop span{width:40px;height:40px;text-align:center;line-height:40px}}#t4s-backToTop{bottom:55px}.sticky-is--active #t4s-backToTop{bottom:calc(10px + var(--stickyATC-height, 45px))}</style>
+{% endif %}
 {%- comment -%}
   vertical_offset_for_trigger: Reduce below value if you need the back to the top button to appear higher up on the page. That value is in pixels.
 {%- endcomment -%}
@@ -8,7 +13,7 @@
 -%}
 
 {%- if se_stts.enable_backtop -%}
-<link rel="stylesheet" href="{{ 'back-to-top.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" data-href="{{ 'back-to-top.css' | asset_url }}">
 <a id="t4s-backToTop" class="t4s-back-to-top t4s-back-to-top__design{{ se_stts.backtop_des }} t4s-pf t4s-progress_bar_{{ se_stts.enable_progress_bar }}" data-hidden-mobile="{{ se_stts.enable_hidden_mobile }}" data-scrollTop="{{ vertical_offset_for_trigger }}" rel="nofollow" href="#" aria-label="{{ 'general.aria.back_to_top' | t }}" style="--border-w:2px;--cricle-normal:{{ se_stts.border_cl }};--cricle-active:{{ se_stts.border_cl_active }};">
   {%- if se_stts.enable_progress_bar -%}
     <div class="t4s-circle-css" style="--border-w:2px;">
