@@ -563,6 +563,21 @@
         "mg_mb": ",,30px,",
         "pd_mb": ""
       }
+    },
+    "4ee7fc52-c2bd-43e4-b548-1ca61fe7d0e9": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": ""
+      }
     }
   },
   "order": [
@@ -573,6 +588,7 @@
     "aa9c88a6-8567-4fa6-a48d-c5ae3146568a",
     "f7c0e350-24ed-4608-ba70-172670c4ab1a",
     "product-recommendations",
-    "recently-viewed-products"
+    "recently-viewed-products",
+    "4ee7fc52-c2bd-43e4-b548-1ca61fe7d0e9"
   ]
 }
