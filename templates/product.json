@@ -564,10 +564,26 @@
         "pd_mb": ""
       }
     },
+    "5553b264-913a-45eb-a43e-59c9a55e77c5": {
+      "type": "line",
+      "settings": {
+        "line_style": "solid",
+        "line_width": 100,
+        "line_height": 4,
+        "line_cl": "#b7499b",
+        "line_pos": "t4s-text-center",
+        "layout": "t4s-container-fluid",
+        "mg": "",
+        "mg_tb": "",
+        "mg_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "4ee7fc52-c2bd-43e4-b548-1ca61fe7d0e9": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "",
+        "custom_liquid": "<div id=\"shopify-section-template--16800073777385__16891733191dfe92fe\" class=\"shopify-section\">\n\t<div id=\"shopify-block-199a191d-03f8-4543-b439-90e80c21a434\" class=\"shopify-block shopify-app-block\">\n\t\t<div class=\"__seguno-newsletter-form\" style=\"--color-background: 255, 255, 255;--color-foreground: 26, 27, 24;--color-button: 183, 73, 155;--color-button-text: 255, 255, 255;\">\n\t\t\t<h2 class=\"h1 __seguno-newsletter-form-heading\">Subscribe & Save<\/h2>\n\t\t\t<div class=\"__seguno-newsletter-form-subheading\">\n\t\t\t\t<p>Subscribe to our NewsLetter and get <strong>$10 USD Off*<\/strong> your purchase. Get the latest & greatest update on New Arrivals, Promotions and lots more.<\/p>\n\t\t\t\t<p><em>*Cannot be combined with other promotions. <\/em><a href=\"\/pages\/current-offers-and-promotions\" title=\"Current Offers and Promotions\"><em>Click here for details<\/em><\/a><em>.<\/em><\/p>\n\t\t\t<\/div>\n\t\t\t<form method=\"post\" action=\"\/contact#__seguno_contact_form--199a191d-03f8-4543-b439-90e80c21a434\" id=\"__seguno_contact_form--199a191d-03f8-4543-b439-90e80c21a434\" accept-charset=\"UTF-8\" class=\"__seguno-contact-form\">\n\t\t\t\t<input type=\"hidden\" name=\"form_type\" value=\"customer\">\n\t\t\t\t<input type=\"hidden\" name=\"utf8\" value=\"✓\">\n\t\t\t\t<input type=\"hidden\" name=\"return_to\" value=\"\/collections\/buy-silk-mark-certified-saree\">\n\t\t\t\t<input type=\"hidden\" name=\"contact[tags]\" value=\"newsletter\">\n\t\t\t\t<div class=\"__seguno-newsletter-field\">\n\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t<input id=\"SegunoNewsletterForm-email--199a191d-03f8-4543-b439-90e80c21a434\" type=\"email\"\n\t\t\t\t\t\t\tname=\"contact[email]\" class=\"field__input\" value=\"\" aria-required=\"true\" autocorrect=\"off\"\n\t\t\t\t\t\t\tautocapitalize=\"off\" autocomplete=\"email\" placeholder=\"email@email.com\" required>\n\t\t\t\t\t\t<label class=\"field__label\"\n\t\t\t\t\t\t\tfor=\"SegunoNewsletterForm-email--199a191d-03f8-4543-b439-90e80c21a434\">\n\t\t\t\t\t\t\tEmail\n\t\t\t\t\t\t<\/label>\n\t\t\t\t\t<\/div>\n\t\t\t\t<\/div>\n\t\t\t\t<div class=\"__seguno-newsletter-field\">\n\t\t\t\t\t<div class=\"checkbox-field\">\n\t\t\t\t\t\t<label for=\"SegunoNewsletterForm-permission--199a191d-03f8-4543-b439-90e80c21a434\"\n\t\t\t\t\t\t\tclass=\"__seguno-permission-field\">\n\t\t\t\t\t\t\t<input id=\"SegunoNewsletterForm-permission--199a191d-03f8-4543-b439-90e80c21a434\"\n\t\t\t\t\t\t\t\ttype=\"checkbox\" class=\"field__checkbox __seguno-newsletter-permission-checkbox\">\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<p>I agree to receive marketing emails from IndyVogue.<\/p>\n\t\t\t\t\t\t\t<\/div>\n\t\t\t\t\t\t<\/label>\n\t\t\t\t\t<\/div>\n\t\t\t\t<\/div>\n\t\t\t\t<button type=\"submit\" class=\"button\" id=\"SegunoNewsletterForm-submit--199a191d-03f8-4543-b439-90e80c21a434\" name=\"commit\" disabled>SUBSCRIBE<\/button>\n\t\t\t<\/form>\n\t\t<\/div>\n\t<\/div>\n<\/div>",
         "layout": "t4s-container-wrap",
         "cl_bg": "",
         "cl_bg_gradient": "",
@@ -589,6 +605,7 @@
     "f7c0e350-24ed-4608-ba70-172670c4ab1a",
     "product-recommendations",
     "recently-viewed-products",
+    "5553b264-913a-45eb-a43e-59c9a55e77c5",
     "4ee7fc52-c2bd-43e4-b548-1ca61fe7d0e9"
   ]
 }
