@@ -178,5 +178,8 @@ endif -%}
 
 		{% include 'limoniapps-discountninja-body' %}
 		{{ 'wnw-optimization-3.0.js' | asset_url | script_tag }}                
-	</body>
+	<!-- CRITEO START -->
+{% render 'criteo-tracking' %}
+<!-- CRITEO END -->
+</body>
 </html>

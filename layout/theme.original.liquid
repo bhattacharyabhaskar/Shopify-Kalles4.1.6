@@ -85,5 +85,8 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
       </ul>
     {%- render 'render_bottom' -%}
     <script src="{{ 'unique.js' | asset_url }}" defer="defer"></script>
-  </body>
+  <!-- CRITEO START -->
+{% render 'criteo-tracking' %}
+<!-- CRITEO END -->
+</body>
 </html>
