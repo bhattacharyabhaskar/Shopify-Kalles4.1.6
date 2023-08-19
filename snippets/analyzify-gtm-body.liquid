@@ -13,10 +13,6 @@
         stopAtLog: false, // Set this to true if you want to use a debugger while logging
         //Modify the following button attributes if you do not see any ee_addToCart datalayer event when you click add to cart button in any product detail page.
         addtocart_btn_attributes: {
-            "name": ["add-to-cart", "add"],
-            "data-add-to-cart-text": ["Add to Cart"],
-            "class": ["button-add", "add-to-cart", "add_to_cart", "buttonAddtoCart", "product-form__add-to-cart", "gtmatc", "product-form__cart-submit", "AddToCartText", "AddToCart", "AddToCart-product-template", "product__add-to-cart"],
-            "id": ["AddToCart"]
         },
         wishlist_btn_attributes: {
             "class": ["test-wishlist"]
@@ -30,7 +26,7 @@
             "data-remove-item": ["cart-template"],
             "data-cart-remove": ["Remove"],
             "aria-label": ["Remove"],
-            "class": ["cart__remove-btn", "cart__remove", "cart__removee", "cart-item__remove", "item-remove"],
+            "class": ["cart__remove-btn", "t4s-mini_cart__remove", "cart__remove", "cart__removee", "cart-item__remove", "item-remove"],
             "id": [],
             "href": ["/cart/change?id=", "/cart/change?line="]
         },
@@ -47,9 +43,6 @@
         },
         //Modify the following button attributes if you do not see any ee_addToCart datalayer event when you click add to cart button in any collection pages.
         collection_atc_attributes: {
-            "class": ["hit-buy-button", "product-form__cart-submit", "spf-product__form-btn-addtocart", "add-to-cart", "boost-pfs-addtocart-btn"],
-            "type": ["submit"],
-            "aria-label": ["Add to cart"]
         },
         //Modify the following button attributes if you do not see any ee_productClick datalayer event when you click to a product in search result pages.
         search_prod_click_attributes: {
@@ -396,7 +389,9 @@
                 {% when 'search' %}
                 const search_prod_click_elem = window.findElemInPath(path, analyzify.search_prod_click_attributes);
                 {% endcase %}
-
+                if(event.target.classList.contains('t4s-product-form__submit') || event.target.closest('.t4s-product-form__submit')){
+                  analyzify.quickViewAtcEventFunc(event);
+                }
                 if (checkout_elem !== null) {
                     analyzify.checkoutEventFunc();
                 }else if(rfc_elem !== null) {
@@ -543,7 +538,16 @@
                             }
                         }
                     }
-                    
+                    if (!removedItem.length) {
+                        if(formElement.getAttribute('data-id')){
+                            const rfc_variant_id = formElement.getAttribute('data-id');
+                            cartItems.items.filter(function(product) {
+                                if (product.variant_id == Number(rfc_variant_id)){
+                                    removedItem.push(product);
+                                }
+                            });
+                        }
+                    }
                     if (!removedItem.length) {
                         const attrValues = formElement
                             .getAttributeNames()
@@ -925,7 +929,34 @@
                     analyzify.log('Found element does not have an href attribute.')
                 }
             }
-
+            window.analyzify.quickViewAtcEventFunc = function(event){
+              var formElement = event.target.closest('form');
+              if(formElement !== null){
+              	var ptitle = formElement.querySelector('.ptitle')
+              	if(ptitle !== null){
+                    if (formElement.querySelector('input[name="quantity"]')){
+                      quantity = formElement.querySelector('input[name="quantity"]').value
+                    }else{
+                      quantity = 1
+                    }
+              		window.dataLayer.push({
+		                event: 'ee_addToCart',
+		                product_name: formElement.querySelector('.ptitle').value,
+		                product_id : formElement.querySelector('.pid').value,
+		                product_price: formElement.querySelector('.pprice').value,
+		                product_brand: formElement.querySelector('.pbrand').value,
+		                currency: detectedCurrency,
+		                product_type: formElement.querySelector('.ptype').value,
+		                category_id: formElement.querySelector('.pcategory_id').value,
+		                category_title: formElement.querySelector('.pcategory_name').value,
+		                variant_id: formElement.querySelector('*[name="id"]').value,
+		                variant_title: formElement.querySelector('.pvtitle').value,
+		                product_sku: formElement.querySelector('.psku').value,
+		                quantity: quantity
+		              });
+              	}
+              }
+            }
             {% case template_name %}
             {% when 'collection' %}
             analyzify.CollectionPageHandle();
