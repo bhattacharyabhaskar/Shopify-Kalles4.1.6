@@ -61,7 +61,15 @@ endif -%}
 <div class="t4s-product-form__variants is-no-pick__{{ PR_no_pick }}{% if PR_buy_pr %} is-payment-btn-true t4s-payment-button t4s-btn-color-{{ bk_stts.button_color_payment }}{% endif %}  is-remove-soldout-{{ remove_soldout }} is-btn-full-width__{{ bk_stts.btn_atc_full }} is-btn-atc-txt-{{ bk_stts.btn_txt }} is-btn-ck-txt-{{ bk_stts.btn_txt2 }} is--fist-ratio-{{ is_fit_ratio_img }}" style="{% if is_fit_ratio_img %};--fit-ratio-img:{{ first_ratio_img }};{% endif %} --wishlist-color: {{ bk_stts.wishlist_color }};--wishlist-hover-color: {{ bk_stts.wishlist_color_hover }};--wishlist-active-color: {{ bk_stts.wishlist_color_active }};--compare-color: {{ bk_stts.compare_color }};--compare-hover-color: {{ bk_stts.compare_color_hover }};--compare-active-color: {{ bk_stts.compare_color_active }};" {{ shopify_attributes }}>
   <div data-callBackVariant id="t4s-callBackVariant{{ product_form_id }}">
     {%- form 'product', product, id: product_form_id, data-productid: product.id, class: class_frm, novalidate: 'novalidate', data-type: 'add-to-cart-form', data-disable-swatch: isProductDefault -%}
-        
+        <input type="hidden" class="pid" value="{{product.id}}">
+        <input type="hidden" class="ptitle" value="{{product.title | remove: "'" | remove: '"'}}">
+        <input type="hidden" class="pprice" value="{{product.variants.first.price | times: 0.01}}">
+        <input type="hidden" class="pbrand" value="{{product.vendor | remove: "'" | remove: '"'}}">
+        <input type="hidden" class="ptype" value="{{product.type | remove: "'" | remove: '"'}}">
+        <input type="hidden" class="pcategory_id" value="{{ product.collections.first.id }}">
+        <input type="hidden" class="pcategory_name" value="{{ product.collections.first.title | remove: "'" | remove: '"' }}">
+        <input type="hidden" class="pvtitle" value="{{ product.variants.first.title | remove: "'" | remove: '"' }}">
+        <input type="hidden" class="psku" value="{{ product.variants.first.sku }}">        
         {{- form | payment_terms -}}
 
         {%- if isProductDefault -%}
