@@ -144,7 +144,6 @@
     },
     "sidebar": {
       "type": "sidebar-collection",
-      "disabled": true,
       "blocks": {
         "c7bdf308-8019-4991-b58c-6d3e205a52eb": {
           "type": "category",
@@ -199,6 +198,7 @@
         "c090f36e-d6ef-4a2a-ab04-cc78211dadb7",
         "221aa22f-5c6c-40c9-9403-6d3cd2c23e93"
       ],
+      "disabled": true,
       "settings": {
         "enable_drawer": false,
         "space": 50,
@@ -271,7 +271,7 @@
         "layout": "t4s-container-wrap",
         "cl_bg": "",
         "cl_bg_gradient": "",
-        "mg": ",,50px,",
+        "mg": ",,10px,",
         "pd": "",
         "mg_tb": "",
         "pd_tb": "",
