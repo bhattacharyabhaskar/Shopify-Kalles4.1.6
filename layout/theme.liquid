@@ -146,6 +146,14 @@ endif -%}
         
           gtag('config', 'G-CJF41PNQ0X');
         </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-6VPL1YNXBS"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());          
+            gtag('config', 'G-6VPL1YNXBS');
+        </script>                      
         {% render 'pixel-gtm' %}
 	</head>
 	<body class="template-{{ request.page_type | handle }} {{ class_lazy }}"{% if body_img != blank %} data-bgset="{{ body_img | image_url: width: 1 }}" data-optimumx="2" data-sizes="auto"{% endif -%}>
