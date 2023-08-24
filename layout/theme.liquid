@@ -146,6 +146,7 @@ endif -%}
         
           gtag('config', 'G-CJF41PNQ0X');
         </script>
+        {% render 'pixel-gtm' %}
 	</head>
 	<body class="template-{{ request.page_type | handle }} {{ class_lazy }}"{% if body_img != blank %} data-bgset="{{ body_img | image_url: width: 1 }}" data-optimumx="2" data-sizes="auto"{% endif -%}>
 		{% if isRTL %}
