@@ -153,8 +153,10 @@ endif -%}
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());          
             gtag('config', 'G-YSVMKS2JNV');
-        </script>                      
+        </script>
+        {% comment %}
         {% render 'pixel-gtm' %}
+        {% endcomment %}
 	</head>
 	<body class="template-{{ request.page_type | handle }} {{ class_lazy }}"{% if body_img != blank %} data-bgset="{{ body_img | image_url: width: 1 }}" data-optimumx="2" data-sizes="auto"{% endif -%}>
 		{% if isRTL %}
