@@ -1,7 +1,7 @@
 <!-- sections/background_video.liquid -->
-{{ 'section.css' | asset_url | stylesheet_tag }}
-{{ 'hero.css' | asset_url | stylesheet_tag }}
-{{ 'content-position.css' | asset_url | stylesheet_tag }}
+<link data-href="{{ 'section.css' | asset_url }}" rel="stylesheet" >
+<link data-href="{{ 'hero.css' | asset_url }}" rel="stylesheet" >
+<link data-href="{{ 'content-position.css' | asset_url }}" rel="stylesheet" >
 {%- liquid
 	assign sid = section.id
     assign se_blocks = section.blocks
