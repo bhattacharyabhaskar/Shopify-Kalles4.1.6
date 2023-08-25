@@ -157,6 +157,83 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 		{%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
 			{{ content_for_header }}
+          <script>
+window.Shopify.loadFeatures(
+	[{
+		name: "consent-tracking-api",
+		version: "0.1",
+	}, ],
+	function(error) {
+		if (error) throw error;
+		if ("Cookiebot" in window)
+			if (Cookiebot.consented || Cookiebot.declined) {
+				window.Shopify.customerPrivacy.setTrackingConsent(!Cookiebot.declined, feedback);
+				return;
+			}
+		window.Shopify.customerPrivacy.setTrackingConsent(false, feedback);
+	}
+);
+
+function feedback() {
+	const p = window.Shopify.customerPrivacy;
+	console.log(`Tracking ${p.userCanBeTracked() ? "en" : "dis"}abled`);
+}
+
+window.checkifloaded = function(condition_str, func_str, cyclelimit, maxwaitlimit, slot) {
+
+	var loaded = false;
+
+	if (typeof(window.checker_slot) == "undefined") {
+		window.checker_slot = [];
+	};
+
+	var slotarray = window.checker_slot;
+
+	if (typeof(slot) !== "number") {
+		slot = slotarray.length;
+		slotarray[slotarray.length] = 0;
+	};
+
+	var cyclebeklemeayari = cyclelimit || 500;
+	var maxbeklemeayari = maxwaitlimit || 50;
+
+	setTimeout(function() {
+		if (eval(condition_str) === false && slotarray[slot] < (maxbeklemeayari * 1000 / cyclebeklemeayari) && loaded === false) {
+			window.console.log("Condition was not met yet. Current value: " + condition_str + " -> " + eval(condition_str));
+			slotarray[slot]++;
+			window.checkifloaded(condition_str, func_str, cyclebeklemeayari, maxbeklemeayari, slot);
+
+		} else {
+			if (slotarray[slot] >= (maxbeklemeayari * 1000 / cyclebeklemeayari)) {
+				window.console.log("Time is up, condition was not met. Condition: " + condition_str);
+
+			} else {
+
+				window.console.log("Condition met on  " + ((slotarray[slot] + 1) * 50 / 1000) + " seconds. Condition: " + condition_str);
+				loaded = true;
+				func_str();
+			}
+		}
+	}, cyclebeklemeayari);
+};
+
+window.checkifloaded('window.hasOwnProperty("Shopify") == true', function() {
+
+	window.checkifloaded('window.Shopify.hasOwnProperty("customerPrivacy") == true', function() {
+
+		window.checkifloaded('window.Shopify.customerPrivacy.hasOwnProperty("setTrackingConsent") == true', function() {
+
+			console.log("Fonkisyon Çalıştı");;
+
+			window.addEventListener("CookiebotOnConsentReady", function() {
+				window.Shopify.customerPrivacy.setTrackingConsent(!Cookiebot.declined, feedback);
+			});
+
+		});
+
+	});
+
+})</script>
 		{%- else -%}
 			{% capture content_for_header2 %}{{ content_for_header }}{% endcapture %}
 			{{ content_for_header2 | replace: ' defer="defer" ', ' type="lazyload2" ' | replace: " src=", " data-src=" | replace: "window.addEventListener('load', asyncLoad, false);", "window.addEventListener('wnw_load', asyncLoad, false);" | replace: "DOMContentLoaded", "DOMContentLoaded2" | replace: "addEventListener('load', prefetchAssets);", "addEventListener('wnw_load', prefetchAssets);" }}
