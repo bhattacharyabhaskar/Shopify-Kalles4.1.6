@@ -292,7 +292,7 @@ window.checkifloaded('window.hasOwnProperty("Shopify") == true', function() {
 		</ul>
 		{%- render 'render_bottom' -%}
 		<script type="lazyload2" data-src="{{ 'unique.js' | asset_url }}"></script>
-		{% comment %}{% include 'adroll' %}{% endcomment %}
+		{% include 'adroll' %}
 		{%- render 'footer-app-block' -%}
 
 		{% if template contains "cart" %}
