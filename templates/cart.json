@@ -3,36 +3,37 @@
     "heading": {
       "type": "heading-template",
       "blocks": {
-        "61658221-289a-451c-832e-472e370318ff": {
-          "type": "1",
+        "7e0c3d29-d951-4f69-acd8-abc6b8f611d3": {
+          "type": "2",
           "settings": {
-            "heading": "SHOPPING CART",
-            "fontf": "2",
-            "text_cl": "#ffffff",
-            "text_fs": 20,
-            "text_lh": 20,
-            "text_fw": 500,
+            "content": "",
+            "fontf": "inherit",
+            "text_cl": "#fff",
+            "text_fs": 16,
+            "text_lh": 0,
+            "text_fw": 400,
             "text_ls": 0,
             "font_italic": false,
             "font_uppercase": false,
             "text_shadow": false,
             "text_mgb": 0,
             "hidden_mobile": false,
-            "text_fs_mb": 20,
-            "text_lh_mb": 20,
+            "text_fs_mb": 16,
+            "text_lh_mb": 0,
             "text_ls_mb": 0,
             "text_mgb_mobile": 0
           }
         }
       },
       "block_order": [
-        "61658221-289a-451c-832e-472e370318ff"
+        "7e0c3d29-d951-4f69-acd8-abc6b8f611d3"
       ],
       "settings": {
+        "image": "shopify:\/\/shop_images\/Checkout-Banner-08282023.gif",
         "use_specify_image": true,
         "parallax": false,
         "color": "#000000",
-        "overlay": 54,
+        "overlay": 0,
         "padding": 50,
         "paddingmb": 50,
         "mg_b": 0,
