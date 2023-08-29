@@ -1852,7 +1852,7 @@
             "type": "btn",
             "settings": {
               "title": "Return To Shop",
-              "url": "",
+              "url": "shopify:\/\/collections\/buy-silk-mark-certified-saree",
               "btn_icon": false,
               "button_style": "default",
               "btn_cl": "primary",
