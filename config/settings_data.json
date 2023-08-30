@@ -2639,6 +2639,12 @@
         "disabled": true,
         "settings": {
         }
+      },
+      "12512365888938011351": {
+        "type": "shopify:\/\/apps\/analyzify-ga4-ads-tracking\/blocks\/app-embed\/69637cfd-dd6f-4511-aa97-7037cfb5515c",
+        "disabled": false,
+        "settings": {
+        }
       }
     }
   },
