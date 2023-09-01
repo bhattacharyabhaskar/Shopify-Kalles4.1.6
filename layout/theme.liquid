@@ -24,6 +24,7 @@ endif -%}
 {%- capture class_html -%}t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_color_style_{{ settings.swatch_color_style }} pr_border_style_{{ settings.pr_border_style }} pr_img_effect_{{ settings.pr_img_effect }} enable_eff_img1_{{ settings.enable_eff_img1 }} badge_shape_{{ settings.badge_shape }} css_for_wis_app_{{ settings.enable_css_wis }}{% if settings.use_cus_lz and settings.cus_lz %} t4s-lzcus-true{% endif %} shadow_round_img_{{ settings.enable_shadow_round_img }} t4s-header__{{ settings.header_design }} is-remove-unavai-{{ settings.variant_remove }} t4_compare_{{ settings.enable_compe }}{% if settings.type_qv == '1' %} t4s-sidebar-qv{% endif %} t4s-cart-count-{{ cart.item_count }} t4s-pr-ellipsis-{{ settings.enable_pr_ellipsis }}{%- endcapture -%}
 <html class="{{ class_html }} no-js" lang="{{ iso_code }}"{% if isRTL %} dir="rtl"{% endif %}>
 	<head>
+      <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFd2JQEk.woff2" as="font" type="font/woff2" crossorigin>
  <style>
 @font-face {
   font-family: 'Poppins';
