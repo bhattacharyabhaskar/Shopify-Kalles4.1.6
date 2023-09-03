@@ -784,21 +784,24 @@
               "r_s_v_item": "30"
             }
           },
-          "334013b4-82f3-4046-8371-eaf3c3340153": {
-            "type": "drop",
+          "5621e923-2e18-4a39-8c32-5e66b34a3670": {
+            "type": "mega",
             "settings": {
               "title": "About Us",
               "url": "",
               "open_link": "_self",
-              "menu": "header-knowus",
               "icon": "",
               "cus_cl": false,
               "cl": "#ec0101",
               "lb": "",
-              "lb_cl": "",
-              "lazy_mn": false,
+              "lb_cl": "#00BADB",
               "pos_sub": "bottom",
-              "pos": "left"
+              "wid": "cus",
+              "cus_wid": 200,
+              "id": 6,
+              "enable_packery": true,
+              "r_s_h_item": "20",
+              "r_s_v_item": "30"
             }
           },
           "5afc548b-1866-4c39-a686-48b52bfb6e4c": {
@@ -859,7 +862,7 @@
           "9883384a-d19a-4abe-9a94-388d91fce9b6",
           "e0be43d6-bf02-4962-a06e-4294c6d6bd53",
           "af5bfac8-5352-466a-881d-e739f1151d56",
-          "334013b4-82f3-4046-8371-eaf3c3340153",
+          "5621e923-2e18-4a39-8c32-5e66b34a3670",
           "5afc548b-1866-4c39-a686-48b52bfb6e4c",
           "4a281327-6e12-4cd4-af83-0ce2f502e7b8",
           "9a73cf8b-993e-4dbe-9f11-6e990bfb91c0"
@@ -1427,6 +1430,22 @@
               "btn_hidden_mobile": true,
               "col": "8"
             }
+          },
+          "d5fa9c74-4798-423d-af23-84d854ab9bcc": {
+            "type": "mega",
+            "settings": {
+              "id": 6
+            }
+          },
+          "8b5cd4d6-0b62-44fe-8f11-647015f999dc": {
+            "type": "link",
+            "settings": {
+              "tt_hd": "",
+              "url": "shopify:\/\/pages\/about-us",
+              "open_link": "_self",
+              "menu": "header-knowus",
+              "col": "12"
+            }
           }
         },
         "block_order": [
@@ -1444,7 +1463,9 @@
           "400a038a-cb32-4aae-a66d-7d4cd404ccd6",
           "41ee689a-9ef7-46ab-a5a6-5fa4776a9af6",
           "758ddd07-8ea5-4c0e-80a1-e7eef279fa5f",
-          "552902be-02b1-40ca-8475-982bbdb75ed7"
+          "552902be-02b1-40ca-8475-982bbdb75ed7",
+          "d5fa9c74-4798-423d-af23-84d854ab9bcc",
+          "8b5cd4d6-0b62-44fe-8f11-647015f999dc"
         ],
         "settings": {
           "bg": ""
