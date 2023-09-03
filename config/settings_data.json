@@ -764,21 +764,24 @@
               "r_s_v_item": "30"
             }
           },
-          "556a85dc-041d-4d44-8c22-263ed70a8b48": {
-            "type": "drop",
+          "af5bfac8-5352-466a-881d-e739f1151d56": {
+            "type": "mega",
             "settings": {
               "title": "Accessories",
               "url": "shopify:\/\/pages\/accessory",
               "open_link": "_self",
-              "menu": "accessories",
               "icon": "",
               "cus_cl": false,
               "cl": "#ec0101",
               "lb": "",
-              "lb_cl": "",
-              "lazy_mn": false,
+              "lb_cl": "#00BADB",
               "pos_sub": "bottom",
-              "pos": "left"
+              "wid": "cus",
+              "cus_wid": 1200,
+              "id": 3,
+              "enable_packery": true,
+              "r_s_h_item": "20",
+              "r_s_v_item": "30"
             }
           },
           "334013b4-82f3-4046-8371-eaf3c3340153": {
@@ -855,7 +858,7 @@
         "block_order": [
           "9883384a-d19a-4abe-9a94-388d91fce9b6",
           "e0be43d6-bf02-4962-a06e-4294c6d6bd53",
-          "556a85dc-041d-4d44-8c22-263ed70a8b48",
+          "af5bfac8-5352-466a-881d-e739f1151d56",
           "334013b4-82f3-4046-8371-eaf3c3340153",
           "5afc548b-1866-4c39-a686-48b52bfb6e4c",
           "4a281327-6e12-4cd4-af83-0ce2f502e7b8",
@@ -1329,6 +1332,22 @@
               "col": "6"
             }
           },
+          "aff84461-3948-4519-98a7-5ac9750be986": {
+            "type": "mega",
+            "settings": {
+              "id": 3
+            }
+          },
+          "869d8166-c1d8-4bfb-9571-5f94b6e4a9e0": {
+            "type": "link",
+            "settings": {
+              "tt_hd": "",
+              "url": "",
+              "open_link": "_self",
+              "menu": "accessories",
+              "col": "12"
+            }
+          },
           "5952e385-42a5-4603-9be9-64b76f15ef48": {
             "type": "mega",
             "settings": {
@@ -1419,6 +1438,8 @@
           "45fa281e-2be5-4727-bd01-942824713769",
           "cec6a189-3084-497a-b4a8-b391531b2503",
           "95da8d7e-67f2-4ebd-b1ad-e83d518cb37e",
+          "aff84461-3948-4519-98a7-5ac9750be986",
+          "869d8166-c1d8-4bfb-9571-5f94b6e4a9e0",
           "5952e385-42a5-4603-9be9-64b76f15ef48",
           "400a038a-cb32-4aae-a66d-7d4cd404ccd6",
           "41ee689a-9ef7-46ab-a5a6-5fa4776a9af6",
