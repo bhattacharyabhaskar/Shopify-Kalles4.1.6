@@ -1329,72 +1329,6 @@
               "col": "6"
             }
           },
-          "5bdb6eec-e820-4415-ac9b-9c6096eb20c1": {
-            "type": "mega",
-            "settings": {
-              "id": 3
-            }
-          },
-          "ff494243-e58b-40e9-a2ea-e64ccd58a624": {
-            "type": "link",
-            "settings": {
-              "tt_hd": "FEATURES",
-              "url": "",
-              "open_link": "_self",
-              "menu": "sarees-by-work",
-              "col": "2"
-            }
-          },
-          "02beea21-3cb9-41ce-a1ab-04ae44b7f47e": {
-            "type": "link",
-            "settings": {
-              "tt_hd": "Exclusives",
-              "url": "",
-              "open_link": "_self",
-              "menu": "sarees",
-              "col": "2"
-            }
-          },
-          "cc1a7875-8010-421e-b69c-efc19a6043d6": {
-            "type": "link",
-            "settings": {
-              "tt_hd": "PRODUCT LAYOUTS",
-              "url": "",
-              "open_link": "_self",
-              "menu": "",
-              "col": "3"
-            }
-          },
-          "e17e717c-01e0-4704-92bc-92c339ee6148": {
-            "type": "link",
-            "settings": {
-              "tt_hd": "PRODUCT DETAILS",
-              "url": "",
-              "open_link": "_self",
-              "menu": "",
-              "col": "3"
-            }
-          },
-          "27ca598d-2e3f-44fc-a790-64783d37de5e": {
-            "type": "link",
-            "settings": {
-              "tt_hd": "PRODUCT SWATCH",
-              "url": "",
-              "open_link": "_self",
-              "menu": "",
-              "col": "3"
-            }
-          },
-          "bdfaa837-86a3-4159-805a-668060142b0d": {
-            "type": "link",
-            "settings": {
-              "tt_hd": "PRODUCT FEATURES",
-              "url": "",
-              "open_link": "_self",
-              "menu": "",
-              "col": "3"
-            }
-          },
           "5952e385-42a5-4603-9be9-64b76f15ef48": {
             "type": "mega",
             "settings": {
@@ -1438,16 +1372,6 @@
             "type": "mega",
             "settings": {
               "id": 5
-            }
-          },
-          "5665b9cc-d2a6-42e0-b267-e4b36da8a05e": {
-            "type": "link",
-            "settings": {
-              "tt_hd": "BLOG LAYOUT",
-              "url": "https:\/\/demo-kalles-4-1.myshopify.com\/blogs\/fashion?preview_theme_id=",
-              "open_link": "_self",
-              "menu": "",
-              "col": "4"
             }
           },
           "552902be-02b1-40ca-8475-982bbdb75ed7": {
@@ -1495,18 +1419,10 @@
           "45fa281e-2be5-4727-bd01-942824713769",
           "cec6a189-3084-497a-b4a8-b391531b2503",
           "95da8d7e-67f2-4ebd-b1ad-e83d518cb37e",
-          "5bdb6eec-e820-4415-ac9b-9c6096eb20c1",
-          "ff494243-e58b-40e9-a2ea-e64ccd58a624",
-          "02beea21-3cb9-41ce-a1ab-04ae44b7f47e",
-          "cc1a7875-8010-421e-b69c-efc19a6043d6",
-          "e17e717c-01e0-4704-92bc-92c339ee6148",
-          "27ca598d-2e3f-44fc-a790-64783d37de5e",
-          "bdfaa837-86a3-4159-805a-668060142b0d",
           "5952e385-42a5-4603-9be9-64b76f15ef48",
           "400a038a-cb32-4aae-a66d-7d4cd404ccd6",
           "41ee689a-9ef7-46ab-a5a6-5fa4776a9af6",
           "758ddd07-8ea5-4c0e-80a1-e7eef279fa5f",
-          "5665b9cc-d2a6-42e0-b267-e4b36da8a05e",
           "552902be-02b1-40ca-8475-982bbdb75ed7"
         ],
         "settings": {
