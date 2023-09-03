@@ -776,7 +776,7 @@
               "cl": "#ec0101",
               "lb": "",
               "lb_cl": "",
-              "lazy_mn": true,
+              "lazy_mn": false,
               "pos_sub": "bottom",
               "pos": "left"
             }
@@ -793,7 +793,7 @@
               "cl": "#ec0101",
               "lb": "",
               "lb_cl": "",
-              "lazy_mn": true,
+              "lazy_mn": false,
               "pos_sub": "bottom",
               "pos": "left"
             }
