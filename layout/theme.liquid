@@ -24,51 +24,42 @@ endif -%}
 {%- capture class_html -%}t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_color_style_{{ settings.swatch_color_style }} pr_border_style_{{ settings.pr_border_style }} pr_img_effect_{{ settings.pr_img_effect }} enable_eff_img1_{{ settings.enable_eff_img1 }} badge_shape_{{ settings.badge_shape }} css_for_wis_app_{{ settings.enable_css_wis }}{% if settings.use_cus_lz and settings.cus_lz %} t4s-lzcus-true{% endif %} shadow_round_img_{{ settings.enable_shadow_round_img }} t4s-header__{{ settings.header_design }} is-remove-unavai-{{ settings.variant_remove }} t4_compare_{{ settings.enable_compe }}{% if settings.type_qv == '1' %} t4s-sidebar-qv{% endif %} t4s-cart-count-{{ cart.item_count }} t4s-pr-ellipsis-{{ settings.enable_pr_ellipsis }}{%- endcapture -%}
 <html class="{{ class_html }} no-js" lang="{{ iso_code }}"{% if isRTL %} dir="rtl"{% endif %}>
 	<head>
-      <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFd2JQEk.woff2" as="font" type="font/woff2" crossorigin>
- <style>
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFd2JQEk.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}</style>
- <!-- Google Consent Mode -->
-<script data-cookieconsent="ignore">
-window.dataLayer = window.dataLayer || [];
-
-function gtag() {
-	dataLayer.push(arguments);
-}
-
-gtag("consent", "default", {
-
-	ad_storage: "denied",
-	analytics_storage: "denied",
-	functionality_storage: "denied",
-	personalization_storage: "denied",
-	security_storage: "granted",
-	wait_for_update: 2000,
-
-});
-
-gtag("set", "ads_data_redaction", true);
-</script>
-<!-- End Google Consent Mode -->
-<!-- Google Tag Manager -->
-<script data-cookieconsent="ignore" type="lazyload2">
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TXQ7TSM');
-</script>
-<!-- End Google Tag Manager -->
-
-<!-- CookieBot Installation -->
-<script id="Cookiebot" type="lazyload2" data-src="https://consent.cookiebot.com/uc.js" data-cbid="9dde7be0-f98d-4b0b-be6e-ce14953638c1" data-blockingmode="auto"></script>
-<!-- End CookieBot Installation -->
+      {% render 'fonts-css' %}
+   <!-- Google Consent Mode -->
+      <script data-cookieconsent="ignore">
+      window.dataLayer = window.dataLayer || [];
+      
+      function gtag() {
+      	dataLayer.push(arguments);
+      }
+      
+      gtag("consent", "default", {
+      
+      	ad_storage: "denied",
+      	analytics_storage: "denied",
+      	functionality_storage: "denied",
+      	personalization_storage: "denied",
+      	security_storage: "granted",
+      	wait_for_update: 2000,
+      
+      });
+      
+      gtag("set", "ads_data_redaction", true);
+      </script>
+    <!-- End Google Consent Mode -->
+    <!-- Google Tag Manager -->
+    <script data-cookieconsent="ignore" type="lazyload2">
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TXQ7TSM');
+    </script>
+    <!-- End Google Tag Manager -->
+    
+    <!-- CookieBot Installation -->
+    <script id="Cookiebot" type="lazyload2" data-src="https://consent.cookiebot.com/uc.js" data-cbid="9dde7be0-f98d-4b0b-be6e-ce14953638c1" data-blockingmode="auto"></script>
+    <!-- End CookieBot Installation -->
       
 		{% render 'website-schema' %}
 		{% include 'shop-sheriff-amp' %}
@@ -167,82 +158,83 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		{%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
 			{{ content_for_header }}
           <script>
-window.Shopify.loadFeatures(
-	[{
-		name: "consent-tracking-api",
-		version: "0.1",
-	}, ],
-	function(error) {
-		if (error) throw error;
-		if ("Cookiebot" in window)
-			if (Cookiebot.consented || Cookiebot.declined) {
-				window.Shopify.customerPrivacy.setTrackingConsent(!Cookiebot.declined, feedback);
-				return;
-			}
-		window.Shopify.customerPrivacy.setTrackingConsent(false, feedback);
-	}
-);
-
-function feedback() {
-	const p = window.Shopify.customerPrivacy;
-	console.log(`Tracking ${p.userCanBeTracked() ? "en" : "dis"}abled`);
-}
-
-window.checkifloaded = function(condition_str, func_str, cyclelimit, maxwaitlimit, slot) {
-
-	var loaded = false;
-
-	if (typeof(window.checker_slot) == "undefined") {
-		window.checker_slot = [];
-	};
-
-	var slotarray = window.checker_slot;
-
-	if (typeof(slot) !== "number") {
-		slot = slotarray.length;
-		slotarray[slotarray.length] = 0;
-	};
-
-	var cyclebeklemeayari = cyclelimit || 500;
-	var maxbeklemeayari = maxwaitlimit || 50;
-
-	setTimeout(function() {
-		if (eval(condition_str) === false && slotarray[slot] < (maxbeklemeayari * 1000 / cyclebeklemeayari) && loaded === false) {
-			window.console.log("Condition was not met yet. Current value: " + condition_str + " -> " + eval(condition_str));
-			slotarray[slot]++;
-			window.checkifloaded(condition_str, func_str, cyclebeklemeayari, maxbeklemeayari, slot);
-
-		} else {
-			if (slotarray[slot] >= (maxbeklemeayari * 1000 / cyclebeklemeayari)) {
-				window.console.log("Time is up, condition was not met. Condition: " + condition_str);
-
-			} else {
-
-				window.console.log("Condition met on  " + ((slotarray[slot] + 1) * 50 / 1000) + " seconds. Condition: " + condition_str);
-				loaded = true;
-				func_str();
-			}
-		}
-	}, cyclebeklemeayari);
-};
-
-window.checkifloaded('window.hasOwnProperty("Shopify") == true', function() {
-
-	window.checkifloaded('window.Shopify.hasOwnProperty("customerPrivacy") == true', function() {
-
-		window.checkifloaded('window.Shopify.customerPrivacy.hasOwnProperty("setTrackingConsent") == true', function() {
-
-			console.log("Fonkisyon Çalıştı");;
-
-			window.addEventListener("CookiebotOnConsentReady", function() {
-				window.Shopify.customerPrivacy.setTrackingConsent(!Cookiebot.declined, feedback);
-			});
-
-		});
-
-	});
-
-})</script>
+            window.Shopify.loadFeatures(
+            	[{
+            		name: "consent-tracking-api",
+            		version: "0.1",
+            	}, ],
+            	function(error) {
+            		if (error) throw error;
+            		if ("Cookiebot" in window)
+            			if (Cookiebot.consented || Cookiebot.declined) {
+            				window.Shopify.customerPrivacy.setTrackingConsent(!Cookiebot.declined, feedback);
+            				return;
+            			}
+            		window.Shopify.customerPrivacy.setTrackingConsent(false, feedback);
+            	}
+            );
+            
+            function feedback() {
+            	const p = window.Shopify.customerPrivacy;
+            	console.log(`Tracking ${p.userCanBeTracked() ? "en" : "dis"}abled`);
+            }
+            
+            window.checkifloaded = function(condition_str, func_str, cyclelimit, maxwaitlimit, slot) {
+            
+            	var loaded = false;
+            
+            	if (typeof(window.checker_slot) == "undefined") {
+            		window.checker_slot = [];
+            	};
+            
+            	var slotarray = window.checker_slot;
+            
+            	if (typeof(slot) !== "number") {
+            		slot = slotarray.length;
+            		slotarray[slotarray.length] = 0;
+            	};
+            
+            	var cyclebeklemeayari = cyclelimit || 500;
+            	var maxbeklemeayari = maxwaitlimit || 50;
+            
+            	setTimeout(function() {
+            		if (eval(condition_str) === false && slotarray[slot] < (maxbeklemeayari * 1000 / cyclebeklemeayari) && loaded === false) {
+            			window.console.log("Condition was not met yet. Current value: " + condition_str + " -> " + eval(condition_str));
+            			slotarray[slot]++;
+            			window.checkifloaded(condition_str, func_str, cyclebeklemeayari, maxbeklemeayari, slot);
+            
+            		} else {
+            			if (slotarray[slot] >= (maxbeklemeayari * 1000 / cyclebeklemeayari)) {
+            				window.console.log("Time is up, condition was not met. Condition: " + condition_str);
+            
+            			} else {
+            
+            				window.console.log("Condition met on  " + ((slotarray[slot] + 1) * 50 / 1000) + " seconds. Condition: " + condition_str);
+            				loaded = true;
+            				func_str();
+            			}
+            		}
+            	}, cyclebeklemeayari);
+            };
+            
+            window.checkifloaded('window.hasOwnProperty("Shopify") == true', function() {
+            
+            	window.checkifloaded('window.Shopify.hasOwnProperty("customerPrivacy") == true', function() {
+            
+            		window.checkifloaded('window.Shopify.customerPrivacy.hasOwnProperty("setTrackingConsent") == true', function() {
+            
+            			console.log("Fonkisyon Çalıştı");;
+            
+            			window.addEventListener("CookiebotOnConsentReady", function() {
+            				window.Shopify.customerPrivacy.setTrackingConsent(!Cookiebot.declined, feedback);
+            			});
+            
+            		});
+            
+            	});
+            
+            })
+        </script>
 		{%- else -%}
 			{% capture content_for_header2 %}{{ content_for_header }}{% endcapture %}
 			{{ content_for_header2 | replace: ' defer="defer" ', ' type="lazyload2" ' | replace: " src=", " data-src=" | replace: "window.addEventListener('load', asyncLoad, false);", "window.addEventListener('wnw_load', asyncLoad, false);" | replace: "DOMContentLoaded", "DOMContentLoaded2" | replace: "addEventListener('load', prefetchAssets);", "addEventListener('wnw_load', prefetchAssets);" }}
@@ -313,7 +305,7 @@ window.checkifloaded('window.hasOwnProperty("Shopify") == true', function() {
 		{% include 'limoniapps-discountninja-body' %}
 		{{ 'wnw-optimization-3.0.js' | asset_url | script_tag }}                
 	<!-- CRITEO START -->
-{% render 'criteo-tracking' %}
-<!-- CRITEO END -->
+    {% render 'criteo-tracking' %}
+    <!-- CRITEO END -->
 </body>
 </html>
