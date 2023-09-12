@@ -487,16 +487,126 @@
         "code_cus_css": ""
       }
     },
+    "f1678196-4b05-4402-9948-cb38e1f368c9": {
+      "type": "image_text",
+      "blocks": {
+        "template--16828407021801__f1678196-4b05-4402-9948-cb38e1f368c9-bl_text-1": {
+          "type": "bl_text",
+          "settings": {
+            "col_dk": "12",
+            "col_tb": "12",
+            "text_size": "40,15",
+            "txt_align": "start",
+            "sub_heading": "",
+            "heading": "Designer Jewelry",
+            "text": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "subhd_color": "#222222",
+            "hd_color": "#222222",
+            "des_color": "#878787",
+            "use_shadow": false,
+            "button_label": "Button label",
+            "button_link": "",
+            "open_link": "_blank",
+            "btn_icon": false,
+            "button_style": "default",
+            "btn_size": "large",
+            "btn_cl": "dark",
+            "button_effect": "default"
+          }
+        }
+      },
+      "block_order": [
+        "template--16828407021801__f1678196-4b05-4402-9948-cb38e1f368c9-bl_text-1"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "space_h_item": "20",
+        "space_v_item": "10",
+        "space_h_item_mb": "20",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
+    "10214a21-0f6e-4dd6-abf2-ebba81336596": {
+      "type": "image_text",
+      "blocks": {
+        "template--16828407021801__10214a21-0f6e-4dd6-abf2-ebba81336596-bl_text-1": {
+          "type": "bl_text",
+          "settings": {
+            "col_dk": "12",
+            "col_tb": "12",
+            "text_size": "40,15",
+            "txt_align": "start",
+            "sub_heading": "",
+            "heading": "Wrapping Up",
+            "text": "<p>If you are trying to make the Ganesh Chaturthi special, drape your Paithanis in the most stylish manner, and use these style tips to the fullest.<\/p>",
+            "subhd_color": "#222222",
+            "hd_color": "#222222",
+            "des_color": "#878787",
+            "use_shadow": false,
+            "button_label": "Button label",
+            "button_link": "",
+            "open_link": "_blank",
+            "btn_icon": false,
+            "button_style": "default",
+            "btn_size": "large",
+            "btn_cl": "dark",
+            "button_effect": "default"
+          }
+        }
+      },
+      "block_order": [
+        "template--16828407021801__10214a21-0f6e-4dd6-abf2-ebba81336596-bl_text-1"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "space_h_item": "20",
+        "space_v_item": "10",
+        "space_h_item_mb": "20",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "947465df-8011-4c4f-8367-4239ec3004ea": {
       "type": "featured-collection",
       "settings": {
         "design_heading": "1",
         "heading_align": "t4s-text-center",
-        "top_heading": "Latest Saree Collection",
+        "top_heading": "Paithani Silk Collection",
         "icon_heading": "las la-gem",
         "top_subheading": "",
         "tophead_mb": 30,
-        "collection": "buy-silk-mark-certified-saree",
+        "collection": "paithani-silk-saree",
         "product_des": "1",
         "show_vendor": false,
         "use_cdt": false,
@@ -616,6 +726,8 @@
     "0b236726-dffe-42d4-a6a4-59f47b5d376f",
     "554cb4b9-1c32-4338-8bf8-4e1b8c07e873",
     "7d34ae35-a031-4f2e-afcb-30cee64e9ffe",
+    "f1678196-4b05-4402-9948-cb38e1f368c9",
+    "10214a21-0f6e-4dd6-abf2-ebba81336596",
     "947465df-8011-4c4f-8367-4239ec3004ea",
     "e7b55938-3dde-44ab-9365-66967e09d447"
   ]
