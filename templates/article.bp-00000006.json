@@ -380,40 +380,11 @@
     "554cb4b9-1c32-4338-8bf8-4e1b8c07e873": {
       "type": "image_text",
       "blocks": {
-        "template--16762835501289__554cb4b9-1c32-4338-8bf8-4e1b8c07e873-16831174407b348715-0": {
-          "type": "bl_image",
-          "settings": {
-            "image1": "shopify:\/\/shop_images\/Not_1_But_5_Most_Loved_Saree-Net_Saree.jpg",
-            "col_dk": "6",
-            "col_tb": "6",
-            "layout_des": "carousel",
-            "post_mobile": "default",
-            "image_ratio": "ratioadapt",
-            "image_size": "cover",
-            "image_position": "8",
-            "loop": true,
-            "au_time": 0,
-            "au_hover": true,
-            "nav_btn": false,
-            "btn_vi": "hover",
-            "btn_owl": "default",
-            "btn_shape": "none",
-            "btn_cl": "dark",
-            "btn_size": "small",
-            "btn_hidden_mobile": true,
-            "nav_dot": false,
-            "dot_owl": "default",
-            "dots_cl": "dark",
-            "dots_round": true,
-            "dots_space": 10,
-            "dots_hidden_mobile": false
-          }
-        },
         "template--16762835501289__554cb4b9-1c32-4338-8bf8-4e1b8c07e873-16831174407b348715-1": {
           "type": "bl_text",
           "settings": {
-            "col_dk": "6",
-            "col_tb": "6",
+            "col_dk": "12",
+            "col_tb": "12",
             "text_size": "40,15",
             "txt_align": "start",
             "sub_heading": "",
@@ -435,7 +406,6 @@
         }
       },
       "block_order": [
-        "template--16762835501289__554cb4b9-1c32-4338-8bf8-4e1b8c07e873-16831174407b348715-0",
         "template--16762835501289__554cb4b9-1c32-4338-8bf8-4e1b8c07e873-16831174407b348715-1"
       ],
       "settings": {
