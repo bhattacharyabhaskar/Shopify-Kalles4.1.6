@@ -215,45 +215,16 @@
     "be349666-2469-4b59-9e48-269f0cd4f2cc": {
       "type": "image_text",
       "blocks": {
-        "template--16762835501289__be349666-2469-4b59-9e48-269f0cd4f2cc-16831174407b348715-0": {
-          "type": "bl_image",
-          "settings": {
-            "image1": "shopify:\/\/shop_images\/Not_1_But_5_Most_Loved_Saree-Cotton_Saree.jpg",
-            "col_dk": "6",
-            "col_tb": "6",
-            "layout_des": "carousel",
-            "post_mobile": "default",
-            "image_ratio": "ratioadapt",
-            "image_size": "cover",
-            "image_position": "8",
-            "loop": true,
-            "au_time": 0,
-            "au_hover": true,
-            "nav_btn": false,
-            "btn_vi": "hover",
-            "btn_owl": "default",
-            "btn_shape": "none",
-            "btn_cl": "dark",
-            "btn_size": "small",
-            "btn_hidden_mobile": true,
-            "nav_dot": false,
-            "dot_owl": "default",
-            "dots_cl": "dark",
-            "dots_round": true,
-            "dots_space": 10,
-            "dots_hidden_mobile": false
-          }
-        },
         "template--16762835501289__be349666-2469-4b59-9e48-269f0cd4f2cc-16831174407b348715-1": {
           "type": "bl_text",
           "settings": {
-            "col_dk": "6",
-            "col_tb": "6",
+            "col_dk": "12",
+            "col_tb": "12",
             "text_size": "40,15",
             "txt_align": "start",
             "sub_heading": "",
-            "heading": "Cotton Sarees",
-            "text": "<p>Lightweight, breathable and perfect for a variety of occasions. It can have intricate work like embroidery or maybe translucent texture with checkered patterns and more.<\/p><p>You can drape the cotton sarees in a pant-style format, where you swap out the petticoat for comfy pants. If that doesn’t scream chic comfort, we don’t know what does! No more fussing with traditional drapes – just wrap that saree around your functional trousers and strut your stuff.<\/p>",
+            "heading": "Draping Styles of Paithani Saree",
+            "text": "<p>The drape of saree can make the break of a saree look of a Paithani saree. Then most common saree drapoing style which you can try are:<\/p><ul><li>Traditional Nauvari Style<\/li><li>Contemporary Marathi Draping<\/li><li>Marathi Dhti Style Draping<\/li><\/ul><p>Of course, you can drape these sarees in the classic styles with open pallu and pleated pallus too. Read the following blog to drape more perfectly.<\/p><p><strong>Saree Draping Part 1: <\/strong><a href=\"https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-1\"><span style=\"text-decoration:underline\"><strong>https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-1<\/strong><\/span><\/a><\/p><p><strong>Saree Draping Part 2:<\/strong><\/p><p><a href=\"https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-2\"><span style=\"text-decoration:underline\"><strong>https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-2<\/strong><\/span><\/a><\/p><p><strong>How to Hide Your Torso while Saree Draping:<\/strong><\/p><p><a href=\"https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/how-to-style-your-sarees-to-hide-your-torso-5-saree-draping-ideas\"><span style=\"text-decoration:underline\"><strong>https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/how-to-style-your-sarees-to-hide-your-torso-5-saree-draping-ideas<\/strong><\/span><\/a><\/p>",
             "subhd_color": "#222222",
             "hd_color": "#222222",
             "des_color": "#878787",
@@ -270,7 +241,6 @@
         }
       },
       "block_order": [
-        "template--16762835501289__be349666-2469-4b59-9e48-269f0cd4f2cc-16831174407b348715-0",
         "template--16762835501289__be349666-2469-4b59-9e48-269f0cd4f2cc-16831174407b348715-1"
       ],
       "settings": {
@@ -300,45 +270,16 @@
     "c57fc7eb-b69c-45a5-9cce-eb58d9806d48": {
       "type": "image_text",
       "blocks": {
-        "template--16762835501289__c57fc7eb-b69c-45a5-9cce-eb58d9806d48-16831174407b348715-0": {
-          "type": "bl_image",
-          "settings": {
-            "image1": "shopify:\/\/shop_images\/Not_1_But_5_Most_Loved_Saree-Chiffon_Saree.jpg",
-            "col_dk": "6",
-            "col_tb": "6",
-            "layout_des": "carousel",
-            "post_mobile": "default",
-            "image_ratio": "ratioadapt",
-            "image_size": "cover",
-            "image_position": "8",
-            "loop": true,
-            "au_time": 0,
-            "au_hover": true,
-            "nav_btn": false,
-            "btn_vi": "hover",
-            "btn_owl": "default",
-            "btn_shape": "none",
-            "btn_cl": "dark",
-            "btn_size": "small",
-            "btn_hidden_mobile": true,
-            "nav_dot": false,
-            "dot_owl": "default",
-            "dots_cl": "dark",
-            "dots_round": true,
-            "dots_space": 10,
-            "dots_hidden_mobile": false
-          }
-        },
         "template--16762835501289__c57fc7eb-b69c-45a5-9cce-eb58d9806d48-16831174407b348715-1": {
           "type": "bl_text",
           "settings": {
-            "col_dk": "6",
-            "col_tb": "6",
+            "col_dk": "12",
+            "col_tb": "12",
             "text_size": "40,15",
             "txt_align": "start",
             "sub_heading": "",
-            "heading": "Chiffon Sarees",
-            "text": "<p>Yet another lightweight sarees, sheer in their look and perfect for any events. They come in a variety of types such as crepe chiffon, georgette chiffon and more. It is known for their textured appearance, so if you want to style these sarees, then get ready to redefine necklaces – with your saree! Wrap that pallu around your neck like a scarf, and voila – instant style upgrade.<\/p>",
+            "heading": "Blouse to Wear",
+            "text": "<p>While draping your paithani saree, the selection of your blouse is also important. It is an important part to glam up your sare look this Ganesh Chaturthi. While the matching blouse fabric that comes with the saree will give you an ethnic look, you can also go for modern fabrics, such as net or georgette. <\/p>",
             "subhd_color": "#222222",
             "hd_color": "#222222",
             "des_color": "#878787",
@@ -355,7 +296,6 @@
         }
       },
       "block_order": [
-        "template--16762835501289__c57fc7eb-b69c-45a5-9cce-eb58d9806d48-16831174407b348715-0",
         "template--16762835501289__c57fc7eb-b69c-45a5-9cce-eb58d9806d48-16831174407b348715-1"
       ],
       "settings": {
@@ -393,8 +333,8 @@
             "text_size": "40,15",
             "txt_align": "start",
             "sub_heading": "",
-            "heading": "Georgette Sarees",
-            "text": "<p>Made from synthetic fibers and have a slightly heavier drape, while <a href=\"https:\/\/www.indyvogue.com\/collections\/georgette-silk-saree\"><span style=\"text-decoration:underline\"><strong>georgette fabric sarees<\/strong><\/span><\/a><strong> <\/strong>are made from pure silk and have a lighter, more flowy drape. Spread those pleats like a mermaid’s tail – it’s easier than you think if you are trying out the georgette saree and add a lovely visual effect.<\/p>",
+            "heading": "Makeup to Try",
+            "text": "<p>Before you hit the pandals or hop skip one house where you are invited as guest to another or may be when you are celebrating in a grandeur way at your home, your make up needs to be special.  To enhance the features of your rich, luxurious silk saree, go for makeup looks that are understated.<\/p><p>Bold eyes and bright lips, simple base makeup with bright red lips, glittery eyes and rosy cheeks are some combinations that work for everyone. <\/p>",
             "subhd_color": "#222222",
             "hd_color": "#222222",
             "des_color": "#878787",
@@ -477,8 +417,8 @@
             "text_size": "40,15",
             "txt_align": "start",
             "sub_heading": "",
-            "heading": "Net Sarees",
-            "text": "<p>Net sarees have slightly stiffer drape, while net sarees are made from pure silk and have a softer, more flowy drape. Try a butterfly cape for the whimsical touch. With capes, you’re not just wearing a saree – you’re donning an alter ego, ready to save the fashion world!<\/p>",
+            "heading": "Hairstyle",
+            "text": "<p>Hairstyling is a huge part of the Ganesh Chaturthi look. The overall saree styling and a great way to bind your whole look together, needs a hairstyle such as classy buns, intricate braids and open hairstyles with extra volume. Use some accessories to enhance the beauty of these sarees, so you may pick from a variety of real flowers, ornamental hair gems, etc.<\/p>",
             "subhd_color": "#222222",
             "hd_color": "#222222",
             "des_color": "#878787",
