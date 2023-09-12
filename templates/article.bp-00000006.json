@@ -432,6 +432,61 @@
         "code_cus_css": ""
       }
     },
+    "7d34ae35-a031-4f2e-afcb-30cee64e9ffe": {
+      "type": "image_text",
+      "blocks": {
+        "template--16828407021801__7d34ae35-a031-4f2e-afcb-30cee64e9ffe-bl_text-1": {
+          "type": "bl_text",
+          "settings": {
+            "col_dk": "12",
+            "col_tb": "12",
+            "text_size": "40,15",
+            "txt_align": "start",
+            "sub_heading": "",
+            "heading": "Footwear",
+            "text": "<p>Choose the right pair of shoes not just to keep your feet comfortable byt make your sare draping more alluring. With Paithani sarees the footwear which goes along are strappy sandals, glittery wedge heels and metallic stilettos or try decorative Mojaris.<\/p>",
+            "subhd_color": "#222222",
+            "hd_color": "#222222",
+            "des_color": "#878787",
+            "use_shadow": false,
+            "button_label": "Button label",
+            "button_link": "",
+            "open_link": "_blank",
+            "btn_icon": false,
+            "button_style": "default",
+            "btn_size": "large",
+            "btn_cl": "dark",
+            "button_effect": "default"
+          }
+        }
+      },
+      "block_order": [
+        "template--16828407021801__7d34ae35-a031-4f2e-afcb-30cee64e9ffe-bl_text-1"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "space_h_item": "20",
+        "space_v_item": "10",
+        "space_h_item_mb": "20",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "947465df-8011-4c4f-8367-4239ec3004ea": {
       "type": "featured-collection",
       "settings": {
@@ -560,6 +615,7 @@
     "c57fc7eb-b69c-45a5-9cce-eb58d9806d48",
     "0b236726-dffe-42d4-a6a4-59f47b5d376f",
     "554cb4b9-1c32-4338-8bf8-4e1b8c07e873",
+    "7d34ae35-a031-4f2e-afcb-30cee64e9ffe",
     "947465df-8011-4c4f-8367-4239ec3004ea",
     "e7b55938-3dde-44ab-9365-66967e09d447"
   ]
