@@ -20,17 +20,17 @@
     {%- if checkFirst and bk_type == 'mega' -%}
     {%- assign checkFirst = false -%}
     <div id="t4s-mega-contents{{ bk_stts.id }}" data-id="{{ bk_stts.id }}" data-blockid="{{ block.id }}" {{ block.shopify_attributes }}>
-    <link rel="stylesheet" href="{{ 'mega-menu.css' | asset_url }}" media="all">
+    <link rel="stylesheet" data-href="{{ 'mega-menu.css' | asset_url }}">
     {%- elsif bk_type == 'mega' -%}
     </div>
     <div id="t4s-mega-contents{{ bk_stts.id }}" data-id="{{ bk_stts.id }}" data-blockid="{{ block.id }}" {{ block.shopify_attributes }}>
-    <link rel="stylesheet" href="{{ 'mega-menu.css' | asset_url }}" media="all">
+    <link rel="stylesheet" data-href="{{ 'mega-menu.css' | asset_url }}">
     {%- endif -%}
 
       {%- case bk_type -%}
         {%- when 'banner' %}{% assign c_bid = block.id %}{% assign image = bk_stts.image -%}
-          {{ 'content-position.css' | asset_url | stylesheet_tag }}
-          {{ 'banner.css' | asset_url | stylesheet_tag }}
+          <link rel="stylesheet" data-href="{{ 'content-position.css' | asset_url }}">
+          <link rel="stylesheet" data-href="{{ 'banner.css' | asset_url }}">
           {%- liquid 
             assign image = bk_stts.image
             assign image_ratio = bk_stts.image_ratio
@@ -74,7 +74,7 @@
             </style>
           </div>
         {%- when 'cat' -%}
-          {{ 'collection.css' | asset_url | stylesheet_tag }}
+          <link rel="stylesheet" data-href="{{ 'collection.css' | asset_url }}">
           {%- liquid
             assign collection_des = bk_stts.collection_des
             assign image_ratio = bk_stts.image_ratio
@@ -120,8 +120,8 @@
             </div>
           </div>
         {%- when 'pr' -%}
-          {{ 'collection-products.css' | asset_url | stylesheet_tag }}
-          <link href="{{ 'loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+          <link rel="stylesheet" data-href="{{ 'collection-products.css' | asset_url }}">
+          <link rel="stylesheet" data-href="{{ 'loading.css' | asset_url }}">
           {%- liquid
             assign sett_equal = bk_stts.use_eq_height
             assign show_vendor = bk_stts.show_vendor
@@ -179,8 +179,8 @@
             {%- if layout_des == "1" -%} 
             <div data-collection-url="{{ collection.url }}" class="t4s_box_pr_grid t4s-products t4s-justify-content-center t4s-text-{{ bk_stts.content_align }} t4s_{{ image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} t4s-row t4s-row-cols-{{ bk_stts.col_dk }} t4s-gx-{{ bk_stts.space_h_item }} t4s-gy-{{ bk_stts.space_v_item }}">
            {%- else layout_des == "2" -%} 
-            {{ 'slider-settings.css' | asset_url | stylesheet_tag }}
-            {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+            <link rel="stylesheet" data-href="{{ 'slider-settings.css' | asset_url }}">
+            <link rel="stylesheet" data-href="{{ 'pre_flickityt4s.min.css' | asset_url }}">
             <div data-collection-url="{{ collection.url }}" class="t4s-flicky-slider t4s_box_pr_slider t4s-products t4s-text-{{ bk_stts.content_align }} t4s_{{ image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} t4s-row t4s-row-cols-{{ bk_stts.col_dk }} t4s-gx-{{ bk_stts.space_h_item }} t4s-gy-{{ bk_stts.space_v_item }} {% if bk_stts.nav_btn %} t4s-slider-btn-style-{{ bk_stts.btn_owl }} t4s-slider-btn-{{ bk_stts.btn_shape }} t4s-slider-btn-{{ bk_stts.btn_size }} t4s-slider-btn-cl-{{ bk_stts.btn_cl }} t4s-slider-btn-vi-{{ bk_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ bk_stts.btn_hidden_mobile }} {% endif %} flickityt4s flickityt4s-later" data-flickityt4s-js='{"setPrevNextButtons":true,"arrowIcon":"{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": {{ bk_stts.nav_btn }},"percentPosition": 1,"pageDots": false, "autoPlay" : false, "pauseAutoPlayOnHover" : true }' style="--flickity-btn-pos: {{ bk_stts.space_h_item }}px;--flickity-btn-pos-mb: {{ bk_stts.space_h_item_mb }}px;">
             {%- endif -%} 
               {%- if collection != blank -%}
@@ -247,8 +247,8 @@
           <div id="bk_{{ block.id }}" class="type_mn_html t4s-rte t4s-menu-item t4s-sub-column-item t4s-col-{{ bk_stts.col }} t4s-col-item" {{ block.shopify_attributes }}>{{- bk_stts.html -}}{% if bk_stts.page != blank %}{{ pages[bk_stts.page].content }}{% endif -%}
           </div>
         {%- when 'blogs' -%}
-          {{ 'blog.css' | asset_url | stylesheet_tag }}
-          <link href="{{ 'loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+          <link rel="stylesheet" data-href="{{ 'blog.css' | asset_url }}">
+          <link rel="stylesheet" data-href="{{ 'loading.css' | asset_url }}">
           {%- liquid
             assign layout_des = bk_stts.layout_des
             if bk_stts.btn_owl == "outline"
@@ -299,8 +299,8 @@
             {%- if layout_des == "1" -%} 
             <div class="blog_grid has_post_des_{{ post_des }} t4s-justify-content-center t4s-text-{{ bk_stts.content_align }} t4s_{{ image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} t4s-row t4s-row-cols-{{ bk_stts.col_dk }} t4s-gx-{{ bk_stts.space_h_item }} t4s-gy-{{ bk_stts.space_v_item }}">
            {%- else layout_des == "2" -%} 
-            {{ 'slider-settings.css' | asset_url | stylesheet_tag }}
-            {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+            <link rel="stylesheet" data-href="{{ 'slider-settings.css' | asset_url }}">
+            <link rel="stylesheet" data-href="{{ 'pre_flickityt4s.min.css' | asset_url }}">
             <div class="t4s-flicky-slider blog_slider has_post_des_{{ post_des }} t4s-text-{{ bk_stts.content_align }} t4s_{{ image_ratio }} t4s_position_{{ bk_stts.image_position }} t4s_{{ bk_stts.image_size }} t4s-row t4s-row-cols-{{ bk_stts.col_dk }} t4s-gx-{{ bk_stts.space_h_item }} t4s-gy-{{ bk_stts.space_v_item }} {% if bk_stts.nav_btn %} t4s-slider-btn-style-{{ bk_stts.btn_owl }} t4s-slider-btn-{{ bk_stts.btn_shape }} t4s-slider-btn-{{ bk_stts.btn_size }} t4s-slider-btn-cl-{{ bk_stts.btn_cl }} t4s-slider-btn-vi-{{ bk_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ bk_stts.btn_hidden_mobile }} {% endif %} flickityt4s flickityt4s-later" data-flickityt4s-js='{"setPrevNextButtons":true,"arrowIcon":"{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": {{ bk_stts.nav_btn }},"percentPosition": 1,"pageDots": false, "autoPlay" : false, "pauseAutoPlayOnHover" : true }' style="--flickity-btn-pos: {{ bk_stts.space_h_item }}px;--flickity-btn-pos-mb: {{ bk_stts.space_h_item_mb }}px;">
             {%- endif -%} 
               {%- if blog != blank -%} 
