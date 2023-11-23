@@ -61,5 +61,5 @@
 </div>
 {%- endif -%} 
 {%- if general_block -%}
-    {{ 'general-block.css' | asset_url | stylesheet_tag }}
+    <link rel="stylesheet" data-href="{{ 'general-block.css' | asset_url }}">
 {%- endif -%}
