@@ -4,7 +4,7 @@
     assign se_stts = section.settings
     assign label = 'sections.announcement.label' | t -%}
   {%- capture cap_btn -%}{%- if se_stts.close != '0' -%}<div class="t4s-col-item t4s-col-auto t4s-d-none t4s-d-md-block"><button class="t4s-announcement-bar__close t4s-op-0"><svg role="presentation" class="t4s-iconsvg-close" viewBox="0 0 16 14"><path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path></svg> {{ 'sections.announcement.close' | t }}</button></div>{%- endif -%}{%- endcapture -%}
-  {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+   <link rel="stylesheet" data-href="{{ 'pre_flickityt4s.min.css' | asset_url }}">
 
   {%- style -%}
     {%- assign bg_op = se_stts.bg_op | divided_by: 100.0 -%}
