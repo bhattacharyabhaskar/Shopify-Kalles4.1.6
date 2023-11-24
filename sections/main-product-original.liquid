@@ -242,8 +242,8 @@ endif -%}
   {%- endcapture -%}
 {%- endif -%}
 
-{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
-{{ 'main-product.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" data-href="{{ 'pre_flickityt4s.min.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{ 'main-product.css' | asset_url }}">
 
 <div class="t4s-container t4s-main-product__content is--layout_{{ se_stts.pr_layout }} t4s-product-media__{{ media_layout }} t4s-product-thumb-size__{{ se_stts.thumb_lr_size }}">
   <div class="t4s-row">
@@ -288,7 +288,7 @@ endif -%}
               else 
                 assign class_gx_lg = ' t4s-g-lg-10 '
               endif -%}
-          {{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+          <link rel="stylesheet" data-href="{{ 'slider-settings.css' | asset_url }}">
           <div class="t4s-row t4s-g-0">
             <div data-product-single-media-group class="{{ class_main }}t4s-col-12 t4s-col-item t4s-pr">
               <div data-t4s-gallery data-main-media data-t4s-thumb-true class="t4s-row t4s-g-0 t4s-slide-eff-{{ se_stts.eff }} flickityt4s t4s_{{ image_ratio }} t4s_position_{{ se_stts.image_position }} t4s_{{ se_stts.image_size }} t4s-flicky-slider {% if se_stts.nav_btn %} t4s-slider-btn-{{ se_stts.nav_btn }} t4s-slider-btn-style-{{ se_stts.btn_owl }} t4s-slider-btn-{{ se_stts.btn_shape }} t4s-slider-btn-{{ se_stts.btn_size }} t4s-slider-btn-cl-{{ se_stts.btn_cl }} t4s-slider-btn-vi-{{ se_stts.btn_vi }} t4s-slider-btn-hidden-mobile-{{ se_stts.btn_hidden_mobile }} {% endif %} {% if se_stts.nav_dot %} t4s-dots-style-{{ se_stts.dot_owl }} t4s-dots-cl-{{ se_stts.dots_cl }} t4s-dots-round-{{ se_stts.dots_round }} t4s-dots-hidden-mobile-{{ se_stts.dots_hidden_mobile }} {% endif %}" data-flickityt4s-js='{"t4sid": "{{ se_id }}", "status": true, "checkVisibility": false, "cellSelector": "[data-main-slide]:not(.is--media-hide)","isFilter":{{ canMedia_group }},"imagesLoaded": 0,"adaptiveHeight": 1, "contain": 1, "groupCells": "100%", "dragThreshold" : {% if se_stts.eff == 'fade' %}6{% else %}5{% endif %}, "cellAlign": "left","wrapAround": true,"prevNextButtons": {{ se_stts.nav_btn }},"percentPosition": 1,"pageDots": {{ se_stts.nav_dot }}, "autoPlay" : 0, "pauseAutoPlayOnHover" : true , "thumbNav": {% if media_layout != 'without_thumbnails' %}true{% else %}false{% endif %}, "thumbVertical": {% if media_layout != 'thumbnails_bottom' %}true{% else %}false{% endif %}, "isMedia": true }' style="--flickity-btn-pos: 0px;--flickity-btn-pos-mb: 0px;--space-dots: {{ se_stts.dots_space }}px;">
@@ -356,7 +356,7 @@ endif -%}
                   render 'product-360', product: product, se_id: se_id, class_col: class_col
                   endif -%}
               </div>
-              <link href="{{ 'single-pr-badge.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+              <link rel="stylesheet" data-href="{{ 'single-pr-badge.css' | asset_url }}">
               <div data-product-single-badge data-sort="sale,new,soldout,preOrder,custom" class="t4s-single-product-badge t4s-pa t4s-pe-none t4s-op-0"></div>
               {%- render 'product-btns', se_stts: se_stts, product: product -%}
             </div>
@@ -550,7 +550,7 @@ endif -%}
               
               <div class="t4s-product_social-share t4s-text-{{ bk_stts.socials_align }}" {{ block.shopify_attributes }}>
                 {%- if settings.share_source == '1' -%}
-                  {{ 'icon-social.css' | asset_url | stylesheet_tag }}
+                  <link rel="stylesheet" data-href="{{ 'icon-social.css' | asset_url }}">
                   <div class="t4s-product__social t4s-socials-block t4s-setts-color-{{ bk_stts.use_color_set }} social-{{ block.id }}" style="--cl:{{ bk_stts.icon_cl }};--bg-cl:{{ bk_stts.bg_cl }};--mgb: {{ bk_stts.mgb }}px;--mgb-mb: {{ bk_stts.mgb_mb }}px; --bd-radius:{{ bk_stts.bd_radius }}px;">
                     {%- if bk_stts.social_mode == '1' -%} 
                     {%- assign follow_social = true -%} 
@@ -560,7 +560,7 @@ endif -%}
                     {%- render 'social_sharing', style: bk_stts.social_style, use_color_set: bk_stts.use_color_set, size: bk_stts.social_size, space_h_item: bk_stts.space_h_item, space_h_item_mb: bk_stts.space_h_item_mb, space_v_item: bk_stts.space_v_item, space_v_item_mb: bk_stts.space_v_item_mb, follow_social: follow_social -%} 
                   </div>
                 {%- else -%}
-                  {{ 'icon-social.css' | asset_url | stylesheet_tag }}
+                  <link rel="stylesheet" data-href="{{ 'icon-social.css' | asset_url }}">
                   {%- capture the_snippet_share -%}{% render 'ssw-widget-share-links' with 1 %}{%- endcapture -%}
                   {%- unless the_snippet_share contains 'Liquid error' %}{{ the_snippet_share }}{%- endunless -%}
                 {%- endif -%}
@@ -614,7 +614,7 @@ endif -%}
                 {%- if bk_stts.icon == '3' and image != blank -%}<img class="lazyloadt4s t4s-w-100 t4s-ani-{{ bk_stts.ani }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image | image_url: width: 50 }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt }}">
                 {%- else -%}<i class="t4s-ani-{{ bk_stts.ani }} {{ bk_stts.icon_name }}"></i>
                 {%- endif -%}
-                {%- if bk_stts.ani != 'none' %}<link href="{{ 'ani-atc.min.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">{% endif -%}
+                {%- if bk_stts.ani != 'none' %}<link rel="stylesheet" data-href="{{ 'ani-atc.min.css' | asset_url }}">{% endif -%}
                 {%- endif -%}
                 {{ bk_stts.text | replace: '[count]', '<span data-count class="t4s-pr__live-view t4s-fwm"></span>' }}
             </div>
@@ -625,7 +625,7 @@ endif -%}
                 {%- if bk_stts.icon == '3' and image != blank -%}<img class="lazyloadt4s t4s-w-100 t4s-ani-{{ bk_stts.ani }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image | image_url: width: 50 }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt }}">
                 {%- else -%}<i class="t4s-ani-{{ bk_stts.ani }} {{ bk_stts.icon_name }}"></i>
                 {%- endif -%}
-                {%- if bk_stts.ani != 'none' %}<link href="{{ 'ani-atc.min.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">{% endif -%}
+                {%- if bk_stts.ani != 'none' %}<link rel="stylesheet" data-href="{{ 'ani-atc.min.css' | asset_url }}">{% endif -%}
                 {%- endif -%}
                 {{ bk_stts.text | replace: '[sold]', '<span data-sold class="t4s-pr__sold t4s-fwm"></span>' | replace: '[hour]', '<span data-hour class="t4s-pr__hrs t4s-fwm"></span>' }}
             </div>
@@ -636,7 +636,7 @@ endif -%}
                 {%- if bk_stts.icon == '3' and image != blank -%}<img class="lazyloadt4s t4s-w-100 t4s-ani-{{ bk_stts.ani }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image | image_url: width: 50 }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt }}">
                 {%- else -%}<i class="t4s-ani-{{ bk_stts.ani }} {{ bk_stts.icon_name }}"></i>
                 {%- endif -%}
-                {%- if bk_stts.ani != 'none' %}<link href="{{ 'ani-atc.min.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">{% endif -%}
+                {%- if bk_stts.ani != 'none' %}<link rel="stylesheet" data-href="{{ 'ani-atc.min.css' | asset_url }}">{% endif -%}
                 {%- endif -%}
 
                 {%- capture hourHTML -%}<span data-hour-delivery class="t4s-h_delivery t4s-dn">[totalHours] {{ bk_stts.hr }} %M {{ bk_stts.min }}</span>{%- endcapture -%}
@@ -644,7 +644,7 @@ endif -%}
             </div>
 
           {%- when 'countdown' %}{% unless bk_stts.source == '1' or pr_tags contains 'has_stock_countdown' %}{% continue %}{% endunless -%}
-             {{ 'countdown.css' | asset_url | stylesheet_tag }}
+             <link rel="stylesheet" data-href="{{ 'countdown.css' | asset_url }}">
             {%- liquid 
               assign meta = meta_theme.countdown
               assign isCountdownMeta = false
@@ -669,7 +669,7 @@ endif -%}
                       {%- if bk_stts.icon == '3' and image != blank -%}<img class="lazyloadt4s t4s-w-100 t4s-ani-{{ bk_stts.ani }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image | image_url: width: 50 }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt }}">
                       {%- else -%}<i class="t4s-ani-{{ bk_stts.ani }} {{ bk_stts.icon_name }}"></i>
                       {%- endif -%}
-                      {%- if bk_stts.ani != 'none' %}<link href="{{ 'ani-atc.min.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">{% endif -%}{%- endif -%}{{ bk_stts.mess }}</p>
+                      {%- if bk_stts.ani != 'none' %}<link rel="stylesheet" data-href="{{ 'ani-atc.min.css' | asset_url }}">{% endif -%}{%- endif -%}{{ bk_stts.mess }}</p>
                       {%- endif -%}
                       <div id="t4s-countdow{{ bk_id }}" class="t4s-countdown-wrap t4s-d-inline-flex t4s-justify-content-center t4s-justify-content-between t4s-lh-1 t4s-countdown-des-{{ bk_stts.cdt_des }} t4s-countdown t4s-countdown-size-{{ bk_stts.cdt_size }} "{% if isCountdownMeta %} data-date="{{ cd_date }}" data-loop="{% if bk_stts.dayx > 0 %}true{% else %}false{% endif %}" data-dayl="{{ bk_stts.dayx }}"{% endif %} data-cd-options='{ "isCountdownMeta":{{ isCountdownMeta }},"cd_date":{{ cd_date | json }} }' {%- render 'bk_cus_style', type: 'countdown', bk_stts: bk_stts, ani_delay: 0 -%}>
                     <div class="time">
@@ -689,7 +689,7 @@ endif -%}
                 {%- if bk_stts.icon == '3' and image != blank -%}<img class="lazyloadt4s t4s-w-100 t4s-ani-{{ bk_stts.ani }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image | image_url: width: 50 }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt }}">
                 {%- else -%}<i class="t4s-ani-{{ bk_stts.ani }} {{ bk_stts.icon_name }}"></i>
                 {%- endif -%}
-                {%- if bk_stts.ani != 'none' %}<link href="{{ 'ani-atc.min.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">{% endif -%}
+                {%- if bk_stts.ani != 'none' %}<link rel="stylesheet" data-href="{{ 'ani-atc.min.css' | asset_url }}">{% endif -%}
                 {%- endif -%}
                 {{ arr_mess[0] }} <span data-count class='t4s-count'></span> {{ arr_mess[1] }}</p>
                 {%- if bk_stts.progress -%}
@@ -699,7 +699,7 @@ endif -%}
 
             {%- when 'store_pickup' %}{% comment %}{% if isProductAvailable == false %}{% continue %}{% endif -%}{% endcomment -%}
 
-              {{ 'pickup-availability.css' | asset_url | stylesheet_tag }}
+              <link rel="stylesheet" data-href="{{ 'pickup-availability.css' | asset_url }}">
               <div class="t4s-pr__pickup-availability-container t4s-dn-" data-variant-id="{{ current_variant.id }}" data-pickup-availability-container data-has-only-default-variant="{{ isProductDefault }}" data-root-url="{{ routes.root_url }}" data-id-popup="popup{{ pr_se_id }}"></div>
 
               {%- when 'tab_des' or 'tab_add' or 'tab_buy' or 'tab_rivui' or 'tab_liquid' or 'tab_html' -%}
@@ -762,11 +762,11 @@ endif -%}
         assign max_qty = 9999
     endif -%}
     
-<link href="{{ 'sticky-atc.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
-{%- if se_stts.ani != 'none' -%}<link href="{{ 'ani-atc.min.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">{%- endif -%}
+<link rel="stylesheet" data-href="{{ 'sticky-atc.css' | asset_url }}">
+{%- if se_stts.ani != 'none' -%}<link rel="stylesheet" data-href="{{ 'ani-atc.min.css' | asset_url }}">{%- endif -%}
 <template class="t4s-d-none" id="t4s-sticky-atc-temp">
   <div data-sticky-addtocart class="t4s-sticky-atc sticky_layout_mb--{{ se_stts.sticky_layout_mb }} t4s-pf t4s-b-0 t4s-l-0 t4s-r-0 t4s-op-0 t4s-pe-none"{% if PR_no_pick %} hidden{% endif %}>
-    {%- if request.design_mode %}<link href="{{ 'sticky-atc.css' | asset_url }}" rel="stylesheet" media="all">{% endif -%}
+    {%- if request.design_mode %}<link rel="stylesheet" data-href="{{ 'sticky-atc.css' | asset_url }}">{% endif -%}
     <div class="t4s-sticky-atc__product">
        
        {%- liquid
@@ -786,7 +786,7 @@ endif -%}
       <div {% if variants_size > 1 %}data-sticky-v-title{% endif %} class="t4s-sticky-atc__v-title">
       {%- unless isProductDefault -%}
        {%- if se_stts.enable_select -%}
-          <link rel="stylesheet" href="{{ 'base_drop.min.css' | asset_url }}" media="all">
+          <link rel="stylesheet" data-href="{{ 'base_drop.min.css' | asset_url }}">
           <div class="t4s-dropdown t4s-dropdown__sortby">
             <button type="button" data-dropdown-open data-position="bottom-end" data-id="t4s__dropdown-{{ pr_se_id }}" class="t4s-truncate"><span>{{ current_variant.title | escape }}</span><svg class="t4s-icon-select-arrow" role="presentation" viewBox="0 0 19 12"><use xlink:href="#t4s-select-arrow"></use></svg></button>
             <div data-dropdown-wrapper class="t4s-dropdown__wrapper t4s-current-scrollbar" id="t4s__dropdown-{{ pr_se_id }}">

@@ -666,7 +666,7 @@
           "top-bar-1": {
             "type": "text",
             "settings": {
-              "text": "<p><a href=\"\/collections\/buy-silk-mark-certified-saree\" title=\"Latest Indian Saree\"><strong>SHOP LATEST SAREES<\/strong><\/a><\/p>",
+              "text": "<p><strong>🎉THANKSGIVING SUPER SALE+FREE SHIPPING🌼<\/strong><\/p><p><strong>10% OFF ON ORDERS OVER $250 USD. USE CODE THANKS24 <\/strong><a href=\"https:\/\/www.indyvogue.com\/pages\/current-offers-and-promotions\"><strong>Click for details<\/strong><\/a><\/p>",
               "countdown": "2023\/12\/26",
               "txt_day": "days",
               "dayx": 0,
@@ -794,7 +794,7 @@
               "cus_cl": false,
               "cl": "#ec0101",
               "lb": "",
-              "lb_cl": "#00BADB",
+              "lb_cl": "#00badb",
               "pos_sub": "bottom",
               "wid": "cus",
               "cus_wid": 200,

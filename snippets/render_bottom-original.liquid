@@ -267,7 +267,7 @@ endif -%}
 {%- assign mobile_nav_type = settings.mobile_nav_type -%}
 {%- assign routes_search_url = routes.search_url -%}
 
-<link rel="stylesheet" href="{{ 'mobile_nav.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" data-href="{{ 'mobile_nav.css' | asset_url }}">
 {%- if admin_sp -%}
    <div id="t4s-menu-drawer" class="t4s-drawer t4s-drawer__left t4s-dn{% if is_page_index %} t4s-page-index-{{ page.id }}{% endif %}" aria-hidden="true">
      {%- if mobile_nav_type == '1' or mobile_nav_type == '2' -%}
@@ -304,7 +304,7 @@ endif -%}
 {%- endif -%}
 
 {%- if admin_sp == false and page_type != 'cart' and settings.cart_type != 'disable' -%}
-<link href="{{ 'mini-cart.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'mini-cart.css' | asset_url }}">
 <div data-cart-wrapper id="t4s-mini_cart" data-ccount="{{ cart.item_count }}" class="t4s-drawer t4s-drawer__right t4s-dn" aria-hidden="true">
     {%- if cart.item_count > 0 -%}
     <div class="t4s-skeleton-element ske-h-50 ske-mt-15 ske-mb-20 ske-mrl-15 ske-shine"></div>
@@ -408,7 +408,7 @@ endif
 echo '<div id="t4s-snow_ef" class="t4s-dn"></div><div id="t4s-assets-pre" class="t4s-d-none"></div><div id="t4s-append-component" class="t4s-d-none"></div>' -%}
 
 {%- unless customer or settings.login_side == false or request.page_type contains 'customers' -%}
-<link href="{{ 'login-sidebar.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" data-href="{{ 'login-sidebar.css' | asset_url }}">
 <div id="t4s-login-sidebar" class="t4s-drawer t4s-drawer__right" aria-hidden="true">
     <div class="t4s-skeleton-element ske-h-50 ske-mt-20 ske-mrl-20 ske-shine"></div>
     <div class="t4s-skeleton-element ske-h-50 ske-mrl-20"></div><div class="t4s-skeleton-element ske-h-50 ske-mrl-20"></div><div class="t4s-skeleton-element ske-h-20 ske-mrl-20"></div>
@@ -416,7 +416,7 @@ echo '<div id="t4s-snow_ef" class="t4s-dn"></div><div id="t4s-assets-pre" class=
 </div>
 {%- endunless -%}
 
-<link href="{{ 'search-hidden.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" data-href="{{ 'search-hidden.css' | asset_url }}">
 <div data-predictive-search data-sid="search-hidden" id="t4s-search-hidden" class="t4s-drawer t4s-drawer__right" aria-hidden="true">
   <div class="t4s-skeleton-element ske-h-50 ske-mt-20 ske-mb-20 ske-shine ske-mrl-20 ske-mt-15"></div>
   <div class="t4s-skeleton-element ske-h-50 ske-mrl-20"></div><div class="t4s-skeleton-element ske-h-50 ske-mrl-20 ske-shine"></div>
@@ -424,16 +424,16 @@ echo '<div id="t4s-snow_ef" class="t4s-dn"></div><div id="t4s-assets-pre" class=
 </div>
 <template id="t4s-style-popup">
 {%- if enable_quickview -%}
-{{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
-{{ 'main-product.css' | asset_url | stylesheet_tag }}
-{{ 'qv-product.css' | asset_url | stylesheet_tag }}
-{{ 'drawer.min.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" data-href="{{ 'pre_flickityt4s.min.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{ 'main-product.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{ 'qv-product.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{ 'drawer.min.css' | asset_url }}">
 {%- endif -%}
-{%- if enable_quickshop %}{{ 'qs-product.css' | asset_url | stylesheet_tag }}{% endif -%}
+{%- if enable_quickshop %}<link rel="stylesheet" data-href="{{ 'qs-product.css' | asset_url }}">{% endif -%}
 </template>
-<link rel="stylesheet" href="{{ 'theme.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'drawer.min.css' | asset_url }}" media="all">
-<link rel="stylesheet" href="{{ 'line-awesome.min.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- if settings.colors_css %}<link rel="stylesheet" href="{{ 'colors.css' | asset_url }}" media="print" onload="this.media='all'">{% endif -%} 
+<link rel="stylesheet" data-href="{{ 'theme.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{ 'drawer.min.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{ 'line-awesome.min.css' | asset_url }}">
+{%- if settings.colors_css %}<link rel="stylesheet" data-href="{{ 'colors.css' | asset_url }}">{% endif -%}
 {%- if settings.custom_css_t4s %}<link rel="stylesheet" data-href="{{- 'custom.css' | asset_url -}}">{% endif -%}
 {%- if admin_sp %}<style>.t4s-section-admn-fixed { position: fixed;top: 100px;pointer-events: none; z-index: -1;opacity: 0; }.t4s-section-admn2-fixed { position: fixed;top: 100px;z-index: 468; }</style>{% endif -%}

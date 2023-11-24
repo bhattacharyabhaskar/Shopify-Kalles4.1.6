@@ -237,10 +237,10 @@
   {%- endcapture -%}
 {%- endif -%}
 
- {{ 'section.css' | asset_url | stylesheet_tag }}
-  {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
-  {{ 'main-product.css' | asset_url | stylesheet_tag }}
-  {{ 'featured-product.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" data-href="{{ 'section.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{ 'pre_flickityt4s.min.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{ 'main-product.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{ 'featured-product.css' | asset_url }}">
   <div class="t4s-product-featured t4s-product-media__{{ media_layout }} t4s-product-thumb-size__{{ se_stts.thumb_lr_size }} t4s-section-inner {{ t4s_se_class }} t4s_nt_se_{{ se_id }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="2"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
     {{- html_layout[0] -}}
     {%- if stt_layout == 't4s-se-container' -%}
