@@ -284,4 +284,42 @@ section.shopify-section.t4s-section.t4s-section-all.t4s_tp_cdt.t4s-custom-html {
        text-align: center!important;
   }
 }
+.t4s-swatch__item {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    display: inline-block;
+    padding: 6px 16px 7px;
+    text-align: center;
+    border: 1px solid var(--border-sw-color);
+    color: var(--secondary-sw-color);
+    border-radius: 3px;
+    vertical-align: middle;
+    cursor: pointer;
+    margin: 5px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    transition: color .25s ease,background-color .25s ease,border-color .15s ease,box-shadow .25s ease,opacity .25s ease;
+}
+
+.t4s-selector-mode__circle .t4s-swatch__option:not(.is-t4s-style__color) .t4s-swatch__item, .t4s-color-mode__circle .t4s-swatch__option.is-t4s-style__color .t4s-swatch__item {
+    padding: 5px;
+    display: inline-block;
+    min-width: 30px;
+    min-height: 30px;
+    line-height: 18px;
+    border-radius: 40px;
+    text-align: center;
+}
+.t4s-swatch__item:not(.is-sw__color).is--selected {
+    border-color: var(--primary-sw-color);
+    background: var(--primary-sw-color);
+    color: var(--t4s-light-color);
+}
+.t4s-swatch__list {
+    margin: 10px -5px 0;
+}
+.t4s-swatch__option {
+    margin-bottom: 20px;
+}
 </style>
