@@ -262,20 +262,21 @@ endif -%}
         {% render 'criteo-tracking' %}
         <!-- CRITEO END -->
         {%- render 'footer-app-block' -%}
-        {{ 'wnw-optimization-3.0.js' | asset_url | script_tag }}                
-    {%- render "ecom_footer"-%}
-
-      <script>
-      	var site_nav_link_burger = true;
-      	document.addEventListener("DOMContentLoaded", function() {
-            var icon_menu = document.querySelector(".t4s-push-menu-btn");
-            icon_menu.addEventListener("click", function() {
-      			if(site_nav_link_burger) {
-      				event.preventDefault();
-      				site_nav_link_burger = false;
-      			}
-      		});
-      	}) 
-       </script>               
+                       
+        {%- render "ecom_footer"-%}
+        
+        <script>
+          var site_nav_link_burger = true;
+          document.addEventListener("DOMContentLoaded", function() {
+              var icon_menu = document.querySelector(".t4s-push-menu-btn");
+              icon_menu.addEventListener("click", function() {
+                  if(site_nav_link_burger) {
+                      event.preventDefault();
+                      site_nav_link_burger = false;
+                  }
+              });
+          }) 
+         </script> 
+      {{ 'wnw-optimization-3.0.js' | asset_url | script_tag }} 
     </body>
 </html>
