@@ -88,6 +88,7 @@
                     {%- endif -%}
                     {%- if recurringchecked %}<span class="product-details__item-recurring cb">{{ 'cart.general.recurring_mess' | t: frequency: frequency, frequency_unit: frequency_unit }}</span>{% endif -%}
                  </div>
+                {{ cart_change_url }}
                  <div class="t4s-page_cart__tools">
                     {%- if item_pr.has_only_default_variant == false and atc_ajax_enable -%}
                     <a href="{{ item_url }}" rel="nofollow" class="t4s-page_cart__edit" data-action-quickshop data-edit="{{ edit_item }}" data-id="{{ qv_key }}" data-key="{{ item_key }}" data-no-instant data-id="{{ qv_key }}" data-tooltip="top-start" data-t4s-tooltip='{{ 'cart.general.edit_item' | t | escape }}'><svg viewBox="0 0 24 24" width="20" height="20"><use href="#icon-cart-edit"/></svg></a>
