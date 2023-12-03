@@ -334,6 +334,61 @@
         "code_cus_css": ""
       }
     },
+    "c57fc7eb-b69c-45a5-9cce-eb58d9806d48": {
+      "type": "image_text",
+      "blocks": {
+        "template--16762835501289__c57fc7eb-b69c-45a5-9cce-eb58d9806d48-16831174407b348715-1": {
+          "type": "bl_text",
+          "settings": {
+            "col_dk": "12",
+            "col_tb": "12",
+            "text_size": "40,15",
+            "txt_align": "start",
+            "sub_heading": "",
+            "heading": "",
+            "text": "<h3>7. Heirlooms to Treasure<\/h3><p>The everlasting appeal of the katan banarasi is tempting and this authentic weave accentuates the opulence of the signature banarasi embroidery beautifully - making it a timeless heirloom for many families.<\/p><h3>8. They Go Light to Heavy<\/h3><p>They range from light to heavy and you can consider the weather and duration of the occasion for which you choose a heavy or light banarasi saree. Like a heavier saree is perfect for winter weddings, a lighter one is for the summer - katan can be found in both varieties.<\/p><h3>9. Choose Your Right Fit<\/h3><p>Generally, the katan banarasi saree comes in a standard length of 5.5 meters but the width can vary. Consider your body type and height to pick the width of this latest Indian saree. The wider the saree, the greater the illusion of height, while a narrower saree is flattering for a petite bride.<\/p><h3>10. Evergreen Forever<\/h3><p>Trends come and go, but katan banarasi saree is going to remain in vogue eternally forever. From Gen-Z fashionistas to 80’s moms, everyone loves this latest Indian sare which enhances your grace and adds a dash of royalty to your aura.<\/p><h2><em>Finally…<\/em><\/h2><p>Katan banarasi saree is one of the ideal choices for this Shaadi season - from its historical legacy to its modern charm, they’re the perfect blend of tradition and trend. Get set to paint the town in various hues and SLAY!<\/p>",
+            "subhd_color": "#222222",
+            "hd_color": "#222222",
+            "des_color": "#878787",
+            "use_shadow": false,
+            "button_label": "Button label",
+            "button_link": "",
+            "open_link": "_blank",
+            "btn_icon": false,
+            "button_style": "default",
+            "btn_size": "large",
+            "btn_cl": "dark",
+            "button_effect": "default"
+          }
+        }
+      },
+      "block_order": [
+        "template--16762835501289__c57fc7eb-b69c-45a5-9cce-eb58d9806d48-16831174407b348715-1"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "space_h_item": "20",
+        "space_v_item": "10",
+        "space_h_item_mb": "20",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "f0f3239f-39b3-4e8c-b676-76afaf93962e": {
       "type": "image_text",
       "blocks": {
@@ -394,61 +449,6 @@
       "block_order": [
         "template--16762835501289__f0f3239f-39b3-4e8c-b676-76afaf93962e-16831174407b348715-0",
         "template--16762835501289__f0f3239f-39b3-4e8c-b676-76afaf93962e-16831174407b348715-1"
-      ],
-      "settings": {
-        "design_heading": "1",
-        "heading_align": "t4s-text-center",
-        "top_heading": "",
-        "icon_heading": "las la-gem",
-        "top_subheading": "",
-        "tophead_mb": 30,
-        "space_h_item": "20",
-        "space_v_item": "10",
-        "space_h_item_mb": "20",
-        "space_v_item_mb": "10",
-        "layout": "t4s-container-wrap",
-        "cl_bg": "",
-        "cl_bg_gradient": "",
-        "mg": ",,50px,",
-        "pd": "",
-        "mg_tb": "",
-        "pd_tb": "",
-        "mg_mb": ",,30px,",
-        "pd_mb": "",
-        "use_cus_css": false,
-        "code_cus_css": ""
-      }
-    },
-    "c57fc7eb-b69c-45a5-9cce-eb58d9806d48": {
-      "type": "image_text",
-      "blocks": {
-        "template--16762835501289__c57fc7eb-b69c-45a5-9cce-eb58d9806d48-16831174407b348715-1": {
-          "type": "bl_text",
-          "settings": {
-            "col_dk": "12",
-            "col_tb": "12",
-            "text_size": "40,15",
-            "txt_align": "start",
-            "sub_heading": "",
-            "heading": "Blouse to Wear",
-            "text": "<p>While draping your paithani saree, the selection of your blouse is also important. It is an important part to glam up your sare look this Ganesh Chaturthi. While the matching blouse fabric that comes with the saree will give you an ethnic look, you can also go for modern fabrics, such as net or georgette. <\/p>",
-            "subhd_color": "#222222",
-            "hd_color": "#222222",
-            "des_color": "#878787",
-            "use_shadow": false,
-            "button_label": "Button label",
-            "button_link": "",
-            "open_link": "_blank",
-            "btn_icon": false,
-            "button_style": "default",
-            "btn_size": "large",
-            "btn_cl": "dark",
-            "button_effect": "default"
-          }
-        }
-      },
-      "block_order": [
-        "template--16762835501289__c57fc7eb-b69c-45a5-9cce-eb58d9806d48-16831174407b348715-1"
       ],
       "settings": {
         "design_heading": "1",
@@ -811,8 +811,8 @@
     "947465df-8011-4c4f-8367-4239ec3004ea",
     "be349666-2469-4b59-9e48-269f0cd4f2cc",
     "ba01bad7-693a-42a7-a049-fcc4e83d80f6",
-    "f0f3239f-39b3-4e8c-b676-76afaf93962e",
     "c57fc7eb-b69c-45a5-9cce-eb58d9806d48",
+    "f0f3239f-39b3-4e8c-b676-76afaf93962e",
     "0b236726-dffe-42d4-a6a4-59f47b5d376f",
     "554cb4b9-1c32-4338-8bf8-4e1b8c07e873",
     "7d34ae35-a031-4f2e-afcb-30cee64e9ffe",
