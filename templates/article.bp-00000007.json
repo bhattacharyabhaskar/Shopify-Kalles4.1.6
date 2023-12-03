@@ -132,7 +132,7 @@
       "settings": {
         "design_heading": "1",
         "heading_align": "t4s-text-center",
-        "top_heading": "IndyVogue Banarasi Collection",
+        "top_heading": "IndyVogue Katan Banarasi Collection",
         "icon_heading": "las la-gem",
         "top_subheading": "",
         "tophead_mb": 30,
@@ -233,6 +233,94 @@
         "space_v_item": "10",
         "space_h_item_mb": "20",
         "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
+    "ba01bad7-693a-42a7-a049-fcc4e83d80f6": {
+      "type": "image-gallery",
+      "blocks": {
+        "template--17057258111209__ba01bad7-693a-42a7-a049-fcc4e83d80f6-image_item-1": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Katan-1.jpg",
+            "link": ""
+          }
+        },
+        "template--17057258111209__ba01bad7-693a-42a7-a049-fcc4e83d80f6-image_item-2": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Katan-2.jpg",
+            "link": ""
+          }
+        },
+        "template--17057258111209__ba01bad7-693a-42a7-a049-fcc4e83d80f6-image_item-3": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Katan-3.jpg",
+            "link": ""
+          }
+        },
+        "template--17057258111209__ba01bad7-693a-42a7-a049-fcc4e83d80f6-image_item-4": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Katan-4.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--17057258111209__ba01bad7-693a-42a7-a049-fcc4e83d80f6-image_item-1",
+        "template--17057258111209__ba01bad7-693a-42a7-a049-fcc4e83d80f6-image_item-2",
+        "template--17057258111209__ba01bad7-693a-42a7-a049-fcc4e83d80f6-image_item-3",
+        "template--17057258111209__ba01bad7-693a-42a7-a049-fcc4e83d80f6-image_item-4"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "Gallery",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "layout_des": "1",
+        "click_image": "data-t4s-gallery",
+        "nav_thumbs": true,
+        "open_link": "_blank",
+        "item_rd": 0,
+        "img_effect": "none",
+        "b_effect": "none",
+        "image_ratio": "ratioadapt",
+        "image_size": "cover",
+        "image_position": "8",
+        "col_dk": "4",
+        "col_tb": "2",
+        "col_mb": "2",
+        "space_item": "30",
+        "space_item_mb": "10",
+        "loop": true,
+        "au_time": 0,
+        "au_hover": true,
+        "nav_btn": true,
+        "btn_vi": "hover",
+        "btn_owl": "default",
+        "btn_shape": "none",
+        "btn_cl": "dark",
+        "btn_size": "small",
+        "btn_hidden_mobile": false,
+        "nav_dot": true,
+        "dot_owl": "default",
+        "dots_cl": "dark",
+        "dots_round": false,
+        "dots_space": 10,
         "layout": "t4s-container-wrap",
         "cl_bg": "",
         "cl_bg_gradient": "",
@@ -722,6 +810,7 @@
     "1608235d-c3e9-4bd1-b190-b35ac6c54005",
     "947465df-8011-4c4f-8367-4239ec3004ea",
     "be349666-2469-4b59-9e48-269f0cd4f2cc",
+    "ba01bad7-693a-42a7-a049-fcc4e83d80f6",
     "f0f3239f-39b3-4e8c-b676-76afaf93962e",
     "c57fc7eb-b69c-45a5-9cce-eb58d9806d48",
     "0b236726-dffe-42d4-a6a4-59f47b5d376f",
