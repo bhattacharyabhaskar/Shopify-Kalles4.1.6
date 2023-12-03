@@ -191,6 +191,61 @@
         "code_cus_css": ""
       }
     },
+    "be349666-2469-4b59-9e48-269f0cd4f2cc": {
+      "type": "image_text",
+      "blocks": {
+        "template--16762835501289__be349666-2469-4b59-9e48-269f0cd4f2cc-16831174407b348715-1": {
+          "type": "bl_text",
+          "settings": {
+            "col_dk": "12",
+            "col_tb": "12",
+            "text_size": "40,15",
+            "txt_align": "start",
+            "sub_heading": "",
+            "heading": "Draping Styles of Paithani Saree",
+            "text": "<p>The drape of saree can make the break of a saree look of a Paithani saree. Then most common saree drapoing style which you can try are:<\/p><ul><li>Traditional Nauvari Style<\/li><li>Contemporary Marathi Draping<\/li><li>Marathi Dhti Style Draping<\/li><\/ul><p>Of course, you can drape these sarees in the classic styles with open pallu and pleated pallus too. Read the following blog to drape more perfectly.<\/p><p><strong>Saree Draping Part 1: <\/strong><a href=\"https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-1\"><span style=\"text-decoration:underline\"><strong>https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-1<\/strong><\/span><\/a><\/p><p><strong>Saree Draping Part 2:<\/strong><\/p><p><a href=\"https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-2\"><span style=\"text-decoration:underline\"><strong>https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-2<\/strong><\/span><\/a><\/p><p><strong>How to Hide Your Torso while Saree Draping:<\/strong><\/p><p><a href=\"https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/how-to-style-your-sarees-to-hide-your-torso-5-saree-draping-ideas\"><span style=\"text-decoration:underline\"><strong>https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/how-to-style-your-sarees-to-hide-your-torso-5-saree-draping-ideas<\/strong><\/span><\/a><\/p>",
+            "subhd_color": "#222222",
+            "hd_color": "#222222",
+            "des_color": "#878787",
+            "use_shadow": false,
+            "button_label": "Button label",
+            "button_link": "",
+            "open_link": "_blank",
+            "btn_icon": false,
+            "button_style": "default",
+            "btn_size": "large",
+            "btn_cl": "dark",
+            "button_effect": "default"
+          }
+        }
+      },
+      "block_order": [
+        "template--16762835501289__be349666-2469-4b59-9e48-269f0cd4f2cc-16831174407b348715-1"
+      ],
+      "settings": {
+        "design_heading": "1",
+        "heading_align": "t4s-text-center",
+        "top_heading": "",
+        "icon_heading": "las la-gem",
+        "top_subheading": "",
+        "tophead_mb": 30,
+        "space_h_item": "20",
+        "space_v_item": "10",
+        "space_h_item_mb": "20",
+        "space_v_item_mb": "10",
+        "layout": "t4s-container-wrap",
+        "cl_bg": "",
+        "cl_bg_gradient": "",
+        "mg": ",,50px,",
+        "pd": "",
+        "mg_tb": "",
+        "pd_tb": "",
+        "mg_mb": ",,30px,",
+        "pd_mb": "",
+        "use_cus_css": false,
+        "code_cus_css": ""
+      }
+    },
     "f0f3239f-39b3-4e8c-b676-76afaf93962e": {
       "type": "image_text",
       "blocks": {
@@ -251,61 +306,6 @@
       "block_order": [
         "template--16762835501289__f0f3239f-39b3-4e8c-b676-76afaf93962e-16831174407b348715-0",
         "template--16762835501289__f0f3239f-39b3-4e8c-b676-76afaf93962e-16831174407b348715-1"
-      ],
-      "settings": {
-        "design_heading": "1",
-        "heading_align": "t4s-text-center",
-        "top_heading": "",
-        "icon_heading": "las la-gem",
-        "top_subheading": "",
-        "tophead_mb": 30,
-        "space_h_item": "20",
-        "space_v_item": "10",
-        "space_h_item_mb": "20",
-        "space_v_item_mb": "10",
-        "layout": "t4s-container-wrap",
-        "cl_bg": "",
-        "cl_bg_gradient": "",
-        "mg": ",,50px,",
-        "pd": "",
-        "mg_tb": "",
-        "pd_tb": "",
-        "mg_mb": ",,30px,",
-        "pd_mb": "",
-        "use_cus_css": false,
-        "code_cus_css": ""
-      }
-    },
-    "be349666-2469-4b59-9e48-269f0cd4f2cc": {
-      "type": "image_text",
-      "blocks": {
-        "template--16762835501289__be349666-2469-4b59-9e48-269f0cd4f2cc-16831174407b348715-1": {
-          "type": "bl_text",
-          "settings": {
-            "col_dk": "12",
-            "col_tb": "12",
-            "text_size": "40,15",
-            "txt_align": "start",
-            "sub_heading": "",
-            "heading": "Draping Styles of Paithani Saree",
-            "text": "<p>The drape of saree can make the break of a saree look of a Paithani saree. Then most common saree drapoing style which you can try are:<\/p><ul><li>Traditional Nauvari Style<\/li><li>Contemporary Marathi Draping<\/li><li>Marathi Dhti Style Draping<\/li><\/ul><p>Of course, you can drape these sarees in the classic styles with open pallu and pleated pallus too. Read the following blog to drape more perfectly.<\/p><p><strong>Saree Draping Part 1: <\/strong><a href=\"https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-1\"><span style=\"text-decoration:underline\"><strong>https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-1<\/strong><\/span><\/a><\/p><p><strong>Saree Draping Part 2:<\/strong><\/p><p><a href=\"https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-2\"><span style=\"text-decoration:underline\"><strong>https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/saree-draping-styles-from-different-regions-of-india-part-2<\/strong><\/span><\/a><\/p><p><strong>How to Hide Your Torso while Saree Draping:<\/strong><\/p><p><a href=\"https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/how-to-style-your-sarees-to-hide-your-torso-5-saree-draping-ideas\"><span style=\"text-decoration:underline\"><strong>https:\/\/www.indyvogue.com\/blogs\/indyvogue-fashion-center\/how-to-style-your-sarees-to-hide-your-torso-5-saree-draping-ideas<\/strong><\/span><\/a><\/p>",
-            "subhd_color": "#222222",
-            "hd_color": "#222222",
-            "des_color": "#878787",
-            "use_shadow": false,
-            "button_label": "Button label",
-            "button_link": "",
-            "open_link": "_blank",
-            "btn_icon": false,
-            "button_style": "default",
-            "btn_size": "large",
-            "btn_cl": "dark",
-            "button_effect": "default"
-          }
-        }
-      },
-      "block_order": [
-        "template--16762835501289__be349666-2469-4b59-9e48-269f0cd4f2cc-16831174407b348715-1"
       ],
       "settings": {
         "design_heading": "1",
@@ -721,8 +721,8 @@
     "d036730a-8d16-4983-945e-58174fb11f9c",
     "1608235d-c3e9-4bd1-b190-b35ac6c54005",
     "947465df-8011-4c4f-8367-4239ec3004ea",
-    "f0f3239f-39b3-4e8c-b676-76afaf93962e",
     "be349666-2469-4b59-9e48-269f0cd4f2cc",
+    "f0f3239f-39b3-4e8c-b676-76afaf93962e",
     "c57fc7eb-b69c-45a5-9cce-eb58d9806d48",
     "0b236726-dffe-42d4-a6a4-59f47b5d376f",
     "554cb4b9-1c32-4338-8bf8-4e1b8c07e873",
