@@ -154,7 +154,7 @@
       </div>
    {%- endif -%}
 
-      <form action="{{ cart_url }}" method="post" novalidate class="t4s-drawer__wrap limoniapps-discountninja-drawercart-root">
+   <form action="{{ cart_url }}" method="post" novalidate class="t4s-drawer__wrap">
       <input type="hidden" data-cart-attr-rm name="attributes[collection_items_per_row]" value="">
       {%- if se_stts.enable_discount %}<input type="hidden" data-cart-discount name="discount" value="">{% endif -%}
       <div class="t4s-drawer__main">
@@ -198,8 +198,8 @@
          </div>
 
          {%- unless se_style == '1' and se_pos == '1' %}{{- html_btn -}}{% endunless -%}
-        {%- if se_stts.enable_pr %}<div class="t4s-when-cart-emty" data-cart-upsell-options='{ "baseurl":"{{ routes.product_recommendations_url }}", "limit":5, "product_id":{{ cart.items.first.product_id | default: 19041994 }}, "section_id": "mini_cart_upsell" }'></div>{% endif -%}
 
+        {%- if se_stts.enable_pr %}<div class="t4s-when-cart-emty" data-cart-upsell-options='{ "baseurl":"{{ routes.product_recommendations_url }}", "limit":5, "product_id":{{ cart.items.first.product_id | default: 19041994 }}, "section_id": "mini_cart_upsell" }'></div>{% endif -%}
 
       </div>
       </div>
@@ -216,9 +216,9 @@
              {%- assign button_style = bk_stts.button_style -%}
             {%- case block.type -%}
                {%- when 'price' -%}
-                     <div class="t4s-cart-total t4s-row t4s-gx-5 t4s-gy-0 t4s-align-items-center t4s-justify-content-between limoniapps-discountninja-cart-subtotal" {{ block.shopify_attributes }}>
+                  <div class="t4s-cart-total t4s-row t4s-gx-5 t4s-gy-0 t4s-align-items-center t4s-justify-content-between" {{ block.shopify_attributes }}>
                      <div class="t4s-col-auto"><strong>{{ 'cart.mini_cart.subtotal' | t }}</strong></div>
-                        <div data-cart-prices class="t4s-col-auto t4s-text-right limoniapps-discountninja-cart-subtotal-price">
+                     <div data-cart-prices class="t4s-col-auto t4s-text-right">
                         {%- if cart.total_discount > 0 -%}
                         <div class="t4s-cart__originalPrice t4s-d-inline-block">{{ cart.original_total_price | money }}</div>
                         <div class="t4s-cart__discountPrice t4s-d-inline-block"> - {{ cart.total_discount | money }}</div>
@@ -229,8 +229,7 @@
                         <div class="t4s-cart__totalPrice">{{ total_price | money_with_currency }}</div>
                      </div>
                   </div>
-            <div class="limoniapps-discountninja-cart-promotionsummary"></div>
-            <div class="limoniapps-discountninja-cartdiscountfield-placeholder"></div>
+
                {%- when 'tax' -%}
                   {%- capture taxes_shipping_checkout -%}{%- assign page_url = pages[settings.link_ship].url -%}
                      {%- if se_stts.show_discount -%}
