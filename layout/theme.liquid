@@ -256,7 +256,8 @@ endif -%}
 		</ul>
 		{%- render 'render_bottom' -%}
 		<script type="lazyload2" data-src="{{ 'unique.js' | asset_url }}"></script>
-				{% include 'limoniapps-discountninja-body' %}
+        {% include 'adroll' %}
+    	{% include 'limoniapps-discountninja-body' %}
     	<!-- CRITEO START -->
         {% render 'criteo-tracking' %}
         <!-- CRITEO END -->
@@ -277,6 +278,6 @@ endif -%}
           }) 
          </script> 
       {{ 'wnw-optimization-3.0.js' | asset_url | script_tag }} 
-    {% include 'adroll' %}
+    
 </body>
 </html>
