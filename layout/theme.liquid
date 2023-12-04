@@ -147,6 +147,7 @@ endif -%}
 		<script data-src="{{ 'lazysizes.min.js' | asset_url }}" type="lazyload2"></script>
 		<script data-src="{{ 'global.min.js' | asset_url }}" type="lazyload2"></script>
 
+		{%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
 			{{ content_for_header }}
             <script>
                 window.Shopify.loadFeatures(
@@ -207,6 +208,11 @@ endif -%}
                 	});                
                 })
             </script>
+		{%- else -%}
+			{% capture content_for_header2 %}{{ content_for_header }}{% endcapture %}
+			{{ content_for_header2 | replace: ' async="async" ', ' type="lazyload2" ' | replace: ' defer="defer" ', ' type="lazyload2" ' | replace: " src=", " data-src=" | replace: "window.addEventListener('load', asyncLoad, false);", "window.addEventListener('wnw_load', asyncLoad, false);" | replace: "DOMContentLoaded", "DOMContentLoaded2" | replace: "addEventListener('load', prefetchAssets);", "addEventListener('wnw_load', prefetchAssets);" }}
+			<script>var trekkie=[];trekkie.integrations=!0;window.BOOMR={},window.BOOMR.version=true;</script>
+		{%- endif -%}
 		{%- render 'head_assets', t_name: t_name, isRTL: isRTL -%}
 		{% render 'gsf-conversion-pixels' %}
 		{% render 'limoniapps-discountninja-header' %}
