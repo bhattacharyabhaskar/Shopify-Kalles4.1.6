@@ -270,20 +270,6 @@ function load_all_js() {
 		console.log("No-optimization");
 	} else {
 		console.log("Yes-optimization");
-		setTimeout(function() {
-			wnwAnalytics();
-			wnwBoomerang();
-		}, 100);
-		setTimeout(function() {
-			var wnw_load_event = document.createEvent("Event");
-			wnw_load_event.initEvent("wnw_load", true, true);
-			window.document.dispatchEvent(wnw_load_event);
-		}, 500);
-		setTimeout(function() {
-			var DOMContentLoaded2_event = document.createEvent("Event");
-			DOMContentLoaded2_event.initEvent("DOMContentLoaded2", true, true);
-			window.document.dispatchEvent(DOMContentLoaded2_event);
-		}, 5000);
 	}
 
 	lazyLoadScripts();
