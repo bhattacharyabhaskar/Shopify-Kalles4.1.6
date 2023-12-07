@@ -120,15 +120,6 @@ function lazyLoadBackground2() {
 function lazyLoadCss() {
 	var lazyLink = document.querySelectorAll("link[data-href]");
 	for (i = 0; i < lazyLink.length; i++) {
-		var preloadLink = document.createElement("link");
-		preloadLink.href = lazyLink[i].getAttribute("data-href");
-		preloadLink.rel = "preload";
-		preloadLink.as = "style";
-		document.head.appendChild(preloadLink);
-	}
-
-	var lazyLink = document.querySelectorAll("link[data-href]");
-	for (i = 0; i < lazyLink.length; i++) {
 		var css_element = document.createElement("link");
 		css_element.href = lazyLink[i].getAttribute("data-href");
 		css_element.rel = "stylesheet";
@@ -182,12 +173,6 @@ function lazyLoadPoster() {
 }
 
 function w3_load_js_uri(static_script) {
-	var preloadLink = document.createElement("link");
-	preloadLink.href = static_script.getAttribute("data-src");
-	preloadLink.rel = "preload";
-	preloadLink.as = "script";
-	document.head.appendChild(preloadLink);
-
 	var ext_js_element = document.createElement("script");
 	if (typeof(static_script.attributes) != "undefined") {
 		for (var att, i3 = 0, atts = static_script.attributes, n3 = atts.length; i3 < n3; i3++) {
