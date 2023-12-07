@@ -144,9 +144,10 @@ endif -%}
 			<meta name="description" content="{{ 'list_collections.meta_description' | t | escape }}">
 		{%- endif -%}
 		{%- render 'meta-tags', t_name: t_name -%}
-    <script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script>
+		<script data-src="{{ 'lazysizes.min.js' | asset_url }}" type="lazyload2"></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer="defer"></script>
-    {{ content_for_header }}
+
+		{{ content_for_header }}
 		<script>
 			window.Shopify.loadFeatures(
 				[{
