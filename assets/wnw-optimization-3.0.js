@@ -5,9 +5,18 @@ document.addEventListener("DOMContentLoaded", function() {
 	wnw_windowHeight=screen.height;
 	lazyLoadImg2();
 	lazyLoadBackground2();
-	["keydown","mousemove","touchmove","touchstart","touchend","wheel"].forEach(function(e) {
-		window.addEventListener(e,wnw_init,false);
+	window.addEventListener("scroll", function() {
+		wnw_init();
 	});
+	window.addEventListener("mousemove", function() {
+		wnw_init();
+	});
+	window.addEventListener("touchstart", function() {
+		wnw_init();
+	});
+	setTimeout(function() {
+		wnw_init();
+	}, 8000);
 });
 
 function wnw_init() {
