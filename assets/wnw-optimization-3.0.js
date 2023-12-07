@@ -266,14 +266,8 @@ function wnwBoomerang() {
 }
 
 function load_all_js() {
-	if(Shopify.designMode || window.location.href.indexOf("/cart") > -1 || window.location.href.indexOf("/checkout") > -1) {
-		console.log("No-optimization");
-	} else {
-		console.log("Yes-optimization");
-	}
-
 	lazyLoadScripts();
-	
+
 	setTimeout(function() {
 		critical2 = document.querySelectorAll(".critical2");
 		critical2.forEach(function(a) {
