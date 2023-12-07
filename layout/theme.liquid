@@ -145,7 +145,7 @@ endif -%}
 		{%- endif -%}
 		{%- render 'meta-tags', t_name: t_name -%}
 		<script data-src="{{ 'lazysizes.min.js' | asset_url }}"></script>
-		<script data-src="{{ 'global.min.js' | asset_url }}" type="lazyload2"></script>
+        <script src="{{ 'global.min.js' | asset_url }}" defer="defer"></script>
 
 		{{ content_for_header }}
 		<script>
