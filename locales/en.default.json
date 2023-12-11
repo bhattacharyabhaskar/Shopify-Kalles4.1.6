@@ -156,8 +156,8 @@
     }
   },
   "list_collections": {
-    "meta_title":"Collection List Page",
-    "meta_description":"The collection list page, which lists all the store's collections.",
+    "meta_title": "Collection List Page",
+    "meta_description": "The collection list page, which lists all the store's collections.",
     "pagination": {
       "load_more": "Load More",
       "load_prev": "Load Previous",
@@ -675,5 +675,11 @@
     "blog_excerpt": "Your store hasn’t published any blog posts yet. A blog can be used to talk about new product launches, tips, or other news you want to share with your customers. You can check out Shopify’s ecommerce blog for inspiration and advice for your own store and blog.",
     "blog_author": "Author name",
     "no_content": "This section doesn’t currently include any content. Add content to this section using the sidebar."
+  },
+  "discount_ninja": {
+    "from": "From",
+    "here": "here",
+    "free": "FREE",
+    "sold_out": "Sold out"
   }
 }
