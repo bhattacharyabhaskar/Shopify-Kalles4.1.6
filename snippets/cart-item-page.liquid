@@ -36,10 +36,7 @@
                     {%- assign qv_key = item_pr.id -%}
                     {%- unless item_pr.has_only_default_variant or item_variant.title contains 'mczr_price_' -%}{%- assign qv_key = item_id -%}{%- for option in item.options_with_values -%}<p class="t4s-cart_meta_variant">{{ option.name }}: <strong>{{ option.value }}</strong></p>{%- endfor -%}{%- endunless -%}                    
                     SKU: {{item.sku }}<br /> 
-                   {% assign myString = item.sku %}
-                   {% assign lastCharacter = myString | slice: -1 %}
-
-                    {% if lastCharacter == "B" %}
+                    {% if item.sku contains "B" %}
                       <p></p><p></p><strong><i><FONT COLOR="RED">Note: After you place the order, the Order Confirmation E-Mail will have the link to the Blouse Mesurement Form</FONT></i></strong></p></p>
                     {% endif %}
                     
