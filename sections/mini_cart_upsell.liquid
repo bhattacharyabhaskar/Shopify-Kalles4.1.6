@@ -17,8 +17,19 @@
 				    assign pr_url = product.url
 						assign image = product.featured_media | default: placeholder_img
 					 -%}
-		       	<div class="t4s-minicart-recommendations__item t4s-col-item">
-		       		<div class="t4s-row t4s-g-0 t4s-align-items-center">
+              
+<div 
+data-limoniapps-discountninja-product-handle="{{ product.handle }}"
+data-limoniapps-discountninja-product-collections="{{ product.collections | map: 'handle' | join: ',' | default: '[[--NONE--]]' }}"
+data-limoniapps-discountninja-product-collectionids="{{ product.collections | map: 'id' | join: ',' | default: '[[--NONE--]]' }}"
+data-limoniapps-discountninja-product-available="{{ product.available}}"
+data-limoniapps-discountninja-product-price="{{ product.first_available_variant.price | default: product.price }}"
+data-limoniapps-discountninja-product-compareatprice="{{ product.first_available_variant.compare_at_price | default: product.first_available_variant.price | default: product.compare_at_price | default: product.price }}"
+data-limoniapps-discountninja-product-pricevaries="{{ product.price_varies}}"
+data-limoniapps-discountninja-product-pricemin="{{ product.price_min}}"
+data-limoniapps-discountninja-product-tags="{{ product.tags | join: ',' | escape | default: '[[--NONE--]]' }}"
+class="t4s-minicart-recommendations__item t4s-col-item">
+  <div class="t4s-row t4s-g-0 t4s-align-items-center">
 						<div class="t4s-col-item t4s-col-auto t4s-minicart-recommendations__item--img">
 							{%- if image != blank -%}
 								<a class="t4s-d-block t4s-pr t4s-oh t4s_ratio" href="{{ pr_url }}"style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1 }}">
@@ -30,7 +41,7 @@
 						<div class="t4s-col-item t4s-col t4s-pr t4s-oh">
 							{%- if enable_rating -%}{%- render 'product-rating', product: product, app_review: app_review -%}{%- endif -%}
 							<a href="{{ pr_url }}" class="t4s-d-block t4s-minicart-recommendations__item--title t4s-truncate">{{ product.title }}</a>
-							{%- render 'product-price', class_price: 't4s-minicart-recommendations__item--price', product: product, price_varies_style: price_varies_style, type: 'card', isGrouped: false -%}
+							<span class="limoniapps-discountninja-productprice">{%- render 'product-price',class_price:'t4s-minicart-recommendations__item--price',product:product,price_varies_style:price_varies_style,type:'card',isGrouped:false -%}</span>
 						</div>
 						{%- if settings.enable_quickview %}<div class="t4s-col-item t4s-col-auto"><a href="{{ pr_url }}" data-id="{{ product.id }}" data-tooltip="top" title="{{ 'products.product_card.quick_view' | t | escape }}" rel="nofollow" class="t4s-minicart-recommendations__item--qv t4s-btn-loading__svg" data-action-quickview>
 							<svg viewBox="0 0 24 24" class="t4s-btn-op0"><use xlink:href="#t4s-icon-qv"></use></svg>
