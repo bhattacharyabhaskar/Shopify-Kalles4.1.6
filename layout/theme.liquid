@@ -90,16 +90,20 @@ endif -%}
 		{% else %}
 			<link rel="canonical" href="{{ canonical_url }}">
 		{% endif %}
+
 		<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 		{%- if settings.favicon != blank %}
 			<link rel="shortcut icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
 		{% endif -%}
+
 		{%- if settings.favicon_apple != blank %}
 			<link rel="apple-touch-icon-precomposed" type="image/png" sizes="152x152" href="{{ settings.favicon_apple | image_url: width: 152 }}">
 		{% endif -%}
+
 		{%- if settings.font_source == '1' and settings.fnt_fm_sp1.system? == false or settings.fnt_fm_sp2.system? == false or settings.fnt_fm_sp3.system? == false -%}
 			<link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
 		{%- endif -%}
+
 		{%- if t_name != 'list-collections' -%}
 			{%- capture seo_title -%}
 				{%- if template == 'search' and search.performed == true -%}
