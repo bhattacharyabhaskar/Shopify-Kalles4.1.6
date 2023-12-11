@@ -170,32 +170,32 @@ endif -%}
                 			}
                 		window.Shopify.customerPrivacy.setTrackingConsent(false, feedback);
                 	}
-                );                
+                );
                 function feedback() {
                 	const p = window.Shopify.customerPrivacy;
                 	console.log(`Tracking ${p.userCanBeTracked() ? "en" : "dis"}abled`);
-                }                
-                window.checkifloaded = function(condition_str, func_str, cyclelimit, maxwaitlimit, slot) {                
-                	var loaded = false;                
+                }
+                window.checkifloaded = function(condition_str, func_str, cyclelimit, maxwaitlimit, slot) {
+                	var loaded = false;
                 	if (typeof(window.checker_slot) == "undefined") {
                 		window.checker_slot = [];
-                	};                
-                	var slotarray = window.checker_slot;                
+                	};
+                	var slotarray = window.checker_slot;
                 	if (typeof(slot) !== "number") {
                 		slot = slotarray.length;
                 		slotarray[slotarray.length] = 0;
-                	};                
+                	};
                 	var cyclebeklemeayari = cyclelimit || 500;
-                	var maxbeklemeayari = maxwaitlimit || 50;                
+                	var maxbeklemeayari = maxwaitlimit || 50;
                 	setTimeout(function() {
                 		if (eval(condition_str) === false && slotarray[slot] < (maxbeklemeayari * 1000 / cyclebeklemeayari) && loaded === false) {
                 			window.console.log("Condition was not met yet. Current value: " + condition_str + " -> " + eval(condition_str));
                 			slotarray[slot]++;
-                			window.checkifloaded(condition_str, func_str, cyclebeklemeayari, maxbeklemeayari, slot);                
+                			window.checkifloaded(condition_str, func_str, cyclebeklemeayari, maxbeklemeayari, slot);
                 		} else {
                 			if (slotarray[slot] >= (maxbeklemeayari * 1000 / cyclebeklemeayari)) {
-                				window.console.log("Time is up, condition was not met. Condition: " + condition_str);                
-                			} else {                
+                				window.console.log("Time is up, condition was not met. Condition: " + condition_str);
+                			} else {
                 				window.console.log("Condition met on  " + ((slotarray[slot] + 1) * 50 / 1000) + " seconds. Condition: " + condition_str);
                 				loaded = true;
                 				func_str();
