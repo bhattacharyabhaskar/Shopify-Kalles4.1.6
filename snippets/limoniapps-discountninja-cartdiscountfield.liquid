@@ -4,16 +4,16 @@ Do not modify or remove this snippet, we reserve the right to overwrite it at an
 {%- endcomment -%}
 
 <div style="display:none" class="limoniapps-discountninja-cartdiscountfield-wrapper limoniapps-discountninja-fontsize-base">
-	<div style="[[SHOWLINK]]" onclick="javascript:if (discountNinja) discountNinja.DiscountCode.ToggleLink(this)" class="limoniapps-discountninja-cartdiscountfield-link">[[LINKTEXT]]</div>
-	<div style="[[SHOWCONTENT]]" class="limoniapps-discountninja-cartdiscountfield-inner">
-		<div style="[[SHOWDESCRIPTION]]" data-limoniapps-discountninja-cartdiscountfield-showdescription="[[SHOWDESCRIPTIONFLAG]]" class="limoniapps-discountninja-cartdiscountfield-description">[[DESCRIPTION]]</div>
+	<div style="display:none;" onclick="javascript:if (discountNinja) discountNinja.DiscountCode.ToggleLink(this)" class="limoniapps-discountninja-cartdiscountfield-link"></div>
+	<div style="" class="limoniapps-discountninja-cartdiscountfield-inner">
+		<div style="display:none;" data-limoniapps-discountninja-cartdiscountfield-showdescription="false" class="limoniapps-discountninja-cartdiscountfield-description"><p><span style='font-size: 12px;'>Enter your discount code here</span></p></div>
 		<div class="limoniapps-discountninja-cartdiscountfield-inputandbutton">
-			<input type="text" class="limoniapps-discountninja-cartdiscountfield-input" value="" autocomplete="off" placeholder="[[PLACEHOLDER]]" />
-			<button type="button" class="limoniapps-discountninja-cartdiscountfield-apply" value="[[BUTTONTEXT]]">[[BUTTONTEXT]]</button>
+			<input type="text" class="limoniapps-discountninja-cartdiscountfield-input" value="" autocomplete="off" placeholder="Enter discount code" />
+			<button type="button" class="limoniapps-discountninja-cartdiscountfield-apply" value="APPLY">APPLY</button>
 		</div>
 		<div class="limoniapps-discountninja-cartdiscountfield-discountcodes"></div>
-		<div style="[[SHOWFOOTER]]" data-limoniapps-discountninja-cartdiscountfield-showfooter="[[SHOWFOOTERFLAG]]" class="limoniapps-discountninja-cartdiscountfield-footer" onmouseover="javascript:if (discountNinja) discountNinja.DiscountCode.ShowFooterInstructions(this)" onmouseout="javascript:if (discountNinja) discountNinja.DiscountCode.HideFooterInstructions(this)">
-			[[FOOTERTEXT]]<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-footer-onhover">[[FOOTERONHOVERTEXT]]</div>
+		<div style="display:none;" data-limoniapps-discountninja-cartdiscountfield-showfooter="false" class="limoniapps-discountninja-cartdiscountfield-footer" onmouseover="javascript:if (discountNinja) discountNinja.DiscountCode.ShowFooterInstructions(this)" onmouseout="javascript:if (discountNinja) discountNinja.DiscountCode.HideFooterInstructions(this)">
+			<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-footer-onhover"></div>
 		</div>
 		<div class="limoniapps-discountninja-cartdiscountfield-discountcode-template" style="display:none" >
 			<div class="limoniapps-discountninja-cartdiscountfield-discountcode" data-discountcode="[[DISCOUNT_CODE]]">
@@ -24,10 +24,10 @@ Do not modify or remove this snippet, we reserve the right to overwrite it at an
 			</div>
 		</div>
 	</div>
-	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-searching">[[SEARCHING]]</div>
-	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-applied">[[APPLIED]]</div>
-	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notapplied">[[NOTAPPLIED]]</div>
-	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notapplied-reason">[[NOTAPPLIEDREASON]]</div>
-	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notfound">[[NOTFOUND]]</div>
-	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notcombinable">[[NOTCOMBINABLE]]</div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-searching"><div class="limoniapps-discountninja-spinner"></div><span> Searching...</span></div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-applied"><p><span style='color: rgb(57, 123, 33);'>✔️ </span>Discount code found, it will be applied at checkout.</span></p></div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notapplied"><p><span style='color: rgb(255, 0, 0);'>Discount code cannot be applied to the cart. Restrictions may apply or the cart may not contain the correct items to use this discount.</span></p></div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notapplied-reason">The discount code cannot be applied to the cart. Please ensure the cart meets the requirements to apply this discount code.</div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notfound"><p><span style='color: rgb(255, 0, 0);'>Please provide a valid discount code.</span></p></div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notcombinable"><p><span style='color: rgb(255, 0, 0);'>Discount code cannot be combined with the offers applied to the cart.</span></p></div>
 </div>
